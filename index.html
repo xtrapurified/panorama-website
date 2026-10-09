@@ -41,7 +41,9 @@
 #golden canvas{display:block;width:100%;aspect-ratio:2/1;max-width:100%}
 #golden .gh-dot{display:inline-block;width:.42em;height:.42em;border-radius:50%;background:var(--red);margin-right:.45em;vertical-align:.12em;animation:ghpulse 2s ease-in-out infinite}
 @keyframes ghpulse{50%{opacity:.2}}
-@media (max-width:900px){#golden .gh-code,#golden .gh-map{grid-column:1 / -1}#golden .gh-map{order:-1}#golden .gh-tease{display:none}}
+@media (max-width:900px){#golden .gh-code,#golden .gh-map{grid-column:1 / -1}#golden .gh-map{order:-1}}
+/* phones: the teaser stays, on up to two lines next to the +, a touch brighter so the egg is found */
+@media (max-width:900px){#golden .gh-tease{display:block;flex:1;margin-left:0;padding:0 1em 0 0;white-space:normal;text-align:left;color:#9d9d99;line-height:1.45;font-size:calc(11.5*var(--fz))}}
 @media (prefers-reduced-motion:reduce){#golden .gh-dot{animation:none}}
 </style></head><body>
 <!doctype html>
