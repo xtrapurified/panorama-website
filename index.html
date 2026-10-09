@@ -550,7 +550,8 @@ footer{font-size:calc(12*var(--fz))}
 .lede .tag{top:calc((var(--d1) - var(--t1)) * .88)}   /* the small label shares a baseline with the first line of the statement */
 .idx .k{font-size:var(--small)}
 /* once the page scrolls past the reel the globe gives way to a plain wordmark: Panorama Films with a small ®, the nav's size, bold */
-.wm{display:none;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:clamp(17px,1.4vw,22px);font-weight:700;letter-spacing:-.015em;line-height:1;color:var(--fg);white-space:nowrap;text-decoration:none}
+.wm{display:none;font-family:"Helvetica Neue",Helvetica,Arial,sans-serif;font-size:clamp(17px,1.4vw,22px);font-weight:700;letter-spacing:-.045em;line-height:1;color:var(--fg);white-space:nowrap;text-decoration:none}
+.wm .wm-f{font-weight:500}   /* Films a step lighter than Panorama */
 .wm sup{font-size:.42em;font-weight:400;line-height:0;vertical-align:.95em;margin-left:.12em}
 .hdr.compact .logo-slot{width:auto;aspect-ratio:auto}
 .hdr.compact .logo-slot .logo{opacity:0;visibility:hidden;pointer-events:none}
@@ -1079,6 +1080,7 @@ footer .ft-top:hover{color:var(--red)}
 .lb-bar .lb-l{display:flex;gap:24px;align-items:center;min-width:0}
 .lb-bar .lb-l > *{line-height:1.2}
 .lb-bar .lb-x{justify-self:end}
+.lb-bar .lb-pn{visibility:hidden}   /* Prev / Next live at the sides of the film and at the end of the page, not in the bar */
 /* arrows at the left and right edges of the window, level with the middle of the film */
 .lb-stage,.lb-player{position:relative}
 .lb-side{position:absolute;top:calc(4px + min((100vw - var(--m) * 2) * 9 / 32, (100svh - 140px) / 2));z-index:3;width:var(--m);height:clamp(64px,8vw,120px);margin-top:calc(clamp(64px,8vw,120px) / -2);display:grid;place-items:center;padding:0;background:none;border:0;color:var(--fg);opacity:.45;cursor:pointer;transition:opacity .2s,color .2s}
@@ -1117,7 +1119,8 @@ footer .ft-top:hover{color:var(--red)}
   .lb-bar .ctl{gap:18px;font-size:calc(18*var(--fz))}
   .lb-bar .lb-pn{grid-column:1;grid-row:1;justify-self:start}
   .lb-bar .lb-x{grid-column:2;grid-row:1;justify-self:end}
-  .lb-bar .lb-l{grid-column:1/-1;grid-row:2}
+  .lb-bar .lb-pn{display:none}
+  .lb-bar .lb-l{grid-column:1;grid-row:1}
   .lb-player{width:100%}
   .lb-ctl{grid-template-columns:auto minmax(0,1fr) auto auto;grid-template-areas:"seek seek seek seek" "play tc snd fs"}
   .lb-ctl #c-play{margin-left:-10px}
@@ -1136,7 +1139,7 @@ footer .ft-top:hover{color:var(--red)}
 <a class="skip" href="#films">Skip to films</a><a class="skip" href="#contact">Skip to contact</a>
 <header class="hdr" id="hdr">
   <div class="page bar">
-    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films" title="Drag me"><img src="media/logo.png" alt="" width="104" height="101" draggable="false"><span class="logo-pan" aria-hidden="true"><i></i></span></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top">Panorama Films<sup aria-hidden="true">®</sup></a></div>
+    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films" title="Drag me"><img src="media/logo.png" alt="" width="104" height="101" draggable="false"><span class="logo-pan" aria-hidden="true"><i></i></span></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top">Panorama <span class="wm-f">Films</span><sup aria-hidden="true">®</sup></a></div>
     <span></span>
     <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a><a href="#search" data-search class="sx-ic" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
