@@ -33,7 +33,8 @@ Supporting facts already in use on the site:
 - The public domain panoramafilms.tv is still the old Cargo site.
 - Full films live on Vimeo (vimeo.com/panoramafilmstv) and YouTube and play in a lightbox. Background loops stream from Vimeo; YouTube films use hosted clips because YouTube's player shows its own interface.
 - The source of truth for projects, titles, clients, years, roles, thumbnails and GIFs is panoramafilms.tv: its Work page lists 35 projects in a fixed order.
-- `project.md` is blocked from being served on the live site (redirect in `netlify.toml`).
+- `project.md` and `CLAUDE.md` are blocked from being served on the live site (redirects in `netlify.toml`).
+- `CLAUDE.md` holds the working rules every chat reads when it opens the repo: pull `dev` first, never push to `main` without approval, keep this file current.
 
 ## Milestones (revert targets)
 
