@@ -711,32 +711,32 @@ footer{font-size:calc(12*var(--fz))}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* search icon in the menu */
 /* contact: the links continue the big question, one per line, quieter as they matter less */
-.end .links.big{display:grid;gap:0;margin-top:.04em;font-size:var(--h1);font-weight:400;letter-spacing:-.04em;line-height:1}
-.end .links.big a,.end .links.big .mail{display:block;font:inherit;letter-spacing:inherit;text-align:left;cursor:pointer;width:fit-content;color:var(--fg);opacity:var(--o,1);transition:opacity .2s,color .2s;text-wrap:balance}
-.end .links.big a .ic{width:calc(.32em + (var(--fz) - 1px) * 22);height:calc(.32em + (var(--fz) - 1px) * 22);margin-left:.12em;vertical-align:.32em}
-.end .links.big a:hover{opacity:1;color:var(--red)}
-.end .links.big .mail:hover,.end .links.big .mail.done{opacity:1;color:var(--fg)}
-.end .links.big .mail .mail-t{text-decoration:none}
-.end .links.big .mail .u{text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:max(1px,.02em);text-underline-offset:.12em;transition:text-decoration-color .2s}
-.end .links.big .mail .mail-t{text-decoration-skip-ink:auto}
-.end .links.big .mail .nw{text-decoration:none}
-.end .links.big .mail:hover .mail-t,.end .links.big .mail.done .mail-t,.end .links.big .mail:focus-visible .mail-t,.end .links.big .mail:hover .u,.end .links.big .mail.done .u,.end .links.big .mail:focus-visible .u{text-decoration-color:var(--red)}
-.end .links.big .bi{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;width:calc(.3em + (var(--fz) - 1px) * 21);height:calc(.3em + (var(--fz) - 1px) * 21);margin-left:.1em;vertical-align:.32em}
+:is(.end,.pj-end) .links.big{display:grid;gap:0;margin-top:.04em;font-size:var(--h1);font-weight:400;letter-spacing:-.04em;line-height:1}
+:is(.end,.pj-end) .links.big a,:is(.end,.pj-end) .links.big .mail{display:block;font:inherit;letter-spacing:inherit;text-align:left;cursor:pointer;width:fit-content;color:var(--fg);opacity:var(--o,1);transition:opacity .2s,color .2s;text-wrap:balance}
+:is(.end,.pj-end) .links.big a .ic{width:calc(.32em + (var(--fz) - 1px) * 22);height:calc(.32em + (var(--fz) - 1px) * 22);margin-left:.12em;vertical-align:.32em}
+:is(.end,.pj-end) .links.big a:hover{opacity:1;color:var(--red)}
+:is(.end,.pj-end) .links.big .mail:hover,:is(.end,.pj-end) .links.big .mail.done{opacity:1;color:var(--fg)}
+:is(.end,.pj-end) .links.big .mail .mail-t{text-decoration:none}
+:is(.end,.pj-end) .links.big .mail .u{text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:max(1px,.02em);text-underline-offset:.12em;transition:text-decoration-color .2s}
+:is(.end,.pj-end) .links.big .mail .mail-t{text-decoration-skip-ink:auto}
+:is(.end,.pj-end) .links.big .mail .nw{text-decoration:none}
+:is(.end,.pj-end) .links.big .mail:hover .mail-t,:is(.end,.pj-end) .links.big .mail.done .mail-t,:is(.end,.pj-end) .links.big .mail:focus-visible .mail-t,:is(.end,.pj-end) .links.big .mail:hover .u,:is(.end,.pj-end) .links.big .mail.done .u,:is(.end,.pj-end) .links.big .mail:focus-visible .u{text-decoration-color:var(--red)}
+:is(.end,.pj-end) .links.big .bi{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;width:calc(.3em + (var(--fz) - 1px) * 21);height:calc(.3em + (var(--fz) - 1px) * 21);margin-left:.1em;vertical-align:.32em}
 .end .over{row-gap:0}
 .end .mail .nw{white-space:nowrap}
 .mail-tip{position:fixed;left:0;top:0;z-index:80;pointer-events:none;padding:6px 10px;background:var(--fg);color:var(--bg);font-size:calc(13*var(--fz));letter-spacing:-.005em;line-height:1;white-space:nowrap;opacity:0;transform:translate(14px,14px);transition:opacity .15s}
 .mail-tip.on{opacity:1}
 .mail-tip.ok{background:var(--red);color:#fff}
-@media (hover:hover) and (pointer:fine){.end .links.big .mail{cursor:copy}}
-@media (max-width:600px){.end .links.big .mail{font-size:min(1em,9.6vw)}}
+@media (hover:hover) and (pointer:fine){:is(.end,.pj-end) .links.big .mail{cursor:copy}}
+@media (max-width:600px){:is(.end,.pj-end) .links.big .mail{font-size:min(1em,9.6vw)}}
 .end .ask{margin-bottom:.04em}
 .mail-note{min-height:1.4em;margin:6px 0 0;user-select:all}
 .menu .sx-ic{text-decoration:none;display:inline-flex;align-self:center}
 footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 footer .ft-y{justify-self:start;white-space:nowrap}
 /* search is the last of the big contact lines, as tall as the letters */
-.end .links.big .big-sx{line-height:1}
-.end .links.big .big-sx svg{display:block;width:.95em;height:.95em;margin:.1em 0 .04em;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round}   /* a touch lighter than the regular weight of the type */
+:is(.end,.pj-end) .links.big .big-sx{line-height:1}
+:is(.end,.pj-end) .links.big .big-sx svg{display:block;width:.95em;height:.95em;margin:.1em 0 .04em;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round}   /* a touch lighter than the regular weight of the type */
 footer .ft-c{justify-self:end;white-space:nowrap}
 footer .ft-top{white-space:nowrap}
 @media (max-width:420px){footer{column-gap:12px}}
@@ -952,6 +952,8 @@ footer .ft-top:hover{color:var(--red)}
 .peekbar:hover .tag,.peekbar:focus-visible .tag{color:#ededeb}
 .peekbar:focus-visible{outline:1px solid var(--red);outline-offset:-4px}
 .tag .arr{color:var(--red);margin-left:.18em;display:inline-block}
+/* the scroll-down arrow: straight sharp lines, square ends, a mitred point */
+.arr .dn{display:inline-block;width:.5em;height:.6em;vertical-align:-.04em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10}
 .peekbar .arr{animation:nudge 2.4s var(--ease) infinite}
 @keyframes nudge{0%,60%,100%{transform:none}30%{transform:translateY(.18em)}}
 @media (prefers-reduced-motion:reduce){.peekbar .arr{animation:none}}
@@ -1040,10 +1042,45 @@ footer .ft-top:hover{color:var(--red)}
 .pj-hd h2,.pj-hd p{margin:0;font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.03;text-wrap:pretty}
 .pj-hd p{color:var(--sub)}
 .lb-ft{margin-top:calc(clamp(72px,8vw,120px) * -.55);border-top:1px solid var(--rule);padding-top:18px}
+/* project page: title on the left, Prev / Next in the middle, Close in the corner */
+.lb-bar{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
+.lb-bar .lb-l{display:flex;gap:24px;align-items:baseline;min-width:0}
+.lb-bar .lb-x{justify-self:end}
+/* arrows either side of the film, half way down, in the page margin */
+.lb-player{position:relative}
+.lb-side{position:absolute;top:50%;z-index:3;width:var(--m);height:clamp(64px,8vw,120px);margin-top:calc(clamp(64px,8vw,120px) / -2);display:grid;place-items:center;padding:0;background:none;border:0;color:var(--fg);opacity:.45;cursor:pointer;transition:opacity .2s,color .2s}
+.lb-side.l{left:calc(var(--m) * -1)}.lb-side.r{right:calc(var(--m) * -1)}
+.lb-side svg{width:clamp(12px,1vw,calc(16*var(--fz)));height:auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:butt;stroke-linejoin:miter}
+.lb-side:hover,.lb-side:focus-visible{opacity:1;color:var(--red)}
+@media (max-width:760px){.lb-side{display:none}}
+/* the line under the player repeated the title, client and services already on the page: gone */
+.lb-now,#lb-note{display:none}
+/* catalogue cards: title, client and year at one size, the title white, the rest grey */
+.card .meta{row-gap:2px}
+.card .meta h3,.card .meta .cl,.card .meta .yr{font-size:calc(18*var(--fz));letter-spacing:-.015em;line-height:1.25}
+.card .meta .cl{color:var(--mid)}
+/* Featured films: only the running Rec counter in the top right; the title and logline lie over the film in inverted colour
+   and hold their place in the window while the film scrolls past (set by script); below, just client and year */
+.works .frame .hud{grid-template-rows:auto;align-content:start}
+.works .frame .hud .top{justify-content:flex-end}
+.ov{position:absolute;inset:0;z-index:2;pointer-events:none;mix-blend-mode:difference;color:#fff;overflow:hidden}
+.ov-in{position:absolute;left:0;right:0;top:0;display:grid;gap:.35em;padding:0 clamp(16px,2.4vw,40px);will-change:transform}
+.ov-t{font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.03;max-width:16ch}
+.ov-l{font-size:var(--t1);letter-spacing:-.02em;line-height:1.1;max-width:30ch}
+.works .cap .cl{grid-column:1/span 9}
+.works .cap .yr{grid-column:10/span 3;text-align:right}
+@media (max-width:760px){.ov-in{padding-right:38%}.ov-t{font-size:calc(22*var(--fz))}.ov-l{display:none}}
+/* the bottom of a project: previous / next, then the invitation and the contact links sitting close above the footer */
+.pj-next button span:last-child .ic{width:.7em;height:.7em;vertical-align:.02em}
+.pj-end{padding-top:clamp(56px,7vw,112px)}
+.pj-end .pj-ask{padding-block:0 .1em}
+.pj-end .links.big{margin-bottom:clamp(24px,3vw,44px)}
 @media (max-width:600px){
-  .lb-bar{grid-template-columns:auto 1fr;row-gap:6px}
-  .lb-bar .ctl{grid-column:2;justify-self:end;gap:18px;font-size:calc(18*var(--fz))}
-  .lb-bar .ttl{grid-column:1/-1}
+  .lb-bar{grid-template-columns:1fr auto;row-gap:6px}
+  .lb-bar .ctl{gap:18px;font-size:calc(18*var(--fz))}
+  .lb-bar .lb-pn{grid-column:1;grid-row:1;justify-self:start}
+  .lb-bar .lb-x{grid-column:2;grid-row:1;justify-self:end}
+  .lb-bar .lb-l{grid-column:1/-1;grid-row:2}
   .lb-player{width:100%}
   .lb-ctl{grid-template-columns:auto minmax(0,1fr) auto auto;grid-template-areas:"seek seek seek seek" "play tc snd fs"}
   .lb-ctl #c-play{margin-left:-10px}
@@ -1092,7 +1129,7 @@ footer .ft-top:hover{color:var(--red)}
   </section>
 
   <div class="page">
-  <a class="peekbar" href="#films" aria-label="Scroll to films"><span class="tag">Films<span class="arr" aria-hidden="true">↓</span></span></a>
+  <a class="peekbar" href="#films" aria-label="Scroll to films"><span class="tag">Films<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span></a>
   <section class="sec first" id="films" data-sec="films">
     <div id="chapters"></div>
   </section>
@@ -1104,7 +1141,7 @@ footer .ft-top:hover{color:var(--red)}
   </section>
 
   <section class="sec" id="studio" data-sec="studio">
-    <div class="lede"><span class="tag">Studio<span class="arr" aria-hidden="true">↓</span></span><h2>Panorama Films is an independent creative storytelling studio working across documentaries, series, campaigns and brand films.</h2></div>
+    <div class="lede"><span class="tag">Studio<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Panorama Films is an independent creative storytelling studio working across documentaries, series, campaigns and brand films.</h2></div>
     <div class="grid about">
       <p>We explore science, technology, culture and the human stories around them, with commissioned films for global brands, NGOs and institutions alongside our own projects.</p>
       <p>The future, documented.</p>
@@ -1176,7 +1213,7 @@ footer .ft-top:hover{color:var(--red)}
   <section id="contact" data-sec="contact">
     <div class="band end">
       <div class="over">
-        <div class="top"><span class="tag">Contact<span class="arr" aria-hidden="true">↓</span></span><span></span></div>
+        <div class="top"><span class="tag">Contact<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span></span></div>
         <p class="ask"><a href="https://panoramafilms.tv/contact-form" target="_blank" rel="noopener"><span class="w">Let’s make a film together.</span><br><span class="r">Get in touch.</span></a></p>
         <div class="links big">
           <a href="https://www.instagram.com/panoramafilmscollective/" target="_blank" rel="noopener" style="--o:.88">Instagram <svg class="ic bi" aria-hidden="true" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.8"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg></a>
@@ -1193,11 +1230,13 @@ footer .ft-top:hover{color:var(--red)}
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
   <div class="lb-bar">
-    <span class="lab red rec live" id="lb-no">Project</span>
-    <span class="lab ttl" id="lb-title"></span>
-    <span class="ctl lab"><button id="lb-prev" aria-label="Previous project"><svg class="ic" aria-hidden="true"><use href="#i-l"/></svg> Prev</button><button id="lb-next" aria-label="Next project">Next <svg class="ic" aria-hidden="true"><use href="#i-r"/></svg></button><button id="lb-close">Close <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></span>
+    <span class="lb-l"><span class="lab red rec live" id="lb-no">Project</span><span class="lab ttl" id="lb-title"></span></span>
+    <span class="ctl lab lb-pn"><button id="lb-prev" aria-label="Previous project"><svg class="ic" aria-hidden="true"><use href="#i-l"/></svg> Prev</button><button id="lb-next" aria-label="Next project">Next <svg class="ic" aria-hidden="true"><use href="#i-r"/></svg></button></span>
+    <span class="ctl lab lb-x"><button id="lb-close">Close <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></span>
   </div>
   <div class="lb-stage"><div class="lb-player" id="lb-player">
+    <button type="button" class="lb-side l" id="lb-sl" aria-label="Previous project"><svg viewBox="0 0 14 24" aria-hidden="true"><path d="M12 1.5 2 12l10 10.5"/></svg></button>
+    <button type="button" class="lb-side r" id="lb-sr" aria-label="Next project"><svg viewBox="0 0 14 24" aria-hidden="true"><path d="M2 1.5 12 12 2 22.5"/></svg></button>
     <div class="lb-box" id="lb-box"></div>
     <div class="lb-ctl lab" id="lb-ctl" hidden>
       <button id="c-play" type="button" aria-label="Pause"></button>
@@ -1274,8 +1313,8 @@ const F = {
   p35:{n:"35", title:"Fruškać", client:"National Park Fruška Gora", year:"2020", roles:"Direction, edit, cinematography", img:"thumbs/p35", page:"Fruskac", v:"421003545"}
 };
 const CHAPTERS = [
-  ["Featured","Campaigns & Commissioned Films","01—03",["ask","sport","ten"]],
-  ["Featured","Documentary & Human Stories","04—06",[["astro","orchard"],"docu"]]
+  /* one section for now: documentaries and human stories are not told apart yet */
+  ["Featured","Campaigns & Commissioned Films","01—06",["ask","sport","ten","astro","orchard","docu"]]
 ];
 const CARDS = ["p07","p08","p09","p10","p11","p12","p13","p14","p15","p16","p17","p18","p19","p20","p21","p22","p23","p24","p25","p26","p27"];
 const INDEX = ["p28","p29","p30","p31","p32","p33","p34","p35"];
@@ -1314,16 +1353,16 @@ function frame(k, small){
     <div class="media"${f.hover ? ` data-hv="${f.hover}" data-c="${k}"` : f.img ? '' : ` data-k="${k}" data-loop="20"`}><img src="${still(k)}" alt="${esc(f.title)}" loading="lazy"></div>
     ${f.v||f.yt ? '<span class="play" aria-hidden="true"></span>' : ''}
     ${small ? `<span class="hud"><span class="top"><span></span>${more}</span></span>`
-      : `<span class="hud"><span class="top"><span class="lab">${esc(f.title)}</span><span class="lab">${nf > 1 ? nf + ' films · ' : ''}${esc(f.year||'')}</span></span><span></span>
-      <span class="bot"><span class="lab rec live">Rec <span class="tc">00:00:00:00</span></span><span class="lab tc dur">${f.dur||''}</span></span></span>`}</a>`;
+      : `<span class="hud"><span class="top"><span></span><span class="lab rec live">Rec <span class="tc">00:00:00:00</span></span></span></span>
+      <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span></span>`}</a>`;
 }
 function work(k){
   const f = F[k];
+  /* the title and logline sit over the film (drawn there for the eye); here they stay as real text for search engines and screen readers */
   return `<article class="work">${frame(k)}
     <div class="grid cap" data-play="${k}">
-      <h3>${esc(f.title)}</h3>
-      <span class="cl s">${esc(f.client)}</span><span class="rl s mid">${esc(f.roles||'')}</span><span class="yr s mid">${esc(f.year)}</span>
-      ${f.line?`<p class="ln mid">${esc(f.line)}</p>`:''}
+      <h3 class="sr-only">${esc(f.title)}</h3>${f.line ? `<p class="sr-only">${esc(f.line)}</p>` : ''}
+      <span class="cl s">${esc(f.client)}</span><span class="yr s mid">${esc(f.year)}</span>
     </div></article>`;
 }
 /* Featured, two ways. 'stack': full-screen panels that slide over each other as you scroll, the film moving
@@ -1347,8 +1386,15 @@ document.getElementById('chapters').innerHTML = CHAPTERS.map(([c,t,r,items],ci)=
   `<div class="lede"><span class="tag sub">${c}</span><h2>${esc(t)}</h2></div>
    <div class="works">${items.map(it=>Array.isArray(it)?`<div class="pair">${it.map(work).join('')}</div>`:work(it)).join('')}</div>`).join('');
 }
+/* Featured titles over the film: each one holds the middle of the window while its film scrolls past, staying inside the frame */
+(()=>{ const ovs = [...document.querySelectorAll('.works .ov-in')]; if (!ovs.length) return; let raf = 0;
+  const place = () => { raf = 0; const vh = innerHeight; ovs.forEach(el=>{ const fr = el.parentElement.getBoundingClientRect(); if (fr.bottom < 0 || fr.top > vh) return;
+    const h = el.offsetHeight, pad = Math.min(40, fr.height * .08), y = Math.max(pad, Math.min(fr.height - h - pad, vh / 2 - fr.top - h / 2)); el.style.transform = `translateY(${Math.round(y)}px)`; }); };
+  addEventListener('scroll', ()=>{ if (!raf) raf = requestAnimationFrame(place); }, {passive: true}); addEventListener('resize', place); place(); })();
 /* the catalogue: twelve films, then the rest with one Load more, then the archive with another */
-document.getElementById('cards').innerHTML = CARDS.concat(INDEX).map((k,i)=>{const f=F[k];return `<article class="card${i >= CARDS.length ? ' arch' : i >= CARDS_SHOWN ? ' later' : ''}">${frame(k, true)}<div class="meta s" data-play="${k}"><h3>${esc(f.title)}</h3><span>${esc(f.client)}</span><span class="yr mid">${esc(f.year)}</span></div></article>`;}).join('');
+/* one system for every card: the title, then the client and the year, all at one size; the client line is left out when the title already names it */
+const same = (a, b) => { const n = x => String(x||'').toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,''); const x = n(a), y = n(b); return !!x && !!y && x.includes(y); };   /* the title already names the client */
+document.getElementById('cards').innerHTML = CARDS.concat(INDEX).map((k,i)=>{const f=F[k], cl = same(f.title, f.client) ? '' : f.client;return `<article class="card${i >= CARDS.length ? ' arch' : i >= CARDS_SHOWN ? ' later' : ''}">${frame(k, true)}<div class="meta s" data-play="${k}"><h3>${esc(f.title)}</h3><span class="cl">${esc(cl)}</span><span class="yr mid">${esc(f.year)}</span></div></article>`;}).join('');
 const idxEl = document.getElementById('index'); if (idxEl) idxEl.innerHTML = INDEX.map(k=>{const f=F[k];return `<div class="idx" data-play="${k}" role="button" tabindex="0" aria-label="${f.v||f.yt ? 'Play' : 'View'} ${esc(f.title)}"${f.hover?` data-hv="${f.hover}"`:''}><span class="th"><img src="${still(k)}" alt="" loading="lazy">${f.v||f.yt?'<span class="play" aria-hidden="true"></span>':''}</span><span class="t">${esc(f.title)}</span><span class="c s mid">${esc(f.client)}</span><span class="w s mid">${esc(f.year)}</span></div>`;}).join('');
 /* each discipline points to films where Panorama was credited for it (services and credits on the project), never more than three */
 const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interviewer/)), Writing: k => /script|concept/i.test(F[k].roles || ''),
@@ -1840,9 +1886,11 @@ function renderProject(k, photo){
   else if (p.imgs && p.imgs.length) h += `<section class="pj-photos" aria-label="Photos">${p.imgs.map(([i,w,hh])=>`<img src="${M}proj/${p.slug}/${String(i).padStart(2,'0')}.webp" width="${w}" height="${hh}" alt="" loading="lazy">`).join('')}</section>`;
   if (k !== 'reel'){
     const j = ORDER.indexOf(k), nk = ORDER[(j + 1) % ORDER.length], pk = ORDER[(j - 1 + ORDER.length) % ORDER.length];
-    h += `<a class="pj-ask" href="https://panoramafilms.tv/contact-form" target="_blank" rel="noopener"><span class="lab mid">Like what you see?</span><span><span class="w">Let’s make a film together.</span><br><span class="r">Get in touch.</span></span></a>
-      <nav class="pj-next" aria-label="More projects"><button type="button" data-go="${pk}"><span class="lab mid">Previous</span><span>${esc(F[pk].title)}</span></button>
+    /* the contact links from the end of the homepage, copied in as they are (the address is filled in by script, never in the source) */
+    const L = document.querySelector(':is(.end,.pj-end) .links.big'), links = L ? L.outerHTML.replace(' id="mailBtn"', '').replace(' aria-describedby="mailNote"', '').replace('class="mail"', 'class="mail pj-mail"') : '';
+    h += `<nav class="pj-next" aria-label="More projects"><button type="button" data-go="${pk}"><span class="lab mid">Previous project</span><span><svg class="ic" aria-hidden="true"><use href="#i-l"/></svg> ${esc(F[pk].title)}</span></button>
       <button type="button" data-go="${nk}"><span class="lab mid">Next project</span><span>${esc(F[nk].title)} <svg class="ic" aria-hidden="true"><use href="#i-r"/></svg></span></button></nav>
+      <div class="pj-end"><a class="pj-ask" href="https://panoramafilms.tv/contact-form" target="_blank" rel="noopener"><span class="lab mid">Like what you see?</span><span><span class="w">Let’s make a film together.</span><br><span class="r">Get in touch.</span></span></a>${links}<p class="mail-note lab mid pj-mail-note" aria-live="polite"></p></div>
 `;
   }
   /* the site footer travels with the project page: year, dark / light, back to the top of the project, the studio */
@@ -1879,7 +1927,7 @@ function openFilm(k){
   renderProject(k, photo);
   document.getElementById('lb-title').textContent = `${f.title} — ${f.client}`;
   document.getElementById('lb-no').textContent = k==='reel' ? 'Reel' : 'Project';
-  document.getElementById('lb-prev').hidden = document.getElementById('lb-next').hidden = (k==='reel');
+  document.getElementById('lb-prev').hidden = document.getElementById('lb-next').hidden = document.getElementById('lb-sl').hidden = document.getElementById('lb-sr').hidden = (k==='reel');
   if (photo){ teardown(); startShow(k); }
   else playFilm(Math.max(0, films.findIndex(x=>x.main)), false);
   if (lb.hidden){ lb.hidden = false; lb.classList.remove('opening'); void lb.offsetWidth; lb.classList.add('opening'); document.body.style.overflow = 'hidden'; document.getElementById('lb-close').focus({focusVisible:false}); }
@@ -1942,6 +1990,12 @@ document.getElementById('lb-close').addEventListener('click', closeFilm);
 lb.addEventListener('click', e=>{ if (e.target.classList.contains('lb-stage')) closeFilm(); });   /* the black space beside the player closes it */
 document.getElementById('lb-prev').addEventListener('click', ()=>stepFilm(-1));
 document.getElementById('lb-next').addEventListener('click', ()=>stepFilm(1));
+document.getElementById('lb-sl').addEventListener('click', e=>{ e.stopPropagation(); stepFilm(-1); });
+document.getElementById('lb-sr').addEventListener('click', e=>{ e.stopPropagation(); stepFilm(1); });
+/* the email button copied onto the project page: copies the address, says so underneath */
+pjEl.addEventListener('click', e=>{ const b = e.target.closest('.pj-mail'); if (!b) return; const a = ['hello', 'panoramafilms.tv'].join('@'), note = pjEl.querySelector('.pj-mail-note');
+  const done = ok => { b.classList.add('done'); if (note) note.textContent = ok ? 'Copied to your clipboard.' : 'Select the address to copy it.'; setTimeout(()=>{ b.classList.remove('done'); if (note) note.textContent = ''; }, 2600); };
+  if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(a).then(()=>done(true), ()=>done(false)); else done(false); });
 /* ================= Interactions ================= */
 
 
