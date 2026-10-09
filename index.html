@@ -536,7 +536,7 @@ footer{font-size:calc(12*var(--fz))}
 @media (prefers-reduced-motion:reduce){.media > img,.media > video,.media > .stream{transition:none}}
 
 /* one size for all small text, the same as the More films titles; weight and grey tell roles apart */
-:root{--small:calc(15*var(--fz));/* one type scale: display (hero lines and every section statement), title, action, small */--d1:clamp(30px,4vw,66px);--h1:clamp(36px,4.8vw,84px);--t1:clamp(22px,2.2vw,calc(32*var(--fzh)));--act:clamp(18px,1.6vw,calc(22*var(--fz)));--ease:cubic-bezier(.16,1,.3,1)}
+:root{--pjask:clamp(40px,6.4vw,calc(110*var(--fz)));--small:calc(15*var(--fz));/* one type scale: display (hero lines and every section statement), title, action, small */--d1:clamp(30px,4vw,66px);--h1:clamp(36px,4.8vw,calc(84*var(--fz)));--t1:clamp(22px,2.2vw,calc(32*var(--fzh)));--act:clamp(18px,1.6vw,calc(22*var(--fz)));--ease:cubic-bezier(.16,1,.3,1)}
 .lab,.s,.hnote,.menu,.menu a,.chapter .t,.facts,.play-reel,.about p,.team p,.caps h3,.caps li,.card h3,.card .meta,.idx .t,.idx .c,.idx .w,
 .cap .cl,.cap .rl,.cap .yr,.cap .ln,.lb-bar .ctl,.watch,.pj-t,.pj-facts dd,.pj-gh h4,.pj-note p,.fields p,footer,.end .links,.lb-ctl,.lb-now #lb-now-n,.all,.pj-cta{font-size:var(--small);line-height:1.35}
 .card h3,.pj-gh h4{font-weight:500}
@@ -647,7 +647,7 @@ footer{font-size:calc(12*var(--fz))}
 
 /* project end: the ask, as big as the contact line */
 .pj-ask{display:grid;gap:10px;padding-block:clamp(40px,6vw,96px) clamp(24px,3vw,48px)}
-.pj .pj-ask > span:last-child{color:var(--red);font-size:clamp(40px,6.4vw,110px);font-weight:400;letter-spacing:-.05em;line-height:.95;transition:color .2s}
+.pj .pj-ask > span:last-child{color:var(--red);font-size:var(--pjask);font-weight:400;letter-spacing:-.05em;line-height:.95;transition:color .2s}
 .pj-ask .ic{width:.45em;height:.45em;margin-left:.15em;vertical-align:.1em}
 .pj .pj-ask:hover > span:last-child{color:var(--fg)}
 /* catalogue reveal */
@@ -1044,17 +1044,19 @@ footer .ft-top:hover{color:var(--red)}
 .lb-ft{margin-top:calc(clamp(72px,8vw,120px) * -.55);border-top:1px solid var(--rule);padding-top:18px}
 /* project page: title on the left, Prev / Next in the middle, Close in the corner */
 .lb-bar{grid-template-columns:minmax(0,1fr) auto minmax(0,1fr)}
-.lb-bar .lb-l{display:flex;gap:24px;align-items:baseline;min-width:0}
+.lb-bar .lb-l{display:flex;gap:24px;align-items:center;min-width:0}
+.lb-bar .lb-l > *{line-height:1.2}
 .lb-bar .lb-x{justify-self:end}
-/* arrows either side of the film, half way down, in the page margin */
-.lb-player{position:relative}
-.lb-side{position:absolute;top:50%;z-index:3;width:var(--m);height:clamp(64px,8vw,120px);margin-top:calc(clamp(64px,8vw,120px) / -2);display:grid;place-items:center;padding:0;background:none;border:0;color:var(--fg);opacity:.45;cursor:pointer;transition:opacity .2s,color .2s}
+/* arrows at the left and right edges of the window, level with the middle of the film */
+.lb-stage,.lb-player{position:relative}
+.lb-side{position:absolute;top:calc(4px + min((100vw - var(--m) * 2) * 9 / 32, (100svh - 140px) / 2));z-index:3;width:var(--m);height:clamp(64px,8vw,120px);margin-top:calc(clamp(64px,8vw,120px) / -2);display:grid;place-items:center;padding:0;background:none;border:0;color:var(--fg);opacity:.45;cursor:pointer;transition:opacity .2s,color .2s}
 .lb-side.l{left:calc(var(--m) * -1)}.lb-side.r{right:calc(var(--m) * -1)}
 .lb-side svg{width:clamp(12px,1vw,calc(16*var(--fz)));height:auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:butt;stroke-linejoin:miter}
 .lb-side:hover,.lb-side:focus-visible{opacity:1;color:var(--red)}
 @media (max-width:760px){.lb-side{display:none}}
 /* the line under the player repeated the title, client and services already on the page: gone */
 .lb-now,#lb-note{display:none}
+.lb-foot{justify-content:flex-end}
 /* catalogue cards: title, client and year at one size, the title white, the rest grey */
 .card .meta{row-gap:2px}
 .card .meta h3,.card .meta .cl,.card .meta .yr{font-size:calc(18*var(--fz));letter-spacing:-.015em;line-height:1.25}
@@ -1074,7 +1076,7 @@ footer .ft-top:hover{color:var(--red)}
 .pj-next button span:last-child .ic{width:.7em;height:.7em;vertical-align:.02em}
 .pj-end{padding-top:clamp(56px,7vw,112px)}
 .pj-end .pj-ask{padding-block:0 .1em}
-.pj-end .links.big{margin-bottom:clamp(24px,3vw,44px)}
+.pj-end .links.big{margin-bottom:clamp(24px,3vw,44px);font-size:var(--pjask)}   /* Instagram and the address as large as Get in touch */
 @media (max-width:600px){
   .lb-bar{grid-template-columns:1fr auto;row-gap:6px}
   .lb-bar .ctl{gap:18px;font-size:calc(18*var(--fz))}
@@ -1234,9 +1236,10 @@ footer .ft-top:hover{color:var(--red)}
     <span class="ctl lab lb-pn"><button id="lb-prev" aria-label="Previous project"><svg class="ic" aria-hidden="true"><use href="#i-l"/></svg> Prev</button><button id="lb-next" aria-label="Next project">Next <svg class="ic" aria-hidden="true"><use href="#i-r"/></svg></button></span>
     <span class="ctl lab lb-x"><button id="lb-close">Close <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></span>
   </div>
-  <div class="lb-stage"><div class="lb-player" id="lb-player">
+  <div class="lb-stage">
     <button type="button" class="lb-side l" id="lb-sl" aria-label="Previous project"><svg viewBox="0 0 14 24" aria-hidden="true"><path d="M12 1.5 2 12l10 10.5"/></svg></button>
     <button type="button" class="lb-side r" id="lb-sr" aria-label="Next project"><svg viewBox="0 0 14 24" aria-hidden="true"><path d="M2 1.5 12 12 2 22.5"/></svg></button>
+    <div class="lb-player" id="lb-player">
     <div class="lb-box" id="lb-box"></div>
     <div class="lb-ctl lab" id="lb-ctl" hidden>
       <button id="c-play" type="button" aria-label="Pause"></button>
