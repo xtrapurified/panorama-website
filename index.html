@@ -903,6 +903,7 @@ footer .ft-top:hover{color:var(--red)}
 .dr-ln{margin-top:24px;display:grid;justify-items:start;gap:10px}
 .dr-ln a,.dr-ln button{font:inherit;font-size:calc(16*var(--fz));line-height:1.35;color:var(--fg);background:none;border:0;padding:0;cursor:pointer;text-align:left;text-decoration:none;text-underline-offset:.25em;text-decoration-thickness:1px;text-decoration-color:var(--red)}
 .dr-ln a:hover,.dr-ln button:hover{color:var(--red)}
+.dr-ln .web{color:var(--red)}.dr-ln .web:hover{color:var(--fg)}   /* their own website, in red, under Browse */
 @media (max-width:760px){.net-dr .x{top:16px}.dr-ph{width:150px}.net-dr{padding-top:28px;position:fixed;top:auto;bottom:0;right:0;left:0;width:auto;height:min(78svh,640px);border-left:0;border-top:1px solid var(--rule);z-index:65}.net-dr[hidden]{transform:translateY(105%)}.net-tl{grid-template-columns:auto 1fr}.tl-y{display:none}}
 .peers.shut .net-tl{display:none}
 /* visually hidden until focused: a keyboard user tabbing in sees the list as a row of names */
@@ -2319,8 +2320,8 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       ${(i.photo || PLACEHOLDER) ? `<div class="dr-ph"><img src="${i.photo || PLACEHOLDER}" alt="${i.photo ? esc(n.name) : ''}"></div>` : `<div class="dr-ini" aria-hidden="true">${ini(n)}</div>`}
       <h3 class="dr-nm">${esc(n.name)}<span class="dr-role">${esc(role)}</span></h3>
       ${i.bio ? `<p class="dr-bio">${esc(i.bio)}</p>` : ''}
-      <div class="dr-ln">${site === LINK_PH ? `<a href="#" data-ph title="Link to come">Website ↗</a>` : `<a href="${esc(site)}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} ↗</a>`}
-        <button type="button" data-all>Browse all projects with ${esc(first)} →</button></div>`;
+      <div class="dr-ln"><button type="button" data-all>Browse all projects with ${esc(first)} →</button>
+        ${site === LINK_PH ? `<a class="web" href="#" data-ph title="Link to come">Website ↗</a>` : `<a class="web" href="${esc(site)}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} ↗</a>`}</div>`;
     dr.hidden = false; if (!peek) dr.querySelector('[data-x]').focus({preventScroll:true, focusVisible:false}); alpha = Math.max(alpha, .6); if (!wrap.hidden) start(); markNames();
     dr.classList.toggle('peek', !!peek);   /* the close X shows only once a name is clicked */
     /* the page never scrolls when a profile opens: the panel lines up with the top of the graph, or with the first name of the list
