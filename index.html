@@ -2528,7 +2528,8 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     netNames.addEventListener('mouseleave', ()=>{ clearTimeout(leaveT); leaveT = setTimeout(settle, 450); });
     dr.addEventListener('mouseenter', ()=>{ if (!wrap.hidden) return; clearTimeout(leaveT); dr.classList.add('dr-stay'); });
     dr.addEventListener('mouseleave', ()=>{ if (!wrap.hidden) return; clearTimeout(leaveT); leaveT = setTimeout(settle, 300); }); }
-  try { if (localStorage.getItem('pf-net-view') === 'list') setView('list'); } catch(e){}
+  /* the list is the default; a visitor who chose the graph gets the graph back */
+  { let v = 'list'; try { v = localStorage.getItem('pf-net-view') || 'list'; } catch(e){} if (v === 'list') setView('list'); }
   netList.addEventListener('click', e=>{ const b = e.target.closest('[data-p]'); if (!b) return; opener = b; openDr(pn.find(n=>n.id === b.dataset.p)); });
   function closeDr(){ if (opener && dr.contains(document.activeElement)){ opener.focus({preventScroll:true}); } opener = null; pinned = null; dr.hidden = true; sel = null; markNames(); alpha = Math.max(alpha, .6); if (visible) start(); else draw(); }
   dr.addEventListener('click', e=>{ if (e.target.closest('[data-ph]')){ e.preventDefault(); return; } const g = e.target.closest('[data-go]'); if (g){ openFilm(g.dataset.go); return; }
