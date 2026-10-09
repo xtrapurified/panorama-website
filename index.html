@@ -1471,7 +1471,7 @@ const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interv
   Post: k => /edit|sound design|grading/i.test(F[k].roles || '')};
 const capFilms = n => CAP_MATCH[n] ? ORDER.filter(k=>F[k] && CAP_MATCH[n](k)) : [];
 document.getElementById('caps').innerHTML = CAPS.map(([n,l])=>{ const fs = capFilms(n);
-  return `<div><h3>${n}</h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${fs.length ? `<div class="cap-f"><span class="lab">Seen in</span>${fs.slice(0,3).map(k=>`<button type="button" data-play="${k}">${esc(F[k].title)}</button>`).join('')}${fs.length > 3 ? `<span class="cap-n">+${fs.length - 3} more</span>` : ''}</div>` : ''}</div>`; }).join('');
+  return `<div><h3>${n}</h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`; }).join('');
 const CLIENT_FILM = {"Dubai Future Foundation":"ten", "Museum of the Future":"astro", "EXPO Dubai":"p17", "Dubai Sports Council":"sport",
   "World Government Summit":"p21", "Valamar":"p33", "SHARE Foundation":"p29", "Civil Rights Defenders":"p14",
   "Birds of Prey Protection Foundation Serbia":"p25", "Goethe Institute":"p27", "World Drone Prix":"p30", "Firefly Production":"p26"};
