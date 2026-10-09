@@ -701,8 +701,9 @@ footer{font-size:calc(12*var(--fz))}
 .net-view button[aria-pressed="true"]{color:var(--fg);text-decoration-color:currentColor;cursor:default}
 .net-names{list-style:none;margin:clamp(56px,6vw,96px) 0 clamp(24px,3vw,48px);padding:0 0 0 calc((100% + var(--g)) / 12 * 4);font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.04}
 .net-names button{font:inherit;letter-spacing:inherit;line-height:inherit;color:var(--fg);opacity:var(--o,1);background:none;border:0;padding:0;cursor:pointer;text-align:left;transition:opacity .25s,color .25s}
-.net-names button:hover,.net-names button:focus-visible{opacity:1}
-.net-names .core button:hover,.net-names button.on{color:var(--red);opacity:1}
+/* one name lit at a time: the highlight follows the profile shown (set by script), never two at once */
+.net-names button:focus-visible{opacity:1}
+.net-names button.on{color:var(--red);opacity:1}
 .net-names button:focus-visible{outline:1px solid var(--red);outline-offset:4px}
 @media (max-width:760px){.net-names{padding-left:0;margin-top:48px}}
 .net-hint{margin:16px 0 0 50%;width:50%;text-align:center;color:#f0463d;line-height:1.5;opacity:.5;white-space:nowrap}
@@ -2328,7 +2329,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     /* the page never scrolls when a profile opens: the panel lines up with the top of the graph, or with the first name of the list
        (photo top on the cap height of the first name), and only slides down to stay on screen when the list has been scrolled past */
     const anc = wrap.hidden ? netNames : wrap;
-    if (innerWidth > 760){ dr.style.minHeight = Math.max(0, Math.min(anc.getBoundingClientRect().height - 96, innerHeight - 260)) + 'px';   /* links sit at the bottom of the field */
+    if (innerWidth > 760){ dr.style.minHeight = Math.max(0, Math.min(netNames.children.length * parseFloat(getComputedStyle(netNames).fontSize) * 1.04 - 96, innerHeight - 260)) + 'px';   /* the same height in both views, measured on the list */   /* links sit at the bottom of the field */
       const ar = anc.getBoundingClientRect(), base = ar.top + (wrap.hidden ? parseFloat(getComputedStyle(netNames).fontSize) * .24 : 48),
         vt = Math.min(Math.max(base, 140), Math.max(base, ar.bottom - dr.offsetHeight));
       dr.style.top = (vt - dr.offsetParent.getBoundingClientRect().top) + 'px'; }
@@ -2350,8 +2351,16 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   /* with a mouse, going through the names shows each profile; leaving the list goes back to the one clicked, or closes */
   let pinned = null;
   if (matchMedia('(hover:hover) and (pointer:fine)').matches){
-    netNames.addEventListener('mouseover', e=>{ const b = e.target.closest('[data-p]'); if (!b || (sel && sel.id === b.dataset.p)) return; openDr(pn.find(n=>n.id === b.dataset.p), true); });
-    netNames.addEventListener('mouseleave', ()=>{ if (pinned){ if (sel !== pinned) openDr(pinned, true); } else if (!dr.hidden) closeDr(); }); }
+    /* a name takes over only once the pointer rests on it for a moment, so passing the gap between two names cannot flicker */
+    let hovT = 0, leaveT = 0;
+    const settle = () => { if (pinned){ if (sel !== pinned) openDr(pinned, true); dr.classList.remove('dr-peek'); } else if (!dr.hidden) closeDr(); };
+    netNames.addEventListener('mouseover', e=>{ const b = e.target.closest('[data-p]'); clearTimeout(hovT); if (!b) return;
+      hovT = setTimeout(()=>{ if (!(sel && sel.id === b.dataset.p)) openDr(pn.find(n=>n.id === b.dataset.p), true); }, 70); });
+    /* moving across to the profile keeps it open (so its links can be used); coming back to the list picks up the names again */
+    netNames.addEventListener('mouseenter', ()=>clearTimeout(leaveT));
+    netNames.addEventListener('mouseleave', ()=>{ clearTimeout(hovT); clearTimeout(leaveT); leaveT = setTimeout(settle, 450); });
+    dr.addEventListener('mouseenter', ()=>{ if (!wrap.hidden) return; clearTimeout(leaveT); });
+    dr.addEventListener('mouseleave', ()=>{ if (!wrap.hidden) return; clearTimeout(leaveT); leaveT = setTimeout(settle, 300); }); }
   try { if (localStorage.getItem('pf-net-view') === 'list') setView('list'); } catch(e){}
   netList.addEventListener('click', e=>{ const b = e.target.closest('[data-p]'); if (!b) return; opener = b; openDr(pn.find(n=>n.id === b.dataset.p)); });
   function closeDr(){ if (opener && dr.contains(document.activeElement)){ opener.focus({preventScroll:true}); } opener = null; pinned = null; dr.hidden = true; sel = null; markNames(); alpha = Math.max(alpha, .6); if (visible) start(); else draw(); }
