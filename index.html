@@ -821,8 +821,11 @@ footer .ft-top:hover{color:var(--red)}
 :root[data-pf="light"] .hitl .media{background:var(--bg)}
 :root[data-pf="light"] .hitl h2{color:#fff}
 /* Human in the loop: larger, a step bolder, in capitals, inverting the photo underneath (white + difference) */
-.hitl .over{mix-blend-mode:difference}   /* the whole overlay blends with the photos; the labels sit on the dark margin, so only the title visibly inverts */
-.hitl h2{font-size:clamp(44px,7vw,calc(120*var(--fz)));font-weight:600;letter-spacing:-.03em;line-height:.92;text-transform:uppercase;color:#fff;text-shadow:none}
+/* the title is drawn twice: an inverting copy underneath, and a white copy on top at 80%, so it reads as white with a fifth of the photo's inverse in it */
+.hitl .over{mix-blend-mode:difference}
+.hitl .over-w{position:absolute;inset:0;z-index:3;mix-blend-mode:normal;opacity:.8;pointer-events:none}
+.hitl .over-w .top{visibility:hidden}
+.hitl h2,.hitl .over-w .h2{display:block;font-size:clamp(36px,5.6vw,calc(96*var(--fz)));font-weight:500;letter-spacing:-.03em;line-height:.92;text-transform:uppercase;color:#fff;text-shadow:none}
 :root[data-pf="light"] ::selection{background:var(--red);color:#fff}
 
 /* ---------- Featured as a stack of full-screen panels ---------- */
@@ -1212,6 +1215,7 @@ footer .ft-top:hover{color:var(--red)}
         <div class="mid-c"><h2>Human in the loop</h2></div>
         <span></span>
       </div>
+      <div class="over over-w" aria-hidden="true"><div class="top"><span class="lab">&nbsp;</span></div><div class="mid-c"><span class="h2">Human in the loop</span></div><span></span></div>
     </div>
   </section>
 
