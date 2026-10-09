@@ -78,17 +78,18 @@ Approved versions to go back to before trying new things. Each one is a git bran
 3. Truth over polish: real titles, clients, years and roles from panoramafilms.tv, in its order, or nothing.
 4. Human judgement leads; tools, including generative media, are methods in service of the film.
 5. Every path ends at an enquiry through the contact form.
+6. Andrija Kovač, Mina Strugar and Marija Kovačina are the core of Panorama Films: their names, roles, bios and photos must be very visible to Google (real HTML text and images, plus structured data), whatever the design of the Collective ends up being. (Andrija, 2026-10-09; SEO work still to do)
 
 ## Site structure (as of v102 / 2026-10-09)
 
 - **Header:** globe logo; nav Work · Studio · Contact, plus search (`/` shortcut). Known issue: header overlap, left for later.
 - **Hero** with showreel loop.
 - **Work** (`#films`): featured films 01–06 in two chapters (parallax off), then the catalogue.
-- **Studio** (`#studio`): the Collective graph (portraits, profile drawer, a round moving web of team and collaborators, keyboard-accessible list), replacing the old team columns. Profile photo is a small circle, grayscale, darkened to ~30%. Collaborators without a portrait use a dark silhouette photo (`media/team/placeholder.webp`, supplied by Andrija); their bios are lorem ipsum placeholders (`BIO_PH` in the code) until real bios arrive; selected collaborators as a mixed logo/name strip with throw physics.
+- **Studio** (`#studio`): the Collective graph (portraits, profile drawer, a round moving web of team and collaborators, keyboard-accessible list), replacing the old team columns. A Graph / List switch (remembered per browser) swaps the web for a names-only list set at statement size: the three of us bright, everyone else quieter the fewer films made together; clicking a name opens the same profile. Profile photo is a small circle, grayscale, darkened to ~30%. Collaborators without a portrait use a dark silhouette photo (`media/team/placeholder.webp`, supplied by Andrija); their bios are lorem ipsum placeholders (`BIO_PH` in the code) until real bios arrive; selected collaborators as a mixed logo/name strip with throw physics.
 - **Approach** (`#approach`): Approach with "Seen in" links to the films that show each point, the Manifesto, and the Human in the loop slideshow.
 - **Contact** (`#contact`): "Let's make a film together.", contact form link, click-to-copy email, Vimeo, Instagram.
 - The page is organised in Films / Studio / Contact folds. Dark by default, with a Dark/Light switch in the footer.
-- Type: fluid above 1440px — one scale unit `--fz` grows small and mid text with the window up to 1.6× (~2300px); the two display sizes (hero lines, section statements: caps of 60px and up) keep their original caps, so big and small text sit closer on large screens. Up to 1440px nothing changes. The Collective graph follows the same rule (frame, portraits, names, profile panel). (dev, 2026-10-09)
+- Type: fluid above 1440px — one scale unit `--fz` grows small text (and sizes under 26px) with the window up to 1.6× (~2300px). Nav, subheadings and titles (`--fzh`, sizes 26px and up) and the two display sizes (hero lines, section statements) keep their original caps, so big and small text sit closer on large screens. Up to 1440px nothing changes. The Collective graph scales with `--fz` (frame, portraits, names, profile panel). (dev, 2026-10-09)
 - **Project pages:** Client, Year, Services; Credits; films in a lightbox; Previous / Next.
 - **Search** covers every project, its films, credits and text. Projects 28–35 are reachable through the archive, search, and Previous / Next.
 
