@@ -1007,7 +1007,9 @@ footer .ft-top:hover{color:var(--red)}
 
 /* profile: Swiss, with the site's own move: the photo and the first line of the name start on the same indent */
 @media (min-width:761px){.net-dr .x{left:auto;right:0}}
-.net-dr.dr-peek .x{visibility:hidden}
+/* in a hover preview the X is hidden; once the mouse crosses over to the profile it fades in, so the preview can be closed by hand */
+.net-dr.dr-peek .x{opacity:0;pointer-events:none;transition:opacity .9s var(--ease)}
+.net-dr.dr-peek.dr-stay .x{opacity:1;pointer-events:auto}
 .dr-ph{width:calc(160*var(--fz));aspect-ratio:4/5;margin:0;background:#000}
 .dr-ph img{filter:grayscale(1) brightness(.3) contrast(1.1)}   /* the photo darkened to about 30%, not see-through */
 /* photo, name and title on the panel's left edge */
@@ -1062,7 +1064,7 @@ footer .ft-top:hover{color:var(--red)}
   <div class="page bar">
     <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films" title="Drag me"><img src="media/logo.png" alt="" width="104" height="101" draggable="false"><span class="logo-pan" aria-hidden="true"><i></i></span></span></div>
     <span></span>
-    <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">Studio</a><a href="#contact" data-nav="contact" class="go">Contact</a><a href="#search" data-search class="sx-ic" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a></nav>
+    <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a><a href="#search" data-search class="sx-ic" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
 </header>
@@ -2325,7 +2327,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       <div class="dr-ln"><button type="button" data-all>Browse all projects with ${esc(first)} →</button>
         ${site === LINK_PH ? `<a class="web" href="#" data-ph title="Link to come">Website ↗</a>` : `<a class="web" href="${esc(site)}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} ↗</a>`}</div>`;
     dr.hidden = false; if (!peek) dr.querySelector('[data-x]').focus({preventScroll:true, focusVisible:false}); alpha = Math.max(alpha, .6); if (!wrap.hidden) start(); markNames();
-    dr.classList.toggle('dr-peek', !!peek);   /* the close X shows only once a name is clicked */
+    dr.classList.toggle('dr-peek', !!peek); dr.classList.remove('dr-stay');   /* the close X shows only once a name is clicked */
     /* the page never scrolls when a profile opens: the panel lines up with the top of the graph, or with the first name of the list
        (photo top on the cap height of the first name), and only slides down to stay on screen when the list has been scrolled past */
     const anc = wrap.hidden ? netNames : wrap;
@@ -2351,15 +2353,17 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   /* with a mouse, going through the names shows each profile; leaving the list goes back to the one clicked, or closes */
   let pinned = null;
   if (matchMedia('(hover:hover) and (pointer:fine)').matches){
-    /* a name takes over only once the pointer rests on it for a moment, so passing the gap between two names cannot flicker */
-    let hovT = 0, leaveT = 0;
+    /* which name is under the pointer is worked out from the rows themselves (top inclusive, bottom exclusive),
+       not from the element the browser reports: the names' see-through greys change paint order, so on the
+       line between two names the browser kept flipping between them even with a still mouse */
+    let leaveT = 0, rows = [];
+    const nameAt = (x, y) => { for (const li of netNames.children){ const r = li.getBoundingClientRect(); if (y >= r.top && y < r.bottom){ const b = li.firstElementChild, br = b.getBoundingClientRect(); return x >= br.left && x <= br.right ? b : null; } } return null; };
     const settle = () => { if (pinned){ if (sel !== pinned) openDr(pinned, true); dr.classList.remove('dr-peek'); } else if (!dr.hidden) closeDr(); };
-    netNames.addEventListener('mouseover', e=>{ const b = e.target.closest('[data-p]'); clearTimeout(hovT); if (!b) return;
-      hovT = setTimeout(()=>{ if (!(sel && sel.id === b.dataset.p)) openDr(pn.find(n=>n.id === b.dataset.p), true); }, 70); });
+    netNames.addEventListener('mousemove', e=>{ const b = nameAt(e.clientX, e.clientY); if (!b || (sel && sel.id === b.dataset.p)) return; openDr(pn.find(n=>n.id === b.dataset.p), true); });
     /* moving across to the profile keeps it open (so its links can be used); coming back to the list picks up the names again */
     netNames.addEventListener('mouseenter', ()=>clearTimeout(leaveT));
-    netNames.addEventListener('mouseleave', ()=>{ clearTimeout(hovT); clearTimeout(leaveT); leaveT = setTimeout(settle, 450); });
-    dr.addEventListener('mouseenter', ()=>{ if (!wrap.hidden) return; clearTimeout(leaveT); });
+    netNames.addEventListener('mouseleave', ()=>{ clearTimeout(leaveT); leaveT = setTimeout(settle, 450); });
+    dr.addEventListener('mouseenter', ()=>{ if (!wrap.hidden) return; clearTimeout(leaveT); dr.classList.add('dr-stay'); });
     dr.addEventListener('mouseleave', ()=>{ if (!wrap.hidden) return; clearTimeout(leaveT); leaveT = setTimeout(settle, 300); }); }
   try { if (localStorage.getItem('pf-net-view') === 'list') setView('list'); } catch(e){}
   netList.addEventListener('click', e=>{ const b = e.target.closest('[data-p]'); if (!b) return; opener = b; openDr(pn.find(n=>n.id === b.dataset.p)); });
