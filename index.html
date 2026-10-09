@@ -695,7 +695,7 @@ footer{font-size:calc(12*var(--fz))}
 .net-tag{position:absolute;left:var(--m);top:0;z-index:1}
 @media (max-width:600px){.net-wrap{--ext:240px;height:min(560px,135vw)}}
 /* Collective, list view: names only, set like the section statements; the three of us bright, everyone else quieter the fewer films we made together */
-.net-view{position:relative;z-index:2;display:flex;justify-content:flex-end;gap:.7em;margin:0 0 -1.1em;font-size:var(--t1);letter-spacing:-.02em;line-height:1.1}
+.net-view{position:relative;z-index:2;display:flex;justify-content:center;gap:.7em;margin:0 0 -1.1em;font-size:var(--t1);letter-spacing:-.02em;line-height:1.1}
 .net-view button{font:inherit;color:var(--mid);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:.25em;text-decoration-thickness:1px;transition:color .2s,text-decoration-color .2s}
 .net-view button:hover{color:var(--fg)}
 .net-view button[aria-pressed="true"]{color:var(--fg);text-decoration-color:currentColor;cursor:default}
@@ -1005,15 +1005,15 @@ footer .ft-top:hover{color:var(--red)}
 
 /* profile: Swiss, with the site's own move: the photo and the first line of the name start on the same indent */
 @media (min-width:761px){.net-dr .x{left:0;right:auto}}
-.dr-ph{width:calc(150*var(--fz));aspect-ratio:1;border-radius:50%;margin:0 0 0 34%;background:#000}
+.dr-ph{width:calc(160*var(--fz));aspect-ratio:4/5;margin:0 0 0 34%;background:#000}
 .dr-ph img{filter:grayscale(1) brightness(.3) contrast(1.1)}   /* the photo darkened to about 30%, not see-through */
-.dr-nm{margin:28px 0 0;text-indent:34%;font-size:clamp(28px,2.5vw,calc(40*var(--fzh)));line-height:1.02}
-.dr-nm .dr-role{display:inline;color:var(--sub)}
-.dr-nm .dr-role::before{content:" "}
+/* name and title share one left edge with the photo */
+.dr-nm{margin:28px 0 0 34%;text-indent:0;font-size:clamp(28px,2.5vw,calc(40*var(--fzh)));line-height:1.02}
+.dr-nm .dr-role{display:block;color:var(--sub)}
 .dr-bio{margin:22px 0 0;max-width:none;font-size:calc(16*var(--fz));line-height:1.55;opacity:.86}
 .dr-bio::first-letter{float:none;font-size:inherit;line-height:inherit;margin:0;color:inherit}
 .dr-ln{margin-top:auto;padding-top:clamp(28px,3vw,44px);border:0;gap:6px}
-@media (max-width:760px){.dr-ph{width:120px;margin-left:0}.dr-nm{text-indent:0;font-size:calc(28*var(--fz))}}
+@media (max-width:760px){.dr-ph{width:120px;margin-left:0}.dr-nm{margin-left:0;font-size:calc(28*var(--fz))}}
 
 /* ---- project page (lightbox) ---- */
 .lb-bar{align-items:center;padding-top:calc(env(safe-area-inset-top,0px) + 18px);padding-bottom:18px}
@@ -2306,7 +2306,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   wrap.addEventListener('pointerleave', ()=>{ if (!drag){ hover = null; if (!running) draw(); } });
   /* the profile drawer */
   const dr = document.getElementById('netDr');
-  function openDr(n){ sel = n; const i = Object.assign({bio: BIO_PH[n.id] || ''}, INFO[n.id] || {}), roles = Object.entries(n.roles).sort((a,b)=>b[1]-a[1]).map(r=>r[0]);
+  function openDr(n, peek){ sel = n; const i = Object.assign({bio: BIO_PH[n.id] || ''}, INFO[n.id] || {}), roles = Object.entries(n.roles).sort((a,b)=>b[1]-a[1]).map(r=>r[0]);
     const role = i.role || roles.slice(0,2).join(' · ') || 'Collaborator';
     const list = n.projects.map(id=>[id, F[id].title, year(id)]).sort((a,b)=>(b[2]||0)-(a[2]||0));
     /* magazine order: portrait, the name set large across its lower edge with the title beneath at the same size, the bio with a drop cap, then their website and every project with them */
@@ -2317,11 +2317,13 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       ${i.bio ? `<p class="dr-bio">${esc(i.bio)}</p>` : ''}
       <div class="dr-ln">${site === LINK_PH ? `<a href="#" data-ph title="Link to come">Website ↗</a>` : `<a href="${esc(site)}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} ↗</a>`}
         <button type="button" data-all>Browse all projects with ${esc(first)} →</button></div>`;
-    dr.hidden = false; dr.querySelector('[data-x]').focus({preventScroll:true, focusVisible:false}); alpha = Math.max(alpha, .6); if (!wrap.hidden) start(); markNames();
+    dr.hidden = false; if (!peek) dr.querySelector('[data-x]').focus({preventScroll:true, focusVisible:false}); alpha = Math.max(alpha, .6); if (!wrap.hidden) start(); markNames();
     /* bring the whole profile into view when it opens partly off screen (desktop; on phones it is a sheet) */
     /* the panel starts where the graph starts, never over the sentence above it */
     const anc = wrap.hidden ? netNames : wrap; dr.style.top = innerWidth > 760 ? (anc.getBoundingClientRect().top - dr.offsetParent.getBoundingClientRect().top + 48) + 'px' : '';
     dr.style.minHeight = innerWidth > 760 ? Math.max(0, Math.min(anc.getBoundingClientRect().height - 96, innerHeight - 260)) + 'px' : '';   /* links sit at the bottom of the field */
+    /* a hover preview in the list stays where the eye is: no scrolling, the panel just keeps on screen beside the names */
+    if (peek && innerWidth > 760){ const ar = anc.getBoundingClientRect(), vt = Math.min(Math.max(ar.top + 48, 140), Math.max(ar.top + 48, ar.bottom - dr.offsetHeight)); dr.style.top = (vt - dr.offsetParent.getBoundingClientRect().top) + 'px'; return; }
     if (innerWidth > 760){ const r = dr.getBoundingClientRect(), top = 200; if (r.top < top || r.top > innerHeight * .4) scrollBy({top: r.top - top, behavior: REDUCED ? 'auto' : 'smooth'}); } }
   let opener = null;
   /* list view: the same people as plain names; the switch is remembered per browser */
@@ -2336,10 +2338,15 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     viewBtns.forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.view === v)));
     try { localStorage.setItem('pf-net-view', v); } catch(e){} };
   viewBtns.forEach(b=>b.addEventListener('click', ()=>{ if (b.getAttribute('aria-pressed') !== 'true') setView(b.dataset.view); }));
-  netNames.addEventListener('click', e=>{ const b = e.target.closest('[data-p]'); if (!b) return; opener = b; openDr(pn.find(n=>n.id === b.dataset.p)); });
+  netNames.addEventListener('click', e=>{ const b = e.target.closest('[data-p]'); if (!b) return; opener = b; pinned = pn.find(n=>n.id === b.dataset.p); openDr(pinned); });
+  /* with a mouse, going through the names shows each profile; leaving the list goes back to the one clicked, or closes */
+  let pinned = null;
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches){
+    netNames.addEventListener('mouseover', e=>{ const b = e.target.closest('[data-p]'); if (!b || (sel && sel.id === b.dataset.p)) return; openDr(pn.find(n=>n.id === b.dataset.p), true); });
+    netNames.addEventListener('mouseleave', ()=>{ if (pinned){ if (sel !== pinned) openDr(pinned, true); } else if (!dr.hidden) closeDr(); }); }
   try { if (localStorage.getItem('pf-net-view') === 'list') setView('list'); } catch(e){}
   netList.addEventListener('click', e=>{ const b = e.target.closest('[data-p]'); if (!b) return; opener = b; openDr(pn.find(n=>n.id === b.dataset.p)); });
-  function closeDr(){ if (opener && dr.contains(document.activeElement)){ opener.focus({preventScroll:true}); } opener = null; dr.hidden = true; sel = null; markNames(); alpha = Math.max(alpha, .6); if (visible) start(); else draw(); }
+  function closeDr(){ if (opener && dr.contains(document.activeElement)){ opener.focus({preventScroll:true}); } opener = null; pinned = null; dr.hidden = true; sel = null; markNames(); alpha = Math.max(alpha, .6); if (visible) start(); else draw(); }
   dr.addEventListener('click', e=>{ if (e.target.closest('[data-ph]')){ e.preventDefault(); return; } const g = e.target.closest('[data-go]'); if (g){ openFilm(g.dataset.go); return; }
     if (e.target.closest('[data-x]')) closeDr();
     if (e.target.closest('[data-all]') && sel){ const q = sel.name.replace(/ (Piki|Cile)\b/,''); closeDr(); openSearch(); sxQ.value = q; runSearch(); } });
