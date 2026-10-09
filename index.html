@@ -1687,7 +1687,10 @@ const hdr = document.getElementById('hdr');
   const step = () => { const sec = (performance.now() - t0) / 1000; heroTc.textContent = fmt(sec); requestAnimationFrame(step); }; step();
   const save = () => { try { sessionStorage.setItem('pf-rec', ((performance.now() - t0) / 1000).toFixed(2)); } catch(e){} };
   addEventListener('pagehide', save); setInterval(save, 5000); })();
-const compact = () => hdr.classList.toggle('compact', scrollY > document.getElementById('hero').offsetHeight * .5);   /* the globe turns into the wordmark half way down the reel, before it reaches the heading */
+/* the globe turns into the wordmark before the heading reaches it: as soon as the first line of the reel's text comes within a gap of the globe's lower edge */
+const heroHd = document.querySelector('.hero .hd'), slotEl = document.getElementById('slot');
+const compact = () => { const gap = 40, logoBottom = hdr.classList.contains('compact') ? (slotEl.getBoundingClientRect().top + slotEl.offsetWidth * 694 / 714) : slotEl.getBoundingClientRect().bottom;
+  hdr.classList.toggle('compact', heroHd ? heroHd.getBoundingClientRect().top < logoBottom + gap : scrollY > 200); };
 addEventListener('scroll', compact, {passive:true}); compact();
 const navov = document.getElementById('navov'), burger = document.getElementById('burger');
 const setNav = open => {
