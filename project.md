@@ -82,7 +82,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 
 ## Site structure (as of v102 / 2026-10-09)
 
-- **Header:** globe logo; nav Work · Studio · Contact, plus search (`/` shortcut). Known issue: header overlap, left for later.
+- **Header:** globe logo with the "Pan" animation (a soft band of light crosses the globe left to right every 14 s; the logo rests at 68% white; off with reduced motion) (dev, 2026-10-09); nav Work · Studio · Contact, plus search (`/` shortcut). Known issue: header overlap, left for later.
 - **Hero** with showreel loop.
 - **Work** (`#films`): featured films 01–06 in two chapters (parallax off), then the catalogue.
 - **Studio** (`#studio`): the Collective graph (portraits, profile drawer, a round moving web of team and collaborators, keyboard-accessible list), replacing the old team columns. A Graph / List switch (remembered per browser) swaps the web for a names-only list set at statement size: the three of us bright, everyone else quieter the fewer films made together; clicking a name opens the same profile. Profile photo is a small circle, grayscale, darkened to ~30%. Collaborators without a portrait use a dark silhouette photo (`media/team/placeholder.webp`, supplied by Andrija); their bios are lorem ipsum placeholders (`BIO_PH` in the code) until real bios arrive; selected collaborators as a mixed logo/name strip with throw physics.
