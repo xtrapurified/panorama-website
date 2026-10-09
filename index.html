@@ -1206,7 +1206,7 @@ footer .ft-top:hover{color:var(--red)}
       <div class="media"><img id="flickImg" src="media/bts/00.webp" alt="Behind the scenes on Panorama Films shoots"></div>
       <div class="over">
         <div class="top"><span class="lab rec live">Field notes</span><span class="lab tc" id="flickNo">01 / 88</span></div>
-        <div class="mid-c"><h2>Human in the loop.</h2></div>
+        <div class="mid-c"><h2>HUMAN IN THE LOOP.</h2></div>
         <span></span>
       </div>
     </div>
@@ -1601,7 +1601,7 @@ function flick(){
 }
 /* start downloading well before the section arrives; run only while it is on screen */
 new IntersectionObserver(([e])=>{ if (e.isIntersecting) preloadAll(); }, {rootMargin:'1500px 0px'}).observe(document.getElementById('hitl'));
-new IntersectionObserver(([e])=>{ clearInterval(fiT); if (e.isIntersecting && !REDUCED) fiT = setInterval(flick, 240); }).observe(document.getElementById('hitl'));
+new IntersectionObserver(([e])=>{ clearInterval(fiT); if (e.isIntersecting && !REDUCED) fiT = setInterval(flick, 360); }).observe(document.getElementById('hitl'));   /* a little slower than the project slideshows */
 
 /* Header */
 const hdr = document.getElementById('hdr');
