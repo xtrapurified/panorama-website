@@ -563,14 +563,14 @@ footer{font-size:calc(12*var(--fz))}
 /* header layout: logo on the left, the links starting a quarter of the page in from the right edge, the reel's Rec in the top right corner */
 .logo-slot{width:clamp(84px,7.7vw,118px)}   /* the globe 30% smaller */
 @media (min-width:761px){
-  .hdr .bar{grid-template-columns:minmax(0,1fr) auto calc(25vw - var(--m)) 0;column-gap:0}
+  .hdr .bar{grid-template-columns:minmax(0,1fr) auto calc(19vw - var(--m)) 0;column-gap:0}
   .hdr .bar > .logo-slot{grid-column:1;grid-row:1}
-  .hdr .bar > .menu{grid-column:2;grid-row:1;justify-self:end}   /* the links end a quarter of the page in from the right edge */
+  .hdr .bar > .menu{grid-column:2;grid-row:1;justify-self:end}   /* the links end about a fifth of the page in from the right edge */
   .hdr .bar > .hdr-rec{grid-column:3;grid-row:1;justify-self:end}
   .hdr .bar > .burger{grid-column:3;grid-row:1}
 }
 .hdr-rec{white-space:nowrap;transition:opacity .3s,visibility .3s}
-.hdr.compact .hdr-rec,body:not(:has(#heroMedia.on)) .hdr-rec{opacity:0;visibility:hidden}   /* only over the running reel */
+/* Rec stays in the corner all the way down: it counts the time this visit has been on the site */
 @media (max-width:760px){.logo-slot{width:64px}.hdr .bar > .hdr-rec{grid-column:3;justify-self:end;margin-right:12px}}
 /* links: no underline; a red one on hover */
 /* links: no underline; a red one on hover (set with the header link colours further down) */
@@ -1632,7 +1632,7 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
 (function tick(){
   live.forEach((c, m)=>{ const t = m.parentElement.querySelector('.hud .tc'); if (t) t.textContent = tc(c.time()); });
   const hc = live.get(heroMedia);
-  if (hc){ const t = hc.time(); heroTc.textContent = tc(t);
+  if (hc){ const t = hc.time();
   }
   requestAnimationFrame(tick);
 })();
@@ -1680,6 +1680,13 @@ const hdr = document.getElementById('hdr');
   const show = k => { i = k; wp.textContent = WORDS[k]; wp.lang = ['ar', 'sr-Cyrl', 'en'][k]; wp.dir = k ? 'ltr' : 'rtl'; };
   wm.addEventListener('pointerenter', ()=>{ if (REDUCED) return; clearInterval(t); show(0); t = setInterval(()=>show((i + 1) % WORDS.length), 260); });
   wm.addEventListener('pointerleave', ()=>{ clearInterval(t); show(2); }); })();
+/* Rec: the time spent on the site in this visit (kept across reloads in the same tab), as hours:minutes:seconds:frames */
+(()=>{ let base = 0; try { base = +sessionStorage.getItem('pf-rec') || 0; } catch(e){}
+  const t0 = performance.now() - base * 1000;
+  const fmt = sec => { const f = Math.floor((sec % 1) * 25), s = Math.floor(sec) % 60, m = Math.floor(sec / 60) % 60, h = Math.floor(sec / 3600); return [h, m, s, f].map(n=>String(n).padStart(2,'0')).join(':'); };
+  const step = () => { const sec = (performance.now() - t0) / 1000; heroTc.textContent = fmt(sec); requestAnimationFrame(step); }; step();
+  const save = () => { try { sessionStorage.setItem('pf-rec', ((performance.now() - t0) / 1000).toFixed(2)); } catch(e){} };
+  addEventListener('pagehide', save); setInterval(save, 5000); })();
 const compact = () => hdr.classList.toggle('compact', scrollY > document.getElementById('hero').offsetHeight * .5);   /* the globe turns into the wordmark half way down the reel, before it reaches the heading */
 addEventListener('scroll', compact, {passive:true}); compact();
 const navov = document.getElementById('navov'), burger = document.getElementById('burger');
