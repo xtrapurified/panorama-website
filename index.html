@@ -1037,6 +1037,8 @@ footer .ft-top:hover{color:var(--red)}
 /* ---- Enhance (v103 trial) ---- */
 /* layout: Field notes holds less empty black around the photo; Approach sits on the same line as its statement, like every other section */
 .hitl{min-height:max(82svh,560px)}
+/* phones: the slideshow block hugs its photos, and Golden hour follows close below */
+@media (max-width:760px){.hitl{min-height:min(108vw,520px)}#golden.sec{padding-top:8px}#golden .more{margin-top:0}#golden .more summary{padding-block:10px}}
 .hitl .media{background:var(--bg)}   /* no black block against the page: the photos sit straight on the page */
 @media (min-width:761px){#approach .fold-lede{margin-top:calc(var(--t1) * .3)}}   /* the Approach label sits one line above its statement */
 /* the "Seen in" lists start on one line across the Approach columns */
@@ -2309,14 +2311,14 @@ document.addEventListener('keydown', e=>{
 (()=>{
   const mq = document.querySelector('#clients .marq'); if (!mq) return;
   const SPEED = 22;   /* pixels per second */
-  let hold = 0, hover = false, last = performance.now(), pos = 0, auto = false, vel = SPEED, samples = [];
+  let hold = 0, hover = false, last = performance.now(), pos = 0, auto = false, vel = SPEED, samples = [], touching = false;
   const mod = v => { const h = half(); return ((v % h) + h) % h; };
   const half = () => mq.scrollWidth / 2;
   const wrap = () => { const h = half(); if (mq.scrollLeft >= h) mq.scrollLeft -= h; else if (mq.scrollLeft <= 0) mq.scrollLeft += h; };
   mq.scrollLeft = 1; pos = 1;
   function tick(t){
     const dt = Math.min(.1, (t - last) / 1000); last = t;
-    if (!REDUCED && t > hold && !mq.classList.contains('drag')){
+    if (!REDUCED && t > hold && !touching && !mq.classList.contains('drag')){
       /* after a throw the strip keeps its speed and eases back to the slow drift, like a spun wheel slowing down */
       vel += (SPEED - vel) * (1 - Math.exp(-dt * 1.4));
       pos = mod(pos + vel * dt); auto = true; mq.scrollLeft = pos;   /* keep the fraction ourselves: scrollLeft rounds to whole pixels */
@@ -2324,7 +2326,11 @@ document.addEventListener('keydown', e=>{
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
-  mq.addEventListener('scroll', ()=>{ if (auto){ auto = false; return; } if (Math.abs(mq.scrollLeft - pos) < 2) return; hold = performance.now() + 2500; wrap(); pos = mq.scrollLeft; vel = 0; }, {passive:true});
+  /* touch: while a finger is on the strip (and while its momentum runs out) the drift stops and the strip scrolls natively */
+  mq.addEventListener('touchstart', ()=>{ touching = true; auto = false; vel = 0; pos = mq.scrollLeft; }, {passive:true});
+  const untouch = () => { touching = false; hold = performance.now() + 2500; pos = mq.scrollLeft; };
+  mq.addEventListener('touchend', untouch, {passive:true}); mq.addEventListener('touchcancel', untouch, {passive:true});
+  mq.addEventListener('scroll', ()=>{ if (touching){ wrap(); pos = mq.scrollLeft; return; } if (auto){ auto = false; return; } if (Math.abs(mq.scrollLeft - pos) < 2) return; hold = performance.now() + 2500; wrap(); pos = mq.scrollLeft; vel = 0; }, {passive:true});
   mq.addEventListener('pointerenter', e=>{ if (e.pointerType === 'mouse') hover = true; });
   mq.addEventListener('pointerleave', ()=>{ hover = false; });
   /* a vertical wheel over the strip still scrolls the page; a horizontal swipe scrolls the strip */
