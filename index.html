@@ -1059,7 +1059,7 @@ footer .ft-top:hover{color:var(--red)}
 @media (max-width:760px){.lb-side{display:none}}
 /* the line under the player repeated the title, client and services already on the page: gone */
 .lb-now,#lb-note{display:none}
-.lb-foot{justify-content:flex-end}
+.lb-foot{display:none}   /* no Open on Vimeo / YouTube link on project pages */
 /* catalogue cards: title, client and year at one size, the title white, the rest grey */
 .card .meta{row-gap:2px}
 .card .meta h3,.card .meta .cl,.card .meta .yr{font-size:calc(18*var(--fz));letter-spacing:-.015em;line-height:1.25}
@@ -1072,7 +1072,7 @@ footer .ft-top:hover{color:var(--red)}
 .ov-in{position:absolute;left:0;right:0;top:0;display:grid;gap:.35em;padding:0 clamp(16px,2.4vw,40px);will-change:transform}
 .ov-t{font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.03;max-width:16ch}
 .ov-l{font-size:var(--t1);letter-spacing:-.02em;line-height:1.1;max-width:30ch}
-.works .cap .cl{grid-column:1/span 9}
+.works .cap .cl{grid-column:1/-1}
 .works .cap .yr{grid-column:10/span 3;text-align:right}
 @media (max-width:760px){.ov-in{padding-right:38%}.ov-t{font-size:calc(22*var(--fz))}.ov-l{display:none}}
 /* the bottom of a project: previous / next, then the invitation and the contact links sitting close above the footer */
@@ -1368,7 +1368,7 @@ function work(k){
   return `<article class="work">${frame(k)}
     <div class="grid cap" data-play="${k}">
       <h3 class="sr-only">${esc(f.title)}</h3>${f.line ? `<p class="sr-only">${esc(f.line)}</p>` : ''}
-      <span class="cl s">${esc(f.client)}</span><span class="yr s mid">${esc(f.year)}</span>
+      <span class="cl s">${esc(f.client)}</span>
     </div></article>`;
 }
 /* Featured, two ways. 'stack': full-screen panels that slide over each other as you scroll, the film moving
@@ -1400,7 +1400,7 @@ document.getElementById('chapters').innerHTML = CHAPTERS.map(([c,t,r,items],ci)=
 /* the catalogue: twelve films, then the rest with one Load more, then the archive with another */
 /* one system for every card: the title, then the client and the year, all at one size; the client line is left out when the title already names it */
 const same = (a, b) => { const n = x => String(x||'').toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,''); const x = n(a), y = n(b); return !!x && !!y && x.includes(y); };   /* the title already names the client */
-document.getElementById('cards').innerHTML = CARDS.concat(INDEX).map((k,i)=>{const f=F[k], cl = same(f.title, f.client) ? '' : f.client;return `<article class="card${i >= CARDS.length ? ' arch' : i >= CARDS_SHOWN ? ' later' : ''}">${frame(k, true)}<div class="meta s" data-play="${k}"><h3>${esc(f.title)}</h3><span class="cl">${esc(cl)}</span><span class="yr mid">${esc(f.year)}</span></div></article>`;}).join('');
+document.getElementById('cards').innerHTML = CARDS.concat(INDEX).map((k,i)=>{const f=F[k], cl = same(f.title, f.client) ? '' : f.client;return `<article class="card${i >= CARDS.length ? ' arch' : i >= CARDS_SHOWN ? ' later' : ''}">${frame(k, true)}<div class="meta s" data-play="${k}"><h3>${esc(f.title)}</h3><span class="cl">${esc(cl)}</span></div></article>`;}).join('');
 const idxEl = document.getElementById('index'); if (idxEl) idxEl.innerHTML = INDEX.map(k=>{const f=F[k];return `<div class="idx" data-play="${k}" role="button" tabindex="0" aria-label="${f.v||f.yt ? 'Play' : 'View'} ${esc(f.title)}"${f.hover?` data-hv="${f.hover}"`:''}><span class="th"><img src="${still(k)}" alt="" loading="lazy">${f.v||f.yt?'<span class="play" aria-hidden="true"></span>':''}</span><span class="t">${esc(f.title)}</span><span class="c s mid">${esc(f.client)}</span><span class="w s mid">${esc(f.year)}</span></div>`;}).join('');
 /* each discipline points to films where Panorama was credited for it (services and credits on the project), never more than three */
 const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interviewer/)), Writing: k => /script|concept/i.test(F[k].roles || ''),
