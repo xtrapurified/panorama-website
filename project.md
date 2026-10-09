@@ -98,11 +98,16 @@ Approved versions to go back to before trying new things. Each one is a git bran
 
 Opens with 12 films (from p07) → "Load more" shows the rest (p07–p27) → "Load more from the archive" adds p28–p35 → "Show fewer".
 
-## Services vs roles (rule, from Andrija)
+## Services, roles and credits (system approved by Andrija, 2026-10-09)
 
-- **Services** = what Panorama Films did for the client on a project (e.g. "Script, creative direction, production"). Shown as "Services" next to Client and Year. Stored in `F[k].roles` in the code (field name kept for compatibility; the label on the page is Services).
-- **Roles** = what each team member did (Creative Director, Producer, Cinematographers, Editing…). Shown under "Credits" on the project page, and they are what the Collective graph reads.
-- Never mix the two: a services line copied into a project's text is hidden from the description automatically.
+Full audit and decisions: the claude.ai doc "Services & Roles — audit and system".
+
+- **Services** = what Panorama Films did for the client. Fixed list, always in this order, sentence case, comma-separated: Concept, Script, Creative direction, Direction, Production, Service production, Cinematography, Aerial cinematography, Editing, Sound production, Animation, Design (plus "Delivery" on Dubai, the City of Sport, still to settle). Old spellings map in: Script writing/Words → Script, Video production → Production, Edit → Editing, Sound design → Sound production. A project's Services line (`F[k].roles`, label "Services") is the union of its films' services. Never a description ("Official event films", "Video partner") or a film type ("Interview").
+- **Roles** = who did what, as titles, in this order: Creative Director, Creative Supervisor, Director, Producer, Executive Producer, Writer, Interviewer, Director of Photography, Cinematographer, Aerial Cinematographer, Camera Assistant, Photographer, Sound, Voice-over, Music, Editor, Assistant Editor, Animation, Production Assistant, Curator, Team (no role). Labels go plural automatically when a row names more than one person.
+- **Credits live in `crdata`** (a JSON block next to `pjdata`), one entry per project: `type` (commission / service / own), an optional `note` (the stamp for service work, e.g. "Service for Orca & Aura Films") or `partner` ("Partner organisation", SHARE), and `blocks`: "Panorama Films" (our crew) and external blocks (`ext: true`, headed by the company, or "External"). This is the only source for credits on project pages, the Collective graph and search; `pjdata` keeps films, text and per-film services.
+- **Service work is someone else's film**: the page carries the stamp at the top, and the external block (their director, producer) comes before ours. Our own projects carry "A Panorama Films project". External crew is shown but never counted in the Collective.
+- **Clients' people stay external**: Hessa Al Eassa (Dubai Future Foundation), Nađa Gluhaček, Hrvoje Šepić, Judita Gamulin, Firefly, Whatif.ae and European Western Balkans crews.
+- Name spellings: Marko Cile Mladenović, Vladimir Miladinović Piki, Nevena Krivokapić-Martinović, Mina Padežanin, Nemanja Mosurović, Emina Muminović, Filip Lukić. Neda Mojsilović is in the Collective.
 
 ## Project media checklist (for the CMS)
 
