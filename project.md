@@ -86,7 +86,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - **Approach** (`#approach`): Approach with "Seen in" links to the films that show each point, the Manifesto, and the Human in the loop slideshow.
 - **Contact** (`#contact`): "Let's make a film together.", contact form link, click-to-copy email, Vimeo, Instagram.
 - The page is organised in Films / Studio / Contact folds. Dark by default, with a Dark/Light switch in the footer.
-- Type: fluid above 1440px — one scale unit `--fz` grows all text with the window up to 1.6× (~2300px); up to 1440px sizes are fixed (dev, 2026-10-09).
+- Type: fluid above 1440px — one scale unit `--fz` grows small and mid text with the window up to 1.6× (~2300px); the two display sizes (hero lines, section statements: caps of 60px and up) keep their original caps, so big and small text sit closer on large screens. Up to 1440px nothing changes. The Collective graph follows the same rule (frame, portraits, names, profile panel). (dev, 2026-10-09)
 - **Project pages:** Client, Year, Services; Credits; films in a lightbox; Previous / Next.
 - **Search** covers every project, its films, credits and text. Projects 28–35 are reachable through the archive, search, and Previous / Next.
 
