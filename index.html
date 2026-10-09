@@ -558,14 +558,14 @@ footer{font-size:calc(12*var(--fz))}
 .wm .wm-f{font-weight:500}   /* Films a step lighter than Panorama */
 .wm sup{font-size:.42em;font-weight:400;line-height:0;vertical-align:.95em;margin-left:.12em}
 .hdr.compact .logo-slot{width:auto;aspect-ratio:auto}
-/* header layout: logo on the left, the links starting at 30% of the page, the reel's Rec in the top right corner */
+/* header layout: logo on the left, the links starting a quarter of the page in from the right edge, the reel's Rec in the top right corner */
 .logo-slot{width:clamp(84px,7.7vw,118px)}   /* the globe 30% smaller */
 @media (min-width:761px){
-  .hdr .bar{grid-template-columns:30% minmax(0,1fr) auto 44px;column-gap:0}
+  .hdr .bar{grid-template-columns:minmax(0,1fr) auto calc(25vw - var(--m)) 0;column-gap:0}
   .hdr .bar > .logo-slot{grid-column:1;grid-row:1}
-  .hdr .bar > .menu{grid-column:2;grid-row:1;justify-self:start}
-  .hdr .bar > .hdr-rec{grid-column:3 / 5;grid-row:1;justify-self:end}
-  .hdr .bar > .burger{grid-column:4;grid-row:1}
+  .hdr .bar > .menu{grid-column:2;grid-row:1;justify-self:end}   /* the links end a quarter of the page in from the right edge */
+  .hdr .bar > .hdr-rec{grid-column:3;grid-row:1;justify-self:end}
+  .hdr .bar > .burger{grid-column:3;grid-row:1}
 }
 .hdr-rec{white-space:nowrap;transition:opacity .3s,visibility .3s}
 .hdr.compact .hdr-rec,body:not(:has(#heroMedia.on)) .hdr-rec{opacity:0;visibility:hidden}   /* only over the running reel */
@@ -1160,7 +1160,7 @@ footer .ft-top:hover{color:var(--red)}
   <div class="page bar">
     <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films" title="Drag me"><img src="media/logo.png" alt="" width="104" height="101" draggable="false"><span class="logo-pan" aria-hidden="true"><i></i></span></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top">Panorama <span class="wm-f">Films</span><sup aria-hidden="true">®</sup></a></div>
     <span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span>
-    <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a><a href="#search" data-search class="sx-ic" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a></nav>
+    <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
 </header>
@@ -1672,7 +1672,7 @@ new IntersectionObserver(([e])=>{ clearInterval(fiT); if (e.isIntersecting && !R
 
 /* Header */
 const hdr = document.getElementById('hdr');
-const compact = () => hdr.classList.toggle('compact', scrollY > document.getElementById('hero').offsetHeight - 120);
+const compact = () => hdr.classList.toggle('compact', scrollY > document.getElementById('hero').offsetHeight * .5);   /* the globe turns into the wordmark half way down the reel, before it reaches the heading */
 addEventListener('scroll', compact, {passive:true}); compact();
 const navov = document.getElementById('navov'), burger = document.getElementById('burger');
 const setNav = open => {
