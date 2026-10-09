@@ -66,7 +66,7 @@ h1,h2,h3,h4{margin:0;font-weight:500}
 .logo.free{position:fixed;z-index:50}
 .logo.dragging{cursor:grabbing}
 /* Pan: the globe rests a little dimmed and a soft band of light travels left to right across its lines every 14 s, like a camera panning across a panorama */
-.logo > img{display:block;width:100%;height:auto;opacity:.68;pointer-events:none}
+.logo > img{display:block;width:100%;height:auto;opacity:.94;pointer-events:none}
 .logo-pan{position:absolute;inset:0;overflow:hidden;pointer-events:none;-webkit-mask:url(media/logo.png) center/100% 100% no-repeat;mask:url(media/logo.png) center/100% 100% no-repeat}
 .logo-pan i{position:absolute;top:0;bottom:0;width:46%;left:-46%;background:linear-gradient(90deg,transparent,rgba(255,255,255,.55) 40%,#fff 50%,rgba(255,255,255,.55) 60%,transparent);animation:logopan 14s cubic-bezier(.45,.05,.55,.95) infinite}
 @keyframes logopan{0%{left:-46%}60%{left:100%}100%{left:100%}}
@@ -558,6 +558,20 @@ footer{font-size:calc(12*var(--fz))}
 .wm .wm-f{font-weight:500}   /* Films a step lighter than Panorama */
 .wm sup{font-size:.42em;font-weight:400;line-height:0;vertical-align:.95em;margin-left:.12em}
 .hdr.compact .logo-slot{width:auto;aspect-ratio:auto}
+/* header layout: logo on the left, the links starting at 30% of the page, the reel's Rec in the top right corner */
+.logo-slot{width:clamp(84px,7.7vw,118px)}   /* the globe 30% smaller */
+@media (min-width:761px){
+  .hdr .bar{grid-template-columns:30% minmax(0,1fr) auto 44px;column-gap:0}
+  .hdr .bar > .logo-slot{grid-column:1;grid-row:1}
+  .hdr .bar > .menu{grid-column:2;grid-row:1;justify-self:start}
+  .hdr .bar > .hdr-rec{grid-column:3 / 5;grid-row:1;justify-self:end}
+  .hdr .bar > .burger{grid-column:4;grid-row:1}
+}
+.hdr-rec{white-space:nowrap;transition:opacity .3s,visibility .3s}
+.hdr.compact .hdr-rec,body:not(:has(#heroMedia.on)) .hdr-rec{opacity:0;visibility:hidden}   /* only over the running reel */
+@media (max-width:760px){.logo-slot{width:64px}.hdr .bar > .hdr-rec{grid-column:3;justify-self:end;margin-right:12px}}
+/* links: no underline; a red one on hover */
+/* links: no underline; a red one on hover (set with the header link colours further down) */
 .hdr.compact .logo-slot .logo{opacity:0;visibility:hidden;pointer-events:none}
 .hdr.compact .wm{display:inline-block;animation:wmIn .4s var(--ease) both}
 @keyframes wmIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
@@ -595,7 +609,7 @@ footer{font-size:calc(12*var(--fz))}
 /* archive folds like the manifesto */
 .archive{margin-top:clamp(80px,8vw,128px)}
 .archive .index{margin-top:40px}
-@media (max-width:760px){.facts{flex-direction:row;flex-wrap:wrap;justify-content:space-between}}
+@media (max-width:760px){.facts{flex-direction:row;flex-wrap:wrap;justify-content:flex-start}}
 
 
 /* Approach folds like the manifesto; it starts open */
@@ -803,7 +817,7 @@ footer .ft-top{white-space:nowrap}
 .hero .over{z-index:auto}
 .hero .hd .sub,.hero .hd h1,.hero .hd .sub2{mix-blend-mode:difference}
 /* over the reel the whole header (logo and links) inverts what is beneath it; once it turns compact it goes back to normal */
-.hdr:not(.compact):not(.navopen){mix-blend-mode:difference}
+.hdr:not(.compact):not(.navopen){mix-blend-mode:normal}   /* was difference; plain white over the darkened reel lets the red hover line and the Rec dot stay red */
 .hdr:not(.compact):not(.navopen)::before{display:none}
 .hero .media::after{background:rgba(0,0,0,.24)}   /* a lighter veil, so the inverted lines have real light and dark to react to */
 .hero .hd > *{margin:0;font:inherit;letter-spacing:inherit;line-height:inherit}
@@ -1023,10 +1037,11 @@ footer .ft-top:hover{color:var(--red)}
 @media (max-width:600px){.sx-r a{grid-template-columns:clamp(84px,26vw,120px) minmax(0,1fr)}}
 
 /* header links: all white (in light mode the compact header keeps dark links so they stay readable on paper) */
-.menu a,.menu a.go,.menu a.on{color:#fff;text-decoration-color:rgba(255,255,255,.4)}
-.menu a:hover,.menu a.go:hover{color:var(--red);text-decoration-color:var(--red)}
+.menu a,.menu a.go,.menu a.on{color:#fff;text-decoration-color:transparent;transition:text-decoration-color .2s}
+.menu a:hover,.menu a.go:hover,.menu a:focus-visible{color:#fff;text-decoration-color:var(--red);text-decoration-thickness:max(1.5px,.07em)}
 .menu .sx-ic{color:#fff}
-:root[data-pf="light"] .hdr.compact .menu a,:root[data-pf="light"] .hdr.compact .menu a.go,:root[data-pf="light"] .hdr.compact .menu a.on{color:var(--fg);text-decoration-color:rgba(18,18,17,.35)}
+:root[data-pf="light"] .hdr.compact .menu a,:root[data-pf="light"] .hdr.compact .menu a.go,:root[data-pf="light"] .hdr.compact .menu a.on{color:var(--fg);text-decoration-color:transparent}
+:root[data-pf="light"] .hdr.compact .menu a:hover{text-decoration-color:var(--red)}
 
 /* mobile menu: a black page of its own, links stacked large, each a full-width tap target */
 @media (max-width:760px){
@@ -1144,7 +1159,7 @@ footer .ft-top:hover{color:var(--red)}
 <header class="hdr" id="hdr">
   <div class="page bar">
     <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films" title="Drag me"><img src="media/logo.png" alt="" width="104" height="101" draggable="false"><span class="logo-pan" aria-hidden="true"><i></i></span></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top">Panorama <span class="wm-f">Films</span><sup aria-hidden="true">®</sup></a></div>
-    <span></span>
+    <span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span>
     <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a><a href="#search" data-search class="sx-ic" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
@@ -1167,7 +1182,6 @@ footer .ft-top:hover{color:var(--red)}
       <div class="grid hl"><div class="hd"><p class="sub">Films about people, ideas and the future.</p><h1>Seeing the bigger picture.</h1><p class="sub2">Panorama Films, creative storytelling studio.</p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
       <div class="grid facts">
         <a class="play-reel" data-play="reel" href="https://vimeo.com/1232743611/7e23d97b0f" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:05</span></a>
-        <span class="lab rec live">Rec <span class="tc" id="heroTc">00:00:00:00</span></span>
       </div>
     </div>
   </section>
