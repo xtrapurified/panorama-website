@@ -319,10 +319,11 @@ footer a:hover{color:var(--red)}
 .pj-facts > .pj-cr{padding-top:clamp(18px,2vw,28px);border-top:1px solid var(--rule);margin-top:4px;color:var(--fg)}
 /* credit blocks: our crew and external crew under their own small headings; the stamp says whose film it is */
 .pj-facts > .pj-cb{padding:18px 0 6px;border-top:0}
-.pj-facts > .pj-cb .lab{color:var(--fg);font-weight:500}
+.pj-facts > .pj-cb .lab{color:var(--red);font-weight:500}   /* For Panorama Films / For Orca & Aura Films */
 .pj-facts > .pj-cr + .pj-cb{padding-top:0}
 .pj-facts > .pj-kind{border-top:0;padding:0 0 14px}
 .stamp{display:inline-block;width:max-content;padding:4px 9px 5px;border:1px solid var(--rule);border-radius:999px;color:var(--fg)}
+.stamp.svc{background:var(--red);border-color:var(--red);color:#000;font-weight:500}   /* service work: a red stamp with black text */
 .pj-text{grid-column:6/span 7;display:grid;gap:1em;max-width:62ch}
 .pj-text p{margin:0;font-size:calc(17*var(--fz));line-height:1.55;color:#cfcfcc}
 .pj-text p:first-child{font-size:clamp(20px,1.8vw,calc(26*var(--fzh)));line-height:1.35;letter-spacing:-.01em;color:var(--fg)}
@@ -347,7 +348,7 @@ footer a:hover{color:var(--red)}
 .lb-bar button:hover{color:var(--red)}
 .lb-stage{display:grid;place-items:center;padding-block:16px;cursor:zoom-out}
 .lb-player{cursor:auto;width:min(100%,calc((100svh - 290px) * 16 / 9));max-width:100%}
-.lb-box{position:relative;overflow:hidden;width:100%;aspect-ratio:16/9;background:var(--field)}
+.lb-box{position:relative;overflow:hidden;width:100%;aspect-ratio:16/9;background:#000}
 .lb-box iframe,.lb-box video,.lb-box img{position:absolute;inset:0;width:100%;height:100%;border:0;object-fit:cover}
 .lb-box iframe{opacity:0;transition:opacity .4s cubic-bezier(.16,1,.3,1)}
 .lb-box.ready iframe{opacity:1}
@@ -710,7 +711,7 @@ footer{font-size:calc(12*var(--fz))}
 .net-tag{position:absolute;left:var(--m);top:0;z-index:1}
 @media (max-width:600px){.net-wrap{--ext:240px;height:min(560px,135vw)}}
 /* Collective, list view: names only, set like the section statements; the three of us bright, everyone else quieter the fewer films we made together */
-.net-view{position:relative;z-index:2;display:flex;justify-content:center;gap:.7em;margin:0 0 -1.1em;font-size:var(--t1);letter-spacing:-.02em;line-height:1.1}
+.net-view{position:relative;z-index:2;display:flex;justify-content:center;gap:.7em;margin:0 0 clamp(16px,2vw,32px);font-size:var(--t1);letter-spacing:-.02em;line-height:1.1}
 .net-view button{font:inherit;color:var(--mid);background:none;border:0;padding:0;cursor:pointer;text-decoration:underline;text-decoration-color:transparent;text-underline-offset:.25em;text-decoration-thickness:1px;transition:color .2s,text-decoration-color .2s}
 .net-view button:hover{color:var(--fg)}
 .net-view button[aria-pressed="true"]{color:var(--fg);text-decoration-color:currentColor;cursor:default}
@@ -947,10 +948,10 @@ footer .ft-top:hover{color:var(--red)}
 /* Collective: the graph takes the whole studio width; the three portraits live in it now, timeline parked */
 .grid.team{display:none}
 .net-tl{display:none}
-.net-wrap{height:clamp(700px,min(76vw,100svh),calc(1080*var(--fz)))}
-.net-dr{height:clamp(700px,min(76vw,100svh),calc(1080*var(--fz)));background:transparent;box-shadow:none;border-left:1px solid var(--rule)}
+.net-wrap{height:clamp(560px,min(61vw,80svh),calc(864*var(--fz)))}   /* the graph at 80% of its earlier size */
+.net-dr{height:clamp(560px,min(61vw,80svh),calc(864*var(--fz)));background:transparent;box-shadow:none;border-left:1px solid var(--rule)}
 @media (min-width:761px){.net-dr{padding-top:0}}
-@media (max-width:600px){.net-wrap{height:min(640px,150vw)}}
+@media (max-width:600px){.net-wrap{height:min(512px,120vw)}}
 @media (max-width:760px){.net-dr{background:var(--bg)}}
 
 /* ---- Enhance (v103 trial) ---- */
@@ -1154,7 +1155,7 @@ footer .ft-top:hover{color:var(--red)}
     <div class="over page">
       <div class="top">
         <span></span>
-        <span class="lab" id="heroNow">Showreel</span>
+        <span class="lab" id="heroNow"></span>
       </div>
       <div class="grid hl"><div class="hd"><p class="sub">Films about people, ideas and the future.</p><h1>Seeing the bigger picture.</h1><p class="sub2">Panorama Films, creative storytelling studio.</p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
       <div class="grid facts">
@@ -1609,7 +1610,7 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
   live.forEach((c, m)=>{ const t = m.parentElement.querySelector('.hud .tc'); if (t) t.textContent = tc(c.time()); });
   const hc = live.get(heroMedia);
   if (hc){ const t = hc.time(); heroTc.textContent = tc(t);
-    heroNow.textContent = 'Showreel'; }
+  }
   requestAnimationFrame(tick);
 })();
 
@@ -1778,7 +1779,7 @@ function playLocal(k, failed){
 
 function playVimeo(k, fm){
   const f = fm || F[k];
-  const src = `https://player.vimeo.com/video/${f.v}?${f.h?`h=${f.h}&`:''}autoplay=1&controls=0&title=0&byline=0&portrait=0&dnt=1&quality=1080p&color=e2231a`;
+  const src = `https://player.vimeo.com/video/${f.v}?${f.h?`h=${f.h}&`:''}autoplay=1&controls=0&title=0&byline=0&portrait=0&dnt=1&transparent=0&quality=1080p&color=e2231a`;
   box.insertAdjacentHTML('beforeend', `<iframe src="${src}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen tabindex="-1" title="${esc(f.title)}"></iframe><button class="lb-hit" type="button" tabindex="-1" aria-hidden="true"></button>`);
   const lp = new Vimeo.Player(box.querySelector('iframe')), off = () => lp.disableTextTrack().catch(()=>{});
   const st = { sound:true, nativeFs:true, paused:true, muted:false, time:0, dur:0,
@@ -1896,7 +1897,7 @@ function renderProject(k, photo){
     const parts = s.split(/[,.]/).map(x=>x.trim()).filter(Boolean); return parts.length > 1 && parts.every(x=>SVC_ITEMS.has(x)); };
   const facts = FACTS[k] || uniq([['Client', f.client], ['Year', f.year], ['Services', f.roles]].filter(x=>x[1]).concat(cr ? [] : (p.credits || []).map(([a,b])=>[a, tidy(b)]), extra));
   /* service work is someone else's film: their crew comes first and the page says so; our own films and partners get a stamp too */
-  const stamp = cr ? (cr.type === 'service' ? cr.note || 'Service work' : cr.type === 'own' ? 'A Panorama Films project' : cr.partner || '') : '';
+  const svcWork = !!cr && cr.type === 'service', stamp = cr ? (cr.type === 'service' ? cr.note || 'Service work' : cr.type === 'own' ? 'A Panorama Films project' : cr.partner || '') : '';
   const blocks = cr && !FACTS[k] ? (cr.type === 'service' ? [...cr.blocks.filter(b=>b.ext), ...cr.blocks.filter(b=>!b.ext)] : cr.blocks).filter(b=>b.rows.length) : [];
   let h = photo ? '' : `<header class="pj-hd"><h2>${esc(f.title)}</h2>${f.line ? `<p>${esc(f.line)}</p>` : ''}</header>`;
   if (films.length > 1){
@@ -1917,9 +1918,9 @@ function renderProject(k, photo){
     h += `<section class="pj-about grid"><dl class="pj-facts">${(()=>{ /* what Panorama did for the client (services) first; who did what (team roles) under Credits */
       const PROJ = /^(client|year|services|format|subject|venue|location|date)$/i, row = ([a,b])=>`<div><dt class="lab mid">${esc(a)}</dt><dd>${esc(b)}</dd></div>`;
       const pr = facts.filter(x=>PROJ.test(x[0])), tm = facts.filter(x=>!PROJ.test(x[0]));
-      const crd = blocks.length ? `<div class="pj-cr"><span class="lab">Credits</span></div>` + blocks.map(b=>`<div class="pj-cb${b.ext ? ' ext' : ''}"><span class="lab mid">${esc(b.h)}</span></div>` + b.rows.map(([a,n])=>row([roleLabel(a, n), n])).join('')).join('')
+      const crd = blocks.length ? `<div class="pj-cr"><span class="lab">Credits</span></div>` + blocks.map(b=>`<div class="pj-cb${b.ext ? ' ext' : ''}"><span class="lab">${esc(/^external$/i.test(b.h) ? b.h : 'For ' + b.h)}</span></div>` + b.rows.map(([a,n])=>row([roleLabel(a, n), n])).join('')).join('')
         : tm.length ? `<div class="pj-cr"><span class="lab">Credits</span></div>` + tm.map(row).join('') : '';
-      return (stamp ? `<div class="pj-kind"><span class="stamp lab">${esc(stamp)}</span></div>` : '') + pr.map(row).join('') + crd; })()}</dl>
+      return (stamp ? `<div class="pj-kind"><span class="stamp lab${svcWork ? ' svc' : ''}">${esc(stamp)}</span></div>` : '') + pr.map(row).join('') + crd; })()}</dl>
       <div class="pj-text">${foldYear(p.intro).filter(t=>!isSvc(t)).filter(t=>!(FACTS[k] && (/^\s*\d{4}\s*$/.test(t) || /^\s*\*/.test(t) || /^Produced by/i.test(t)))).map(t=>`<p>${para(t)}</p>`).join('')}</div></section>`;
   }
   const gtexts = p.groups.filter(g=>foldYear(g.text).length || groupCred.has(g));
@@ -2319,7 +2320,8 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   function seedAll(){ if (W < 10 || H < 10) return false;
     nodes.forEach((n,i)=>{ const a = seed + i * 2.39996 + (Math.random() - .5) * .6, r = (n.person ? .36 : .18) * Math.min(W, FH) * (.85 + Math.random() * .3); n.x = W/2 + Math.cos(a) * r; n.y = H/2 + Math.sin(a) * r; n.vx = n.vy = 0; });
     if (typeof settle === 'function') settle(); return true; }
-  const R_ = n => (n.person ? (n.core ? 32 : Math.min(24, 14 + n.deg * .7)) : 1.8 + n.deg * .5) * (W < 600 ? .62 : S);
+  const GS = .8;   /* portraits, dots and names at 80% of their earlier size; the lines keep their thickness */
+  const R_ = n => (n.person ? (n.core ? 32 : Math.min(24, 14 + n.deg * .7)) : 1.8 + n.deg * .5) * (W < 600 ? .62 : S) * GS;
   /* fixed points: Andrija on top, Marija bottom right, Mina bottom left; everyone else turns inside */
   const CORE = ['andrija','marija','mina'].map(id=>pn.find(n=>n.id === id)); let ANG = -Math.PI / 2 + Math.random() * Math.PI * 2;
   /* the first time the web comes into view it opens gently from the centre */
@@ -2380,7 +2382,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     nodes.filter(n=>!n.person).forEach(n=>{ if (n.vis <= .01) return; const dim = act && !hi.has(n), r = R_(n), on = act && hi.has(n);
       ctx.globalAlpha = (dim ? .18 : 1) * n.vis;
       ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fillStyle = n === hover ? '#e2231a' : on ? (LIGHT() ? '#3a3a37' : '#bdbdba') : (LIGHT() ? '#8f8f8a' : '#6a6a67'); ctx.fill();
-      if (!small || on) label(n, r, small ? 11 : 13 * S, 400, on || n === hover ? (LIGHT() ? '#121211' : '#ededeb') : (LIGHT() ? 'rgba(110,110,105,.9)' : 'rgba(110,110,107,.85)'));
+      if (!small || on) label(n, r, (small ? 11 : 13 * S) * GS, 400, on || n === hover ? (LIGHT() ? '#121211' : '#ededeb') : (LIGHT() ? 'rgba(110,110,105,.9)' : 'rgba(110,110,107,.85)'));
       ctx.globalAlpha = 1; });
     nodes.filter(n=>n.person).forEach(n=>{ if (n.vis <= .01) return; const dim = act && !hi.has(n), r = R_(n);
       ctx.globalAlpha = (dim ? .3 : 1) * n.vis;
@@ -2394,7 +2396,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       if (!n.img){ ctx.font = `500 ${Math.round(r * .78)}px "Helvetica Neue",Helvetica,Arial,sans-serif`; ctx.fillStyle = LIGHT() ? '#3a3a37' : '#bdbdba'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(ini(n), n.x, n.y + .5); }
       /* the three of us in red; everyone else sized by how many projects we made together */
       const others = pn.filter(p=>!p.core), lo = Math.min(...others.map(p=>p.deg)), hi2 = Math.max(...others.map(p=>p.deg)), f = hi2 > lo ? (n.deg - lo) / (hi2 - lo) : 1;
-      const fs = n.core ? (small ? 15 : 22 * S) : Math.round(small ? 10 + f * 4 : (13 + f * 7) * S);
+      const fs = Math.round((n.core ? (small ? 15 : 22 * S) : (small ? 10 + f * 4 : (13 + f * 7) * S)) * GS);
       label(n, r, fs, 500, n.core ? (LIGHT() ? '#d0291f' : '#f0463d') : (LIGHT() ? '#2b2b28' : '#cfcfcc'));
       ctx.globalAlpha = 1; });
   }
