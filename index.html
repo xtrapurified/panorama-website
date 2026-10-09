@@ -690,7 +690,7 @@ footer{font-size:calc(12*var(--fz))}
 /* contact: the links continue the big question, one per line, quieter as they matter less */
 .end .links.big{display:grid;gap:0;margin-top:.04em;font-size:var(--h1);font-weight:400;letter-spacing:-.04em;line-height:1}
 .end .links.big a,.end .links.big .mail{display:block;font:inherit;letter-spacing:inherit;text-align:left;cursor:pointer;width:fit-content;color:var(--fg);opacity:var(--o,1);transition:opacity .2s,color .2s;text-wrap:balance}
-.end .links.big a .ic{width:.32em;height:.32em;margin-left:.12em;vertical-align:.32em}
+.end .links.big a .ic{width:calc(.32em + (var(--fz) - 1px) * 22);height:calc(.32em + (var(--fz) - 1px) * 22);margin-left:.12em;vertical-align:.32em}
 .end .links.big a:hover{opacity:1;color:var(--red)}
 .end .links.big .mail:hover,.end .links.big .mail.done{opacity:1;color:var(--fg)}
 .end .links.big .mail .mail-t{text-decoration:none}
@@ -698,7 +698,7 @@ footer{font-size:calc(12*var(--fz))}
 .end .links.big .mail .mail-t{text-decoration-skip-ink:auto}
 .end .links.big .mail .nw{text-decoration:none}
 .end .links.big .mail:hover .mail-t,.end .links.big .mail.done .mail-t,.end .links.big .mail:focus-visible .mail-t,.end .links.big .mail:hover .u,.end .links.big .mail.done .u,.end .links.big .mail:focus-visible .u{text-decoration-color:var(--red)}
-.end .links.big .bi{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;width:.3em;height:.3em;margin-left:.1em;vertical-align:.32em}
+.end .links.big .bi{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round;width:calc(.3em + (var(--fz) - 1px) * 21);height:calc(.3em + (var(--fz) - 1px) * 21);margin-left:.1em;vertical-align:.32em}
 .end .over{row-gap:0}
 .end .mail .nw{white-space:nowrap}
 .mail-tip{position:fixed;left:0;top:0;z-index:80;pointer-events:none;padding:6px 10px;background:var(--fg);color:var(--bg);font-size:calc(13*var(--fz));letter-spacing:-.005em;line-height:1;white-space:nowrap;opacity:0;transform:translate(14px,14px);transition:opacity .15s}
@@ -713,7 +713,7 @@ footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 footer .ft-y{justify-self:start;white-space:nowrap}
 /* search is the last of the big contact lines, as tall as the letters */
 .end .links.big .big-sx{line-height:1}
-.end .links.big .big-sx svg{display:block;width:.7em;height:.7em;margin:.12em 0 .06em;fill:none;stroke:currentColor;stroke-width:2.9;stroke-linecap:round}   /* stroke matched to the regular weight of the type */
+.end .links.big .big-sx svg{display:block;width:.7em;height:.7em;margin:.12em 0 .06em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}   /* a touch lighter than the regular weight of the type */
 footer .ft-c{justify-self:end;white-space:nowrap}
 footer .ft-top{white-space:nowrap}
 @media (max-width:420px){footer{column-gap:12px}}
@@ -850,7 +850,7 @@ footer .ft-top:hover{color:var(--red)}
 .peers{position:relative}
 .net-tl{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:clamp(14px,2vw,28px);margin:22px 0 0}
 .tl-play{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:var(--small);color:var(--fg);background:none;border:1px solid var(--sub);border-radius:20px;padding:7px 14px 7px 11px;cursor:pointer;transition:border-color .2s,color .2s}
-.tl-play svg{width:11px;height:11px;fill:var(--red)}
+.tl-play svg{width:calc(11*var(--fz));height:calc(11*var(--fz));fill:var(--red)}
 .tl-play:hover{border-color:var(--red)}
 .tl-play.on svg path{d:path("M2.5 1.8h2.4v8.4H2.5zM7.1 1.8h2.4v8.4H7.1z")}
 .tl-track{position:relative}
@@ -1003,9 +1003,9 @@ footer .ft-top:hover{color:var(--red)}
 .lb-player{width:min(100%,calc((100svh - 140px) * 16 / 9));margin:0}
 .lb-ctl{grid-template-columns:auto auto minmax(0,1fr) auto auto;column-gap:clamp(14px,1.6vw,24px);padding-top:6px}
 .lb-ctl button{display:inline-grid;place-items:center;width:44px;height:44px;padding:0;color:var(--fg)}
-.lb-ctl button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+.lb-ctl button svg{width:calc(24*var(--fz));height:calc(24*var(--fz));fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .lb-ctl #c-play{margin-left:-10px;min-width:0}
-.lb-ctl #c-play svg{width:28px;height:28px}
+.lb-ctl #c-play svg{width:calc(28*var(--fz));height:calc(28*var(--fz))}
 .lb-ctl #c-fs{margin-right:-10px}
 .lb-now{padding-top:10px}
 .pj{padding-top:clamp(56px,6vw,96px)}
