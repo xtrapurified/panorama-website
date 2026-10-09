@@ -1424,7 +1424,7 @@ function frame(k, small){
     <div class="media"${f.hover ? ` data-hv="${f.hover}" data-c="${k}"` : f.img ? '' : ` data-k="${k}" data-loop="20"`}><img src="${still(k)}" alt="${esc(f.title)}" loading="lazy"></div>
     ${f.v||f.yt ? '<span class="play" aria-hidden="true"></span>' : ''}
     ${small ? `<span class="hud"><span class="top"><span></span>${more}</span></span>`
-      : `<span class="hud"><span class="top"><span></span><span class="lab rec live">Rec <span class="tc">00:00:00:00</span></span></span></span>
+      : `<span class="hud"></span>
       <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span></span>`}</a>`;
 }
 function work(k){
