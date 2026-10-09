@@ -102,6 +102,7 @@ h1,h2,h3,h4{margin:0;font-weight:500}
 /* the header only catches clicks on its own logo, links and buttons; the empty band and the fade pass clicks through to the page */
 .hdr,.hdr .bar{pointer-events:none}
 .hdr .bar > *,.hdr.navopen .menu{pointer-events:auto}
+.menu .nav-ft{display:none}
 .hdr .bar > span:empty{pointer-events:none}
 .hdr .bar{display:grid;grid-template-columns:auto 1fr auto 44px;align-items:center;column-gap:clamp(20px,2.4vw,36px);padding-block:clamp(14px,2vw,28px)}
 .hdr.navopen .menu a{text-shadow:0 1px 14px rgba(0,0,0,.55)}
@@ -591,6 +592,8 @@ footer{font-size:calc(12*var(--fz))}
 @media (prefers-reduced-motion:reduce){.media > img,.media > video,.media > .stream{transition:none}}
 
 /* one size for all small text, the same as the More films titles; weight and grey tell roles apart */
+/* phones: the big lines (hero, Let's make a film together and its links) a step larger */
+@media (max-width:760px){:root{--h1:clamp(36px,10.6vw,48px)!important;--pjask:clamp(36px,10.6vw,48px)!important}}
 :root{--pjask:clamp(34px,4.8vw,calc(96*var(--fz)));--ui:calc(9.2*var(--fz));--small:calc(15*var(--fz));/* one type scale: display (hero lines and every section statement), title, action, small */--d1:clamp(26px,3.05vw,56px);--h1:clamp(32px,3.7vw,calc(72*var(--fz)));--t1:clamp(19px,1.6vw,26px);--act:clamp(15px,1.15vw,calc(17*var(--fz)));--ease:cubic-bezier(.16,1,.3,1)}
 .s,.hnote,.menu,.menu a,.chapter .t,.facts,.play-reel,.about p,.team p,.caps h3,.caps li,.card h3,.card .meta,.idx .t,.idx .c,.idx .w,
 .cap .cl,.cap .rl,.cap .yr,.cap .ln,.lb-bar .ctl,.watch,.pj-t,.pj-facts dd,.pj-gh h4,.pj-note p,.fields p,.end .links,.lb-ctl,.lb-now #lb-now-n,.all,.pj-cta{font-size:var(--small);line-height:1.35}
@@ -888,7 +891,7 @@ footer .ft-top:hover{color:var(--red)}
 .ft-th span{opacity:.5;transition:opacity .2s,color .2s}
 .ft-th span[aria-current="true"]{opacity:1;color:var(--fg)}
 .ft-th:hover span:not([aria-current="true"]){color:var(--red);opacity:1}
-@media (max-width:600px){footer{grid-template-columns:1fr auto;row-gap:14px}footer .ft-top{grid-column:1/-1;grid-row:1;justify-self:start}.ft-l{grid-column:1/-1;grid-row:2;justify-content:space-between;width:100%}footer .ft-c{grid-column:1/-1;grid-row:3;justify-self:start}}
+@media (max-width:760px){footer{grid-template-columns:1fr auto 1fr;row-gap:0;column-gap:12px;align-items:center}footer .ft-top{grid-column:2;grid-row:1;justify-self:center}.ft-l{grid-column:1;grid-row:1;width:auto}footer .ft-th{display:none}footer .ft-c{grid-column:3;grid-row:1;justify-self:end;text-align:right}}
 :root[data-pf="light"]{--bg:#f1f0ec;--fg:#121211;--mid:#6c6c68;--rule:#d8d7d2;--field:#e4e3de;--tagbg:#dcdbd6;--sub:#a5a49f;color-scheme:light}
 /* over the hero the header stays as on the dark site; once past it, it turns to paper */
 :root[data-pf="light"] .hdr.compact{--hdr-rgb:241,240,236}
@@ -1112,6 +1115,13 @@ footer .ft-top:hover{color:var(--red)}
   .hdr.navopen .menu a.sx-ic::before{content:"Search";order:-1}
   .hdr.navopen .menu a:active{color:var(--red)}
   :root[data-pf="light"] .hdr.navopen .menu a{color:#fff}
+  /* phone menu: links at the size of the big text, then search and Dark / Light at the bottom */
+  .hdr.navopen .menu a{font-size:var(--h1);min-height:calc(var(--h1) * 1.55)}
+  .hdr.navopen .menu .nav-ft{display:flex;align-items:center;justify-content:space-between;padding-top:22px;border-top:1px solid rgba(255,255,255,.18)}
+  .hdr.navopen .menu .nav-ft .nav-sx{min-height:0;border:0;padding:0;font-size:inherit}
+  .hdr.navopen .menu .nav-ft .nav-sx::after{content:none}
+  .hdr.navopen .menu .nav-ft .nav-sx svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round}
+  .hdr.navopen .menu .nav-ft .ft-th{font-size:calc(13*var(--fz));color:#fff}
   :root[data-pf="light"] .hdr.navopen .burger i::before,:root[data-pf="light"] .hdr.navopen .burger i::after{background:#fff}
 }
 
@@ -1136,7 +1146,8 @@ footer .ft-top:hover{color:var(--red)}
 .lb-bar .ctl{gap:clamp(20px,2.4vw,36px);font-size:var(--act)}
 .lb-bar .ctl button{display:inline-flex;align-items:center;gap:.3em;min-height:44px;font-size:inherit;letter-spacing:-.01em}
 .lb-bar .ctl .ic{width:.8em;height:.8em}
-.lb-bar #lb-close{color:var(--fg)}
+.lb-bar #lb-close{color:var(--red)}
+.lb-bar #lb-close:hover{color:var(--fg)}   /* Close is always red */
 .lb-stage{display:block;place-items:initial;padding-block:4px 0;cursor:auto}
 .lb-player{width:min(100%,calc((100svh - 140px) * 16 / 9));margin:0}
 .lb-ctl{grid-template-columns:auto auto minmax(0,1fr) auto auto;column-gap:clamp(14px,1.6vw,24px);padding-top:6px}
@@ -1183,7 +1194,7 @@ footer .ft-top:hover{color:var(--red)}
 .ov-l{font-size:var(--t1);letter-spacing:-.02em;line-height:1.1;max-width:30ch}
 .works .cap .cl{grid-column:1/-1}
 .works .cap .yr{grid-column:10/span 3;text-align:right}
-@media (max-width:760px){.ov-in{padding-right:38%}.ov-t{font-size:calc(22*var(--fz))}.ov-l{display:none}}
+@media (max-width:760px){.works .ov{display:none}.works .cap h3.sr-only{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;grid-column:1/-1;font-size:var(--small);font-weight:400;letter-spacing:-.01em;line-height:1.35;margin:0}.works .cap{row-gap:0}}
 /* the bottom of a project: previous / next, then the invitation and the contact links sitting close above the footer */
 .pj-next button span:last-child .ic{width:.7em;height:.7em;vertical-align:.02em}
 .pj-end{padding-top:clamp(56px,7vw,112px)}
@@ -1216,7 +1227,7 @@ footer .ft-top:hover{color:var(--red)}
   <div class="page bar">
     <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films" title="Drag me"><img src="media/logo.png" alt="" width="104" height="101" draggable="false"><span class="logo-pan" aria-hidden="true"><i></i></span></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a></div>
     <span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span>
-    <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a></nav>
+    <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a><span class="nav-ft"><a href="#search" data-search class="nav-sx" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a><button type="button" class="ft-th" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
 </header>
@@ -2107,14 +2118,31 @@ function openFilm(k){
   else playFilm(Math.max(0, films.findIndex(x=>x.main)), false);
   if (lb.hidden){ lb.hidden = false; lb.classList.remove('opening'); void lb.offsetWidth; lb.classList.add('opening'); document.body.style.overflow = 'hidden'; document.getElementById('lb-close').focus({focusVisible:false}); }
   lb.scrollTop = 0;
-  if (k !== 'reel' && PJ[k]) history.replaceState(null, '', '#' + PJ[k].slug);
+  /* opening a project adds one step to the browser history, so the iPhone's swipe from the left edge (and any back button) closes it */
+  { const url = (k !== 'reel' && PJ[k]) ? '#' + PJ[k].slug : location.pathname + location.search;
+    if (history.state && history.state.pfLb) history.replaceState({pfLb: 1}, '', url); else history.pushState({pfLb: 1}, '', url); }
 }
+addEventListener('popstate', ()=>{ if (!lb.hidden) closeFilm(true); });
+/* a swipe in from the left edge also closes a project (for in-app browsers where the system back gesture does nothing);
+   the page follows the finger and slides away past a third of the screen */
+(()=>{ let x0 = null, y0 = 0, dx = 0, live = false;
+  lb.addEventListener('touchstart', e=>{ const t = e.touches[0]; if (e.touches.length !== 1 || t.clientX > 28) return; x0 = t.clientX; y0 = t.clientY; dx = 0; live = false; }, {passive: true});
+  lb.addEventListener('touchmove', e=>{ if (x0 === null) return; const t = e.touches[0]; dx = t.clientX - x0; const dy = Math.abs(t.clientY - y0);
+    if (!live && dy > Math.abs(dx)){ x0 = null; return; }
+    if (dx > 8){ live = true; lb.style.transition = 'none'; lb.style.transform = `translateX(${dx}px)`; } }, {passive: true});
+  const end = () => { if (x0 === null) return; x0 = null; if (!live) return;
+    lb.style.transition = 'transform .28s cubic-bezier(.16,1,.3,1)';
+    if (dx > innerWidth / 3){ lb.style.transform = `translateX(${innerWidth}px)`; setTimeout(()=>{ closeFilm(); lb.style.transition = lb.style.transform = ''; }, 260); }
+    else { lb.style.transform = ''; setTimeout(()=>{ lb.style.transition = ''; }, 300); } };
+  lb.addEventListener('touchend', end); lb.addEventListener('touchcancel', end); })();
 function stepFilm(d){ const i = ORDER.indexOf(curK); openFilm(ORDER[(i + d + ORDER.length) % ORDER.length]); }
-function closeFilm(){
+function closeFilm(fromHistory){
+  fromHistory = fromHistory === true;   /* (as a click handler it receives the event) */
+  if (!fromHistory && history.state && history.state.pfLb){ history.back(); return; }   /* the popstate below finishes the close */
   stopShow();
   if (document.fullscreenElement) document.exitFullscreen().catch(()=>{});
   teardown(); lb.hidden = true; document.body.style.overflow = ''; back && back.focus(); back = null;
-  if (location.hash) history.replaceState(null, '', location.pathname + location.search);
+  if (!fromHistory && location.hash) history.replaceState(null, '', location.pathname + location.search);
   document.querySelectorAll('.media[data-k], .media[data-c]').forEach(m=>{ const r = m.getBoundingClientRect(); if (r.bottom > 0 && r.top < innerHeight) live.get(m)?.play(); });
 }
 const toggle = () => { if (!P) return; P.paused ? P.play() : P.pause(); };
