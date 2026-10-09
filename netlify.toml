@@ -2,10 +2,10 @@
 # Netlify serves the repo root as-is.
 #
 # Branches:
-#   main -> production (panorama-films.netlify.app). Each deploy costs credits,
+#   main -> production (panoramafilms.netlify.app). Each deploy costs credits,
 #           so merge into main only when a version is approved.
 #   dev  -> working branch. Netlify branch deploys are free and get their own
-#           preview link (dev--panorama-films.netlify.app).
+#           preview link (dev--panoramafilms.netlify.app).
 [build]
   publish = "."
   command = ""
