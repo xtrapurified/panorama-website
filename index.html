@@ -23,6 +23,9 @@
 #golden .gh-code *{font-family:inherit;font-size:inherit;line-height:inherit;letter-spacing:inherit}
 #golden .gh-code .k,#golden .gh-code pre{color:var(--mid)}
 #golden .gh-code .v{color:var(--fg)}
+svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;overflow:visible}
+/* light mode: Golden hour turns to paper too, and the map follows */
+:root[data-pf="light"] #golden .gh-body{--bg:#e8e7e2;--fg:#121211;--mid:#6c6c68;background:var(--bg)}
 #golden canvas{cursor:crosshair}
 #golden .gh-code p,#golden .gh-code pre{margin:0}
 #golden .gh-code pre{font:inherit;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--mid)}
@@ -1118,7 +1121,6 @@ footer .ft-top:hover{color:var(--red)}
   .hdr.navopen .menu a.sx-ic svg{width:.7em;height:.7em;stroke-width:2.4}
   .hdr.navopen .menu a.sx-ic::before{content:"Search";order:-1}
   .hdr.navopen .menu a:active{color:var(--red)}
-  :root[data-pf="light"] .hdr.navopen .menu a{color:#fff}
   /* phone menu: links at the size of the big text, then search and Dark / Light at the bottom */
   .hdr.navopen .menu a{font-size:var(--h1);min-height:calc(var(--h1) * 1.55)}
   .hdr.navopen .menu .nav-ft{display:flex;align-items:center;justify-content:space-between;padding-top:22px;border-top:1px solid rgba(255,255,255,.18)}
@@ -1126,7 +1128,14 @@ footer .ft-top:hover{color:var(--red)}
   .hdr.navopen .menu .nav-ft .nav-sx::after{content:none}
   .hdr.navopen .menu .nav-ft .nav-sx svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:1.6;stroke-linecap:round}
   .hdr.navopen .menu .nav-ft .ft-th{font-size:calc(13*var(--fz));color:#fff}
-  :root[data-pf="light"] .hdr.navopen .burger i::before,:root[data-pf="light"] .hdr.navopen .burger i::after{background:#fff}
+  /* light mode: the phone menu turns to paper with dark type, like the rest of the page */
+  :root[data-pf="light"] .hdr.navopen,:root[data-pf="light"] .hdr.navopen .menu{background:var(--bg)}
+  :root[data-pf="light"] .hdr.navopen .menu a,:root[data-pf="light"] .hdr.navopen .menu a.go,:root[data-pf="light"] .hdr.navopen .menu a.on{color:var(--fg);border-color:rgba(18,18,17,.16);text-decoration-color:transparent}
+  :root[data-pf="light"] .hdr.navopen .menu a:active{color:var(--red)}
+  :root[data-pf="light"] .hdr.navopen .menu .nav-ft{border-top-color:rgba(18,18,17,.16)}
+  :root[data-pf="light"] .hdr.navopen .menu .nav-ft .nav-sx svg{stroke:var(--fg)}
+  :root[data-pf="light"] .hdr.navopen .menu .nav-ft .ft-th{color:var(--fg)}
+  :root[data-pf="light"] .hdr.navopen .burger i::before,:root[data-pf="light"] .hdr.navopen .burger i::after{background:var(--fg)}
 }
 
 /* profile: Swiss, with the site's own move: the photo and the first line of the name start on the same indent */
@@ -2598,7 +2607,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       <h3 class="dr-nm">${esc(n.name)}<span class="dr-role">${esc(role)}</span></h3>
       ${i.bio ? `<p class="dr-bio">${esc(i.bio)}</p>` : ''}
       <div class="dr-ln"><button type="button" data-all>Browse all projects with ${esc(first)} →</button>
-        ${site === LINK_PH ? `<a class="web" href="#" data-ph title="Link to come">Website ↗</a>` : `<a class="web" href="${esc(site)}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} ↗</a>`}</div>`;
+        ${site === LINK_PH ? `<a class="web" href="#" data-ph title="Link to come">Website <svg class="ar" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg></a>` : `<a class="web" href="${esc(site)}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} <svg class="ar" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg></a>`}</div>`;
     dr.hidden = false; if (!peek) dr.querySelector('[data-x]').focus({preventScroll:true, focusVisible:false}); alpha = Math.max(alpha, .6); if (!wrap.hidden) start(); markNames();
     dr.classList.toggle('dr-peek', !!peek); dr.classList.remove('dr-stay');   /* the close X shows only once a name is clicked */
     /* the page never scrolls when a profile opens: the panel lines up with the top of the graph, or with the first name of the list
@@ -2710,7 +2719,9 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
   const canvas = document.getElementById('ghC'); if (!canvas || !window.d3) return;
   const fold = document.getElementById('ghFold');
   const R = Math.PI / 180;
-  const C = { sea: '#0c0c0c', land: '#383837', red: [226, 35, 26], redS: '#e2231a', fg: '#f2f2f0', mid: '#5f5f5d' };
+  const DARK = { sea: '#0c0c0c', land: '#383837', red: [226, 35, 26], redS: '#e2231a', fg: '#f2f2f0', mid: '#5f5f5d', night: .74 };
+  const LIGHT = { sea: '#f4f3ef', land: '#cfcec8', red: [226, 35, 26], redS: '#e2231a', fg: '#121211', mid: '#8d8c87', night: .24 };
+  let C = document.documentElement.dataset.pf === 'light' ? LIGHT : DARK;
   const land = topojson.feature(LAND_TOPO, LAND_TOPO.objects.land), SPHERE = { type: 'Sphere' };
   const lobesFrom = (n0, s) => {
     const mid = (a, b) => (a + b) / 2;
@@ -2765,7 +2776,7 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
         for (const lb of lobes) { const cm = lb[1][0], l = cm + (x - cm) / Math.max(cp, 1e-6); if (l >= lb[0][0] && l <= lb[2][0]) { lam = l; break; } }
         if (lam === null) continue;
         const e = Math.asin(sp * sd + cp * cd * Math.cos(lam * R - ls)) / R;
-        const night = e >= 0 ? 0 : Math.min(1, -e / 8) * .74;
+        const night = e >= 0 ? 0 : Math.min(1, -e / 8) * C.night;
         const glow = Math.max(0, 1 - Math.abs(e - 1) / 5.5) * .66;
         const o = (j * ow + i) * 4;
         if (glow > night) { d[o] = C.red[0]; d[o + 1] = C.red[1]; d[o + 2] = C.red[2]; d[o + 3] = glow * 255; }
@@ -2812,7 +2823,7 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
     const ws = windows(t).slice(0, 2), nx = nextFrom(t); pinNext = nx === 'now' ? '' : nx;
     const el = document.getElementById('ghPin');
     const lines = ws.length
-      ? ws.map(w => `<span class="v">${hm.format(w.a)}–${hm.format(w.b)}</span> <b style="font-weight:400;color:var(--red)">${w.up ? '&nearr;' : '&searr;'}</b>`).join('&nbsp;&nbsp;')
+      ? ws.map(w => `<span class="v">${hm.format(w.a)}–${hm.format(w.b)}</span> <b style="font-weight:400;color:var(--red)">${w.up ? '<svg class="ar" viewBox="0 0 10 10" aria-label="rising"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg>' : '<svg class="ar" viewBox="0 0 10 10" aria-label="setting"><path d="M2 2 8 8M8 3.5V8H3.5"/></svg>'}</b>`).join('&nbsp;&nbsp;')
       : '<span class="v">No golden hour today</span>';
     el.innerHTML = `<span class="k">&gt; pin(${deg4(pin.lat, 'N', 'S')}, ${deg4(pin.lon, 'E', 'W')})</span><br>`
       + (pin.name ? `<span class="k">${pin.name}</span><br>` : '')
@@ -2823,14 +2834,14 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
     const { t, sun, hits } = st;
     document.getElementById('ghClock').innerHTML = `<span class="gh-dot" aria-hidden="true"></span>${fmt.format(t)}`;
     document.getElementById('ghList').innerHTML = hits.length
-      ? hits.map(h => `<b>${h.name}</b>&nbsp;${h.up ? '&nearr;' : '&searr;'}`).join(', ')
+      ? hits.map(h => `<b>${h.name}</b>&nbsp;${h.up ? '<svg class="ar" viewBox="0 0 10 10" aria-label="rising"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg>' : '<svg class="ar" viewBox="0 0 10 10" aria-label="setting"><path d="M2 2 8 8M8 3.5V8H3.5"/></svg>'}`).join(', ')
       : 'Nowhere on our list. Try +1h.';
     const o = document.getElementById('ghOff');
     const am = Math.round(Math.abs(off) * 60), oh = Math.floor(am / 60), om = am % 60;
     o.textContent = (off >= 0 ? '+' : '−') + oh + 'h' + (om ? String(om).padStart(2, '0') : ''); o.setAttribute('aria-valuenow', off.toFixed(2));
     const home = hits.find(h => h.name === 'Belgrade');
     document.getElementById('ghTease').innerHTML = hits.length
-      ? `output = [golden,hour], <b>${(home || hits[0]).name}</b> ${(home || hits[0]).up ? '&nearr;' : '&searr;'} golden hour now${hits.length > 1 ? `, +${hits.length - 1} more` : ''}`
+      ? `output = [golden,hour], <b>${(home || hits[0]).name}</b> ${(home || hits[0]).up ? '<svg class="ar" viewBox="0 0 10 10" aria-label="rising"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg>' : '<svg class="ar" viewBox="0 0 10 10" aria-label="setting"><path d="M2 2 8 8M8 3.5V8H3.5"/></svg>'} golden hour now${hits.length > 1 ? `, +${hits.length - 1} more` : ''}`
       : `output = [golden,hour], ${pinNext ? (pin.name === 'Panorama Films' ? 'Belgrade' : pin.name || 'pin') + ' golden hour in ' + pinNext : 'golden hour'}`;
   }
 
@@ -2868,6 +2879,7 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
   }).observe(canvas);
   new IntersectionObserver(es => { visible = es[0].isIntersecting; if (visible) draw(); }).observe(fold);
   fold.addEventListener('toggle', draw);
+  addEventListener('themechange', () => { C = document.documentElement.dataset.pf === 'light' ? LIGHT : DARK; draw(); });
   setInterval(() => { if (visible) draw(); }, 30000);
 
   let md = null;
