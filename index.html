@@ -1,11 +1,3 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Panorama Films is an independent creative storytelling studio in Belgrade, Serbia. Documentaries, series, campaigns and brand films.">
-<link rel="icon" href="media/logo.png">
 <title>Panorama Films</title>
 <style>
 /* Layout: Swiss 12-column grid on black, film-first. Footage carries colour; type is Helvetica, flush left.
@@ -163,7 +155,7 @@ h1,h2,h3,h4{margin:0;font-weight:500}
 .works{display:grid;gap:clamp(64px,8vw,120px)}
 .cap{margin-top:14px;align-items:center;row-gap:6px}
 .cap .n{grid-column:1/span 1}
-.cap h3{grid-column:2/span 5;font-size:var(--t1);letter-spacing:-.02em;line-height:1.05}
+.cap h3{grid-column:2/span 5;font-size:clamp(22px,2.2vw,32px);letter-spacing:-.02em;line-height:1.05}
 .cap .cl{grid-column:7/span 3}
 .cap .rl{grid-column:10/span 2}
 .cap .yr{grid-column:12/span 1;text-align:right}
@@ -242,7 +234,7 @@ h1,h2,h3,h4{margin:0;font-weight:500}
 @media (max-width:600px){.process > div{grid-column:span 6;padding-bottom:20px}}
 .fields{padding-block:8px 32px;row-gap:36px}
 .fields article{grid-column:span 3;border-top:1px solid var(--rule);padding-top:12px;display:grid;gap:10px;align-content:start}
-.fields h3{font-size:var(--t1);font-weight:700;letter-spacing:-.02em}
+.fields h3{font-size:clamp(22px,2vw,28px);font-weight:700;letter-spacing:-.02em}
 .fields p{color:var(--mid);font-size:15px}
 @media (max-width:900px){.fields article{grid-column:span 6}}
 @media (max-width:540px){.fields article{grid-column:1/-1}}
@@ -260,11 +252,6 @@ h1,h2,h3,h4{margin:0;font-weight:500}
 .caps h3{font-size:16px;margin-bottom:10px;font-weight:700}
 .caps ul{list-style:none;margin:0;padding:0;display:grid;gap:4px}
 .caps li{color:var(--mid);font-size:14px}
-.cap-f{margin-top:16px;display:grid;justify-items:start;gap:2px}
-.cap-f .lab{color:var(--sub);margin-bottom:4px}
-.cap-f button{font:inherit;font-size:var(--small);line-height:1.35;color:var(--fg);background:none;border:0;padding:3px 0;text-align:left;cursor:pointer;text-decoration:underline;text-underline-offset:.22em;text-decoration-color:var(--sub);transition:color .2s,text-decoration-color .2s}
-.cap-f button:hover{color:var(--red);text-decoration-color:var(--red)}
-.cap-n{font-size:13px;color:var(--mid);margin-top:2px}
 @media (max-width:900px){.caps > div{grid-column:span 4}}
 @media (max-width:540px){.caps > div{grid-column:span 6}}
 .hitl{margin-top:clamp(72px,9vw,140px);min-height:max(100svh,620px);border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)}
@@ -392,7 +379,7 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 .rec{gap:7px}.rec::before{width:7px;height:7px}
 .ic{display:inline-block;width:.68em;height:.68em;margin-left:.28em;vertical-align:.02em;flex:none}
 /* section labels: set like the Approach and Manifesto titles, in grey */
-.tag{display:inline-block;font-size:var(--t1);font-weight:400;line-height:1.03;letter-spacing:-.037em;padding:0;border-radius:0;background:none;color:var(--sub);white-space:nowrap}
+.tag{display:inline-block;font-size:clamp(30px,3.8vw,60px);font-weight:400;line-height:1.03;letter-spacing:-.037em;padding:0;border-radius:0;background:none;color:var(--sub);white-space:nowrap}
 /* every section label folds its section away, like Approach and Manifesto */
 .tag.tg{cursor:pointer;display:inline-flex;align-items:center;transition:color .2s;user-select:none}
 .tag.tg:hover,.tag.tg:focus-visible{color:var(--red)}
@@ -404,10 +391,9 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 .is-shut{display:none!important}
 .lede.h-shut .tag{position:static}
 /* Studio: the sentence starts one row under the label */
-#studio > .lede h2,.lede.coll h2{padding-top:1.03em}
-.lede.coll{margin-bottom:clamp(24px,3vw,48px)}
+#studio > .lede h2{padding-top:1.03em}
 #studio > .lede.h-shut h2{padding-top:0}
-@media (max-width:760px){#studio > .lede h2,.lede.coll h2{padding-top:0}}
+@media (max-width:760px){#studio > .lede h2{padding-top:0}}
 .peers.shut .net,.peers.shut .net-hint{display:none}.peers.shut .net-wrap{height:auto;z-index:0}.peers.shut .net-tag{position:static;margin-left:var(--m)}
 
 /* header */
@@ -437,8 +423,8 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 .sec{padding-top:var(--sec)}
 .sec.first{padding-top:clamp(64px,7vw,120px)}
 .lede{position:relative;margin-bottom:clamp(56px,6.4vw,104px)}
-.lede h2{font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.03;text-indent:calc((100% + var(--g)) / 12 * 4);text-wrap:pretty;max-width:none}
-.lede .tag{position:absolute;left:0;top:calc(var(--d1) * .2)}
+.lede h2{font-size:clamp(30px,3.8vw,60px);font-weight:400;letter-spacing:-.037em;line-height:1.03;text-indent:calc((100% + var(--g)) / 12 * 4);text-wrap:pretty;max-width:none}
+.lede .tag{position:absolute;left:0;top:calc(clamp(30px,3.8vw,60px) * .2)}
 .lede h2 .mid{color:var(--sub)}
 @media (max-width:760px){.lede h2{text-indent:0}.lede .tag{position:static;margin-bottom:16px}}
 
@@ -480,9 +466,9 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 .caps h3{font-size:15px;font-weight:500;letter-spacing:-.01em;margin-bottom:8px}
 .more{border:0;margin-top:clamp(80px,8vw,128px)}
 .more summary{border:0;padding-block:0;justify-content:flex-start;gap:.35em}
-.more .mt{font-size:var(--t1);font-weight:400;letter-spacing:-.037em;line-height:1.03;color:var(--sub);transition:color .2s}
+.more .mt{font-size:clamp(30px,3.8vw,60px);font-weight:400;letter-spacing:-.037em;line-height:1.03;color:var(--sub);transition:color .2s}
 .more summary:hover .mt{color:var(--red)}
-.more .pm{font-size:var(--t1);display:inline-flex}
+.more .pm{font-size:clamp(30px,3.8vw,60px);display:inline-flex}
 .more .pm{position:relative;width:.42em;height:.42em;margin-left:.12em;align-self:center;transition:none}
 .more .pm::before,.more .pm::after{content:"";position:absolute;left:0;top:50%;width:100%;height:max(2px,.045em);margin-top:max(-1px,-.0225em);background:var(--red);transition:transform .3s cubic-bezier(.16,1,.3,1)}
 .more .pm::after{transform:rotate(90deg)}
@@ -497,7 +483,7 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 
 /* contact */
 .end{border:0;margin-top:var(--sec)}
-.end .ask{font-size:var(--h1);font-weight:400;letter-spacing:-.04em;line-height:1}
+.end .ask{font-size:clamp(48px,8.4vw,140px);font-weight:400;letter-spacing:-.05em;line-height:.95}
 .end .ask .ic{width:.45em;height:.45em;margin-left:.15em;vertical-align:.1em}
 .end .links{border:0;padding-top:0;font-size:13px}
 footer{font-size:12px}
@@ -529,22 +515,22 @@ footer{font-size:12px}
 @media (prefers-reduced-motion:reduce){.media > img,.media > video,.media > .stream{transition:none}}
 
 /* one size for all small text, the same as the More films titles; weight and grey tell roles apart */
-:root{--small:15px;/* one type scale: display (hero lines and every section statement), title, action, small */--d1:clamp(30px,4vw,66px);--h1:clamp(36px,4.8vw,84px);--t1:clamp(22px,2.2vw,32px);--act:clamp(18px,1.6vw,22px);--ease:cubic-bezier(.16,1,.3,1)}
+:root{--small:15px}
 .lab,.s,.hnote,.menu,.menu a,.chapter .t,.facts,.play-reel,.about p,.team p,.caps h3,.caps li,.card h3,.card .meta,.idx .t,.idx .c,.idx .w,
 .cap .cl,.cap .rl,.cap .yr,.cap .ln,.lb-bar .ctl,.watch,.pj-t,.pj-facts dd,.pj-gh h4,.pj-note p,.fields p,footer,.end .links,.lb-ctl,.lb-now #lb-now-n,.all,.pj-cta{font-size:var(--small);line-height:1.35}
 .card h3,.pj-gh h4{font-weight:500}
-.lede .tag{top:calc((var(--d1) - var(--t1)) * .88)}   /* the small label shares a baseline with the first line of the statement */
+.lede .tag{top:0}
 .idx .k{font-size:var(--small)}
 
 /* hero: the line and the subline share one size; the studio line sits low on the left, play in the right corner */
 .hero .hd .sub{color:rgba(237,237,235,.62)}
-.hero .hd{grid-column:1/-1;font-size:var(--h1);font-weight:400;line-height:1;letter-spacing:-.04em;text-wrap:wrap}
+.hero .hd{grid-column:1/-1;font-size:clamp(34px,4.2vw,74px);line-height:1;letter-spacing:-.04em;text-wrap:wrap}
 .facts{display:flex;justify-content:space-between;align-items:baseline;gap:24px}
 .facts > *{grid-column:auto}
 @media (max-width:760px){.facts{flex-direction:column;gap:10px}.facts > p:first-child{display:block}}
 /* navigation back at the old site's size: Helvetica Neue 26px, white at 60%, underlined */
 .menu{gap:clamp(16px,1.8vw,26px)}
-.menu a{font-size:clamp(22px,2.3vw,34px);color:rgba(255,255,255,.6);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:rgba(255,255,255,.35);line-height:1.2}
+.menu a{font-size:clamp(20px,1.8vw,26px);color:rgba(255,255,255,.6);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:rgba(255,255,255,.35);line-height:1.2}
 .menu a:hover{opacity:1;color:#fff}
 .menu a.on{color:#fff}
 .menu .go,.menu a.go{color:var(--red);text-decoration-color:rgba(226,35,26,.45)}
@@ -572,7 +558,7 @@ footer{font-size:12px}
 
 /* Approach folds like the manifesto; it starts open */
 .more.fold{margin-top:0}
-.fold-lede{margin:0;font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.03;color:var(--fg);text-indent:calc((100% + var(--g)) / 12 * 4);text-wrap:pretty;max-width:none}
+.fold-lede{margin:0;font-size:clamp(30px,3.8vw,60px);font-weight:400;letter-spacing:-.037em;line-height:1.03;color:var(--fg);text-indent:calc((100% + var(--g)) / 12 * 4);text-wrap:pretty;max-width:none}
 @media (max-width:760px){.fold-lede{text-indent:0}}
 .fold .caps{margin-top:clamp(48px,5vw,80px)}
 
@@ -618,7 +604,7 @@ footer{font-size:12px}
 .sx-q::-webkit-search-cancel-button{display:none}
 .sx-n{margin:22px 0 clamp(28px,4vw,56px)}
 .sx-r{list-style:none;margin:0;padding:0;display:grid;gap:2px}
-.sx-r a{display:grid;grid-template-columns:clamp(96px,11vw,168px) minmax(0,1fr) auto;gap:0 var(--g);align-items:center;padding:10px 0;color:var(--fg)}
+.sx-r a{display:grid;grid-template-columns:2.6em clamp(96px,11vw,168px) minmax(0,1fr) auto;gap:0 var(--g);align-items:center;padding:10px 0;color:var(--fg)}
 .sx-r .k{color:var(--mid);font-size:var(--small);font-variant-numeric:tabular-nums}
 .sx-r .th{display:block;aspect-ratio:16/9;overflow:hidden;background:var(--field)}
 .sx-r .th img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter .4s}
@@ -642,7 +628,7 @@ footer{font-size:12px}
 .cards .card.later,.cards .card.arch{display:none}
 .cards.all-on .card.later,.cards.arch-on .card.arch{display:block}
 .reveal{display:flex;justify-content:center;margin-top:clamp(40px,5vw,72px)}
-.reveal button{font-size:var(--act);letter-spacing:-.015em;color:var(--fg);text-decoration:underline;text-underline-offset:.22em;text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.35)}
+.reveal button{font-size:clamp(20px,1.8vw,26px);letter-spacing:-.015em;color:var(--fg);text-decoration:underline;text-underline-offset:.22em;text-decoration-thickness:1px;text-decoration-color:rgba(255,255,255,.35)}
 .reveal button:hover{color:var(--red)}
 .reveal[hidden]{display:none}
 .end .ask a .ic{display:none}
@@ -654,13 +640,12 @@ footer{font-size:12px}
 /* contact: big pause after the label; first line white, second red */
 .end .top{margin-bottom:clamp(120px,18vw,320px)}
 .end .ask a .w,.pj .pj-ask .w{color:var(--fg)}
-.ask-next{margin:clamp(14px,1.6vw,24px) 0 clamp(28px,3vw,48px);max-width:38ch;font-size:clamp(17px,1.4vw,21px);line-height:1.4;color:var(--mid)}
 .end .ask a:hover,.pj .pj-ask:hover > span:last-child{color:var(--red)}
 .end .ask .r,.pj .pj-ask .r{text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:max(2px,.025em);text-underline-offset:.1em;transition:text-decoration-color .2s}
 .end .ask a:hover .r,.end .ask a:focus-visible .r,.pj .pj-ask:hover .r,.pj .pj-ask:focus-visible .r{text-decoration-color:var(--red)}
 /* show more / fewer: same + and − as Approach and Manifesto */
 .reveal{justify-content:center}
-.reveal .tgl{display:inline-flex;align-items:center;gap:.35em;font-size:var(--act);font-weight:400;letter-spacing:-.01em;line-height:1.2;text-decoration:none;color:var(--mid);min-height:44px}
+.reveal .tgl{display:inline-flex;align-items:center;gap:.35em;font-size:clamp(18px,1.6vw,22px);font-weight:400;letter-spacing:-.01em;line-height:1.2;text-decoration:none;color:var(--mid);min-height:44px}
 .reveal .tgl:hover{color:var(--fg)}
 .reveal .pm{position:relative;width:.62em;height:.62em;margin-left:.1em}
 .reveal .pm::before,.reveal .pm::after{content:"";position:absolute;left:0;top:50%;width:100%;height:2px;margin-top:-1px;background:var(--red);transition:transform .3s cubic-bezier(.16,1,.3,1)}
@@ -687,7 +672,7 @@ footer{font-size:12px}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 /* search icon in the menu */
 /* contact: the links continue the big question, one per line, quieter as they matter less */
-.end .links.big{display:grid;gap:0;margin-top:.04em;font-size:var(--h1);font-weight:400;letter-spacing:-.04em;line-height:1}
+.end .links.big{display:grid;gap:0;margin-top:.04em;font-size:clamp(48px,8.4vw,140px);font-weight:400;letter-spacing:-.05em;line-height:.98}
 .end .links.big a,.end .links.big .mail{display:block;font:inherit;letter-spacing:inherit;text-align:left;cursor:pointer;width:fit-content;color:var(--fg);opacity:var(--o,1);transition:opacity .2s,color .2s;text-wrap:balance}
 .end .links.big a .ic{width:.32em;height:.32em;margin-left:.12em;vertical-align:.32em}
 .end .links.big a:hover{opacity:1;color:var(--red)}
@@ -712,7 +697,7 @@ footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 footer .ft-y{justify-self:start;white-space:nowrap}
 /* search is the last of the big contact lines, as tall as the letters */
 .end .links.big .big-sx{line-height:1}
-.end .links.big .big-sx svg{display:block;width:.7em;height:.7em;margin:.12em 0 .06em;fill:none;stroke:currentColor;stroke-width:2.9;stroke-linecap:round}   /* stroke matched to the regular weight of the type */
+.end .links.big .big-sx svg{display:block;width:.7em;height:.7em;margin:.12em 0 .06em;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:round}
 footer .ft-c{justify-self:end;white-space:nowrap}
 footer .ft-top{white-space:nowrap}
 @media (max-width:420px){footer{column-gap:12px}}
@@ -744,14 +729,6 @@ footer .ft-top{white-space:nowrap}
 .geo{cursor:default;outline-offset:4px}
 .geo .gb{display:none}
 .hero .hd .locs{color:var(--red)}
-/* the white and grey lines invert whatever the showreel shows beneath them; the cities stay red.
-   .over must not form its own layer (z-index:auto) or the lines could only blend with themselves */
-.hero .over{z-index:auto}
-.hero .hd .sub,.hero .hd h1,.hero .hd .sub2{mix-blend-mode:difference}
-/* over the reel the whole header (logo and links) inverts what is beneath it; once it turns compact it goes back to normal */
-.hdr:not(.compact):not(.navopen){mix-blend-mode:difference}
-.hdr:not(.compact):not(.navopen)::before{display:none}
-.hero .media::after{background:rgba(0,0,0,.24)}   /* a lighter veil, so the inverted lines have real light and dark to react to */
 .hero .hd > *{margin:0;font:inherit;letter-spacing:inherit;line-height:inherit}
 .geo:hover .ga,.geo:focus-visible .ga,.geo.on .ga{display:none}
 .geo:hover .gb,.geo:focus-visible .gb,.geo.on .gb{display:inline;animation:geoin .4s cubic-bezier(.16,1,.3,1)}
@@ -764,7 +741,7 @@ footer{align-items:center}
 .ft-l{display:inline-flex;align-items:center;gap:clamp(18px,2.4vw,36px);justify-self:start;white-space:nowrap}
 footer .ft-top{justify-self:center}
 .th-i{width:1em;height:1em;margin-right:.35em;vertical-align:-.15em;fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
-footer .ft-top{font-size:var(--act);letter-spacing:-.01em;color:var(--fg)}
+footer .ft-top{font-size:clamp(18px,1.5vw,22px);letter-spacing:-.01em;color:var(--fg)}
 footer .ft-top:hover{color:var(--red)}
 .ft-th{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;display:inline-flex;gap:.9em}
 .ft-th span{opacity:.5;transition:opacity .2s,color .2s}
@@ -844,181 +821,6 @@ footer .ft-top:hover{color:var(--red)}
 /* Featured sits right up against each heading, ending where the heading's indent begins */
 #chapters .lede .tag.sub{left:auto;right:calc(100% - (100% + var(--g)) / 12 * 4 + 1.6em)}
 @media (max-width:760px){#chapters .lede .tag.sub{right:auto}}
-
-/* ---------- Network: portraits, profile drawer, timeline ---------- */
-.peers{position:relative}
-.net-tl{display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:clamp(14px,2vw,28px);margin:22px 0 0}
-.tl-play{display:inline-flex;align-items:center;gap:8px;font:inherit;font-size:var(--small);color:var(--fg);background:none;border:1px solid var(--sub);border-radius:20px;padding:7px 14px 7px 11px;cursor:pointer;transition:border-color .2s,color .2s}
-.tl-play svg{width:11px;height:11px;fill:var(--red)}
-.tl-play:hover{border-color:var(--red)}
-.tl-play.on svg path{d:path("M2.5 1.8h2.4v8.4H2.5zM7.1 1.8h2.4v8.4H7.1z")}
-.tl-track{position:relative}
-#tlR{--p:100%;-webkit-appearance:none;appearance:none;width:100%;height:24px;margin:0;background:transparent;cursor:pointer;display:block}
-#tlR::-webkit-slider-runnable-track{height:2px;background:linear-gradient(var(--red),var(--red)) 0/var(--p) 100% no-repeat,var(--sub)}
-#tlR::-moz-range-track{height:2px;background:linear-gradient(var(--red),var(--red)) 0/var(--p) 100% no-repeat,var(--sub)}
-#tlR::-webkit-slider-thumb{-webkit-appearance:none;width:14px;height:14px;margin-top:-6px;border-radius:50%;background:var(--fg);border:0}
-#tlR::-moz-range-thumb{width:14px;height:14px;border-radius:50%;background:var(--fg);border:0}
-.tl-yrs{position:relative;height:18px;font-size:13px;color:var(--mid);margin-top:4px;font-variant-numeric:tabular-nums}
-.tl-yrs span{position:absolute;top:0;transform:translateX(-50%);white-space:nowrap}
-.tl-yrs span:first-child{transform:none}.tl-yrs span:last-child{transform:translateX(-100%)}
-@media (max-width:760px){.tl-yrs span:not(:first-child):not(:last-child):not(.on){visibility:hidden}}
-.tl-yrs span.on{color:var(--fg)}
-.tl-y{font-size:clamp(28px,2.6vw,40px);letter-spacing:-.03em;font-variant-numeric:tabular-nums;min-width:3ch;text-align:right}
-.net-dr{position:absolute;top:0;right:calc(var(--m) * -1);width:min(420px,92vw);height:clamp(640px,66vw,940px);overflow-y:auto;background:var(--field);border-left:1px solid var(--rule);padding:clamp(90px,8vw,130px) clamp(28px,3vw,44px) clamp(28px,3vw,44px);z-index:3;box-shadow:-30px 0 60px rgba(0,0,0,.45);transform:translateX(0);transition:transform .45s cubic-bezier(.16,1,.3,1),opacity .3s}
-.net-dr[hidden]{display:block;transform:translateX(105%);opacity:0;pointer-events:none;visibility:hidden}
-.net-dr .x{position:absolute;right:clamp(20px,2.4vw,36px);top:0;width:48px;height:48px;padding:0;background:none;border:0;cursor:pointer;z-index:1}
-.net-dr .x::before,.net-dr .x::after{content:"";position:absolute;left:50%;top:50%;width:40px;height:3px;margin:-1.5px 0 0 -20px;background:var(--red);transition:transform .3s var(--ease,cubic-bezier(.16,1,.3,1))}
-.net-dr .x::before{transform:rotate(45deg)}.net-dr .x::after{transform:rotate(-45deg)}
-.net-dr .x:hover::before{transform:rotate(135deg)}.net-dr .x:hover::after{transform:rotate(45deg)}
-.net-dr .x:focus-visible{outline:1px solid var(--red);outline-offset:2px}
-.dr-ph{width:calc(100% - 64px);max-width:300px;aspect-ratio:4/5;background:var(--bg);overflow:hidden;margin:0 0 28px}
-.dr-ph img{width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.1) brightness(.8)}
-.dr-ini{width:84px;height:84px;border-radius:50%;border:1px solid var(--sub);display:grid;place-items:center;font-size:22px;color:var(--mid);margin-bottom:28px}
-.dr-nm{margin:0;font-size:clamp(24px,2vw,30px);font-weight:500;letter-spacing:-.03em;line-height:1.1}
-.dr-nm .dr-role{display:block;color:var(--mid);font-weight:400}
-.dr-bio{margin:20px 0 0;font-size:15px;line-height:1.5;color:var(--fg);opacity:.82;max-width:38ch}
-.dr-ln{margin-top:24px;display:grid;justify-items:start;gap:10px}
-.dr-ln a,.dr-ln button{font:inherit;font-size:15px;line-height:1.35;color:var(--fg);background:none;border:0;padding:0;cursor:pointer;text-align:left;text-decoration:underline;text-underline-offset:.25em;text-decoration-thickness:1px;text-decoration-color:var(--red)}
-.dr-ln a:hover,.dr-ln button:hover{color:var(--red)}
-@media (max-width:760px){.net-dr .x{top:16px}.dr-ph{width:150px}.net-dr{padding-top:28px;position:fixed;top:auto;bottom:0;right:0;left:0;width:auto;height:min(78svh,640px);border-left:0;border-top:1px solid var(--rule);z-index:65}.net-dr[hidden]{transform:translateY(105%)}.net-tl{grid-template-columns:auto 1fr}.tl-y{display:none}}
-.peers.shut .net-tl{display:none}
-/* visually hidden until focused: a keyboard user tabbing in sees the list as a row of names */
-.net-list{position:absolute;left:0;bottom:0;margin:0;padding:0;list-style:none;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
-.net-list:focus-within{position:relative;width:auto;height:auto;clip-path:none;overflow:visible;white-space:normal;display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:18px}
-.net-list button{font:inherit;font-size:var(--small);color:var(--fg);background:none;border:0;padding:6px 0;cursor:pointer;text-decoration:underline;text-underline-offset:.25em;text-decoration-color:var(--sub)}
-.net-list button:focus-visible{outline:2px solid var(--red);outline-offset:3px}
-
-/* Collective: the graph takes the whole studio width; the three portraits live in it now, timeline parked */
-.grid.team{display:none}
-.net-tl{display:none}
-.net-wrap{height:clamp(700px,min(76vw,100svh),1080px)}
-.net-dr{height:clamp(700px,min(76vw,100svh),1080px);background:transparent;box-shadow:none;border-left:1px solid var(--rule)}
-@media (min-width:761px){.net-dr{padding-top:0}}
-@media (max-width:600px){.net-wrap{height:min(640px,150vw)}}
-@media (max-width:760px){.net-dr{background:var(--bg)}}
-
-/* ---- Enhance (v103 trial) ---- */
-/* layout: Field notes holds less empty black around the photo; Approach sits on the same line as its statement, like every other section */
-.hitl{min-height:max(82svh,560px)}
-.hitl .media{background:var(--bg)}   /* no black block against the page: the photos sit straight on the page */
-@media (min-width:761px){#approach > details > summary .mt{padding-top:calc((var(--d1) - var(--t1)) * .88)}#approach .fold-lede{margin-top:calc(((var(--d1) - var(--t1)) * .88 + var(--t1) * 1.03) * -1)}}
-/* the "Seen in" lists start on one line across the Approach columns */
-@supports (grid-template-rows:subgrid){.caps > div{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;align-content:start}.caps .cap-f{align-self:start}}
-/* motion: one ease everywhere; big statements arrive once, top to bottom, as they scroll in */
-.rv{clip-path:inset(0 -2em 100% -2em);transform:translateY(.22em);transition:clip-path 1.2s var(--ease),transform 1.2s var(--ease)}
-.rv.in{clip-path:inset(-.3em -2em -.4em -2em);transform:none}
-@keyframes lbin{from{opacity:0}to{opacity:1}}
-@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
-@keyframes drin{from{opacity:0;transform:translateX(18px)}to{opacity:1;transform:none}}
-@keyframes sheet{from{transform:translateY(100%)}to{transform:none}}
-.lb.opening{animation:lbin .45s var(--ease)}
-.lb.opening .pj,.lb.opening .lb-player{animation:rise .7s var(--ease) both}
-.lb.opening .pj{animation-delay:.08s}
-.unfold{animation:rise .7s var(--ease) both}
-.net-dr:not([hidden]){animation:drin .5s var(--ease)}
-@media (max-width:760px){.net-dr:not([hidden]){animation:sheet .5s var(--ease)}}
-@media (prefers-reduced-motion:reduce){.rv{clip-path:none;transform:none;transition:none}.lb.opening,.lb.opening .pj,.lb.opening .lb-player,.unfold,.net-dr:not([hidden]){animation:none}}
-
-/* no folding; the hero stops short of the screen's bottom so a black strip with "Films ↓" shows there is more below */
-:root{--pb:clamp(64px,9vh,104px)}
-.hero{height:calc(100svh - var(--pb));min-height:500px}
-.peekbar{display:flex;align-items:center;height:var(--pb);margin-inline:calc(var(--m) * -1);padding-inline:var(--m);background:#000;color:inherit;text-decoration:none;position:relative;z-index:1}
-.peekbar .tag{color:var(--sub);transition:color .2s}
-.peekbar:hover .tag,.peekbar:focus-visible .tag{color:#ededeb}
-.peekbar:focus-visible{outline:1px solid var(--red);outline-offset:-4px}
-.tag .arr{color:var(--red);margin-left:.18em;display:inline-block}
-.peekbar .arr{animation:nudge 2.4s var(--ease) infinite}
-@keyframes nudge{0%,60%,100%{transform:none}30%{transform:translateY(.18em)}}
-@media (prefers-reduced-motion:reduce){.peekbar .arr{animation:none}}
-:root[data-pf="light"] .peekbar .tag{color:rgba(237,237,235,.55)}
-
-/* the profile floats on the left beside the graph, set like a magazine page */
-@media (min-width:761px){
-  .net-dr{left:0;right:auto;width:min(400px,30vw);height:auto;max-height:none;overflow:visible;padding:0;border:0;background:transparent;box-shadow:none}
-  .net-dr[hidden]{transform:translateX(-24px)}
-  .net-dr:not([hidden]){animation:drinl .6s var(--ease)}
-  .net-dr .x{right:0;top:0}
-}
-@keyframes drinl{from{opacity:0;transform:translateX(-24px)}to{opacity:1;transform:none}}
-.dr-ph{width:76%;max-width:none;margin:0}
-.dr-ph img{filter:grayscale(1) contrast(1.05)}
-.dr-nm{position:relative;margin:-.5em 0 0;font-size:clamp(34px,3.3vw,52px);font-weight:400;letter-spacing:-.04em;line-height:.98}
-.dr-nm .dr-role{display:block;color:var(--sub);font-weight:400}
-.dr-bio{margin:24px 0 0;font-size:16px;line-height:1.55;opacity:.86;max-width:34ch}
-.dr-bio::first-letter{float:left;font-size:3.3em;line-height:.82;margin:.05em .08em 0 0;color:var(--red);font-weight:400}
-.dr-ln{margin-top:28px}
-@media (max-width:760px){.dr-ph{width:150px}.dr-nm{margin-top:18px;font-size:30px}}
-
-/* no project numbers anywhere: captions start at the left edge, and a film's title and its one-line description share one size */
-.cap h3{grid-column:1/span 6}
-.cap .ln{grid-column:1/span 7;margin-top:0;font-size:var(--t1);line-height:1.05;letter-spacing:-.02em;color:var(--sub)}
-.pair .cap h3,.pair .cap .ln{grid-column:1/-1}
-.pair .cap .cl{grid-column:1/span 8}
-@media (max-width:760px){.cap h3,.cap .ln,.pair .cap h3,.pair .cap .ln{grid-column:1/-1}.cap .cl,.pair .cap .cl{grid-column:1/span 9}}
-.sx-r a{grid-template-columns:clamp(96px,11vw,168px) minmax(0,1fr) auto}
-@media (max-width:600px){.sx-r a{grid-template-columns:clamp(84px,26vw,120px) minmax(0,1fr)}}
-
-/* header links: all white (in light mode the compact header keeps dark links so they stay readable on paper) */
-.menu a,.menu a.go,.menu a.on{color:#fff;text-decoration-color:rgba(255,255,255,.4)}
-.menu a:hover,.menu a.go:hover{color:var(--red);text-decoration-color:var(--red)}
-.menu .sx-ic{color:#fff}
-:root[data-pf="light"] .hdr.compact .menu a,:root[data-pf="light"] .hdr.compact .menu a.go,:root[data-pf="light"] .hdr.compact .menu a.on{color:var(--fg);text-decoration-color:rgba(18,18,17,.35)}
-
-/* mobile menu: a black page of its own, links stacked large, each a full-width tap target */
-@media (max-width:760px){
-  .hdr.navopen{bottom:0;background:#000}
-  .hdr.navopen::before{display:none}
-  .hdr.navopen .menu{position:fixed;inset:0;z-index:-1;display:flex;flex-direction:column;align-items:stretch;justify-content:flex-end;gap:0;padding:140px var(--m) calc(36px + env(safe-area-inset-bottom,0px));background:#000}
-  .hdr.navopen .menu a{display:flex;align-items:center;justify-content:space-between;min-height:76px;border-top:1px solid rgba(255,255,255,.18);font-size:clamp(40px,12vw,56px);font-weight:400;letter-spacing:-.04em;line-height:1;text-decoration:none;text-shadow:none;color:#fff}
-  .hdr.navopen .menu a::after{content:"→";font-size:.6em;color:var(--red)}
-  .hdr.navopen .menu a.sx-ic::after{content:none}
-  .hdr.navopen .menu a.sx-ic{border-bottom:1px solid rgba(255,255,255,.18);width:auto;height:auto;margin:0;align-self:stretch;justify-content:space-between;gap:.3em}
-  .hdr.navopen .menu a.sx-ic svg{width:.7em;height:.7em;stroke-width:2.4}
-  .hdr.navopen .menu a.sx-ic::before{content:"Search";order:-1}
-  .hdr.navopen .menu a:active{color:var(--red)}
-  :root[data-pf="light"] .hdr.navopen .menu a{color:#fff}
-  :root[data-pf="light"] .hdr.navopen .burger i::before,:root[data-pf="light"] .hdr.navopen .burger i::after{background:#fff}
-}
-
-/* profile: Swiss, with the site's own move: the photo and the first line of the name start on the same indent */
-@media (min-width:761px){.net-dr .x{left:0;right:auto}}
-.dr-ph{width:66%;margin:0 0 0 34%}
-.dr-nm{margin:28px 0 0;text-indent:34%;font-size:clamp(28px,2.5vw,40px);line-height:1.02}
-.dr-nm .dr-role{display:inline;color:var(--sub)}
-.dr-nm .dr-role::before{content:" "}
-.dr-bio{margin:22px 0 0;max-width:none;font-size:16px;line-height:1.55;opacity:.86}
-.dr-bio::first-letter{float:none;font-size:inherit;line-height:inherit;margin:0;color:inherit}
-.dr-ln{margin-top:26px;padding-top:14px;border-top:1px solid var(--rule)}
-@media (max-width:760px){.dr-ph{width:150px;margin-left:0}.dr-nm{text-indent:0;font-size:28px}}
-
-/* ---- project page (lightbox) ---- */
-.lb-bar{align-items:center;padding-top:calc(env(safe-area-inset-top,0px) + 18px);padding-bottom:18px}
-.lb-bar .ttl{font-size:var(--small)}
-.lb-bar .ctl{gap:clamp(20px,2.4vw,36px);font-size:var(--act)}
-.lb-bar .ctl button{display:inline-flex;align-items:center;gap:.3em;min-height:44px;font-size:inherit;letter-spacing:-.01em}
-.lb-bar .ctl .ic{width:.8em;height:.8em}
-.lb-bar #lb-close{color:var(--fg)}
-.lb-stage{display:block;place-items:initial;padding-block:4px 0;cursor:auto}
-.lb-player{width:min(100%,calc((100svh - 140px) * 16 / 9));margin:0}
-.lb-ctl{grid-template-columns:auto auto minmax(0,1fr) auto auto;column-gap:clamp(14px,1.6vw,24px);padding-top:6px}
-.lb-ctl button{display:inline-grid;place-items:center;width:44px;height:44px;padding:0;color:var(--fg)}
-.lb-ctl button svg{width:24px;height:24px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
-.lb-ctl #c-play{margin-left:-10px;min-width:0}
-.lb-ctl #c-play svg{width:28px;height:28px}
-.lb-ctl #c-fs{margin-right:-10px}
-.lb-now{padding-top:10px}
-.pj{padding-top:clamp(56px,6vw,96px)}
-.pj-hd h2,.pj-hd p{margin:0;font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.03;text-wrap:pretty}
-.pj-hd p{color:var(--sub)}
-.lb-ft{margin-top:calc(clamp(72px,8vw,120px) * -.55);border-top:1px solid var(--rule);padding-top:18px}
-@media (max-width:600px){
-  .lb-bar{grid-template-columns:auto 1fr;row-gap:6px}
-  .lb-bar .ctl{grid-column:2;justify-self:end;gap:18px;font-size:18px}
-  .lb-bar .ttl{grid-column:1/-1}
-  .lb-player{width:100%}
-  .lb-ctl{grid-template-columns:auto minmax(0,1fr) auto auto;grid-template-areas:"seek seek seek seek" "play tc snd fs"}
-  .lb-ctl #c-play{margin-left:-10px}
-}
 </style>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -1063,7 +865,6 @@ footer .ft-top:hover{color:var(--red)}
   </section>
 
   <div class="page">
-  <a class="peekbar" href="#films" aria-label="Scroll to films"><span class="tag">Films<span class="arr" aria-hidden="true">↓</span></span></a>
   <section class="sec first" id="films" data-sec="films">
     <div id="chapters"></div>
   </section>
@@ -1075,7 +876,7 @@ footer .ft-top:hover{color:var(--red)}
   </section>
 
   <section class="sec" id="studio" data-sec="studio">
-    <div class="lede"><span class="tag">Studio<span class="arr" aria-hidden="true">↓</span></span><h2>Panorama Films is an independent creative storytelling studio working across documentaries, series, campaigns and brand films.</h2></div>
+    <div class="lede" data-fold-h><span class="tag">Studio</span><h2>Panorama Films is an independent creative storytelling studio working across documentaries, series, campaigns and brand films.</h2></div>
     <div class="grid about">
       <p>We explore science, technology, culture and the human stories around them, with commissioned films for global brands, NGOs and institutions alongside our own projects.</p>
       <p>The future, documented.</p>
@@ -1086,12 +887,8 @@ footer .ft-top:hover{color:var(--red)}
       <article><span class="face" data-ini="MK"><img src="media/team/marija.webp" data-alt="" alt="Marija Kovačina" loading="lazy" onerror="this.remove()"></span><span class="lab mid">Editorial Director</span><h3>Marija Kovačina</h3><p>Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.</p></article>
     </div>
     <div class="peers" id="peers">
-      <div class="lede coll"><span class="tag sub">Collective</span><h2>An open circle of cinematographers, editors, sound designers and producers. Each film brings a different part of it together.</h2></div>
-      <div class="net-wrap"><canvas class="net" id="net" aria-hidden="true"></canvas></div>
-      <div class="net-tl" id="netTl"><button type="button" class="tl-play" id="tlPlay" aria-label="Play the network year by year"><svg viewBox="0 0 12 12" aria-hidden="true"><path d="M3 1.8v8.4L10 6z"/></svg><span>Play</span></button>
-        <div class="tl-track"><input type="range" id="tlR" aria-label="Show projects up to year"><div class="tl-yrs" id="tlYrs"></div></div><span class="tl-y" id="tlY"></span></div>
-      <p class="net-hint lab" id="netHint">*Drag the names. Each line is a project made together. <span class="net-act">Click</span> a name to open their profile.</p>
-      <aside class="net-dr" id="netDr" hidden aria-label="Profile"></aside>
+      <div class="net-wrap"><span class="tag net-tag">Network</span><canvas class="net" id="net" aria-hidden="true"></canvas></div>
+      <p class="net-hint lab" id="netHint">*Drag the names. Each line is a project made together. <span class="net-act">Click</span> a name to see its films.</p>
       <ul class="sr-only" id="netList"></ul>
     </div>
     <div class="collab">
@@ -1105,7 +902,7 @@ footer .ft-top:hover{color:var(--red)}
   <section class="sec" id="approach" data-sec="approach">
     <details class="more fold" open>
       <summary><span class="mt">Approach</span><span class="pm" aria-hidden="true"></span></summary>
-      <p class="fold-lede">We stay with a film from the first question to the final frame: the research and the interviews, the script, the shoot and the cut, so nothing gets lost between hands.</p>
+      <p class="fold-lede">From first question to final frame: research, write, shoot, edit.</p>
       <div class="grid caps" id="caps"></div>
     </details>
     <details class="more" open>
@@ -1130,11 +927,12 @@ footer .ft-top:hover{color:var(--red)}
   <section id="contact" data-sec="contact">
     <div class="band end">
       <div class="over">
-        <div class="top"><span class="tag">Contact<span class="arr" aria-hidden="true">↓</span></span><span></span></div>
-        <p class="ask"><a href="https://panoramafilms.tv/contact-form" target="_blank" rel="noopener"><span class="w">Let’s make a film together.</span><br><span class="r">Get in touch.</span></a></p>
+        <div class="top"><span class="tag">Contact</span><span></span></div>
+        <p class="ask"><a href="https://panoramafilms.tv/contact-form" target="_blank" rel="noopener"><span class="w">Let’s make a film.</span><br><span class="r">Get in touch.</span></a></p>
         <div class="links big">
-          <a href="https://www.instagram.com/panoramafilmscollective/" target="_blank" rel="noopener" style="--o:.88">Instagram <svg class="ic bi" aria-hidden="true" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.8"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg></a>
-          <button type="button" class="mail" id="mailBtn" style="--o:.66" aria-describedby="mailNote" aria-label="Copy email address"><span class="mail-t">Email</span> <svg class="ic bi" aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg></button>
+          <button type="button" class="mail" id="mailBtn" style="--o:.88" aria-describedby="mailNote" aria-label="Copy email address"><span class="mail-t">Email</span> <svg class="ic bi" aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg></button>
+          <a href="https://vimeo.com/panoramafilmstv" target="_blank" rel="noopener" style="--o:.66">Vimeo <svg class="ic bi" aria-hidden="true" viewBox="0 0 24 24"><path d="M3 8.6 4 10c1.4-1 2-1.3 2.3-.6.6 1.5 1.9 6.8 2.6 8.3.9 1.7 2.4 2 4 .7 3-2.4 7.6-8 8-11.6.3-3.3-1.9-4.2-3.9-3.9-1.8.3-3.4 2-4 4.3 1.7-1 3-.7 2.6 1.3-.4 2.2-2.4 5.1-3.4 5.1-1 0-1.7-5.4-2.3-7.6C9.2 4.2 8 4 6.4 5 5.2 5.8 3 8.6 3 8.6Z"/></svg></a>
+          <a href="https://www.instagram.com/panoramafilmscollective/" target="_blank" rel="noopener" style="--o:.52">Instagram <svg class="ic bi" aria-hidden="true" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.8"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg></a>
           <a href="#search" data-search class="big-sx" style="--o:.4" aria-label="Search films, clients and people" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a>
         </div>
         <p class="mail-note lab mid" id="mailNote" aria-live="polite"></p>
@@ -1147,18 +945,18 @@ footer .ft-top:hover{color:var(--red)}
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
   <div class="lb-bar">
-    <span class="lab red rec live" id="lb-no">Project</span>
+    <span class="lab red rec live" id="lb-no">Film</span>
     <span class="lab ttl" id="lb-title"></span>
     <span class="ctl lab"><button id="lb-prev" aria-label="Previous project"><svg class="ic" aria-hidden="true"><use href="#i-l"/></svg> Prev</button><button id="lb-next" aria-label="Next project">Next <svg class="ic" aria-hidden="true"><use href="#i-r"/></svg></button><button id="lb-close">Close <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></span>
   </div>
   <div class="lb-stage"><div class="lb-player" id="lb-player">
     <div class="lb-box" id="lb-box"></div>
     <div class="lb-ctl lab" id="lb-ctl" hidden>
-      <button id="c-play" type="button" aria-label="Pause"></button>
+      <button id="c-play" type="button">Pause</button>
       <span id="c-tc" aria-live="off">0:00 / 0:00</span>
       <input class="seek" id="c-seek" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek">
-      <button id="c-snd" type="button" aria-label="Mute"></button>
-      <button id="c-fs" type="button" aria-label="Full screen"></button>
+      <button id="c-snd" type="button">Mute</button>
+      <button id="c-fs" type="button">Full screen</button>
     </div>
   </div></div>
   <div class="lb-now"><span id="lb-now-t"></span><span class="mid" id="lb-now-n"></span></div>
@@ -1178,18 +976,13 @@ footer .ft-top:hover{color:var(--red)}
 <script id="pjdata" type="application/json">{"ask":{"intro":["Ask More is a fast, image-driven meditation on curiosity as the force that moves humanity forward. Built from iconic photographs of resistance, discovery, invention, exploration, culture, and human connection, the film gathers fragments of history into a single pulse. In under a minute, these images become a visual anthem to the questions that shaped the past and the questions that will define what comes next. Created for Dubai Future Forum 2025, “Ask More” positions Dubai as a global stage for uncertainty, imagination, and possibility, and celebrates the courage to ask again, ask deeper, and ask more."],"credits":[],"groups":[{"t":null,"meta":[["Services","Concept. Creative Direction."],["Creative Director","Andrija Kovač"],["Words","Mina Strugar"],["Produced by","Andrija Kovač, Mina Strugar"],["Creative Director","Andrija Kovač"]],"films":[{"yt":"QWbPqxAycbI","t":"2025 DFF ASK MORE TVC FINAL 1920x1080_EN.mp4","th":true}],"text":[]}],"imgs":[],"slug":"Ask-more"},"sport":{"intro":["Uniting The World Through Sports","The World Sports Summit (WSS) is the world’s most exclusive gathering for global sport, bringing together athletes, legends, decision-makers, policymakers, innovators, and investors from every corner of the world.","Born from the belief that sport is more than competition, WSS exists to reconnect a fragmented industry and place humanity back at its core. The summit unites past, present, and future generations to exchange ideas, celebrate resilience, and inspire progress.","Hosted annually in Dubai, WSS stands at the intersection of sport, culture, and transformation, creating dialogue that shapes the future while honoring the legacy that built it."],"credits":[],"groups":[{"t":"Dubai, The City of Sport","meta":[["Services","Creative Direction, Production, Script, Editing, Delivery"],["Year","2025"],["Produced by","Andrija Kovač, Mina Strugar,"],["Creative Director","Andrija Kovač"],["Team","Marija Kovačina, Bojan Palikuća,"]],"films":[{"v":"1219027164","h":"9051dc97a8","t":"2025 - World Sports Summit FINAL 16x9","th":true}],"text":[]}],"imgs":[],"slug":"World-Sports-Summit"},"ten":{"intro":["10!\nThe Dubai Future Foundation (DFF) marks its 10-year milestone in 2026, having been launched in 2016 by Sheikh Mohammed bin Rashid Al Maktoum to institutionalize future-shaping and position Dubai 10 years ahead of other global cities."],"credits":[],"groups":[{"t":"10 Years of Designing Dubai’s Future","meta":[["Services","Creative Direction Production"],["Year","2025"]],"films":[{"v":"1228612747","h":"6c4df67db8","t":"DFF 10 YEARS EN","th":true}],"text":["Director Andrija Kovač","Executive Producer Mina Strugar"]}],"imgs":[],"slug":"10-Years-Of-DFF"},"astro":{"intro":["November 27-28, 2023","Museum of the Future, Dubai\nCrew-6\nOn March 2, 2023, NASA’s SpaceX Crew-6 Astronauts embarked on a mission to the International Space Station.","6 months later they came back to Earth and visited the Museum of the Future to tell their story.\nEP 0 Crew-6 Astronauts\nYear","2023"],"credits":[["Services","Script Writing, Creative Direction, Video Production"]],"groups":[{"t":null,"meta":[["Produced by","Andrija Kovač, Mina Strugar, Nemanja Babić"],["Creative Director","Andrija Kovač"]],"films":[{"yt":"TjI3z8T5fvg","t":"Ep. 00: Astronauts | Docuseries: What Does The Future Hold? - Season 2","th":true}],"text":["Team: Ana Ćurčin, Marija Kovačina, Vladimir Miladinović, Nemanja Stojanović, Marko Mladenović, Zoran Rašić, Bojan Palikuća, Milovan Ilić, Danilo Pantović, Nevena Krivokapić, Neda Mojsilović, Matija Đukanović, Hessa Al Eassa"]}],"imgs":[],"slug":"Astronauts-at-the-Museum-Crew-6"},"orchard":{"intro":["In rural Serbia, Isidor tends to the orchard his family has cultivated for generations. As climate change and water scarcity reshape the land around him, he fights to preserve both a livelihood and a legacy.","Produced in collaboration with Orca & Aura Films","Service Production Panorama Films"],"credits":[],"groups":[{"t":"The Orchard Keeper","meta":[["Services","Service Production, Cinematography"],["Year","2025"]],"films":[{"v":"1222033605","t":"The Orchard Keeper","th":false}],"text":["Director Arwa Merchant","Executive Producer Andrija Kovač","Director of Photography Marko Cile Mladenović","Camera Assistant Nemanja Stojanović","Drone Operator Vladimir Miladinović","Sound Recordist Ognjen Dimitrijević","Production Assistants Laasima Basheer, Tanja Strugar"]}],"imgs":[],"slug":"The-Orchard-Keeper"},"docu":{"intro":["Script Writing, Creative Direction, Video Production\nYear","2024"],"credits":[],"groups":[{"t":null,"meta":[["Creative Director","Andrija Kovač"],["Producer","Mina Strugar"],["Interviewer","Marija Kovačina"],["Cinematographers","Marko Mladenović, Nemanja Stojanović, Vladimir Pavić, Zoran Rašić, Milovan Ilić, Vladimir Miladinović"],["Sound","Bojan Palikuća, Neda Mojsilović"],["Editing","Marija Kovačina, Andrija Kovač, Romana Vujasinović, Nemanja Babić"],["Executive Producers","Hessa Al Eassa, Nevena Krivokapić, Ana Ćurčin, Zoja Kukić"]],"films":[{"yt":"xwtbz61y6Ik","t":"Season 3: What Does the Future Hold?","th":true}],"text":["What Does The Future Hold Season 3\nUnveil the mysteries of tomorrow? Embark on a journey into the future with our docuseries ‘What Does the Future Hold?’ that is set to inspire a new generation of thinkers.","Produced by Panorama Films in collaboration with Dubai Future Foundation","www.dubaifuture.ae/docuseries-what-does-the-future-hold"]}],"imgs":[],"slug":"What-Does-The-Future-Hold-Season-3"},"p07":{"intro":["* A Photographic Exhibition Curated by Andrija Kovač","“Imagine Boka” is a photographic exhibition that transcends the boundaries of reality, blurring the lines between fact and fiction, past and present. Curated by Andrija Kovač, this thought-provoking collection of AI–generated images explores imagined, alternative histories of Boka Kotorska in the 1970s and 1980s — its people, places, customs, and traditions.","Driven by a curiosity for understanding Boka Bay’s cultural heritage, “Imagine Boka” invites viewers to question their perceptions of authenticity, reevaluate the subjective nature of memory, and recognize the fluidity of historical narratives. The exhibition simultaneously elicits the transformative power of artificial intelligence in amplifying our collective imagination and the implications the technology may have in reshaping both our past and our future.","The exhibition is supported by SHARE Foundation, Cultural Heritage Innovation Lab KotorART, and NP Gospa od Škrpjela.","Produced by Andrija Kovač and Đorđe Krivokapić.","2023"],"credits":[],"groups":[],"imgs":[[0,933,1400],[1,1400,933],[2,1400,933],[3,933,1400],[4,933,1400],[5,933,1400],[6,1400,933],[7,1400,933],[8,1400,933],[9,1400,933],[10,1002,1400],[11,1002,1400],[12,1002,1400],[13,1400,933],[14,1400,933],[15,1400,933],[16,1400,933],[17,1400,933],[18,1400,933],[19,1400,933],[20,1400,933],[21,1400,933],[22,1400,933],[23,1400,933]],"slug":"ImagineBoka-ai"},"p08":{"intro":["The inaugural Dubai Future Forum is an annual event hosted by the Dubai Future Foundation convening over 400 of the world’s top futurists to Dubai to anticipate challenges, imagine opportunities, share foresight, and shape the future.","Taking place over two days at the iconic Museum of the Future, the Forum provides an international platform for futurists and thought leaders, from diverse sectors, to build a long-lasting community by engaging on tomorrow’s most pressing issues; cementing Dubai’s position as a rising global hub for futures leadership and action."],"credits":[],"groups":[{"t":null,"meta":[],"films":[],"text":[]},{"t":"Imagine.","meta":[["Services","Creative Direction, Cinematography, Editing"],["Year","2023"],["Produced by","Andrija Kovač, Mina Strugar"],["Creative Director","Andrija Kovač"],["Script","Mina Strugar"],["Editing","Andrija Kovač, Marija Kovačina"]],"films":[],"text":[]}],"imgs":[],"slug":"Miracles-Don-t-Happen"},"p09":{"intro":["At the 71st Pula Film Festival in July 2024, legendary actor Slavko Štimac was honored with the prestigious \"Fabijan Šovagović\" Award for his lifetime contribution to Croatian and regional cinema. Presented by the Society of Croatian Film Directors, the accolade recognized his enduring impact on film history, spanning from his iconic breakout role in Vlak u snijegu (1976) to his decades of celebrated performances.","To accompany his recognition, Panorama Films produced a special, short documentary announcement film honoring his career. Directed by Judita Gamulin, the short piece captured the essence of Štimac’s artistry and was screened at the festival to introduce the legendary actor before he stepped on stage to accept his lifetime achievement award."],"credits":[],"groups":[{"t":"Slavko Štimac","meta":[["Services","Cinematography"],["Year","2024"]],"films":[{"v":"988793491","t":"SLAVKO ŠTIMAC","th":true}],"text":[]}],"imgs":[],"slug":"Pula-Film-Festival"},"p10":{"intro":["November 27-28, 2023","Museum of the Future, Dubai\nDubai Future Forum 2023:\nThe World’s Largest Gathering of Futurists\nThe inaugural Dubai Future Forum is an annual event hosted by the Dubai Future Foundation convening over 400 of the world’s top futurists to Dubai to anticipate challenges, imagine opportunities, share foresight, and shape the future.","Taking place over two days at the iconic Museum of the Future, the Forum provides an international platform for futurists and thought leaders, from diverse sectors, to build a long-lasting community by engaging on tomorrow’s most pressing issues; cementing Dubai’s position as a rising global hub for futures leadership and action."],"credits":[],"groups":[{"t":"Gathering Future Minds 2023","meta":[["Services","Creative Direction, Cinematography, Editing"],["Year","2023"],["Produced by","Andrija Kovač, Mina Strugar, Nemanja Babić"],["Creative Director","Andrija Kovač"]],"films":[{"yt":"UBfYThx_7Dc","t":"Gathering Future Minds - Dubai Future Forum 2023","th":true}],"text":["Team: Marija Kovačina, Vladimir Miladinović, Nemanja Stojanović, Marko Mladenović, Zoran Rašić, Bojan Palikuća, Milovan Ilić, Danilo Pantović, Nevena Krivokapić, Ana Ćurčin, Neda Mojsilović, Matija Đukanović, Hessa Al Eassa"]}],"imgs":[],"slug":"Valamar-Arba-Resort"},"p11":{"intro":["Unveil the mysteries of tomorrow? Embark on a journey into the future with our docuseries ‘What Does the Future Hold?’ that is set to inspire a new generation of thinkers.","Produced by Panorama Films in collaboration with Dubai Future Foundation","www.dubaifuture.ae/docuseries-what-does-the-future-hold","Season 02 Trailer\nYear","2024"],"credits":[["Creative Director","Andrija Kovač"],["Producer","Mina Strugar"],["Interviewer","Nemanja Babić"],["Cinematographers","Marko Mladenović, Nemanja Stojanović, Vladimir Pavić, Zoran Rašić, Milovan Ilić, Vladimir Miladinović"],["Sound","Bojan Palikuća, Neda Mojsilović"],["Editing","Nemanja Babić, Marija Kovačina, Andrija Kovač, Romana Vujasinović"],["Executive Producers","Hessa Al Eassa, Nevena Krivokapić, Ana Ćurčin"],["Services","Script Writing, Creative Direction, Video Production"]],"groups":[{"t":null,"meta":[["Services","Script Writing, Creative Direction, Video Production"],["Services","Script Writing, Creative Direction, Video Production"],["Services","Script Writing, Creative Direction, Video Production"],["Services","Script Writing, Creative Direction, Video Production"]],"films":[{"yt":"LPEJdLKHUhY","t":"Season 2: What Does the Future Hold?","th":true},{"yt":"JJLb5bfoLGI","t":"Ep. 01: The Age of AI | Docuseries: What Does the Future Hold ? - Season 2","th":true},{"yt":"uuaMBkd7QeU","t":"Ep. 02: Augmented Humanity | Docuseries: What Does the Future Hold? - Season 2","th":true},{"yt":"ia8Nz5DFm7E","t":"Ep. 03: Our Changing World | Docuseries: What Does the Future Hold? - Season 2","th":true}],"text":["EP 1 The Age of AI\nYear","2024\nEP 2 Augmented Humanity\nYear","2024\nEP 3 Our Changing World\nYear","2024\nEP 4 The Art of Foresight\nYear","2024"]}],"imgs":[],"slug":"What-Does-The-Future-Hold-S02"},"p12":{"intro":["Air to the People 2.0 is a project focused on building a wider community of citizens who are striving to reduce the impact of climate change and air pollution whilst actively advocating for the installation of Klimerko devices - devices measuring air quality. These installations would provide greater accuracy in measurements and improve the availability of data regarding the air pollution levels in Serbia."],"credits":[],"groups":[{"t":"Air to the People 2.0","meta":[["Services","Direction, Editing, Cinematography"],["Year","2020"]],"films":[{"yt":"LdLfDc-AlAc","t":"Air to the people: Serbia","th":true}],"text":[]},{"t":"Prof. Vladimir Đurđević: Air to the People 2.0","meta":[["Services","Interview"],["Year","2020"]],"films":[{"yt":"sZpNItdOzio","t":"prof. dr. Vladimir Djurdjević, Air to the people 2.0.","th":true}],"text":[]}],"imgs":[],"slug":"Air-to-the-People-Serbia"},"p13":{"intro":["The inaugural Dubai Future Forum is an annual event hosted by the Dubai Future Foundation convening over 400 of the world’s top futurists to Dubai to anticipate challenges, imagine opportunities, share foresight, and shape the future.","Taking place over two days at the iconic Museum of the Future, the Forum provides an international platform for futurists and thought leaders, from diverse sectors, to build a long-lasting community by engaging on tomorrow’s most pressing issues; cementing Dubai’s position as a rising global hub for futures leadership and action."],"credits":[],"groups":[{"t":"Gathering Future Minds 2025","meta":[["Services","Creative Direction, Cinematography, Editing"],["Year","2025"]],"films":[{"yt":"PkLvj-vQygs","t":"Dubai Future Forum 2025 Highlights","th":true}],"text":[]},{"t":"Gathering Future Minds 2024","meta":[["Services","Creative Direction, Cinematography, Editing"],["Year","2024"]],"films":[{"yt":"t1PD4IwT4UU","t":"See you at the Dubai Future Forum 2025","th":true}],"text":[]},{"t":"Gathering Future Minds 2023","meta":[["Services","Creative Direction, Cinematography, Editing"],["Year","2023"],["Produced by","Andrija Kovač, Mina Strugar, Nemanja Babić"],["Creative Director","Andrija Kovač"]],"films":[{"yt":"UBfYThx_7Dc","t":"Gathering Future Minds - Dubai Future Forum 2023","th":true}],"text":["Team: Marija Kovačina, Vladimir Miladinović, Nemanja Stojanović, Marko Mladenović, Zoran Rašić, Bojan Palikuća, Milovan Ilić, Danilo Pantović, Nevena Krivokapić, Ana Ćurčin, Neda Mojsilović, Matija Đukanović, Hessa Al Eassa"]}],"imgs":[],"slug":"Dubai-Future-Forum-Chronicles-1"},"p14":{"intro":["From September 12 to 18, Belgrade hosted the Europride, an international event dedicated to LGBT rights, which is held every year in one of the cities in Europe.","\"This is a major milestone for the LGBTI+ community in the entire region that will mark the beginning of a new era,\""],"credits":[],"groups":[{"t":"We Will Walk.","meta":[["Services","Creative Direction, Cinematography, Editing"],["Year","2022"],["Directors","Nemanja Babić"],["Editor","Marija Kovačina"],["Editor Assistant","Sara Jovanović"],["Creative Supervisor","Andrija Kovač"],["Cinematographers","Aleksa Bartol, Vladimir Miladinović, Milovan Ilić, Branimir Milovanović, Aleksa Jakonić"],["Sound","Bojan Palikuća"]],"films":[{"v":"886851613","h":"25a02b2640","t":"CRD - WE WILL WALK - official trailer","th":true}],"text":["* Produced by Panorama Films for Civil Rights Defenders"]}],"imgs":[],"slug":"We-Will-Walk"},"p15":{"intro":["The inaugural Dubai Future Forum is an annual event hosted by the Dubai Future Foundation convening over 400 of the world’s top futurists to Dubai to anticipate challenges, imagine opportunities, share foresight, and shape the future.","Taking place over two days at the iconic Museum of the Future, the Forum provides an international platform for futurists and thought leaders, from diverse sectors, to build a long-lasting community by engaging on tomorrow’s most pressing issues; cementing Dubai’s position as a rising global hub for futures leadership and action."],"credits":[],"groups":[{"t":null,"meta":[],"films":[{"yt":"tkh-cNGWigw","t":"Dubai Future Forum 2023","th":true}],"text":[]},{"t":"Imagine.","meta":[["Services","Creative Direction, Cinematography, Editing"],["Year","2023"],["Produced by","Andrija Kovač, Mina Strugar"],["Creative Director","Andrija Kovač"],["Script","Mina Strugar"],["Editing","Andrija Kovač, Marija Kovačina"]],"films":[],"text":[]}],"imgs":[],"slug":"Imagine-Our-Future"},"p16":{"intro":["The 30 Years is an initiative that provides perspective on three decades (1991–2021) of the presence and work of the Open Society Foundations (OSF) in the Balkans (Albania, Bosnia and Herzegovina, Croatia, Kosovo, Montenegro, North Macedonia, Serbia and Slovenia).\nIt examines how the unique philanthropic efforts, open society ideas and philosophy persevered during the stormy recent history of the region and how the work is still a moving force, alive and active. The initiative also looks toward the future—the many challenges and opportunities facing the region as each country finds its place within today’s Europe.\n* Cover photo courtesy of Ms. Goranka Matić\nwww.opensocietyfoundations.org/"],"credits":[],"groups":[{"t":"The 30 Years Initiative","meta":[["Services","Service Production, Direction, Cinematography, Editing"],["Year","2021"]],"films":[{"v":"604953617","h":"926354aafa","t":"30 Year Initiative -                                      Open Society Foundation Serbia","th":true}],"text":[]}],"imgs":[[0,1400,665],[1,1400,665]],"slug":"The-30-Years-Initiative"},"p17":{"intro":["A once-in-a-lifetime celebration – the largest event ever staged in the Arab world – is set to welcome 190 participating countries, and millions of visitors from across the globe.\nFor Whatif.ae:"],"credits":[["Producer","Hugo Narciso"],["Line producer","Elena Ozova"],["Directors","Nemanja Babić, Andrija Kovač"],["Director of photography","Andrija Kovač"],["Sound","Nemanja Mosurovic"]],"groups":[{"t":"EXPO2021 - A new beginning","meta":[["Services","Creative Direction, Editing, Video Production"],["Year","2020"]],"films":[{"v":"413316400","t":"EXPO - A new beginning - ENGLISH","th":true}],"text":[]},{"t":"127 Days, for a Lifetime of Stories","meta":[["Services","Creative Direction, Animation, Editing, Design"],["Year","2020"]],"films":[{"v":"402236480","t":"EXPO2020 ⁠— 127 days, for a Lifetime of Stories — Teaser","th":true}],"text":["* Commissioned by Whatif.ae"]}],"imgs":[],"slug":"EXPO2020"},"p18":{"intro":["Home Work About","Get in touch ︎︎︎ ︎ ︎ ︎\nStudio Panorama Films","Hilandarska 13,","Belgrade, Serbia","Last Update\n2026 / 09"],"credits":[],"groups":[],"imgs":[],"slug":"DUBAI-TGR"},"p19":{"intro":["Centre for Women's Studies in Serbia was initiated by the feminist activist group \"Woman and Society\". Its first experimental one-semester course started symbolically on March 8, 1992. In 2022, Center celebrates it’s 30th birthday with a 4 part mini-series tackling subjects like the future of feminism, women’s rights, activism and women’s studies.\nProduced by Nađa Gluhaček"],"credits":[["Producer","Nemanja Babić"],["Director and Editor","Marija Kovačina"],["Director of Photography","Andrija Kovač"]],"groups":[{"t":"Feminism 2052","meta":[["Services","Direction, Cinematography, Editing"],["Year","2022"]],"films":[{"v":"685445568","h":"19a3e723be","t":"Zensko Znanje - TREJLER 1","th":true},{"yt":"GW3yVMZtG8k","t":"Serija Žensko znanje, E01 - Feminizam počinje u tridesetoj","th":true}],"text":[]}],"imgs":[[0,1400,818]],"slug":"Feminism-2052"},"p20":{"intro":["Made for theater, created by Maja Pelević (text) and Nikola Zavišić (directing), Filip Mikić (mapping), Mina Strugar (sound-design) & Anja Đorđević (music) this performance could be called a spatial-visual-acoustic installation, which allows the audience, with the help of artificial intelligence, to enter the state of an intimate meditation (only five people can attend one performance) on the topics raised by the apocalyptic times we live in. The absence of the performers makes the audience passive spectators but also its protagonists. “As if the End Were Not Quite Near“ represents a sublimation of both concept plains of the festival, the artistic and the thematic one."],"credits":[],"groups":[{"t":"As If The End Is Not Quite Near","meta":[["Services","Direction, Sound Design, Cinematography, Editing"],["Year","2021"]],"films":[{"v":"518557853","h":"e749699d7a","t":"As If The End Were Not Quite Near — Bitef Theater","th":true}],"text":[]}],"imgs":[[0,1400,665]],"slug":"As-If-The-End-Were-Not-Quite-Near"},"p21":{"intro":["The World Government Summit is a global platform dedicated to shaping the future of government worldwide. Each year, the Summit sets the agenda for the next generation of governments with a focus on how they can harness innovation and technology to solve universal challenges facing humanity.\nCommissioned by the WGS these films are the official documents showcasing the event."],"credits":[["Creative Director","Andrija Kovač"],["Directors","Nemanja Babić, Andrija Kovač, Marija Kovačina"],["Producers","Mina Padežanin, Mina Strugar, Vladimir Miladinović"]],"groups":[{"t":"World Government Summit Highlights 2023","meta":[["Services","Creative Direction, Cinematography, Editing"],["Year","2023"],["Services","Video Production,"],["Services","Video Production,"],["Services","Video Production,"],["Services","Video Production,"],["Services","Video Production,"],["Services","Video Production,"],["Services","Video Production,"],["Services","Video Production,"]],"films":[{"yt":"XBNS7H8gTKk","t":"World Government Summit 2023 Highlights","th":true},{"yt":"68POnvNiN8Y","t":"The World Government Summit 2022 القمة العالمية للحكومات","th":true},{"yt":"MoFEN7ZlwZQ","t":"World Government Summit 2022 - Day 2 | القمة العالمية للحكومات 2022 - اليوم الثاني","th":true},{"yt":"EcHp6GAOS5s","t":"World Government Summit 2022 - Day 1 |  القمة العالمية للحكومات 2022 - اليوم الأول","th":true},{"yt":"4jabn8r3MEk","t":"Can we accelerate the global economic recovery? | WGS2022","th":true},{"yt":"5i-ExSUSmhs","t":"How can we accelerate the transition to a sustainable future? | WGS2022","th":true},{"yt":"KtK7iIWF9Wc","t":"Answering tomorrow's questions today | WGS2022","th":true},{"yt":"xbFYDm6gUOE","t":"What is the future of money? | WGS2022","th":true},{"yt":"eInS6nKSkDc","t":"Will the Metaverse be the next normal? | WGS2022","th":true},{"yt":"cSAw0lvO3ew","t":"World Government Summit 2022","th":true},{"v":"336303639","t":"World Government Summit 2019 — Short Summary","th":true},{"yt":"TzP7GZzx1xg","t":"World Government Summit 2019  l Day 2 Summary","th":true},{"yt":"O2K6XXTzuzo","t":"World Government Summit 2019 l Day 3 Summary","th":true},{"v":"298895485","t":"World Government Summit Highlights 2023","th":false},{"v":"221224130","t":"World Government Summit 17 — Highlights","th":true}],"text":["WGS 2022 Highlights\nCreative Direction, Cinematography, Edit\nYear","2022\nWGS 2022 TVC\nCreative Direction, Cinematography, Edit\nYear","2022\nWGS 2022 Pre-Campaign\nCreative Direction, Cinematography, Edit\nYear","2022\nWGS 2019 - Short Summary\nCreative Direction, Cinematography, Edit\nYear","2019\nWGS 2019 - Day 2 Best Moments\nCreative Direction, Cinematography, Edit\nYear","2019\nWGS 2019 - Day 3 Best Moments\nCreative Direction, Cinematography, Edit\nYear","2019\nWGS 2018\nShaping Future Governments\nCreative Direction, Cinematography, Edit\nYear","2018\nWGS 2017\nDaily Highlights\nCreative Direction, Cinematography, Edit\nYear","2017"]}],"imgs":[],"slug":"World-Government-Summit"},"p22":{"intro":["The inaugural Dubai Future Forum is an annual event hosted by the Dubai Future Foundation convening over 400 of the world’s top futurists to Dubai to anticipate challenges, imagine opportunities, share foresight, and shape the future.","Taking place over two days at the iconic Museum of the Future, the Forum will provide an international platform for futurists and thought leaders, from diverse sectors, to build a long-lasting community by engaging on tomorrow’s most pressing issues; cementing Dubai’s position as a rising global hub for futures leadership and action."],"credits":[],"groups":[{"t":"A Future Based on Hope - DFF Chronicles","meta":[["Services","Creative Direction, Cinematography, Editing"],["Year","2022"],["Services","Script Writing, Creative Direction, Video Production"],["Creative Director","Andrija Kovač"],["Producer","Mina Strugar"],["Directors","Nemanja Babić, Marija Kovačina, Andrija Kovač"],["Cinematography","Vladimir Miladinović, Nemanja Stojanović, Milovan Ilić, Zoran Rašić, Vladimir Pavić"],["Production Assistant","Nevena Krivokapić"],["Editors","Marija Kovačina, Matija Đukanović, Danilo Pantović"],["Sound","Bojan Palikuća"]],"films":[{"yt":"BPaukV0hOg4","t":"A Future Based on Hope - Dubai Future Forum","th":true},{"yt":"dCjr6G4rh7I","t":"Dubai Future Forum","th":true}],"text":["What Does The Future Hold? TVC\nYear","2022\n*"]}],"imgs":[],"slug":"Dubai-Future-Forum-2022"},"p23":{"intro":["Metaplasm is an upcoming experimental documentary by Panorama Films.\nYear","2020"],"credits":[["Metaplasm","The Vulture File"],["Services","Direction, Cinematography, Editing, Video Production"]],"groups":[{"t":null,"meta":[],"films":[{"v":"690970305","t":"2021_action_TEASER.mp4","th":true},{"v":"504282491","t":"Metaplasm","th":false}],"text":[]}],"imgs":[],"slug":"Metaplasm"},"p24":{"intro":["The campaign titled “No species dies alone”, emphasizes the importance of protection of biological diversity as one of the key conditions for the preservation of ecological balance.","The “faces” of the campaign – the griffon vulture, the European roller, the short-toed eagle and the owl are strictly protected and endangered species of birds to whose active protection the company contributes through cooperation with the Foundation for the Protection of Birds of Prey, the Citizens Association Jadovnik, the Gea Naturalist Society and the Riparia Association of Environmentalists.","Panorama films was commissioned through our long term collaboration with the Founation for the Protection of Birds of Prey to follow up with experts on the field and provide footage of these birds in their hard to reach natural habitat.","Campaign was produced by Ovation BBDO for Telekom Serbia"],"credits":[["Producers","Nemanja Babić & Andrija Kovač"],["Cinematography","Andrija Kovač"],["Field sound","Marija Kovačina"]],"groups":[{"t":"Modrovrana - The European roller","meta":[["Services","Cinematography"],["Year","2021"]],"films":[{"yt":"BtOsTRZckhE","t":"Nijedna vrsta ne umire sama: Kako čuvamo modrovrane?","th":true},{"yt":"oltSEnjP4FA","t":"Modrovrana – Nijedna vrsta ne umire sama","th":true}],"text":[]},{"t":"Orao Zmijar - Short-toed Eagle","meta":[["Services","Cinematography"],["Year","2021"]],"films":[{"yt":"YQ2URU3-iw0","t":"Nijedna vrsta ne umire sama: Kako čuvamo orla zmijara?","th":true},{"yt":"wHin1ATDrWk","t":"Orao zmijar – Nijedna vrsta ne umire sama","th":true}],"text":[]},{"t":"Beloglavi Sup - Griffon Vulture","meta":[["Services","Cinematography"],["Year","2021"]],"films":[{"yt":"vlmmZh3x3gk","t":"Nijedna vrsta ne umire sama: Kako čuvamo beloglavog supa?","th":true}],"text":[]}],"imgs":[],"slug":"Telekom-Srbija-No-species-dies-alone"},"p25":{"intro":["This visual narrative shows the process of marking one of the only white-tailed eagles inhabiting the Great War Island in Belgrade, Serbia. The ornithologists and experts from The Birds of Prey Protection Foundation are introducing satellite telemetry via a gps beacon placed on the bird’s back.","vulture.org.rs/"],"credits":[],"groups":[{"t":"Dušan, A white-tailed eagle from Belgrade","meta":[["Services","Production, Direction, Cinematography, Editing"],["Year","2021"]],"films":[{"v":"557581870","h":"fa677efccd","t":"Dušan, A White-tailed eagle from Belgrade","th":true}],"text":[]}],"imgs":[],"slug":"Vulture-Foundation-Serbia"},"p26":{"intro":["Someone shoots at Serbian tycoon Vladan Simonovic. This makes Vladan initiate a private investigation that will open up \"Pandora's box\" with respect to his past and will lead to conflicts linked with the future of his mighty company."],"credits":[["Produced by","Firefly Productions"],["Director","Miroslav Terzić"],["Creator","Đorđe Milosavljević"],["DOP","Radan Popović"],["Aerial Cinematography","Andrija Kovač / Panorama Films"]],"groups":[{"t":"Tajkun Aerial Teaser","meta":[["Services","Aerial Cinematography"],["Year","2019/2020"]],"films":[{"v":"502243916","t":"Tajkun Aerial Teaser","th":false}],"text":[]}],"imgs":[],"slug":"Tajkun-TV-Series"},"p27":{"intro":["has been implemented in Bor, Novi Sad and Požarevac since September 2020. The aim is to support socially disadvantaged children in coping with the school programme. This was prompted by problems schools had to deal with during the current pandemic.\nGoethe Institut New Stages Southeast\nNew Stages Southeast\ninvites playwrights and theater professionals from Southeast Europe to exchange and develop current materials and themes.The exchange takes place within the countries, between the countries and with authors from Germany."],"credits":[],"groups":[{"t":"Education For All","meta":[["Services","Direction, Editing, Video Production"],["Year","2020"]],"films":[{"v":"501401338","t":"Education For All","th":false}],"text":[]},{"t":"New Stages Southeast","meta":[["Services","Direction, Cinematography, Editing, Video Production"],["Year","2021"]],"films":[{"v":"685445740","h":"3eebd29097","t":"GOETHE INSTITUT - New Stages Southeast","th":true}],"text":[]}],"imgs":[],"slug":"Goethe-Institut"},"p28":{"intro":["The documentary “Long Road to Europe” produced by European Western Balkans and Panorama Films represents a retrospective of Serbia’s EU integration process since 2000 and seeks to explain why has this process lasted more than 20 years and which are the most important challenges that hampered and continue to hamper Serbia’s accession to the EU.","Long Way to Europe\nYear","2021"],"credits":[["Produced by","Nikola Burazer, Nemanja Stiplija, Emina Muminovicc"],["Author","Filip Lukic"],["Producer","Nemanja Babić"],["Director and Editor","Marija Kovačina"],["Director of Photography","Andrija Kovač"],["Services","Direction, Cinematography, Editing"]],"groups":[{"t":null,"meta":[],"films":[{"v":"687108342","h":"96054f31ac","t":"Dug put u Evropu MASTER h264 ENG-001","th":true}],"text":[]}],"imgs":[],"slug":"European-Western-Balkans"},"p29":{"intro":["SHARE Foundation is a nonprofit organization established in 2012 to advance human rights and freedoms online and promote positive values of an open and decentralized Web, as well as free access to information, knowledge, and technology.\nPanorama has since been a partner of Share, producing most of their video content on different platforms."],"credits":[],"groups":[{"t":"Thousands of Cameras in Belgrade - Teaser","meta":[["Services","Video Production, Creative Direction"],["Year","2020"]],"films":[{"v":"437807739","t":"SHARE Investigations - hiljade.kamera.rs_TEASER","th":true}],"text":[]},{"t":"Radicalization & Extremisim vs The Internet","meta":[["Services","Video Production, Creative Direction"],["Year","2019"]],"films":[{"v":"400258767","t":"SHARE - Radicalisation, Extremism, Internet","th":true}],"text":[]},{"t":"A Dialog about the Facebook Algorhythm","meta":[["Services","Video Production, Creative Direction"],["Year","2018"]],"films":[{"v":"396945855","t":"SHARE LABS — A Dialogue on the Facebook Algorithm","th":true}],"text":[]},{"t":"The Exciting Life of the Internet Packet","meta":[["Services","Video Production, Creative Direction"],["Year","2018"]],"films":[{"v":"396950164","t":"SHARE LABS — The Exciting Life of the Internet Packet","th":true}],"text":[]},{"t":"Data Protection & The Media","meta":[["Services","Video Production, Creative Direction"],["Year","2019"]],"films":[{"v":"305372099","t":"Data Protection & The Media","th":false}],"text":[]},{"t":"Information Wars Teaser","meta":[["Services","Video Production, Creative Direction"],["Year","2018"]],"films":[{"v":"251623495","t":"Information Wars — Bitka za Podatke — Teaser","th":true}],"text":[]},{"t":"Digital-Born Media Conference","meta":[["Services","Video Production, Creative Direction"],["Year","2017"]],"films":[{"v":"232518194","t":"Digital Born Media Carnival - Kotor - Aftermovie","th":true}],"text":["After a series of successful SHARE Conferences on internet culture and activism, with over a thousand participants in Belgrade, Serbia (2011, 2012) and Beirut, Lebanon (2012), participants who cooperated and exchanged experience in these events, interested in doing continuous research and advocating for human rights in the digital environment, formed a community. As a nonprofit organization, the SHARE Foundation was established in 2012 to advance human rights and freedoms online and promote positive values of an open and decentralized Web, as well as free access to information, knowledge, and technology. SHARE Foundation’s primary areas of activities are freedom of speech online, data privacy, digital security, and open access to knowledge and information.","Our multidisciplinary team consists of legal and IT experts, artists and journalists. The Foundation has so far organized dozens of conferences, gatherings and workshops in Serbia and abroad, attended by leading activists and experts in digital rights and freedoms. As a contributing member of civil society, SHARE Foundation participates in public debates on relevant laws that might affect citizens’ online rights in Serbia. The Foundation has also produced a dozen of info-guides and other free publications.","In the last three years, the Foundation’s data research branch, the SHARE Lab, published several studies on the internet’s invisible infrastructures in Serbia, information warfare, email communication metadata, online election campaigns, Facebook’s algorithms and so on. These studies included detailed analysis of business models, the process of exploitation of private data, hidden forms of work, surveillance economics, and algorithms hidden behind the walls of companies such as Facebook, Google and Amazon. This specific research-detective-art form of action encompasses a wide range of different methodologies in which cyber forensic methods interlace, analysis and visualization of large amounts of data, cartography, media theory and philosophy intertwine.","In order to draw more public attention to the importance of human rights online, SHARE Foundation embarked on producing a 10 episode documentary TV series on some of its core subjects, such as freedom of expression, privacy, new media and digital security, with over 50 local and international experts sharing their insights. The documentary series aired in Serbia and in Montenegro, and the series website umrezi.rs serves as an open platform for improving digital literacy of citizens, with all series episodes, full expert interviews, video-lectures and other materials freely available. In late 2017, SHARE Foundation also produced a series of short educational videos on five important topics: copyright, net neutrality, data protection, fake news and algorithms. The videos explained, in simple terms, why these issues are important for our everyday lives and their aim was to help the general public get a better understanding of the topics.","Since March 2017 the SHARE Foundation is a member of European Digital Rights (EDRi), an association of over 30 civil and human rights organizations from across Europe. The Foundation is also a founding member of the New Media Network (#newmednet), an informal network of lawyers, journalists, activists, and scholars from 14 countries of Central and Southeast Europe, established in 2013, and a member of the Global Net Neutrality Coalition. After three years of providing free legal and technical assistance to online media and civil society organizations, in April 2017 SHARE Foundation formally registered the first Special Computer Emergency Response Team (CERT) for online media in Serbia.","Activities of SHARE Foundation in promoting digital rights were recognized by the Commissioner for Information of Public Importance and Personal Data Protection of Serbia, who in January 2017 presented the Foundation with a certificate of gratitude for an outstanding contribution to affirming the right to personal data protection.","www.sharefoundation.info"]}],"imgs":[],"slug":"SHARE-Foundation"},"p30":{"intro":["The World Drone Prix was the biggest drone race of its kind, bringing together the best pilots of the world to go head-to-head and push the drone industry to innovate and improve. The World Drone Prix had a total prize of $1 million, making it the largest such event in the world.\n* Produced in collaboration with G12 Hub"],"credits":[],"groups":[{"t":"The 1 Million Dollar, World Drone Prix Finals","meta":[["Services","Video Production, Cinematography, Editing"],["Year","2016"]],"films":[{"yt":"bIrIvKGSFVU","t":"The 1 Million Dollar, World Drone Prix Final. #WDP16","th":true}],"text":[]},{"t":"World Drone Prix Dubai - Highlights 1","meta":[["Services","Production, Cinematography, Edit"],["Year","2016"]],"films":[{"v":"158810492","t":"World Drone Prix Dubai - Highlights 1","th":true}],"text":[]},{"t":"World Drone Prix Dubai - Case Study","meta":[["Services","Production, Cinematography, Edit"],["Year","2016"]],"films":[{"v":"396952909","t":"World Drone Prix Dubai — Case Study","th":true}],"text":["DUBAI","As the dust settles on Dubai’s World Drone Prix, the first truly global drone-racing event, it’s one of the youngest pilots on the scene who walks away with the top prize. 15-year-old Luke Bannister, flying for the UK-based Tornado X-Blades team, out-performed 150 global teams here in Dubai to become the first World Drone Prix champion, netting a cool $250,000 (£175,000) in the process.","The event, held on Dubai’s Gulf coast, saw 150 pilots battle through the week for just 32 spots in the finals, which were held last Friday and Saturday on a custom-built, outdoor track. \"Luke was always a threat,\" says Australian pilot Chad Nowak who won a major tournament in Sacramento, USA, last year and flies for Rotor Riot here in Dubai. \"He’s so fast, and doesn’t have the fear or the nerves that the older pilots can have,\" he says.","Nowak lost out to Bannister in an exciting semi-final race, where four evenly matched pilots jostled for position throughout. Pushed to their limit, three of the four pilots eventually crashed, leaving Bannister the only pilot holding his nerve to complete the course. Despite losing, Nowak wasn’t too upset. \"That was a great race,\" he enthused afterwards. \"It felt like we were really pushing the limit of what each other could do, and the crowd were responding, too. They were loving it. I was loving it,\" he says.","Dubai is one of the first drone-racing events to really cater for spectators. Held at night to maximise the visual appeal, the purpose-built track was spectacularly lit and the drones’ LEDs were set to one of four colours, making it much easier to follow the action on-track. Spectators could watch a multi-camera view on big screens, too, or even watch through one of the many first-person-view (FPV) goggles placed around the track for a truly immersive, pilots-eye perspective.\nAnd, if that wasn’t enough, commentary was provided by top pilots such as Nowak and Steele Davis to help introduce the pilots, explain the intricacies of the sport, and give perspective on some of the tactical decisions being made by the teams.","The races themselves, designed around a technical track configuration, were quite different from a normal race. \"Normally drone races are flat-out sprints, but here it comes down to those with the best tactics,\" says Nowak. \"This event has so many variables to consider: battery power, pit changes, track routes and setups,\" adds Luke Bannister.","Bannister’s final race was more straightforward, although not easy—these were the best of the best, after all. Up against Dubai’s own DroneTek, Russia’s VS Meshcheriakov and Netherland’s Drone Race Team SQG, Bannister led from early on and dominated for much of the race. Even after losing track position following pit changes, he was able to quickly catch and overtake the competition, often in places that others might not dare. Bannister was having so much fun, it seems, that he forgot to stop at the end of the race and continued onto his 13th lap, causing much confusion in the pit lane.","Luke was ecstatic with his win. \"It’s crazy, amazing, I’d like to thank my whole team,\" he blurted, prompting another round of cheering and chanting from his Tornado X-Blades crew, proud of their gifted helmsman. What are you looking forward to now? I ask him. \"Flying in a nice, quiet open field,\" he says, possibly overwhelmed by the sheer scale and enthusiasm for the event. *","* Ars Technica"]}],"imgs":[],"slug":"World-Drone-Prix"},"p31":{"intro":["The six days long regional and European event gathering Businessmen, Companies devoted to Innovations, supreme design, quality and functioning of furniture, but also Young Designers as the new creative and inducing power.\nThe Fair is the venue becoming during the six days a significant Meeting Point of all those connected to the Furniture Industry, but also those interested in it. Belgrade Fair is the event where visitors may see the best and latest solutions within the Furniture Industry."],"credits":[],"groups":[{"t":"Belgrade Furniture Fair 2019","meta":[["Services","Production, Cinematography, Edit"],["Year","2019"]],"films":[{"v":"400261995","t":"Belgrade Furniture Fair 2019","th":true}],"text":[]},{"t":"Belgrade Furniture Fair 2018","meta":[["Services","Production, Cinematography, Edit"],["Year","2018"]],"films":[{"v":"397015324","t":"Belgrade Furniture Fair 2018","th":true}],"text":[]},{"t":"Belgrade Furniture Fair 2017","meta":[["Services","Production, Cinematography, Edit"],["Year","2017"]],"films":[{"v":"400256990","t":"Belgrade Furniture Fair 2017","th":true}],"text":[]}],"imgs":[],"slug":"Belgrade-Furniture-Fair"},"p32":{"intro":["Shinobi produces tailor made gear for extreme lifestyles and outdoor activities. Established almost a decade ago with this intent, Shinobi has been working hard to equip their community with the essentials needed to ride the wind, waves, snow, and streets."],"credits":[],"groups":[{"t":"Shinobi Way of Living","meta":[["Services","Creative Direction, Cinematography, Production"],["Year","2020"]],"films":[{"v":"377762565","t":"Shinobi — Way of Living","th":true}],"text":[]},{"t":"Shinobi Gray","meta":[["Services","Creative Direction, Production"],["Year","2020"]],"films":[{"v":"380833214","t":"Shinobi Gray","th":true}],"text":["* Cinematography by Marko Mladenović"]},{"t":"Shinobi Freeride","meta":[["Services","Cinematography, Production"],["Year","2019"]],"films":[{"v":"314829689","t":"Shinobi Winter Freeride","th":true}],"text":[]}],"imgs":[[0,933,1400],[1,1400,788],[2,1400,935],[3,1400,788],[4,1400,937],[5,919,1334],[6,935,1400]],"slug":"Shinobi"},"p33":{"intro":["Valamar Hotels are one of the key promoters of Croatia and especially Istria as a road/mountain/family biking destination.\n3000 km of cycling paths ideal for road and off-road adventures and activities catered to all levels of riders.\nOver the years, Valamar have commissioned short films promoting the sport and the destinations, featuring some of the best riders in the region."],"credits":[],"groups":[{"t":"Welcome to Rabac","meta":[["Services","Creative Direction, Cinematography, Edit"],["Year","2019"]],"films":[{"v":"400257945","t":"Valamar — Welcome To Rabac","th":true}],"text":[]},{"t":"Manuel Fumic is fast.","meta":[["Services","Creative Direction, Cinematography, Edit"],["Year","2019"]],"films":[{"v":"400261730","t":"Valamar Welcome to Rabac - Manuel Fumic RAW","th":true}],"text":[]},{"t":"Mountain Biking — \"A Perfect Day\"","meta":[["Services","Direction, Cinematography, Edit"],["Year","2018"]],"films":[{"v":"397007418","t":"Valamar — MTB — A Perfect Day","th":true}],"text":[]},{"t":"Road Biking - Valamar Loves Bike","meta":[["Services","Direction, Cinematography, Edit"],["Year","2018"]],"films":[{"v":"247129711","t":"Valamar Hotels — Road Biking — Dir. Cut","th":true}],"text":[]}],"imgs":[],"slug":"Valamar-Biking"},"p34":{"intro":["Mitas 4 Islands is a team MTB stage race in which islands are the stages, goat paths are trails and the sea plays hide and seek!\nMore than 400km of unique natural trails on beautiful Croatian islands of Cres, Krk, Rab & Lošinj make this race one of the most attractive in the world.\nPanorama films has been one of the key partners in the race’s beginnings.\n4 Islands - An Unforgettable Experience\nCreative Direction, Cinematography, Edit\nYear","2018"],"credits":[["Services","Video Production,"]],"groups":[{"t":null,"meta":[["Services","Video Production,"],["Services","Video Production,"],["Services","Video Production,"]],"films":[{"v":"234483182","t":"4 Islands","th":false},{"v":"228360160","t":"4 Islands TEASER 2018 TRAILS ARE WAITING","th":true},{"v":"210450324","t":"4 Islands — Are you ready?","th":true},{"v":"187896738","t":"4 Islands 2017","th":true}],"text":["4 Islands - The Trails Are Waiting\nCreative Direction, Cinematography, Edit\nYear","2017\n4 Islands\nAre you ready?\nCreative Direction, Cinematography, Edit\nYear","2017\n4 Islands\n2017\nCreative Direction, Cinematography, Edit\nYear","2017"]}],"imgs":[],"slug":"4-Islands"},"p35":{"intro":["Fruškać is an independent, voluntary, non-government and non-profit guild of people whose love for Fruška Gora gave them the initiative to huddle together and build the guide for the National Park.\nWelcome Summer\nYear","2020"],"credits":[["Services","Direction, Edit, Cinematography"]],"groups":[{"t":null,"meta":[],"films":[{"v":"421003545","t":"National Park Fruška Gora - \"Welcome Summer\"","th":true}],"text":["* Commissioned by Fruškać - Drone Cinematography by Nikola Mraković - Produced by Nikola Arežina"]}],"imgs":[],"slug":"Fruskac"}}</script><!--/pjdata-->
 <script>
 const M = 'media/';
-/* player icons, one consistent drawing: play, pause, sound, muted, full screen, exit full screen */
-const ICO = {play:'<path d="M8 5.5v13l11-6.5z" fill="currentColor" stroke="none"/>', pause:'<path d="M8 5h3v14H8zM13 5h3v14h-3z" fill="currentColor" stroke="none"/>',
-  snd:'<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M15.5 9a4 4 0 0 1 0 6M18 6.5a7.5 7.5 0 0 1 0 11"/>', mute:'<path d="M4 9.5h3.5L12 6v12l-4.5-3.5H4z"/><path d="M16 9.5l5 5M21 9.5l-5 5"/>',
-  fs:'<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>', fsx:'<path d="M9 4v5H4M20 9h-5V4M15 20v-5h5M4 15h5v5"/>'};
-function setIco(b, k, label){ if (b.dataset.ico !== k){ b.dataset.ico = k; b.innerHTML = `<svg viewBox="0 0 24 24" aria-hidden="true">${ICO[k]}</svg>`; } b.setAttribute('aria-label', label); b.title = label; }
 const PJ = JSON.parse(document.getElementById('pjdata').textContent);
 /* every service named anywhere on the site, item by item ("script writing", "cinematography" …) */
 const SVC_ITEMS = (()=>{ const s = new Set(), add = v => String(v || '').split(/[,.]/).forEach(x=>{ x = [...x.trim()].map(c=>c==='đ'||c==='Đ'?'d':c.normalize('NFD')[0]).join('').toLowerCase(); if (x) s.add(x); });
   Object.values(PJ).forEach(p=>{ (p.credits || []).concat(...p.groups.map(g=>g.meta || [])).forEach(([a,b])=>{ if (/^services$/i.test(a)) add(b); }); }); return s; })();   /* per-project films, text and photos from panoramafilms.tv */
 /* s = second where the 20-second background loop starts */
 const F = {
-  reel:{title:"Showreel", client:"Panorama Films", v:"1232743611", h:"7e23d97b0f", still:"reel", clip:"home", dur:"1:05", s:15},
+  reel:{title:"Showreel", client:"Panorama Films", v:"1232743611", h:"7e23d97b0f", still:"reel", clip:"home", file:"reel", dur:"1:05", s:15},
   ask:{n:"01", client:"Dubai Future Forum", year:"2025", title:"Ask More", line:"A visual anthem to the questions that shape our future.", roles:"Concept, creative direction", yt:"QWbPqxAycbI", dur:"1:10", clip:"ask", s:0},
   sport:{n:"02", client:"World Sports Summit", year:"2025", title:"Dubai, the City of Sport", line:"Uniting the world through sport.", roles:"Creative direction, production, script, editing, delivery", v:"1219027164", h:"9051dc97a8", dur:"1:08", clip:"sport", s:0},
   ten:{n:"03", client:"Dubai Future Foundation", year:"2025", title:"10 Years of Designing Dubai’s Future", line:"A film for the Dubai Future Foundation’s ten-year milestone.", roles:"Creative direction, production", v:"1228612747", h:"6c4df67db8", dur:"1:59", clip:"ten", s:4},
@@ -1266,15 +1059,15 @@ function frame(k, small){
   return `<a class="frame" href="${ext(f)}" target="_blank" rel="noopener" data-play="${k}" aria-label="${f.v||f.yt ? 'Play' : 'View'} ${esc(f.title)}">
     <div class="media"${f.hover ? ` data-hv="${f.hover}" data-c="${k}"` : f.img ? '' : ` data-k="${k}" data-loop="20"`}><img src="${still(k)}" alt="${esc(f.title)}" loading="lazy"></div>
     ${f.v||f.yt ? '<span class="play" aria-hidden="true"></span>' : ''}
-    ${small ? `<span class="hud"><span class="top"><span></span>${more}</span></span>`
-      : `<span class="hud"><span class="top"><span class="lab">${esc(f.title)}</span><span class="lab">${nf > 1 ? nf + ' films · ' : ''}${esc(f.year||'')}</span></span><span></span>
+    ${small ? `<span class="hud"><span class="top"><span class="lab">${f.n}</span>${more}</span></span>`
+      : `<span class="hud"><span class="top"><span class="lab">${f.n} — ${esc(f.title)}</span><span class="lab">${nf > 1 ? nf + ' films · ' : ''}${esc(f.year||'')}</span></span><span></span>
       <span class="bot"><span class="lab rec live">Rec <span class="tc">00:00:00:00</span></span><span class="lab tc dur">${f.dur||''}</span></span></span>`}</a>`;
 }
 function work(k){
   const f = F[k];
   return `<article class="work">${frame(k)}
     <div class="grid cap" data-play="${k}">
-      <h3>${esc(f.title)}</h3>
+      <span class="n lab mid">${f.n}</span><h3>${esc(f.title)}</h3>
       <span class="cl s">${esc(f.client)}</span><span class="rl s mid">${esc(f.roles||'')}</span><span class="yr s mid">${esc(f.year)}</span>
       ${f.line?`<p class="ln mid">${esc(f.line)}</p>`:''}
     </div></article>`;
@@ -1289,27 +1082,21 @@ if (FEATURED_VIEW === 'stack'){
       return `<article class="sp" data-play="${k}" role="link" tabindex="0" aria-label="Play ${esc(f.title)}">
         <div class="media cover" data-k="${k}" data-loop="20"><img src="${still(k)}" alt="" loading="${i ? 'lazy' : 'eager'}"></div>
         <div class="sp-ov">
-          <div class="sp-top lab"><span></span><span>${nf > 1 ? nf + ' films · ' : ''}${esc(f.year||'')}</span></div>
+          <div class="sp-top lab"><span>${f.n} / ${String(STACK.length).padStart(2,'0')}</span><span>${nf > 1 ? nf + ' films · ' : ''}${esc(f.year||'')}</span></div>
           <div class="sp-main"><h3>${esc(f.title)}</h3><p class="sp-cl">${esc(f.client)}</p></div>
           <p class="sp-svc lab">${esc(f.roles||'')}</p>
           <div class="sp-bot lab"><span>${i === 0 ? 'Scroll' : ''}</span><span class="sp-play"><span class="sp-dot"></span>Play film${f.dur ? ' · ' + f.dur : ''}</span></div>
         </div></article>`; }).join('')}</div>`;
 } else {
 /* Films (folds the featured films and the catalogue) on its own row, then Featured beside the first heading only */
-document.getElementById('chapters').innerHTML = CHAPTERS.map(([c,t,r,items],ci)=>
+document.getElementById('chapters').innerHTML = `<div class="lede solo films-h"><span class="tag" id="filmsTag">Films</span></div>` + CHAPTERS.map(([c,t,r,items],ci)=>
   `<div class="lede"><span class="tag sub">${c}</span><h2>${esc(t)}</h2></div>
    <div class="works">${items.map(it=>Array.isArray(it)?`<div class="pair">${it.map(work).join('')}</div>`:work(it)).join('')}</div>`).join('');
 }
 /* the catalogue: twelve films, then the rest with one Load more, then the archive with another */
 document.getElementById('cards').innerHTML = CARDS.concat(INDEX).map((k,i)=>{const f=F[k];return `<article class="card${i >= CARDS.length ? ' arch' : i >= CARDS_SHOWN ? ' later' : ''}">${frame(k, true)}<div class="meta s" data-play="${k}"><h3>${esc(f.title)}</h3><span>${esc(f.client)}</span><span class="yr mid">${esc(f.year)}</span></div></article>`;}).join('');
-const idxEl = document.getElementById('index'); if (idxEl) idxEl.innerHTML = INDEX.map(k=>{const f=F[k];return `<div class="idx" data-play="${k}" role="button" tabindex="0" aria-label="${f.v||f.yt ? 'Play' : 'View'} ${esc(f.title)}"${f.hover?` data-hv="${f.hover}"`:''}><span class="th"><img src="${still(k)}" alt="" loading="lazy">${f.v||f.yt?'<span class="play" aria-hidden="true"></span>':''}</span><span class="t">${esc(f.title)}</span><span class="c s mid">${esc(f.client)}</span><span class="w s mid">${esc(f.year)}</span></div>`;}).join('');
-/* each discipline points to films where Panorama was credited for it (services and credits on the project), never more than three */
-const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interviewer/)), Writing: k => /script|concept/i.test(F[k].roles || ''),
-  Direction: k => /direction|directing/i.test(F[k].roles || ''), Production: k => /production|cinematograph/i.test(F[k].roles || ''),
-  Post: k => /edit|sound design|grading/i.test(F[k].roles || '')};
-const capFilms = n => CAP_MATCH[n] ? ORDER.filter(k=>F[k] && CAP_MATCH[n](k)) : [];
-document.getElementById('caps').innerHTML = CAPS.map(([n,l])=>{ const fs = capFilms(n);
-  return `<div><h3>${n}</h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul>${fs.length ? `<div class="cap-f"><span class="lab">Seen in</span>${fs.slice(0,3).map(k=>`<button type="button" data-play="${k}">${esc(F[k].title)}</button>`).join('')}${fs.length > 3 ? `<span class="cap-n">+${fs.length - 3} more</span>` : ''}</div>` : ''}</div>`; }).join('');
+const idxEl = document.getElementById('index'); if (idxEl) idxEl.innerHTML = INDEX.map(k=>{const f=F[k];return `<div class="idx" data-play="${k}" role="button" tabindex="0" aria-label="${f.v||f.yt ? 'Play' : 'View'} ${esc(f.title)}"${f.hover?` data-hv="${f.hover}"`:''}><span class="k lab mid">${f.n}</span><span class="th"><img src="${still(k)}" alt="" loading="lazy">${f.v||f.yt?'<span class="play" aria-hidden="true"></span>':''}</span><span class="t">${esc(f.title)}</span><span class="c s mid">${esc(f.client)}</span><span class="w s mid">${esc(f.year)}</span></div>`;}).join('');
+document.getElementById('caps').innerHTML = CAPS.map(([n,l])=>`<div><h3>${n}</h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
 const CLIENT_FILM = {"Dubai Future Foundation":"ten", "Museum of the Future":"astro", "EXPO Dubai":"p17", "Dubai Sports Council":"sport",
   "World Government Summit":"p21", "Valamar":"p33", "SHARE Foundation":"p29", "Civil Rights Defenders":"p14",
   "Birds of Prey Protection Foundation Serbia":"p25", "Goethe Institute":"p27", "World Drone Prix":"p30", "Firefly Production":"p26"};
@@ -1324,13 +1111,13 @@ const LOGOS = {"Dubai Future Foundation": ["dubai-future-foundation", 8.571], "D
 const logo = c => { const l = LOGOS[c], tag = CLIENT_FILM[c] ? 'a' : 'span', link = CLIENT_FILM[c] ? ` data-play="${CLIENT_FILM[c]}" href="${ext(F[CLIENT_FILM[c]])}" target="_blank" rel="noopener"` : '';
   if (!l) return `<${tag} class="cn lg lt${CLIENT_FILM[c]?' ln':''}" data-c="${esc(c)}"${link}>${esc(c)}</${tag}>`;
   const r = l[1], k = LOGO_SCALE[c] || 1, h = Math.min(1, 1.3 / Math.sqrt(r)) * k, w = h * r;   /* equal visual weight: wide wordmarks get shorter, square marks taller */
-  return `<${tag} class="cn lg${CLIENT_FILM[c]?' ln':''}" data-c="${esc(c)}"${link} ${CLIENT_FILM[c] ? '' : 'role="img" '}aria-label="${esc(c)}${CLIENT_FILM[c] ? ', watch the film' : ''}" title="${esc(c)}" style="--w:${w.toFixed(3)};--h:${h.toFixed(3)};--src:url(${M}logos/${l[0]}.png)"></${tag}>`; };
+  return `<${tag} class="cn lg${CLIENT_FILM[c]?' ln':''}" data-c="${esc(c)}"${link} role="img" aria-label="${esc(c)}" title="${esc(c)}" style="--w:${w.toFixed(3)};--h:${h.toFixed(3)};--src:url(${M}logos/${l[0]}.png)"></${tag}>`; };
 if (CLIENTS_VIEW === 'logos'){
   document.getElementById('featured').hidden = true;
   const box = document.getElementById('clients'); box.classList.add('logos');
   /* two rows, chosen by the studio: the main commissioners, then the foundations and institutions */
-  const ROW1 = ["SHARE Foundation", "Dubai Future Foundation", "UN Women", "The Executive Office", "British Council", "EXPO Dubai", "Civil Rights Defenders", "Dubai Sports Council", "BIRN", "World Government Summit", "Goethe Institute", "Museum of the Future", "Digital Freedom Fund", "Natural History Museum Abu Dhabi", "European Fund for Balkans", "Valamar", "Internet Society Serbia", "SOS Children's Villages", "University of Arts Belgrade"];   /* UAE institutions and NGO / European clients alternate, so every visitor finds their kind of client early */
-  const ROW2 = [];
+  const ROW1 = ["Dubai Future Foundation","The Executive Office","EXPO Dubai","Dubai Sports Council","World Government Summit","Museum of the Future","Natural History Museum Abu Dhabi","Valamar"];
+  const ROW2 = ["SHARE Foundation","UN Women","British Council","Civil Rights Defenders","BIRN","Goethe Institute","Digital Freedom Fund","European Fund for Balkans","Internet Society Serbia","SOS Children's Villages","University of Arts Belgrade"];
   /* one line that drifts slowly to the left; the set is drawn twice so the loop has no seam */
   const set = [...ROW1, ...ROW2].map(c=>logo(c) + '<i class="dv" aria-hidden="true"></i>').join('');   /* a thin divider after each logo */
   box.innerHTML = `<div class="marq" tabindex="0" aria-label="Selected clients, scroll sideways"><div class="track"><div class="set">${set}</div><div class="set" aria-hidden="true">${set.replace(/ (href|role|aria-label)="[^"]*"/g,'').replace(/<a /g,'<a tabindex="-1" ')}</div></div></div>`;
@@ -1575,16 +1362,15 @@ document.querySelectorAll('[data-sec]').forEach(s=>nio.observe(s));
 const lb = document.getElementById('lb'), box = document.getElementById('lb-box'), lbp = document.getElementById('lb-player');
 const ctl = document.getElementById('lb-ctl'), cPlay = document.getElementById('c-play'), cTc = document.getElementById('c-tc'),
       cSeek = document.getElementById('c-seek'), cSnd = document.getElementById('c-snd'), cFs = document.getElementById('c-fs');
-setIco(cPlay, 'pause', 'Pause'); setIco(cSnd, 'snd', 'Mute'); setIco(cFs, 'fs', 'Full screen');
 let back = null, curK = null, P = null, scrubbing = false, watchdog = 0;
 const mmss = t => { t = Math.max(0, Math.floor(t||0)); return `${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}`; };
 const FS_OK = !!(document.fullscreenEnabled || document.webkitFullscreenEnabled);
 function paint(){
   if (!P) return;
-  setIco(cPlay, P.paused ? 'play' : 'pause', P.paused ? 'Play' : 'Pause');
+  cPlay.textContent = P.paused ? 'Play' : 'Pause';
   cPlay.setAttribute('aria-label', (P.paused ? 'Play ' : 'Pause ') + (F[curK]?.title || 'film'));
-  cSnd.hidden = !P.sound; setIco(cSnd, P.muted ? 'mute' : 'snd', P.muted ? 'Unmute' : 'Mute');
-  cFs.hidden = !(FS_OK || P.nativeFs); { const on = document.fullscreenElement || document.webkitFullscreenElement; setIco(cFs, on ? 'fsx' : 'fs', on ? 'Exit full screen' : 'Full screen'); }
+  cSnd.hidden = !P.sound; cSnd.textContent = P.muted ? 'Unmute' : 'Mute';
+  cFs.hidden = !(FS_OK || P.nativeFs); cFs.textContent = (document.fullscreenElement || document.webkitFullscreenElement) ? 'Exit full screen' : 'Full screen';
   cTc.textContent = `${mmss(P.time)} / ${mmss(P.dur)}`;
   if (!scrubbing){ const r = P.dur ? P.time / P.dur : 0; cSeek.value = Math.round(r*1000); cSeek.style.setProperty('--p', (r*100).toFixed(2)+'%'); }
   cSeek.setAttribute('aria-valuetext', `${mmss(P.time)} of ${mmss(P.dur)}`);
@@ -1753,7 +1539,7 @@ function renderProject(k, photo){
   const isSvc = t => { const s = nrm(tidy(String(t).replace(/\s*·\s*\d{4}\s*$/, ''))); if (svc.has(s)) return true;
     const parts = s.split(/[,.]/).map(x=>x.trim()).filter(Boolean); return parts.length > 1 && parts.every(x=>SVC_ITEMS.has(x)); };
   const facts = FACTS[k] || uniq([['Client', f.client], ['Year', f.year], ['Services', f.roles]].filter(x=>x[1]).concat((p.credits || []).map(([a,b])=>[a, tidy(b)]), extra));
-  let h = photo ? '' : `<header class="pj-hd"><h2>${esc(f.title)}</h2>${f.line ? `<p>${esc(f.line)}</p>` : ''}</header>`;
+  let h = '';
   if (films.length > 1){
     let i = 0; const byGroup = [];
     films.forEach(fm=>{ const gt = fm.g || null; const last = byGroup[byGroup.length-1];
@@ -1793,21 +1579,16 @@ function renderProject(k, photo){
   else if (p.imgs && p.imgs.length) h += `<section class="pj-photos" aria-label="Photos">${p.imgs.map(([i,w,hh])=>`<img src="${M}proj/${p.slug}/${String(i).padStart(2,'0')}.webp" width="${w}" height="${hh}" alt="" loading="lazy">`).join('')}</section>`;
   if (k !== 'reel'){
     const j = ORDER.indexOf(k), nk = ORDER[(j + 1) % ORDER.length], pk = ORDER[(j - 1 + ORDER.length) % ORDER.length];
-    h += `<a class="pj-ask" href="https://panoramafilms.tv/contact-form" target="_blank" rel="noopener"><span class="lab mid">Like what you see?</span><span><span class="w">Let’s make a film together.</span><br><span class="r">Get in touch.</span></span></a>
+    h += `<a class="pj-ask" href="https://panoramafilms.tv/contact-form" target="_blank" rel="noopener"><span class="lab mid">Like what you see?</span><span><span class="w">Let’s make a film.</span><br><span class="r">Get in touch.</span></span></a>
       <nav class="pj-next" aria-label="More projects"><button type="button" data-go="${pk}"><span class="lab mid">Previous</span><span>${esc(F[pk].title)}</span></button>
       <button type="button" data-go="${nk}"><span class="lab mid">Next project</span><span>${esc(F[nk].title)} <svg class="ic" aria-hidden="true"><use href="#i-r"/></svg></span></button></nav>
 `;
-  }
-  /* the site footer travels with the project page: year, dark / light, back to the top of the project, the studio */
-  { const y = (document.getElementById('ftY') || {}).textContent || '';
-    h += `<footer class="lab mid lb-ft"><span class="ft-l"><span class="ft-y">${esc(y)}</span><button type="button" class="ft-th" role="switch" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span><a href="#" class="ft-top" data-lbtop>Back to top <svg class="ic" aria-hidden="true"><use href="#i-u"/></svg></a><span class="ft-c">Studio Panorama Films</span></footer>`;
   }
   pjEl.innerHTML = h;
 }
 pjEl.addEventListener('click', e=>{
   const b = e.target.closest('.pj-film'); if (b){ playFilm(+b.dataset.i, true); return; }
   const g = e.target.closest('[data-go]'); if (g){ openFilm(g.dataset.go); lb.scrollTo({top: 0}); }
-  if (e.target.closest('[data-lbtop]')){ e.preventDefault(); lb.scrollTo({top: 0, behavior: REDUCED ? 'auto' : 'smooth'}); }
 });
 let psT = null, psIO = null;
 function stopShow(){ clearInterval(psT); psT = null; if (psIO){ psIO.disconnect(); psIO = null; } }
@@ -1831,11 +1612,11 @@ function openFilm(k){
   lb.classList.toggle('photo', photo);
   renderProject(k, photo);
   document.getElementById('lb-title').textContent = `${f.title} — ${f.client}`;
-  document.getElementById('lb-no').textContent = k==='reel' ? 'Reel' : 'Project';
+  document.getElementById('lb-no').textContent = k==='reel' ? 'Reel' : `Project ${f.n} / 35`;
   document.getElementById('lb-prev').hidden = document.getElementById('lb-next').hidden = (k==='reel');
-  if (photo){ teardown(); startShow(k); }
+  if (photo){ teardown(); document.getElementById('lb-no').textContent = `Project ${f.n} / 35`; startShow(k); }
   else playFilm(Math.max(0, films.findIndex(x=>x.main)), false);
-  if (lb.hidden){ lb.hidden = false; lb.classList.remove('opening'); void lb.offsetWidth; lb.classList.add('opening'); document.body.style.overflow = 'hidden'; document.getElementById('lb-close').focus({focusVisible:false}); }
+  if (lb.hidden){ lb.hidden = false; document.body.style.overflow = 'hidden'; document.getElementById('lb-close').focus({focusVisible:false}); }
   lb.scrollTop = 0;
   if (k !== 'reel' && PJ[k]) history.replaceState(null, '', '#' + PJ[k].slug);
 }
@@ -1970,7 +1751,7 @@ function runSearch(){
   sxN.textContent = !terms.length ? `All ${np} projects. Type to narrow it down.` : sxHits.length ? `${sxHits.length} result${sxHits.length>1?'s':''} for “${sxQ.value.trim()}”` : `Nothing found for “${sxQ.value.trim()}”. Try a client, a place, a person or a year.`;
   const hl = t => terms.length ? snippet(t, terms) || esc(t) : esc(t);
   sxR.innerHTML = sxHits.map((h,i)=>{ const x = h.x;
-    return `<li><a href="${x.sec ? '#'+x.sec : '#'}" class="${x.sec?'sec':''}${i===sxOn?' on':''}" data-i="${i}"><span class="th">${x.thumb ? `<img src="${x.thumb}" alt="" loading="lazy">` : 'Section'}</span><span class="t"><b>${hl(x.title)}</b><span>${h.sn || hl(x.sub)}</span></span><span class="y">${esc(x.year||'')}</span></a></li>`; }).join('');
+    return `<li><a href="${x.sec ? '#'+x.sec : '#'}" class="${x.sec?'sec':''}${i===sxOn?' on':''}" data-i="${i}"><span class="k">${esc(x.n||'')}</span><span class="th">${x.thumb ? `<img src="${x.thumb}" alt="" loading="lazy">` : 'Section'}</span><span class="t"><b>${hl(x.title)}</b><span>${h.sn || hl(x.sub)}</span></span><span class="y">${esc(x.year||'')}</span></a></li>`; }).join('');
 }
 let sxBack = null;
 function openSearch(){ sxBack = document.activeElement; if (!lb.hidden) closeFilm(); sx.hidden = false; document.body.style.overflow = 'hidden'; sxQ.value = ''; runSearch(); requestAnimationFrame(()=>sxQ.focus()); }
@@ -2001,35 +1782,26 @@ document.addEventListener('keydown', e=>{
 (()=>{
   const mq = document.querySelector('#clients .marq'); if (!mq) return;
   const SPEED = 22;   /* pixels per second */
-  let hold = 0, hover = false, last = performance.now(), pos = 0, auto = false, vel = SPEED, samples = [];
-  const mod = v => { const h = half(); return ((v % h) + h) % h; };
+  let hold = 0, hover = false, last = performance.now(), pos = 0, auto = false;
   const half = () => mq.scrollWidth / 2;
   const wrap = () => { const h = half(); if (mq.scrollLeft >= h) mq.scrollLeft -= h; else if (mq.scrollLeft <= 0) mq.scrollLeft += h; };
   mq.scrollLeft = 1; pos = 1;
   function tick(t){
     const dt = Math.min(.1, (t - last) / 1000); last = t;
     if (!REDUCED && t > hold && !mq.classList.contains('drag')){
-      /* after a throw the strip keeps its speed and eases back to the slow drift, like a spun wheel slowing down */
-      vel += (SPEED - vel) * (1 - Math.exp(-dt * 1.4));
-      pos = mod(pos + vel * dt); auto = true; mq.scrollLeft = pos;   /* keep the fraction ourselves: scrollLeft rounds to whole pixels */
+      pos += SPEED * dt; const h = half(); if (pos >= h) pos -= h; auto = true; mq.scrollLeft = pos;   /* keep the fraction ourselves: scrollLeft rounds to whole pixels */
     }
     requestAnimationFrame(tick);
   }
   requestAnimationFrame(tick);
-  mq.addEventListener('scroll', ()=>{ if (auto){ auto = false; return; } if (Math.abs(mq.scrollLeft - pos) < 2) return; hold = performance.now() + 2500; wrap(); pos = mq.scrollLeft; vel = 0; }, {passive:true});
+  mq.addEventListener('scroll', ()=>{ if (auto){ auto = false; return; } if (Math.abs(mq.scrollLeft - pos) < 2) return; hold = performance.now() + 2500; wrap(); pos = mq.scrollLeft; }, {passive:true});
   mq.addEventListener('pointerenter', e=>{ if (e.pointerType === 'mouse') hover = true; });
   mq.addEventListener('pointerleave', ()=>{ hover = false; });
   /* a vertical wheel over the strip still scrolls the page; a horizontal swipe scrolls the strip */
   let sx = 0, sl = 0, moved = false;
-  mq.addEventListener('pointerdown', e=>{ if (e.pointerType !== 'mouse' || e.button) return; sx = e.clientX; sl = pos; moved = false; samples = [[performance.now(), e.clientX]]; vel = 0; mq.classList.add('drag'); mq._pid = e.pointerId; });
-  mq.addEventListener('pointermove', e=>{ if (!mq.classList.contains('drag')) return; const dx = e.clientX - sx; if (!moved && Math.abs(dx) > 4){ moved = true; try { mq.setPointerCapture(mq._pid); } catch(_){} }
-    if (moved){ const now = performance.now(); samples.push([now, e.clientX]); while (samples.length > 2 && now - samples[0][0] > 90) samples.shift(); pos = mod(sl - dx); auto = true; mq.scrollLeft = pos; } });
-  const end = ()=>{ if (!mq.classList.contains('drag')) return; mq.classList.remove('drag');
-    /* the throw: the speed of the last few dozen milliseconds of the drag carries on */
-    const now = performance.now(), a = samples[0], b = samples[samples.length - 1];
-    if (moved && a && b && now - b[0] < 80 && b[0] > a[0]) vel = Math.max(-4500, Math.min(4500, -(b[1] - a[1]) / ((b[0] - a[0]) / 1000)));
-    else vel = moved ? 0 : SPEED;
-    hold = 0; last = now; };
+  mq.addEventListener('pointerdown', e=>{ if (e.pointerType !== 'mouse' || e.button) return; sx = e.clientX; sl = mq.scrollLeft; moved = false; mq.classList.add('drag'); mq._pid = e.pointerId; });
+  mq.addEventListener('pointermove', e=>{ if (!mq.classList.contains('drag')) return; const dx = e.clientX - sx; if (!moved && Math.abs(dx) > 4){ moved = true; try { mq.setPointerCapture(mq._pid); } catch(_){} } if (moved) mq.scrollLeft = sl - dx; });
+  const end = ()=>{ mq.classList.remove('drag'); hold = performance.now() + 2500; pos = mq.scrollLeft; };
   mq.addEventListener('pointerup', end); mq.addEventListener('pointercancel', end); mq.addEventListener('lostpointercapture', ()=>{ if (mq.classList.contains('drag')) end(); });
   addEventListener('blur', ()=>{ if (mq.classList.contains('drag')) end(); });
   mq.addEventListener('click', e=>{ if (moved){ e.preventDefault(); e.stopPropagation(); moved = false; } }, true);
@@ -2101,121 +1873,66 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     const who = pn.filter(n=>n.key.split('|').some(has)); if (who.length < 2) return;
     const pr = {id:k, name:F[k].title, person:false, x:0, y:0, vx:0, vy:0, deg:who.length}; nodes.push(pr);
     who.forEach(n=>{ links.push([n, pr]); n.deg++; }); });
-  /* who did what, from the credits: each person's roles and projects */
-  const RMAP = r => /cinemat|photograph|camera|drone/i.test(r) ? 'Camera' : /sound/i.test(r) ? 'Sound' : /edit/i.test(r) ? 'Editing' : /creative/i.test(r) ? 'Creative direction' : /direct/i.test(r) ? 'Directing' : /produc/i.test(r) ? 'Production' : /interview/i.test(r) ? 'Interviews' : /script|words|writ/i.test(r) ? 'Writing' : null;
-  const year = k => { const m = String(F[k].year || '').match(/\d{4}/); return m ? +m[0] : null; };
-  const segsOf = t => nrm(t).split(/[,;:&]|\band\b/).map(s=>' ' + s.replace(/[^a-z]+/g, ' ') + ' ');
-  pn.forEach(n=>{ n.projects = links.filter(l=>l[0] === n).map(l=>l[1].id); n.roles = {}; });
-  links.forEach(([n, pr])=>{ const p = PJ[pr.id], rows = (p.credits || []).concat(...p.groups.map(g=>g.meta || []));
-    const seen = new Set(); rows.forEach(([a,b])=>{ if (/^(services|year)$/i.test(a)) return; const s = segsOf(b);
-      if (!n.key.split('|').some(alt=>{ const w = alt.split(' '); return s.some(x=>w.every(y=>x.includes(' ' + y + ' '))); })) return;
-      const c = RMAP(a); if (c && !seen.has(c)){ seen.add(c); n.roles[c] = (n.roles[c] || 0) + 1; } }); });
-  /* the three of us: photo, title and bio straight from the team section */
-  const INFO = {}; document.querySelectorAll('.team article').forEach(a=>{ const img = a.querySelector('img'), nm = a.querySelector('h3'); if (!nm) return;
-    const id = pn.find(n=>n.name === nm.textContent.trim()); if (!id) return;
-    INFO[id.id] = {photo: img ? img.getAttribute('src') : '', role: (a.querySelector('.lab') || {}).textContent || '', bio: (a.querySelector('p') || {}).textContent || ''}; });
-  /* links for everyone go here when we have them, e.g. LINKS.andrija = 'https://instagram.com/…' */
-  const LINKS = {};   /* until real links arrive everyone shows a placeholder website link */
-  const LINK_PH = '#';
-  /* until we have everyone's photos, a plain silhouette stands in for them (PLACEHOLDER) */
-  const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 125'%3E%3Crect width='100' height='125' fill='%23e6e6e3'/%3E%3Cpath fill='%23080808' d='M50 22c-11 0-18 8-18 20 0 8 2 15 5 20 1 2 2 5 2 8v6c-12 3-24 7-29 16-3 6-4 15-4 33h88c0-18-1-27-4-33-5-9-17-13-29-16v-6c0-3 1-6 2-8 3-5 5-12 5-20 0-12-7-20-18-20z'/%3E%3C/svg%3E";
-  pn.forEach(n=>{ const i = INFO[n.id] || {}; const src = i.photo || PLACEHOLDER; if (src){ n.img = new Image(); n.img.src = src; n.ph = !i.photo; n.img.onload = () => { if (!running) draw(); }; } });
-  const ini = n => n.name.split(' ').filter(w=>/^[A-ZĆČŠŽĐ]/.test(w)).slice(0,2).map(w=>w[0]).join('');
-  /* timeline: projects appear in the year they were made; undated ones only at the end */
-  const YRS = ORDER.map(year).filter(Boolean), Y0 = Math.min(...YRS), Y1 = Math.max(...YRS); let upto = Y1;
-  const shown = pr => { const y = year(pr.id); return y ? y <= upto : upto === Y1; };
-  nodes.forEach(n=>{ n.vis = 1; });
   /* a plain list for screen readers */
-  /* the same people as buttons, for keyboards and screen readers: each opens the profile */
-  const netList = document.getElementById('netList');
-  netList.setAttribute('aria-label', 'The collective'); netList.className = 'net-list';
-  netList.innerHTML = pn.map(n=>`<li><button type="button" data-p="${n.id}">${esc(n.name)}, ${n.deg} ${n.deg === 1 ? 'project' : 'projects'} together</button></li>`).join('');
+  document.getElementById('netList').innerHTML = pn.map(n=>`<li>${esc(n.name)}: ${n.deg} ${n.deg === 1 ? 'project' : 'projects'}</li>`).join('');
   /* the canvas is taller than its frame by EXT above and below; the web lives in the frame (FH tall) but can be dragged into the margins */
-  const wrap = cv.parentElement; let W = 0, H = 0, FH = 0, EXT = 0, dpr = 1, CX = 0;
+  const wrap = cv.parentElement; let W = 0, H = 0, FH = 0, EXT = 0, dpr = 1;
   const size = () => { const r = cv.getBoundingClientRect(); dpr = Math.min(2, devicePixelRatio || 1); W = r.width; H = r.height; FH = wrap.getBoundingClientRect().height; EXT = (H - FH) / 2; cv.width = W * dpr; cv.height = H * dpr; };
-  size(); CX = W / 2;
-  /* when the section is folded the canvas has no size: keep the last layout instead of squashing everyone into one point */
-  new ResizeObserver(()=>{ const r = cv.getBoundingClientRect(); if (r.width < 10 || r.height < 10) return; const ow = W, oh = H; size(); if (ow > 10 && oh > 10) nodes.forEach(n=>{ n.x *= W / ow; n.y *= H / oh; }); else { CX = W / 2; seedAll(); } }).observe(cv);
+  size(); new ResizeObserver(()=>{ const ow = W, oh = H; size(); nodes.forEach(n=>{ n.x *= W / (ow || W); n.y *= H / (oh || H); }); }).observe(cv);
   /* start in a loose ring: people outside, projects inside */
   const seed = Math.random() * Math.PI * 2;   /* every visit starts from a different turn of the ring, so the web settles differently */
   nodes.sort(()=>Math.random() - .5);
-  /* (when the canvas has no size yet, e.g. the page opened with it off screen, this waits for the first real size; seeding at 0×0 is what made the web fly in from the top left) */
-  function seedAll(){ if (W < 10 || H < 10) return false;
-    nodes.forEach((n,i)=>{ const a = seed + i * 2.39996 + (Math.random() - .5) * .6, r = (n.person ? .36 : .18) * Math.min(W, FH) * (.85 + Math.random() * .3); n.x = W/2 + Math.cos(a) * r; n.y = H/2 + Math.sin(a) * r; n.vx = n.vy = 0; });
-    if (typeof settle === 'function') settle(); return true; }
-  const R_ = n => (n.person ? (n.core ? 32 : Math.min(24, 14 + n.deg * .7)) : 1.8 + n.deg * .5) * (W < 600 ? .62 : 1);
-  /* fixed points: Andrija on top, Marija bottom right, Mina bottom left; everyone else turns inside */
-  const CORE = ['andrija','marija','mina'].map(id=>pn.find(n=>n.id === id)); let ANG = -Math.PI / 2 + Math.random() * Math.PI * 2;
-  /* the first time the web comes into view it opens gently from the centre */
-  let intro = REDUCED ? 1 : 0, introAt = 0;
-  let hover = null, sel = null, drag = null, alpha = 1, running = false, visible = false, raf = 0;
-  /* a loose idea, not a fixed layout: the three of us drift apart around the circle (a third of a turn from each other) and turn with the web */
-  const V = i => { const avail = sel && W > 760 ? W - 440 : W, rc = Math.min(avail, FH) * .4, a = ANG + i * 2 * Math.PI / 3; return [CX + Math.cos(a) * rc, H/2 + Math.sin(a) * rc]; };
+  nodes.forEach((n,i)=>{ const a = seed + i * 2.39996 + (Math.random() - .5) * .6, r = (n.person ? .36 : .18) * Math.min(W, FH) * (.85 + Math.random() * .3); n.x = W/2 + Math.cos(a) * r; n.y = H/2 + Math.sin(a) * r; });
+  const R_ = n => (n.person ? Math.min(10, 3 + n.deg * .42) : 1.6 + n.deg * .45) * (W < 600 ? .75 : 1);
+  let hover = null, drag = null, alpha = 1, running = false, visible = false, raf = 0;
   function step(){
-    /* while a profile is open the web slides left so it stays clear of the panel */
-    const tx = sel && W > 760 ? 440 + (W - 440) / 2 : W / 2; CX += (tx - CX) * .06;   /* with a profile open on the left, the web moves into the space to its right */
     const k = Math.min(W, FH);
     for (let i = 0; i < nodes.length; i++){ const a = nodes[i];
       for (let j = i + 1; j < nodes.length; j++){ const b = nodes[j];
-        let dx = b.x - a.x, dy = b.y - a.y; if (dx*dx + dy*dy < .25){ dx = (Math.random() - .5) * 2; dy = (Math.random() - .5) * 2; }   /* two nodes on the same spot get nudged apart */
-        const d2 = dx*dx + dy*dy + .01; const rep = (a.person && b.person ? 420 : a.person || b.person ? 110 : 60) / d2 * (k / 700);
+        let dx = b.x - a.x, dy = b.y - a.y, d2 = dx*dx + dy*dy + .01; const rep = (a.person && b.person ? 420 : a.person || b.person ? 110 : 60) / d2 * (k / 700);
         dx *= rep; dy *= rep; a.vx -= dx; a.vy -= dy; b.vx += dx; b.vy += dy; } }
     links.forEach(([a,b])=>{ const dx = b.x - a.x, dy = b.y - a.y, d = Math.hypot(dx, dy) || 1, L = k * .28, f = (d - L) / d * .007;
       a.vx += dx * f; a.vy += dy * f; b.vx -= dx * f; b.vy -= dy * f; });
     const tt = performance.now() / 1000 + seed * 10;
     nodes.forEach((n,i)=>{ n.vx += Math.sin(tt * .35 + i * 1.7) * .035; n.vy += Math.cos(tt * .29 + i * 2.3) * .035;
-      n.vx += (CX - n.x) * .006 * (n.person ? 1 : 1.6); n.vy += (H/2 - n.y) * .006 * (n.person ? 1 : 1.6);
+      n.vx += (W/2 - n.x) * .006 * (n.person ? 1 : 1.6); n.vy += (H/2 - n.y) * .006 * (n.person ? 1 : 1.6);
       if (n === drag) { n.vx = n.vy = 0; return; }
-      /* the three of us hold the three points of a wide triangle (like the Mercedes star) around everyone else */
-      if (n.core){ const [tx2, ty2] = V(CORE.indexOf(n)); n.vx += (tx2 - n.x) * .012; n.vy += (ty2 - n.y) * .012; }
       n.vx = Math.max(-8, Math.min(8, n.vx * .86)); n.vy = Math.max(-8, Math.min(8, n.vy * .86)); n.x += n.vx * alpha; n.y += n.vy * alpha;
       /* keep the web a round shape in the middle of the frame */
       /* a name let go outside the circle drifts back instead of jumping */
-      const rx = n.x - CX, ry = n.y - H/2, d = Math.hypot(rx, ry), Rm = (sel && W > 760 ? Math.min(W - 440, FH) : Math.min(W, FH)) * (n.person ? .44 : .34);
-      if (d > Rm){ const e = Rm + (d - Rm) * .93; n.x = CX + rx / d * e; n.y = H/2 + ry / d * e; }
+      const rx = n.x - W/2, ry = n.y - H/2, d = Math.hypot(rx, ry), Rm = Math.min(W, FH) * (n.person ? .44 : .34);
+      if (d > Rm){ const e = Rm + (d - Rm) * .93; n.x = W/2 + rx / d * e; n.y = H/2 + ry / d * e; }
       const pad = 20; n.x = Math.max(pad, Math.min(W - pad, n.x)); n.y = Math.max(24, Math.min(H - 24, n.y)); });
     alpha = Math.max(REDUCED ? 0 : .35, alpha * .985);
     /* the whole web turns slowly around the centre (about one turn every ninety seconds) */
-    if (!REDUCED){ const da = .0009, c = Math.cos(da), sn = Math.sin(da), cx = CX, cy = H/2; ANG += da;
+    if (!REDUCED){ const da = .0009, c = Math.cos(da), sn = Math.sin(da), cx = W/2, cy = H/2;
       nodes.forEach(n=>{ if (n === drag) return; const x = n.x - cx, y = n.y - cy; n.x = cx + x * c - y * sn; n.y = cy + x * sn + y * c; }); }   /* never quite still: the web keeps breathing */
   }
   const linked = n => n && new Set(links.filter(l=>l[0]===n || l[1]===n).flatMap(l=>l));
   function draw(){
     ctx.setTransform(dpr,0,0,dpr,0,0); ctx.clearRect(0,0,W,H);
-    if (intro < 1 && introAt){ intro = Math.min(1, (performance.now() - introAt) / 1600); }
-    if (intro < 1){ const e = 1 - Math.pow(1 - intro, 3), k = .55 + .45 * e; cv.style.opacity = e; ctx.translate(CX, H / 2); ctx.scale(k, k); ctx.translate(-CX, -H / 2); }
-    else if (cv.style.opacity) cv.style.opacity = '';
-    const act = hover || sel, hi = linked(act), small = W < 600; nodes.forEach(n=>{ n._lb = null; });
-    /* fade nodes in and out as the timeline moves */
-    nodes.forEach(n=>{ const t = n.person ? (n.core || n.projects.some(id=>shown(nodes.find(m=>m.id === id))) ? 1 : 0) : (shown(n) ? 1 : 0); n.vis += (t - n.vis) * .12; if (Math.abs(t - n.vis) < .01) n.vis = t; });
-    links.forEach(([a,b])=>{ const on = act && (a === act || b === act); const lv = Math.min(a.vis, b.vis); if (lv <= .01) return; ctx.globalAlpha = lv;
+    const hi = linked(hover), small = W < 600; nodes.forEach(n=>{ n._lb = null; });
+    links.forEach(([a,b])=>{ const on = hover && (a === hover || b === hover);
       const base = a.core ? '226,35,26' : (LIGHT() ? '18,18,17' : '237,237,235');
       /* each line fades from a tenth of its strength at the name to full strength at the project: red for the three of us, white for everyone else */
-      const op = on ? 1 : act ? .06 : (a.core ? .5 : .3), gr = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
+      const op = on ? 1 : hover ? .06 : (a.core ? .5 : .3), gr = ctx.createLinearGradient(a.x, a.y, b.x, b.y);
       gr.addColorStop(0, `rgba(${base},${op * .1})`); gr.addColorStop(1, `rgba(${base},${op})`); ctx.strokeStyle = gr;
       ctx.lineWidth = on ? 1.6 : 1.1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); });
-    ctx.globalAlpha = 1; ctx.setLineDash([]);
+    ctx.setLineDash([]);
     const label = (n, r, size, weight, color) => {
       ctx.font = `${weight} ${size}px "Helvetica Neue",Helvetica,Arial,sans-serif`; ctx.fillStyle = color; ctx.textBaseline = 'middle';
-      const tw = ctx.measureText(n.name).width, right = n.x + r + 8 + tw < W - 8;   /* names flip left near the right edge */
+      const tw = ctx.measureText(n.name).width, right = n.x + r + 8 + tw < W - 8;
       ctx.textAlign = right ? 'left' : 'right'; ctx.fillText(n.name, right ? n.x + r + 8 : n.x - r - 8, n.y);
       /* remember where the name sits so hovering the name works like hovering the dot */
       n._lb = right ? [n.x + r + 4, n.y - size*.7, n.x + r + 12 + tw, n.y + size*.7] : [n.x - r - 12 - tw, n.y - size*.7, n.x - r - 4, n.y + size*.7]; };
-    nodes.filter(n=>!n.person).forEach(n=>{ if (n.vis <= .01) return; const dim = act && !hi.has(n), r = R_(n), on = act && hi.has(n);
-      ctx.globalAlpha = (dim ? .18 : 1) * n.vis;
+    nodes.filter(n=>!n.person).forEach(n=>{ const dim = hover && !hi.has(n), r = R_(n), on = hover && hi.has(n);
+      ctx.globalAlpha = dim ? .18 : 1;
       ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fillStyle = n === hover ? '#e2231a' : on ? (LIGHT() ? '#3a3a37' : '#bdbdba') : (LIGHT() ? '#8f8f8a' : '#6a6a67'); ctx.fill();
       if (!small || on) label(n, r, small ? 11 : 13, 400, on || n === hover ? (LIGHT() ? '#121211' : '#ededeb') : (LIGHT() ? 'rgba(110,110,105,.9)' : 'rgba(110,110,107,.85)'));
       ctx.globalAlpha = 1; });
-    nodes.filter(n=>n.person).forEach(n=>{ if (n.vis <= .01) return; const dim = act && !hi.has(n), r = R_(n);
-      ctx.globalAlpha = (dim ? .3 : 1) * n.vis;
-      /* portraits: a photo in a red ring for the three of us, initials for everyone else until we have their photos */
-      ctx.save(); ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.closePath();
-      if (n.img && n.img.complete && n.img.naturalWidth){ ctx.clip(); const iw = n.img.naturalWidth, ih = n.img.naturalHeight, s = (2*r) / Math.min(iw, ih);
-        ctx.fillStyle = '#000'; ctx.fillRect(n.x - r, n.y - r, 2*r, 2*r); ctx.globalAlpha *= .92; ctx.drawImage(n.img, n.x - iw*s/2, n.y - ih*s*.42, iw*s, ih*s); }
-      else { ctx.fillStyle = LIGHT() ? '#e4e3de' : '#1c1c1b'; ctx.fill(); }
-      ctx.restore(); ctx.globalAlpha = (dim ? .3 : 1) * n.vis;
-      ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.lineWidth = n.core ? 2.5 : 1.3; ctx.strokeStyle = n.core || n === act ? '#e2231a' : (LIGHT() ? '#8f8f8a' : '#5d5d5a'); ctx.stroke();
-      if (!n.img){ ctx.font = `500 ${Math.round(r * .78)}px "Helvetica Neue",Helvetica,Arial,sans-serif`; ctx.fillStyle = LIGHT() ? '#3a3a37' : '#bdbdba'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(ini(n), n.x, n.y + .5); }
+    nodes.filter(n=>n.person).forEach(n=>{ const dim = hover && !hi.has(n), r = R_(n);
+      ctx.globalAlpha = dim ? .3 : 1;
+      ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fillStyle = n.core ? '#e2231a' : (LIGHT() ? '#2b2b28' : '#d9d9d6'); ctx.fill();
       /* the three of us in red; everyone else sized by how many projects we made together */
       const others = pn.filter(p=>!p.core), lo = Math.min(...others.map(p=>p.deg)), hi2 = Math.max(...others.map(p=>p.deg)), f = hi2 > lo ? (n.deg - lo) / (hi2 - lo) : 1;
       const fs = n.core ? (small ? 15 : 22) : Math.round(small ? 10 + f * 4 : 13 + f * 7);
@@ -2226,12 +1943,10 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   const start = () => { if (running) return; running = true; raf = requestAnimationFrame(loop); };
   const stop = () => { running = false; };
   new IntersectionObserver(([e])=>{ visible = e.isIntersecting; visible ? start() : stop(); }).observe(cv);
-  new IntersectionObserver(([e], o)=>{ if (e.isIntersecting && !introAt){ introAt = performance.now(); start(); o.disconnect(); } }, {threshold: .3}).observe(wrap);
   /* settle once before showing, so the first frame is already a web */
-  function settle(){ for (let i = 0; i < 320; i++) step(); alpha = .3; }
-  seedAll(); draw();
-  const pick = (x, y) => { const onName = nodes.filter(n=>n.person).concat(nodes.filter(n=>!n.person)).find(n=>n.vis >= .5 && n._lb && x >= n._lb[0] && x <= n._lb[2] && y >= n._lb[1] && y <= n._lb[3]);
-    let best = null, bd = 40*40; nodes.forEach(n=>{ if (n.vis < .5) return; const d = (n.x-x)**2 + (n.y-y)**2, lim = (R_(n) + (n.person ? 14 : 8)) ** 2; if (d < bd && d < lim){ bd = d; best = n; } }); return best || onName || null; };
+  for (let i = 0; i < 260; i++) step(); alpha = .5; draw();
+  const pick = (x, y) => { const onName = nodes.filter(n=>n.person).concat(nodes.filter(n=>!n.person)).find(n=>n._lb && x >= n._lb[0] && x <= n._lb[2] && y >= n._lb[1] && y <= n._lb[3]);
+    let best = null, bd = 30*30; nodes.forEach(n=>{ const d = (n.x-x)**2 + (n.y-y)**2, lim = (R_(n) + (n.person ? 14 : 8)) ** 2; if (d < bd && d < lim){ bd = d; best = n; } }); return best || onName || null; };
   const pos = e => { const r = cv.getBoundingClientRect(); return [e.clientX - r.left, e.clientY - r.top]; };
   let downAt = null;
   if (matchMedia('(pointer:coarse)').matches){ const a = document.querySelector('#netHint .net-act'); if (a) a.textContent = 'Tap'; }
@@ -2244,54 +1959,29 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     const n = pick(x,y); if (n !== hover){ hover = n; wrap.style.cursor = n ? 'pointer' : ''; if (!running) draw(); } });
   wrap.addEventListener('pointerup', e=>{ const [x,y] = pos(e); wrap.classList.remove('grab');
     const moved = downAt && Math.hypot(x - downAt[0], y - downAt[1]) > 5, n = downAt && downAt[2]; drag = null; downAt = null;
-    if (!moved && n){ if (n.person) openDr(n); else openFilm(n.id); }
-    else if (!moved && !n && sel) closeDr(); });
+    if (!moved && n){ if (n.person){ openSearch(); sxQ.value = n.name.replace(/ (Piki|Cile)\b/,''); runSearch(); } else openFilm(n.id); } });
   wrap.addEventListener('pointerleave', ()=>{ if (!drag){ hover = null; if (!running) draw(); } });
-  /* the profile drawer */
-  const dr = document.getElementById('netDr');
-  function openDr(n){ sel = n; const i = INFO[n.id] || {}, roles = Object.entries(n.roles).sort((a,b)=>b[1]-a[1]).map(r=>r[0]);
-    const role = i.role || roles.slice(0,2).join(' · ') || 'Collaborator';
-    const list = n.projects.map(id=>[id, F[id].title, year(id)]).sort((a,b)=>(b[2]||0)-(a[2]||0));
-    /* magazine order: portrait, the name set large across its lower edge with the title beneath at the same size, the bio with a drop cap, then their website and every project with them */
-    const site = LINKS[n.id] || LINK_PH, first = n.name;
-    dr.innerHTML = `<button type="button" class="x" data-x aria-label="Close ${esc(n.name)}’s profile"></button>
-      ${(i.photo || PLACEHOLDER) ? `<div class="dr-ph"><img src="${i.photo || PLACEHOLDER}" alt="${i.photo ? esc(n.name) : ''}"></div>` : `<div class="dr-ini" aria-hidden="true">${ini(n)}</div>`}
-      <h3 class="dr-nm">${esc(n.name)}<span class="dr-role">${esc(role)}</span></h3>
-      ${i.bio ? `<p class="dr-bio">${esc(i.bio)}</p>` : ''}
-      <div class="dr-ln">${site === LINK_PH ? `<a href="#" data-ph title="Link to come">Website ↗</a>` : `<a href="${esc(site)}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} ↗</a>`}
-        <button type="button" data-all>Browse all projects with ${esc(first)}</button></div>`;
-    dr.hidden = false; dr.querySelector('[data-x]').focus({preventScroll:true, focusVisible:false}); alpha = Math.max(alpha, .6); start();
-    /* bring the whole profile into view when it opens partly off screen (desktop; on phones it is a sheet) */
-    /* the panel starts where the graph starts, never over the sentence above it */
-    dr.style.top = innerWidth > 760 ? (wrap.getBoundingClientRect().top - dr.offsetParent.getBoundingClientRect().top + 48) + 'px' : '';
-    if (innerWidth > 760){ const r = dr.getBoundingClientRect(), top = 200; if (r.top < top || r.top > innerHeight * .4) scrollBy({top: r.top - top, behavior: REDUCED ? 'auto' : 'smooth'}); } }
-  let opener = null;
-  netList.addEventListener('click', e=>{ const b = e.target.closest('[data-p]'); if (!b) return; opener = b; openDr(pn.find(n=>n.id === b.dataset.p)); });
-  function closeDr(){ if (opener && dr.contains(document.activeElement)){ opener.focus({preventScroll:true}); } opener = null; dr.hidden = true; sel = null; alpha = Math.max(alpha, .6); if (visible) start(); else draw(); }
-  dr.addEventListener('click', e=>{ if (e.target.closest('[data-ph]')){ e.preventDefault(); return; } const g = e.target.closest('[data-go]'); if (g){ openFilm(g.dataset.go); return; }
-    if (e.target.closest('[data-x]')) closeDr();
-    if (e.target.closest('[data-all]') && sel){ const q = sel.name.replace(/ (Piki|Cile)\b/,''); closeDr(); openSearch(); sxQ.value = q; runSearch(); } });
-  addEventListener('keydown', e=>{ if (e.key === 'Escape' && !dr.hidden && !document.querySelector('#lb.on, .sx.on')) closeDr(); });
-  /* the timeline */
-  const tl = document.getElementById('tlR'), tlY = document.getElementById('tlY'), tlYrs = document.getElementById('tlYrs'), tlPlay = document.getElementById('tlPlay');
-  tl.min = Y0; tl.max = Y1; tl.step = 1; tl.value = Y1;
-  tlYrs.innerHTML = Array.from({length: Y1 - Y0 + 1}, (_,i)=>`<span style="left:${(i / (Y1 - Y0) * 100).toFixed(2)}%">${Y0 + i}</span>`).join('');
-  const setY = y => { upto = y; tl.value = y; tl.style.setProperty('--p', ((y - Y0) / (Y1 - Y0) * 100) + '%'); tlY.textContent = y;
-    tlYrs.querySelectorAll('span').forEach(s=>s.classList.toggle('on', +s.textContent === y)); alpha = Math.max(alpha, .5); start(); if (sel && !sel.core && !sel.projects.some(id=>shown(nodes.find(m=>m.id === id)))) closeDr(); };
-  let playT = null;
-  const stopPlay = () => { clearInterval(playT); playT = null; tlPlay.classList.remove('on'); tlPlay.querySelector('span').textContent = 'Play'; };
-  tl.addEventListener('input', ()=>{ stopPlay(); setY(+tl.value); });
-  tlPlay.addEventListener('click', ()=>{ if (playT){ stopPlay(); return; }
-    tlPlay.classList.add('on'); tlPlay.querySelector('span').textContent = 'Pause'; let y = upto >= Y1 ? Y0 : upto + 1; setY(y);
-    playT = setInterval(()=>{ if (upto >= Y1){ stopPlay(); return; } setY(upto + 1); }, REDUCED ? 600 : 1100); });
-  setY(Y1);
 })();
 
-/* motion: the big statements arrive once as they scroll in (only those still below the fold when the page opens, so nothing on screen ever hides) */
-if (!REDUCED && 'IntersectionObserver' in window){
-  const rio = new IntersectionObserver(es=>es.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('in'); rio.unobserve(e.target); } }), {rootMargin:'0px 0px -12% 0px'});
-  document.querySelectorAll('.lede h2, .fold-lede, .end .ask').forEach(el=>{ if (el.getBoundingClientRect().top > innerHeight){ el.classList.add('rv'); rio.observe(el); } });
-}
+/* section labels fold their sections: everything after the label up to the next label */
+/* Network and Selected clients are plain subheadings now; Studio folds them away with the rest of the studio,
+   and Approach and Manifesto too */
+document.querySelectorAll('main .tag').forEach(t=>{
+  if (t.classList.contains('net-tag') || t.closest('.collab') || t.classList.contains('sub')) return;
+  const peers = null, head = t.closest('.lede') || t.closest('.top') || t, items = [];
+  const isStudio = !!t.closest('#studio'), isFilms = t.id === 'filmsTag', all = isStudio || isFilms;
+  let n = head.nextElementSibling; while (n && (all || !(n.classList.contains('tag') || n.querySelector('.tag')))){ items.push(n); n = n.nextElementSibling; }
+  if (isStudio) document.querySelectorAll('#approach > details.more, #hitl').forEach(d=>items.push(d));
+  if (isFilms){ const cat = document.getElementById('films').nextElementSibling; if (cat) items.push(cat); }
+  if (!items.length) return;
+  t.classList.add('tg'); t.setAttribute('role', 'button'); t.tabIndex = 0; t.setAttribute('aria-expanded', 'true');
+  t.insertAdjacentHTML('beforeend', '<span class="pm" aria-hidden="true"></span>');
+  const flip = () => { const open = t.getAttribute('aria-expanded') !== 'true'; t.setAttribute('aria-expanded', String(open));
+    items.forEach(el=>el.classList.toggle('is-shut', !open)); if (peers) peers.classList.toggle('shut', !open);
+    if (head && head.hasAttribute && head.hasAttribute('data-fold-h')){ const h2 = head.querySelector('h2'); if (h2) h2.classList.toggle('is-shut', !open); head.classList.toggle('h-shut', !open); } };
+  t.addEventListener('click', flip);
+  t.addEventListener('keydown', e=>{ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); flip(); } });
+});
 
 /* the year in Roman numerals, kept current */
 (()=>{ const el = document.getElementById('ftY'); if (!el) return; let y = new Date().getFullYear(), s = '';
@@ -2300,14 +1990,11 @@ if (!REDUCED && 'IntersectionObserver' in window){
 
 /* dark / light: every visit opens dark; light only when someone switches it on */
 try { localStorage.removeItem('pf-theme'); } catch(_){}
-(()=>{ const root = document.documentElement;
-  const paint = () => { const t = root.dataset.pf === 'light' ? 'light' : 'dark';
-    document.querySelectorAll('.ft-th').forEach(b=>{ b.querySelectorAll('[data-t]').forEach(x=>x.setAttribute('aria-current', String(x.dataset.t === t))); b.setAttribute('aria-checked', String(t === 'light')); }); };
-  document.addEventListener('click', e=>{ const b = e.target.closest('.ft-th'); if (!b) return; const x = e.target.closest('[data-t]');
-    const want = x ? x.dataset.t : (root.dataset.pf === 'light' ? 'dark' : 'light');
+(()=>{ const b = document.getElementById('themeBtn'); if (!b) return; const root = document.documentElement;
+  const paint = () => { const t = root.dataset.pf === 'light' ? 'light' : 'dark'; b.querySelectorAll('[data-t]').forEach(s=>s.setAttribute('aria-current', String(s.dataset.t === t))); b.setAttribute('aria-checked', String(t === 'light')); };
+  b.addEventListener('click', e=>{ const s = e.target.closest('[data-t]'); const want = s ? s.dataset.t : (root.dataset.pf === 'light' ? 'dark' : 'light');
     if (want === 'light') root.dataset.pf = 'light'; else delete root.dataset.pf;
     paint(); window.dispatchEvent(new Event('themechange')); });
-  new MutationObserver(paint).observe(document.getElementById('pj'), {childList: true});
   paint(); })();
 
 /* stack: the film inside each panel moves slower than the page, and a panel dims as the next one slides over it */
@@ -2325,6 +2012,3 @@ try { localStorage.removeItem('pf-theme'); } catch(_){}
 document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true; const s = d.querySelector('summary'); s.tabIndex = -1; s.setAttribute('role','heading'); s.setAttribute('aria-level','2');
   s.addEventListener('click', e=>e.preventDefault()); d.addEventListener('toggle', ()=>{ if (!d.open) d.open = true; }); });
 </script>
-</body></html>
-
-</body></html>
