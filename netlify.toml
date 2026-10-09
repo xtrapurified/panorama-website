@@ -9,3 +9,10 @@
 [build]
   publish = "."
   command = ""
+
+# Internal docs in the repo are not part of the site.
+[[redirects]]
+  from = "/project.md"
+  to = "/"
+  status = 404
+  force = true
