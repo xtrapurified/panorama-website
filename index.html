@@ -921,6 +921,12 @@ footer .ft-top:hover{color:var(--red)}
 /* Featured sits right up against each heading, ending where the heading's indent begins */
 #chapters .lede .tag.sub{left:auto;right:calc(100% - (100% + var(--g)) / 12 * 4 + 1.6em)}
 @media (max-width:760px){#chapters .lede .tag.sub{right:auto}}
+/* Featured and Catalogue: the label sits on its own line right above the heading, on the heading's indent */
+@media (min-width:761px){
+  #chapters .lede .tag.sub,.lede.cat .tag{position:static;display:block;width:max-content;margin:0 0 .35em calc((100% + var(--g)) / 12 * 4);top:auto;right:auto;left:auto}
+}
+/* Studio: two lines between the label and the statement */
+@media (min-width:761px){#studio > .lede:not(.h-shut) h2{padding-top:2.06em}}
 
 /* ---------- Network: portraits, profile drawer, timeline ---------- */
 .peers{position:relative}
