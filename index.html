@@ -536,7 +536,7 @@ footer{font-size:calc(12*var(--fz))}
 @media (prefers-reduced-motion:reduce){.media > img,.media > video,.media > .stream{transition:none}}
 
 /* one size for all small text, the same as the More films titles; weight and grey tell roles apart */
-:root{--pjask:clamp(34px,4.8vw,calc(96*var(--fz)));--ui:calc(13*var(--fz));--small:calc(15*var(--fz));/* one type scale: display (hero lines and every section statement), title, action, small */--d1:clamp(26px,3.05vw,56px);--h1:clamp(32px,3.7vw,calc(72*var(--fz)));--t1:clamp(19px,1.6vw,26px);--act:clamp(15px,1.15vw,calc(17*var(--fz)));--ease:cubic-bezier(.16,1,.3,1)}
+:root{--pjask:clamp(34px,4.8vw,calc(96*var(--fz)));--ui:calc(9.2*var(--fz));--small:calc(15*var(--fz));/* one type scale: display (hero lines and every section statement), title, action, small */--d1:clamp(26px,3.05vw,56px);--h1:clamp(32px,3.7vw,calc(72*var(--fz)));--t1:clamp(19px,1.6vw,26px);--act:clamp(15px,1.15vw,calc(17*var(--fz)));--ease:cubic-bezier(.16,1,.3,1)}
 .s,.hnote,.menu,.menu a,.chapter .t,.facts,.play-reel,.about p,.team p,.caps h3,.caps li,.card h3,.card .meta,.idx .t,.idx .c,.idx .w,
 .cap .cl,.cap .rl,.cap .yr,.cap .ln,.lb-bar .ctl,.watch,.pj-t,.pj-facts dd,.pj-gh h4,.pj-note p,.fields p,.end .links,.lb-ctl,.lb-now #lb-now-n,.all,.pj-cta{font-size:var(--small);line-height:1.35}
 .card h3,.pj-gh h4{font-weight:500}
@@ -550,7 +550,7 @@ footer{font-size:calc(12*var(--fz))}
 .hdr.compact .wm{display:inline-block;animation:wmIn .4s var(--ease) both}
 @keyframes wmIn{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
 /* interface text (labels, Rec, counters, footer) one step below body text */
-.lab,footer{font-size:var(--ui);line-height:1.35}
+.lab,footer,.facts,.play-reel,.hnote,.facts .rec{font-size:var(--ui);line-height:1.35}   /* labels, Rec, counters, the reel's play line, the footer */
 
 /* hero: the line and the subline share one size; the studio line sits low on the left, play in the right corner */
 .hero .hd .sub{color:rgba(237,237,235,.62)}
@@ -709,11 +709,20 @@ footer{font-size:calc(12*var(--fz))}
 .net-view button:hover{color:var(--fg)}
 .net-view button[aria-pressed="true"]{color:var(--fg);text-decoration-color:currentColor;cursor:default}
 .net-names{list-style:none;margin:clamp(56px,6vw,96px) 0 clamp(24px,3vw,48px);padding:0 0 0 calc((100% + var(--g)) / 12 * 4);font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.04}
-.net-names button{font:inherit;letter-spacing:inherit;line-height:inherit;color:var(--fg);opacity:var(--o,1);background:none;border:0;padding:0;cursor:pointer;text-align:left;transition:opacity .25s,color .25s}
+.net-names > li > button{font:inherit;letter-spacing:inherit;line-height:inherit;color:var(--fg);opacity:var(--o,1);background:none;border:0;padding:0;cursor:pointer;text-align:left;transition:opacity .25s,color .25s}
 /* one name lit at a time: the highlight follows the profile shown (set by script), never two at once */
-.net-names button:focus-visible{opacity:1}
-.net-names button.on{color:var(--red);opacity:1}
-.net-names button:focus-visible{outline:1px solid var(--red);outline-offset:4px}
+.net-names > li > button:focus-visible{opacity:1}
+.net-names > li > button.on{color:var(--red);opacity:1}
+.net-names > li > button:focus-visible{outline:1px solid var(--red);outline-offset:4px}
+.net-dr.inl{position:static;inset:auto;transform:none;width:auto;height:auto;max-height:none;overflow:visible;margin:14px 0 26px;padding:0;border:0;background:none;box-shadow:none;animation:none;
+  font-size:var(--small);letter-spacing:normal;line-height:1.45;display:flex;flex-direction:column}
+.net-dr.inl[hidden]{display:none}
+.net-dr.inl .x{position:absolute;right:0;top:auto;margin-top:-6px}
+.net-dr.inl .dr-ph{width:120px}
+.net-dr.inl .dr-nm{margin:12px 0 0;font-size:0;line-height:1.2}   /* the name is right above it: only the role shows */
+.net-dr.inl .dr-nm .dr-role{font-size:calc(17*var(--fz));letter-spacing:-.01em}
+.net-dr.inl .dr-ln{padding-top:18px}
+.net-names > li{position:relative}
 @media (max-width:760px){.net-names{padding-left:0;margin-top:48px}}
 .net-hint{margin:16px 0 0 50%;width:50%;text-align:center;color:#f0463d;line-height:1.5;opacity:.5;white-space:nowrap}
 @media (max-width:900px){.net-hint{margin-left:0;width:100%;white-space:normal}}
@@ -797,7 +806,7 @@ footer{align-items:center}
 .ft-l{display:inline-flex;align-items:center;gap:clamp(18px,2.4vw,36px);justify-self:start;white-space:nowrap}
 footer .ft-top{justify-self:center}
 .th-i{width:1em;height:1em;margin-right:.35em;vertical-align:-.15em;fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
-footer .ft-top{font-size:var(--act);letter-spacing:-.01em;color:var(--fg)}
+footer .ft-top{font-size:calc(12*var(--fz));letter-spacing:-.01em;color:var(--fg)}   /* a step above the rest of the footer, 30% under its old size */
 footer .ft-top:hover{color:var(--red)}
 .ft-th{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;display:inline-flex;gap:.9em}
 .ft-th span{opacity:.5;transition:opacity .2s,color .2s}
@@ -2390,7 +2399,12 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   wrap.addEventListener('pointerleave', ()=>{ if (!drag){ hover = null; if (!running) draw(); } });
   /* the profile drawer */
   const dr = document.getElementById('netDr');
-  function openDr(n, peek){ sel = n; const i = Object.assign({bio: BIO_PH[n.id] || ''}, INFO[n.id] || {}), roles = Object.entries(n.roles).sort((a,b)=>b[1]-a[1]).map(r=>r[0]);
+  const drHome = dr.parentElement, drNext = dr.nextSibling;
+  /* on phones in the list view the profile opens in the list, right under the tapped name, so the names stay scrollable */
+  const placeDr = n => { const inl = innerWidth <= 760 && wrap.hidden; dr.classList.toggle('inl', inl);
+    if (inl){ const li = netNames.querySelector(`[data-p="${n.id}"]`).parentElement; if (dr.parentElement !== li) li.appendChild(dr); }
+    else if (dr.parentElement !== drHome) drHome.insertBefore(dr, drNext); };
+  function openDr(n, peek){ placeDr(n); sel = n; const i = Object.assign({bio: BIO_PH[n.id] || ''}, INFO[n.id] || {}), roles = Object.entries(n.roles).sort((a,b)=>b[1]-a[1]).map(r=>r[0]);
     const role = i.role || roles.slice(0,2).join(' · ') || 'Collaborator';
     const list = n.projects.map(id=>[id, F[id].title, year(id)]).sort((a,b)=>(b[2]||0)-(a[2]||0));
     /* magazine order: portrait, the name set large across its lower edge with the title beneath at the same size, the bio with a drop cap, then their website and every project with them */
@@ -2406,6 +2420,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     /* the page never scrolls when a profile opens: the panel lines up with the top of the graph, or with the first name of the list
        (photo top on the cap height of the first name), and only slides down to stay on screen when the list has been scrolled past */
     const anc = wrap.hidden ? netNames : wrap;
+    if (dr.classList.contains('inl')){ dr.style.top = ''; dr.style.minHeight = ''; return; }
     if (innerWidth > 760){ dr.style.minHeight = Math.max(0, Math.min(netNames.children.length * parseFloat(getComputedStyle(netNames).fontSize) * 1.04 - 96, innerHeight - 260)) + 'px';   /* the same height in both views, measured on the list */   /* links sit at the bottom of the field */
       const ar = anc.getBoundingClientRect(), base = ar.top + (wrap.hidden ? parseFloat(getComputedStyle(netNames).fontSize) * .24 : 48),
         vt = Math.min(Math.max(base, 140), Math.max(base, ar.bottom - dr.offsetHeight));
@@ -2414,7 +2429,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   let opener = null;
   /* list view: the same people as plain names; the switch is remembered per browser */
   const netNames = document.getElementById('netNames'), netHint = document.getElementById('netHint'), viewBtns = document.querySelectorAll('.net-view [data-view]');
-  const markNames = () => netNames.querySelectorAll('button').forEach(b=>b.classList.toggle('on', !!sel && b.dataset.p === sel.id));
+  const markNames = () => netNames.querySelectorAll('li > button').forEach(b=>b.classList.toggle('on', !!sel && b.dataset.p === sel.id));
   { const others = pn.filter(p=>!p.core), lo = Math.min(...others.map(p=>p.deg)), hi = Math.max(...others.map(p=>p.deg));
     const lis = [...netNames.children], node = li => pn.find(n=>n.id === li.firstElementChild.dataset.p);
     lis.sort((a,b)=>{ const x = node(a), y = node(b); return (y.core - x.core) || (x.core ? 0 : y.deg - x.deg); }).forEach(li=>netNames.appendChild(li));
