@@ -65,6 +65,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - 88 behind-the-scenes photos (`media/bts`): the About page slideshow on panoramafilms.tv without its repeats, plus photos restored from the site's other galleries. Shown in colour in "Human in the loop".
 - Client logos for 17 selected collaborators, chosen by Andrija, sourced from the clients' own sites or Wikimedia Commons (`media/logos`), shown in a mixed strip of logos and names. Dubai Sports Council has no logo yet (shown as text until Andrija supplies it).
 - Team portraits of Andrija Kovač, Mina Strugar and Marija Kovačina, supplied by Andrija (`media/team`), used in the Collective graph.
+- Placeholder silhouette portrait for collaborators, supplied by Andrija (`media/team/placeholder.webp`). Collaborator bios: not yet supplied (lorem ipsum stands in).
 - ImagineBoka.ai exhibition photos and poster from panoramafilms.tv/ImagineBoka-ai (`media/proj/ImagineBoka-ai`); venue and dates are taken from the poster.
 - Client list from the About page (41 names) plus Dubai Sports Council, confirmed by Andrija.
 - Original brand brief: `Panorama_Films_Claude_Brief.txt` (uploaded); the T-shirt work in it is out of scope for the website.
@@ -83,7 +84,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - **Header:** globe logo; nav Work · Studio · Contact, plus search (`/` shortcut). Known issue: header overlap, left for later.
 - **Hero** with showreel loop.
 - **Work** (`#films`): featured films 01–06 in two chapters (parallax off), then the catalogue.
-- **Studio** (`#studio`): the Collective graph (portraits, profile drawer, a round moving web of team and collaborators, keyboard-accessible list), replacing the old team columns; selected collaborators as a mixed logo/name strip with throw physics.
+- **Studio** (`#studio`): the Collective graph (portraits, profile drawer, a round moving web of team and collaborators, keyboard-accessible list), replacing the old team columns. Profile photo is a small circle, grayscale, darkened to ~30%. Collaborators without a portrait use a dark silhouette photo (`media/team/placeholder.webp`, supplied by Andrija); their bios are lorem ipsum placeholders (`BIO_PH` in the code) until real bios arrive; selected collaborators as a mixed logo/name strip with throw physics.
 - **Approach** (`#approach`): Approach with "Seen in" links to the films that show each point, the Manifesto, and the Human in the loop slideshow.
 - **Contact** (`#contact`): "Let's make a film together.", contact form link, click-to-copy email, Vimeo, Instagram.
 - The page is organised in Films / Studio / Contact folds. Dark by default, with a Dark/Light switch in the footer.

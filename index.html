@@ -713,7 +713,7 @@ footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center}
 footer .ft-y{justify-self:start;white-space:nowrap}
 /* search is the last of the big contact lines, as tall as the letters */
 .end .links.big .big-sx{line-height:1}
-.end .links.big .big-sx svg{display:block;width:.7em;height:.7em;margin:.12em 0 .06em;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round}   /* a touch lighter than the regular weight of the type */
+.end .links.big .big-sx svg{display:block;width:.95em;height:.95em;margin:.1em 0 .04em;fill:none;stroke:currentColor;stroke-width:1.65;stroke-linecap:round}   /* a touch lighter than the regular weight of the type */
 footer .ft-c{justify-self:end;white-space:nowrap}
 footer .ft-top{white-space:nowrap}
 @media (max-width:420px){footer{column-gap:12px}}
@@ -983,14 +983,15 @@ footer .ft-top:hover{color:var(--red)}
 
 /* profile: Swiss, with the site's own move: the photo and the first line of the name start on the same indent */
 @media (min-width:761px){.net-dr .x{left:0;right:auto}}
-.dr-ph{width:66%;margin:0 0 0 34%}
+.dr-ph{width:calc(150*var(--fz));aspect-ratio:1;border-radius:50%;margin:0 0 0 34%;background:#000}
+.dr-ph img{filter:grayscale(1) brightness(.3) contrast(1.1)}   /* the photo darkened to about 30%, not see-through */
 .dr-nm{margin:28px 0 0;text-indent:34%;font-size:clamp(28px,2.5vw,calc(40*var(--fz)));line-height:1.02}
 .dr-nm .dr-role{display:inline;color:var(--sub)}
 .dr-nm .dr-role::before{content:" "}
 .dr-bio{margin:22px 0 0;max-width:none;font-size:calc(16*var(--fz));line-height:1.55;opacity:.86}
 .dr-bio::first-letter{float:none;font-size:inherit;line-height:inherit;margin:0;color:inherit}
 .dr-ln{margin-top:26px;padding-top:14px;border-top:1px solid var(--rule)}
-@media (max-width:760px){.dr-ph{width:150px;margin-left:0}.dr-nm{text-indent:0;font-size:calc(28*var(--fz))}}
+@media (max-width:760px){.dr-ph{width:120px;margin-left:0}.dr-nm{text-indent:0;font-size:calc(28*var(--fz))}}
 
 /* ---- project page (lightbox) ---- */
 .lb-bar{align-items:center;padding-top:calc(env(safe-area-inset-top,0px) + 18px);padding-bottom:18px}
@@ -2116,10 +2117,23 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     const id = pn.find(n=>n.name === nm.textContent.trim()); if (!id) return;
     INFO[id.id] = {photo: img ? img.getAttribute('src') : '', role: (a.querySelector('.lab') || {}).textContent || '', bio: (a.querySelector('p') || {}).textContent || ''}; });
   /* links for everyone go here when we have them, e.g. LINKS.andrija = 'https://instagram.com/…' */
+  /* PLACEHOLDER bios (lorem ipsum, different lengths) so the profile layout can be judged; replace with real bios */
+  const BIO_PH = {
+    piki: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus, posuere velit aliquet.',
+    babic: 'Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui, cras justo odio dapibus ac facilisis in, egestas eget quam.',
+    cile: 'Maecenas faucibus mollis interdum.',
+    danilo: 'Aenean lacinia bibendum nulla sed consectetur. Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis, nulla vitae elit libero, a pharetra augue.',
+    stojanovic: 'Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes.',
+    bojan: 'Donec ullamcorper nulla non metus auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.',
+    zoran: 'Nulla vitae elit libero, a pharetra augue. Fusce dapibus, tellus ac cursus commodo.',
+    milovan: 'Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.',
+    matija: 'Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante. Nullam id dolor id nibh ultricies vehicula ut id elit, sed posuere consectetur est at lobortis.',
+    ana: 'Sed posuere consectetur est at lobortis. Aenean eu leo quam, pellentesque ornare sem lacinia quam venenatis vestibulum.'
+  };
   const LINKS = {};   /* until real links arrive everyone shows a placeholder website link */
   const LINK_PH = '#';
-  /* until we have everyone's photos, a plain silhouette stands in for them (PLACEHOLDER) */
-  const PLACEHOLDER = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 125'%3E%3Crect width='100' height='125' fill='%23e6e6e3'/%3E%3Cpath fill='%23080808' d='M50 22c-11 0-18 8-18 20 0 8 2 15 5 20 1 2 2 5 2 8v6c-12 3-24 7-29 16-3 6-4 15-4 33h88c0-18-1-27-4-33-5-9-17-13-29-16v-6c0-3 1-6 2-8 3-5 5-12 5-20 0-12-7-20-18-20z'/%3E%3C/svg%3E";
+  /* until we have everyone's photos, a dark silhouette photo stands in for them (PLACEHOLDER) */
+  const PLACEHOLDER = 'media/team/placeholder.webp';
   pn.forEach(n=>{ const i = INFO[n.id] || {}; const src = i.photo || PLACEHOLDER; if (src){ n.img = new Image(); n.img.src = src; n.ph = !i.photo; n.img.onload = () => { if (!running) draw(); }; } });
   const ini = n => n.name.split(' ').filter(w=>/^[A-ZĆČŠŽĐ]/.test(w)).slice(0,2).map(w=>w[0]).join('');
   /* timeline: projects appear in the year they were made; undated ones only at the end */
@@ -2212,7 +2226,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       /* portraits: a photo in a red ring for the three of us, initials for everyone else until we have their photos */
       ctx.save(); ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.closePath();
       if (n.img && n.img.complete && n.img.naturalWidth){ ctx.clip(); const iw = n.img.naturalWidth, ih = n.img.naturalHeight, s = (2*r) / Math.min(iw, ih);
-        ctx.fillStyle = '#000'; ctx.fillRect(n.x - r, n.y - r, 2*r, 2*r); ctx.globalAlpha *= .92; ctx.drawImage(n.img, n.x - iw*s/2, n.y - ih*s*.42, iw*s, ih*s); }
+        ctx.fillStyle = '#000'; ctx.fillRect(n.x - r, n.y - r, 2*r, 2*r); ctx.globalAlpha *= n.ph ? .3 : .92; ctx.drawImage(n.img, n.x - iw*s/2, n.y - ih*s*.42, iw*s, ih*s); }
       else { ctx.fillStyle = LIGHT() ? '#e4e3de' : '#1c1c1b'; ctx.fill(); }
       ctx.restore(); ctx.globalAlpha = (dim ? .3 : 1) * n.vis;
       ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.lineWidth = (n.core ? 2.5 : 1.3) * (small ? 1 : S); ctx.strokeStyle = n.core || n === act ? '#e2231a' : (LIGHT() ? '#8f8f8a' : '#5d5d5a'); ctx.stroke();
@@ -2250,7 +2264,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   wrap.addEventListener('pointerleave', ()=>{ if (!drag){ hover = null; if (!running) draw(); } });
   /* the profile drawer */
   const dr = document.getElementById('netDr');
-  function openDr(n){ sel = n; const i = INFO[n.id] || {}, roles = Object.entries(n.roles).sort((a,b)=>b[1]-a[1]).map(r=>r[0]);
+  function openDr(n){ sel = n; const i = Object.assign({bio: BIO_PH[n.id] || ''}, INFO[n.id] || {}), roles = Object.entries(n.roles).sort((a,b)=>b[1]-a[1]).map(r=>r[0]);
     const role = i.role || roles.slice(0,2).join(' · ') || 'Collaborator';
     const list = n.projects.map(id=>[id, F[id].title, year(id)]).sort((a,b)=>(b[2]||0)-(a[2]||0));
     /* magazine order: portrait, the name set large across its lower edge with the title beneath at the same size, the bio with a drop cap, then their website and every project with them */
