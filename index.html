@@ -1587,12 +1587,13 @@ function preloadAll(){
     (im.decode ? im.decode() : new Promise(r=>im.onload=r)).then(()=>{ picOk[i] = true; }).catch(()=>{}); });
 }
 function sizePhoto(i){
-  /* height follows the original's size (a small phone photo stays small, a full camera frame goes tall);
-     width follows its own proportions; it is cropped only when it is wider than the section */
-  const box = fi.parentElement, W = box.clientWidth, H = box.clientHeight, [ow, oh] = BTS_DIMS[i];
-  const hf = Math.min(.92, Math.max(.34, .22 + .7 * Math.min(oh, 4000) / 4000));
-  let h = H * hf, w = h * ow / oh;
-  if (w > W * .96) w = W * .96;
+  /* every photo covers the same area, whatever its file size or shape: a portrait is taller and narrower,
+     a landscape wider and lower, but they read as one size; capped so tall ones fit the section */
+  const box = fi.parentElement, W = box.clientWidth, H = box.clientHeight, [ow, oh] = BTS_DIMS[i], r = ow / oh;
+  const area = Math.min(W, H * 1.5) * H * .36;
+  let h = Math.sqrt(area / r), w = h * r;
+  if (h > H * .78){ h = H * .78; w = h * r; }
+  if (w > W * .9){ w = W * .9; h = w / r; }
   fi.style.width = Math.round(w) + 'px'; fi.style.height = Math.round(h) + 'px';
 }
 sizePhoto(0); new ResizeObserver(()=>sizePhoto(fiI)).observe(document.getElementById('hitl'));
