@@ -1,5 +1,5 @@
 /* LE-008 · Particle inflate
-   The flat Panorama globe, sampled pixel by pixel from the logo file, swells on hover into a
+   On hover the flat logo first shows a slight wavering colour split for a third of a second, then the flat Panorama globe, sampled pixel by pixel from the logo file, swells on hover into a
    turning 3D sphere of dust. Depth drives an RGB split (near side one way, far side the other).
    Drag turns it in any direction with inertia. Leaving flattens it back into the plain logo.
    <panorama-globe-inflate style="width:180px"></panorama-globe-inflate>
@@ -27,7 +27,7 @@ class PanoramaGlobeInflate extends HTMLElement{
   this.attachShadow({mode:'open'}).innerHTML=`<style>:host{display:block;aspect-ratio:1;position:relative;color:#fff}canvas{width:100%;height:100%;display:block;image-rendering:pixelated;cursor:grab;touch-action:pan-y;outline:none}:host(.held) canvas{cursor:grabbing}canvas:focus-visible{outline:1px solid currentColor;outline-offset:5px}</style><canvas tabindex="0" role="img" aria-label="Panorama globe. Hover or press Space to inflate it into a sphere of particles; drag to turn it."></canvas>`;
   this.cv=this.shadowRoot.querySelector('canvas');this.ctx=this.cv.getContext('2d');
   this.h=0;this.ht=0;this.t=0;this.rot=0;this.tilt=0;this.spin=0;this.tspin=0;this.held=false;this.hover=false;this.pin=false;
-  this.raf=0;this.visible=true;this.S=0;this.P=0;this.tick=this.tick.bind(this);
+  this.raf=0;this.visible=true;this.pre=0;this.ab=0;this.S=0;this.P=0;this.tick=this.tick.bind(this);
   this.motion=matchMedia('(prefers-reduced-motion: reduce)');
  }
  get split(){const v=Number(this.getAttribute('split')??1);return Number.isFinite(v)?clamp(v,0,2):1;}
@@ -82,24 +82,30 @@ class PanoramaGlobeInflate extends HTMLElement{
  dot3(x,y,ox,c){if(Math.abs(ox)<.5/this.D){this.dot(x,y,c,c,c);return}this.dot(x+ox,y,c,0,0);this.dot(x,y,0,c,0);this.dot(x-ox,y,0,0,c);}
  wake(){if(this.isConnected&&!this.raf){this.last=performance.now();this.raf=requestAnimationFrame(this.tick);}}
  tick(now){this.raf=0;if(!this.P||document.hidden||!this.visible)return;
-  const dt=Math.min(.05,(now-this.last)/1000);this.last=now;const RM=this.motion.matches;
-  const tg=this.target,rate=RM?20:(tg>this.h?1/.85:1/1.05);this.h=clamp(this.h+clamp(tg-this.h,-rate*dt,rate*dt),0,1);
+  const dt=clamp((now-this.last)/1000,0,.05);this.last=now;const RM=this.motion.matches;
+  let tg=this.target;
+  /* Before it bursts: hold the flat logo for a moment with a slight wavering colour split (cyan and red fringes). */
+  if(tg===1){this.pre+=dt;if(this.h===0&&this.pre<.32&&!this.held&&!RM)tg=0;}else this.pre=0;
+  this.t=(this.t||0)+dt;
+  const rate=RM?20:(tg>this.h?1/.85:1/1.05);this.h=clamp(this.h+clamp(tg-this.h,-rate*dt,rate*dt),0,1);
   const h=this.h,E=ease(h);
+  this.ab=this.target===1?clamp(this.pre/.2,0,1)*(1-E):0;
   if(h===0&&!this.held){this.rot=this.tilt=this.spin=this.tspin=0}
   else if(!this.held){this.rot+=dt*((RM?0:.8*E)+this.spin);this.tilt+=dt*this.tspin;const dm=Math.exp(-dt*2.2);this.spin*=dm;this.tspin*=dm;this.tilt*=Math.exp(-dt*.6);}
-  if(h===0&&tg===0&&!this.held){if(this.dataset.state!=='rest'||this.dirty){this.rest();this.dirty=false;}this.dataset.state='rest';if(this.hasAttribute('demo'))this.raf=requestAnimationFrame(this.tick);return;}
+  if(h===0&&this.target===0&&!this.held){if(this.dataset.state!=='rest'||this.dirty){this.rest();this.dirty=false;}this.dataset.state='rest';if(this.hasAttribute('demo'))this.raf=requestAnimationFrame(this.tick);return;}
   this.draw(E);this.present();this.dataset.state='inflated';this.raf=requestAnimationFrame(this.tick);
  }
  draw(E){
   const c=this.S/2,R=this.R,sc=this.S/360,AB=this.split;
+  const fl=this.ab*AB*2.2*sc*(.7+.3*Math.sin(this.t*23)+.15*Math.sin(this.t*57));
   const cr=Math.cos(this.rot),sr=Math.sin(this.rot),tl=(-.33+this.tilt)*E,ct=Math.cos(tl),st=Math.sin(tl),keep=1-.45*E;
   for(let i=0;i<this.P;i++){
-   const hx=this.hx[i],hy=this.hy[i];if(E===0){this.dot(hx,hy,255,255,255);continue}
+   const hx=this.hx[i],hy=this.hy[i];if(E===0){this.dot3(hx,hy,fl,255);continue}
    const nx=this.nx[i],ny=this.ny[i],nz=this.nz[i];
    const x1=nx*cr+nz*sr,z1=-nx*sr+nz*cr,y2=ny*ct-z1*st,z2=ny*st+z1*ct;
    const k3=1+z2*.1*E,X=c+x1*R*k3,Y=c+y2*R*k3,bright=1-E*(1-(.22+.78*(z2*.5+.5)));
    if(bay(this.ix[i],this.iy[i])>bright||this.r1[i]>keep)continue;
-   this.dot3(hx+(X-hx)*E,hy+(Y-hy)*E,z2*E*AB*2.8*sc,255);
+   this.dot3(hx+(X-hx)*E,hy+(Y-hy)*E,z2*E*AB*2.8*sc+fl,255);
   }
   if(E>.01){const rr=R*(.8+.2*E);
    for(let j=0;j<this.M;j++){if(this.gr[j]>E*.85)continue;
