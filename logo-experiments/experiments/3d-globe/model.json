@@ -1,0 +1,24 @@
+{
+  "tiltX": 0.486204715155904,
+  "tiltZ": -0.36019945032889145,
+  "phase": 0.06383834190298658,
+  "latitudeStep": 0.3125203796099627,
+  "latitudeOffset": -0.04956524583023807,
+  "parallelWidth": 0.9987209308282021,
+  "meridianWidth": 1.578084481715483,
+  "cx": 31.22100406986017,
+  "cy": 31.25494631394643,
+  "radius": 25.553632152032378,
+  "polarTaper": 0.5812191824621269,
+  "rasterSize": 64,
+  "meridians": 12,
+  "angularSpeedRadiansPerSecond": -0.6283185307179586,
+  "cadenceFPS": 10,
+  "projection": "orthographic",
+  "pixelSampling": "binary, nearest neighbour",
+  "localSpinAxis": [
+    0,
+    1,
+    0
+  ]
+}

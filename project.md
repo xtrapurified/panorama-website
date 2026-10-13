@@ -124,3 +124,10 @@ Full audit and decisions: the claude.ai doc "Services & Roles — audit and syst
 6. Credits: role + names, names spelled consistently.
 7. Photos (photo projects): ~1100 px long side; poster at same width.
 8. Extra-film thumbnails (optional): 640×360.
+
+## Logo Experiments (2026-10-13)
+
+- `/logo-experiments/` is a separate, unlinked one-page reference catalogue of six user-supplied logo studies. It has noindex metadata and a folder-wide robots header; it is public, not access-controlled.
+- Stable IDs LE-001–LE-006 identify the recorded globe, v09, v15, 3D globe, optical lens and Edge prism. Edge prism preserves the chosen intensity 0.1 and hidden slider.
+- Each study keeps its original upload, extracted assets and source. `logo-experiments/catalog.js` registers entries; add future studies with new IDs without renumbering. The collection README describes integration and additions.
+- Follow the existing dev preview workflow. The website logo is not replaced by adding an experiment to this catalogue. Browser review of the new catalogue is still pending.
