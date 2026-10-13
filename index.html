@@ -25,7 +25,7 @@
 #golden .gh-code .v{color:var(--fg)}
 svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;overflow:visible}
 /* light mode: Golden hour turns to paper too, and the map follows */
-:root[data-pf="light"] #golden .gh-body{--bg:#e8e7e2;--fg:#121211;--mid:#6c6c68;background:var(--bg)}
+:root[data-pf="light"] #golden .gh-body{--bg:#f1f0ec;--fg:#121211;--mid:#6c6c68;background:var(--bg)}
 #golden canvas{cursor:crosshair}
 #golden .gh-code p,#golden .gh-code pre{margin:0}
 #golden .gh-code pre{font:inherit;white-space:pre-wrap;overflow-wrap:anywhere;color:var(--mid)}
@@ -2720,7 +2720,7 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
   const fold = document.getElementById('ghFold');
   const R = Math.PI / 180;
   const DARK = { sea: '#0c0c0c', land: '#383837', red: [226, 35, 26], redS: '#e2231a', fg: '#f2f2f0', mid: '#5f5f5d', night: .74 };
-  const LIGHT = { sea: '#f4f3ef', land: '#cfcec8', red: [226, 35, 26], redS: '#e2231a', fg: '#121211', mid: '#8d8c87', night: .24 };
+  const LIGHT = { sea: '#f9f8f5', land: '#cfcec8', red: [226, 35, 26], redS: '#e2231a', fg: '#121211', mid: '#8d8c87', night: .24 };
   let C = document.documentElement.dataset.pf === 'light' ? LIGHT : DARK;
   const land = topojson.feature(LAND_TOPO, LAND_TOPO.objects.land), SPHERE = { type: 'Sphere' };
   const lobesFrom = (n0, s) => {
