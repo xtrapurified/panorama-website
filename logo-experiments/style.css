@@ -1,5 +1,5 @@
 /* Logo Experiments, styled after the Panorama Films website (dark theme): Untitled Sans, the site's colours,
-   wordmark + underlined menu header, small grey label beside a large indented statement, rule-led index, three-part footer. */
+   page name in the header, a large statement, an icon grid of studies, three-part footer. */
 @font-face{font-family:"Untitled Sans";src:url(../media/fonts/UntitledSans-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
 @font-face{font-family:"Untitled Sans";src:url(../media/fonts/UntitledSans-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
 @font-face{font-family:"Untitled Sans";src:url(../media/fonts/UntitledSans-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
@@ -19,36 +19,25 @@ p,h1,h2,h3,ol{margin:0}
 .mid{color:var(--mid)}
 .tc{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:.04em}
 
-/* Header: wordmark left, the site's menu right */
-.hdr{display:flex;justify-content:space-between;align-items:center;gap:24px;padding-block:clamp(18px,2.2vw,30px)}
+/* Header: the page name only */
+.hdr{padding-block:clamp(18px,2.2vw,30px)}
 .wm{font-size:clamp(17px,1.4vw,22px);font-weight:700;letter-spacing:-.045em;line-height:1;white-space:nowrap}
-.wm .wm-f{font-weight:500}
-.wm sup{font-size:.42em;font-weight:500;letter-spacing:0;margin-left:.15em}
-.menu{display:flex;align-items:baseline;gap:clamp(16px,1.8vw,26px)}
-.menu a{font-size:clamp(17px,1.6vw,24px);color:rgba(255,255,255,.6);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:rgba(255,255,255,.35);transition:color .2s}
-.menu a:hover{color:#fff}
 
 /* Intro: small grey label on the statement's first baseline, statement indented four columns */
 .lede{position:relative;padding-top:clamp(72px,9vw,150px);margin-bottom:clamp(64px,7vw,120px)}
-.tag{position:absolute;left:0;top:calc(clamp(72px,9vw,150px) + (var(--d1) - var(--t1)) * .88);font-size:var(--t1);line-height:1.03;letter-spacing:-.037em;color:var(--sub);white-space:nowrap}
-.lede h1{font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.03;text-indent:calc((100% + var(--g)) / 12 * 4);text-wrap:pretty}
+.lede h1{font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.03;max-width:22em;text-wrap:pretty}
 .lede h1 .mid{color:var(--sub)}
 
 /* Index: a rule, then one row per study */
 .sh{display:flex;justify-content:space-between;gap:16px;border-top:1px solid var(--fg);padding:14px 0 6px}
-#grid{list-style:none;padding:0}
-.study{display:grid;grid-template-columns:var(--th) minmax(0,3fr) minmax(0,5fr) auto;column-gap:var(--g);align-items:start;padding-block:16px;border-bottom:1px solid var(--rule);scroll-margin:30px}
-.preview{position:relative;display:block;width:var(--th);aspect-ratio:1.14;background:#000;overflow:hidden;border:1px solid #191919;transition:border-color .2s}
+#grid{list-style:none;padding:0;margin-top:clamp(20px,2.4vw,36px);display:grid;grid-template-columns:repeat(auto-fill,minmax(var(--th),1fr));gap:clamp(28px,3vw,44px) var(--g)}
+.study{min-width:0;scroll-margin:30px}
+.preview{position:relative;display:block;width:100%;aspect-ratio:1;background:#000;overflow:hidden;border:1px solid #191919;transition:border-color .2s}
 .preview iframe{position:absolute;inset:0;width:100%;height:100%;border:0;pointer-events:none}
-.study:hover .preview{border-color:var(--red)}
-.study .id{display:block;font-size:calc(11*var(--fz));color:var(--mid);margin-bottom:6px}
-.study h2{font-size:var(--t1);font-weight:400;letter-spacing:-.037em;line-height:1.05;transition:color .2s}
-.study h2 a:hover{color:var(--red)}
-.study p{font-size:max(13px,calc(15*var(--fz)));line-height:1.4;color:var(--mid);max-width:52ch;padding-top:calc(11*var(--fz) * 1.3 + 6px)}
-.study .side{display:flex;flex-direction:column;align-items:flex-end;gap:10px;padding-top:calc(11*var(--fz) * 1.3 + 6px);text-align:right}
-.study .links{display:flex;gap:18px;color:var(--fg)}
-.study .links a{border-bottom:1px solid var(--rule);padding-bottom:2px;transition:border-color .2s,color .2s}
-.study .links a:hover{border-color:var(--red)}
+.study:hover .preview,.preview:focus-visible{border-color:var(--red)}
+.study .id{display:block;font-size:max(10px,calc(10*var(--fz)));color:var(--mid);margin-top:10px}
+.study h2{font-size:max(14px,calc(16*var(--fz)));font-weight:400;letter-spacing:-.02em;line-height:1.2;margin-top:3px;transition:color .2s}
+.study:hover h2{color:var(--red)}
 
 /* Footer: the site's three-part line */
 footer{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:16px;margin-top:clamp(90px,10vw,160px);padding-block:18px calc(18px + env(safe-area-inset-bottom,0px))}
@@ -78,14 +67,10 @@ dialog::backdrop{background:#000d;backdrop-filter:blur(8px)}
 #status:not(:empty){display:block}
 body.viewing{overflow:hidden}
 
-@media (max-width:900px){.study{grid-template-columns:var(--th) minmax(0,1fr) auto}.study p{grid-column:2/4;grid-row:2;padding-top:10px}.viewer-bottom{align-items:flex-start;flex-direction:column;gap:12px}}
-@media (max-width:760px){.lede h1{text-indent:0}.tag{position:static;display:block;margin-bottom:16px}.menu a{font-size:15px}}
+@media (max-width:900px){.viewer-bottom{align-items:flex-start;flex-direction:column;gap:12px}}
+@media (max-width:760px){}
 @media (max-width:600px){
-  .menu{display:none}
-  .study{grid-template-columns:var(--th) minmax(0,1fr);row-gap:10px}
-  .study .side{grid-column:2;grid-row:2;align-items:flex-start;text-align:left;padding-top:0}
-  .study p{grid-column:1/-1;grid-row:3;padding-top:0}
-  .study .id{font-size:10px}
+  #grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:24px 12px}
   footer{column-gap:12px;font-size:10px}
   dialog{width:100vw;max-width:100vw;height:100dvh;max-height:100dvh;border:0}
   .viewer-top{padding:15px 18px}.viewer-top>div{gap:12px}.viewer-bottom{padding:12px 18px}

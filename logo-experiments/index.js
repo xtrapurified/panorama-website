@@ -15,13 +15,9 @@ const observer=new IntersectionObserver(items=>items.forEach(({target,isIntersec
 for(const item of [...entries].reverse()){
  const card=document.createElement('li');card.className='study';card.id=item.id;
  const preview=document.createElement('a');preview.className='preview';preview.href='#'+item.id;preview.setAttribute('aria-label',`Open ${item.id}: ${item.title}`);
- const head=document.createElement('div');const id=document.createElement('span');id.className='id tc';id.textContent=item.id;
- const h=document.createElement('h2');const ha=document.createElement('a');ha.href='#'+item.id;ha.textContent=item.title;h.append(ha);head.append(id,h);
- const desc=document.createElement('p');desc.textContent=item.description;
- const side=document.createElement('div');side.className='side';const kind=document.createElement('span');kind.className='lab mid';kind.textContent=item.kind==='Frame sequence'?'Recorded':item.kind;
- const links=document.createElement('div');links.className='links lab';for(const [label,url] of [['Open ↗','#'+item.id],['Original ↓',item.download]]){const a=document.createElement('a');a.textContent=label;a.href=url;if(url===item.download)a.download='';links.append(a);}
- side.append(kind,links);
- card.append(preview,head,desc,side);grid.append(card);cards.set(card,item);observer.observe(card);
+ const id=document.createElement('span');id.className='id tc';id.textContent=item.id;
+ const h=document.createElement('h2');const ha=document.createElement('a');ha.href='#'+item.id;ha.textContent=item.title;ha.title=item.description;h.append(ha);
+ card.append(preview,id,h);grid.append(card);cards.set(card,item);observer.observe(card);
 }
 $('#count').textContent=String(entries.length).padStart(2,'0');
 function close(){if(dialog.open)dialog.close();$('#stage').replaceChildren();active=null;document.body.classList.remove('viewing');cards.forEach((_,card)=>syncPreview(card));previousFocus?.focus({preventScroll:true});}
