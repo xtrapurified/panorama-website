@@ -125,5 +125,21 @@ window.LOGO_EXPERIMENTS = [
       "panorama-globe-inflate.html",
       "README.md"
     ]
+  },
+  {
+    "id": "LE-009",
+    "slug": "vector-spin",
+    "title": "Vector spin",
+    "kind": "Vector",
+    "description": "A vector globe whose meridians turn like a sphere. A switch picks spin on hover, continuous turn with drag, or a slow drift with a hover burst; each splits slightly into colour on hover.",
+    "entry": "experiments/vector-spin/panorama-globe-spin.html",
+    "preview": "experiments/vector-spin/panorama-globe-spin.html?embed=1",
+    "source": "experiments/vector-spin/globe-spin.js",
+    "download": "experiments/vector-spin/panorama-globe-spin.html",
+    "files": [
+      "globe-spin.js",
+      "panorama-globe-spin.html",
+      "README.md"
+    ]
   }
 ];
