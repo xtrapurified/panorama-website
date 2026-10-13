@@ -63,7 +63,7 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Panorama Films is an independent creative storytelling studio in Belgrade, Serbia. Documentaries, series, campaigns and brand films.">
 <link rel="icon" href="media/logo.png">
-<script src="media/globe-spin.js" defer></script>
+<script src="media/globe-glass.js" defer></script>
 <title>Panorama Films</title>
 <style>
 /* Layout: Swiss 12-column grid on black, film-first. Footage carries colour; type is Untitled Sans, flush left.
@@ -625,21 +625,22 @@ footer{font-size:calc(12*var(--fz))}
 .hdr.compact .logo-slot > .hdr-rec{opacity:0;visibility:hidden}
 /* Rec counts the time this visit has been on the site */
 @media (max-width:760px){.logo-slot{width:64px}}
-/* Header logo: LE-009 Vector spin from /logo-experiments/ in its first mode, spin on hover (2026-10-13, after LE-005 Optical lens):
-   a vector globe that is still until hovered, then spins for 0.1 s and slowly settles back on its starting pose,
-   with a subtle red/green/blue split while the pointer is over it. The element is square and the sphere fills 80% of it,
-   centred, so it overhangs the slot and the slot is sized to the sphere.
+/* Header logo: LE-010 Glass emblem from /logo-experiments/ (2026-10-13, after LE-009 Vector spin; media/globe-spin.js kept for going back):
+   the traced globe and lettering extruded in white glass, refracting the reel's still frame behind it, with the settings
+   Andrija tuned in the chrome studio (translucency 0.99, roughness 0.16, highlights 1.5, thickness 1.1, front view, no auto-turn).
+   Hover magnifies it and moves the reflections with the pointer; drag turns it, and it reads correctly from the back.
+   The element is square and the emblem fills 80% of it, centred, so it overhangs the slot and the slot is sized to the sphere.
    --gs sets its size: 179 px on desktop, 112 px on phones (sphere about 143 / 89 px). */
 :root{--gs:179px}
 @media (max-width:760px){:root{--gs:112px}}
 .logo-slot{width:calc(var(--gs) * .79855);aspect-ratio:1}
 .logo{aspect-ratio:1}
-.logo panorama-globe-spin{position:absolute;width:var(--gs);max-width:none;left:calc(var(--gs) * -.1007);top:calc(var(--gs) * -.1007)}   /* takes the pointer: hover spins it */
+.logo panorama-globe-glass{position:absolute;width:var(--gs);max-width:none;left:calc(var(--gs) * -.1007);top:calc(var(--gs) * -.1007)}   /* takes the pointer: hover magnifies and relights it, drag turns it */
 /* scrolling down, the globe shrinks toward the top left and fades as the wordmark rises into the same place; scrolling back up reverses it */
-.logo panorama-globe-spin{transform-origin:calc(var(--gs) * .1) calc(var(--gs) * .2);transition:transform .5s var(--ease),opacity .4s var(--ease)}
+.logo panorama-globe-glass{transform-origin:calc(var(--gs) * .1) calc(var(--gs) * .2);transition:transform .5s var(--ease),opacity .4s var(--ease)}
 .hdr.compact .logo-slot .logo{transition:visibility 0s .5s}
-.hdr.compact .logo-slot .logo panorama-globe-spin{transform:scale(.18);opacity:0}
-@media (prefers-reduced-motion:reduce){.logo panorama-globe-spin{transition:none}.hdr.compact .logo-slot .logo{transition:none}}
+.hdr.compact .logo-slot .logo panorama-globe-glass{transform:scale(.18);opacity:0}
+@media (prefers-reduced-motion:reduce){.logo panorama-globe-glass{transition:none}.hdr.compact .logo-slot .logo{transition:none}}
 /* links: no underline; a red one on hover */
 /* links: no underline; a red one on hover (set with the header link colours further down) */
 .hdr.compact .logo-slot .logo{visibility:hidden;pointer-events:none}
@@ -1281,7 +1282,7 @@ footer .ft-top:hover{color:var(--red)}
 <a class="skip" href="#films">Skip to films</a><a class="skip" href="#contact">Skip to contact</a>
 <header class="hdr" id="hdr">
   <div class="page bar">
-    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe-spin mode="hover" aria-hidden="true"></panorama-globe-spin></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a><span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span></div>
+    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe-glass backdrop="media/stills/reel.webp" backdrop-for="#heroMedia" aria-hidden="true"></panorama-globe-glass></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a><span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span></div>
     <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Get in touch</a><span class="nav-ft"><a href="#search" data-search class="nav-sx" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a><button type="button" class="ft-th" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
@@ -1854,8 +1855,8 @@ document.querySelectorAll('[data-sec]').forEach(s=>nio.observe(s));
 /* Logo: the Vector spin globe (LE-009, spin on hover). It handles the pointer itself and stops drawing once it has settled.
    When the header turns compact the globe shrinks into the wordmark's place; it is reset to its starting pose so it reappears still. */
 (()=>{
-  const hdrEl = document.getElementById('hdr'), g = document.querySelector('#logo panorama-globe-spin');
-  customElements.whenDefined('panorama-globe-spin').then(()=>{
+  const hdrEl = document.getElementById('hdr'), g = document.querySelector('#logo panorama-globe-glass');
+  customElements.whenDefined('panorama-globe-glass').then(()=>{
     let off = null, t = 0;
     const rest = ()=>{ const hidden = hdrEl.classList.contains('compact');
       if (hidden === off) return; off = hidden; clearTimeout(t);

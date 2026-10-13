@@ -141,5 +141,22 @@ window.LOGO_EXPERIMENTS = [
       "panorama-globe-spin.html",
       "README.md"
     ]
+  },
+  {
+    "id": "LE-010",
+    "slug": "glass-emblem",
+    "title": "Glass emblem",
+    "kind": "3D",
+    "description": "The traced globe and lettering extruded in white glass that refracts the reel behind it. Hover magnifies and relights it; drag turns it, and it reads correctly from the back. Includes the chrome studio used to tune it.",
+    "entry": "experiments/glass-emblem/panorama-globe-glass.html",
+    "preview": "experiments/glass-emblem/panorama-globe-glass.html?embed=1",
+    "source": "experiments/glass-emblem/globe-glass.js",
+    "download": "experiments/glass-emblem/panorama-chrome-studio.html",
+    "files": [
+      "globe-glass.js",
+      "panorama-globe-glass.html",
+      "panorama-chrome-studio.html",
+      "README.md"
+    ]
   }
 ];
