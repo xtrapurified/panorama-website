@@ -104,6 +104,8 @@ Approved versions to go back to before trying new things. Each one is a git bran
 
 Opens with 12 films (from p07) → "Load more" shows the rest (p07–p27) → "Load more from the archive" adds p28–p35 → "Show fewer".
 
+A centred Grid / Index switch under the Archive heading (same style as the Collective's Graph / List; Grid is the default, the choice is remembered per browser). Index (2026-10-13) lists all 35 projects, 01–35 including the featured ones, one row each: number, small still, title, client, year and film count (phones: number, still, title, year). Each row is a real link to the project page (`#<slug>`). Made so Andrija can see every project at once while deciding which to merge.
+
 ## Services, roles and credits (system approved by Andrija, 2026-10-09)
 
 Full audit and decisions: the claude.ai doc "Services & Roles — audit and system".

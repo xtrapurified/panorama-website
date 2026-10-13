@@ -258,6 +258,18 @@ h1,h2,h3,h4{margin:0;font-weight:500}
 .idx .c{grid-column:9/span 3}
 .idx .w{grid-column:12;text-align:right;white-space:nowrap}
 .idx:hover .t,.idx:hover .w{color:var(--red)}
+/* Index: every project on one list, in the site's order (2026-10-13) */
+.pindex{border-top:1px solid var(--rule)}
+.pindex .idx{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);padding:10px 0}
+.pindex .idx .k{grid-column:1;color:var(--mid);font-variant-numeric:tabular-nums}
+.pindex .idx .th{grid-column:2/span 1}
+.pindex .idx .t{grid-column:3/span 5}
+.pindex .idx .c{grid-column:8/span 3}
+.pindex .idx .w{grid-column:11;text-align:left;justify-content:flex-start}
+.pindex .idx .n{grid-column:12;text-align:right;white-space:nowrap;font-size:var(--small);color:var(--mid)}
+.pindex .idx:hover .n,.pindex .idx:focus-visible .t{color:var(--red)}
+.pindex .idx:focus-visible{outline:none}
+@media (max-width:700px){.pindex .idx .c,.pindex .idx .n{display:none}.pindex .idx .k{display:block;grid-column:1/span 2}.pindex .idx .th{grid-column:3/span 3}.pindex .idx .t{grid-column:6/span 5}.pindex .idx .w{grid-column:11/span 2;justify-content:flex-end;text-align:right}}
 @media (max-width:700px){.idx .k,.idx .c{display:none}.idx .th{grid-column:1/span 4}.idx .t{grid-column:5/span 6;font-size:calc(16*var(--fz))}.idx .w{grid-column:11/span 2}}
 .all{display:flex;justify-content:space-between;gap:16px;padding-top:18px}
 
@@ -1315,8 +1327,10 @@ footer .ft-top:hover{color:var(--red)}
 
   <section class="sec" data-sec="films">
     <div class="lede cat"><span class="tag sub">Catalogue</span><h2>Archive</h2></div>
+    <div class="net-view lab cat-view" role="group" aria-label="Show the catalogue as"><button type="button" data-cv="grid" aria-pressed="true">Grid</button><button type="button" data-cv="index" aria-pressed="false">Index</button></div>
+    <div class="pindex" id="pindex" hidden></div>
     <div class="cards" id="cards"></div>
-    <div class="reveal"><button type="button" id="showAll" class="tgl" aria-controls="cards" aria-expanded="false"><span id="showT">Load more</span><span class="pm" aria-hidden="true"></span></button></div>
+    <div class="reveal" id="showWrap"><button type="button" id="showAll" class="tgl" aria-controls="cards" aria-expanded="false"><span id="showT">Load more</span><span class="pm" aria-hidden="true"></span></button></div>
   </section>
 
   <section class="sec" id="studio" data-sec="studio">
@@ -1608,6 +1622,9 @@ document.getElementById('chapters').innerHTML = CHAPTERS.map(([c,t,r,items],ci)=
 /* one system for every card: the title, then the client and the year, all at one size; the client line is left out when the title already names it */
 const same = (a, b) => { const n = x => String(x||'').toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,''); const x = n(a), y = n(b); return !!x && !!y && x.includes(y); };   /* the title already names the client */
 document.getElementById('cards').innerHTML = CARDS.concat(INDEX).map((k,i)=>{const f=F[k], cl = same(f.title, f.client) ? '' : f.client;return `<article class="card${i >= CARDS.length ? ' arch' : i >= CARDS_SHOWN ? ' later' : ''}">${frame(k, true)}<div class="meta s" data-play="${k}"><h3>${esc(f.title)}</h3><span class="cl">${esc(cl)}</span></div></article>`;}).join('');
+/* Index: all projects as one list, each a real link to its page */
+document.getElementById('pindex').innerHTML = ORDER.map(k=>{ const f = F[k], n = nFilms(k), slug = PJ[k] && PJ[k].slug;
+  return `<a class="idx" href="${slug ? '#' + slug : ext(f)}" data-play="${k}"><span class="k s">${esc(f.n)}</span><span class="th"><img src="${still(k)}" alt="" loading="lazy"></span><span class="t">${esc(f.title)}</span><span class="c s mid">${esc(f.client)}</span><span class="w s mid">${esc(f.year || '')}</span><span class="n s">${n > 1 ? n + ' films' : n === 1 ? '1 film' : ''}</span></a>`; }).join('');
 const idxEl = document.getElementById('index'); if (idxEl) idxEl.innerHTML = INDEX.map(k=>{const f=F[k];return `<div class="idx" data-play="${k}" role="button" tabindex="0" aria-label="${f.v||f.yt ? 'Play' : 'View'} ${esc(f.title)}"${f.hover?` data-hv="${f.hover}"`:''}><span class="th"><img src="${still(k)}" alt="" loading="lazy">${f.v||f.yt?'<span class="play" aria-hidden="true"></span>':''}</span><span class="t">${esc(f.title)}</span><span class="c s mid">${esc(f.client)}</span><span class="w s mid">${esc(f.year)}</span></div>`;}).join('');
 /* each discipline points to films where Panorama was credited for it (services and credits on the project), never more than three */
 const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interviewer/)), Writing: k => /script|concept/i.test(F[k].roles || ''),
@@ -2410,6 +2427,14 @@ document.addEventListener('keydown', e=>{
     /* the address is also shown, selectable, in case copying is blocked */
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(a).then(()=>done(true), ()=>done(false)); else done(false);
   });
+})();
+
+/* catalogue: Grid or Index, remembered per browser */
+(()=>{ const bs = document.querySelectorAll('.cat-view [data-cv]'), ix = document.getElementById('pindex'), cards = document.getElementById('cards'), more = document.getElementById('showWrap');
+  const set = v => { const on = v === 'index'; ix.hidden = !on; cards.hidden = on; more.style.display = on ? 'none' : '';
+    bs.forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.cv === v))); try { localStorage.setItem('pf-cat-view', v); } catch(e){} };
+  bs.forEach(b=>b.addEventListener('click', ()=>{ if (b.getAttribute('aria-pressed') !== 'true') set(b.dataset.cv); }));
+  let v = 'grid'; try { v = localStorage.getItem('pf-cat-view') || 'grid'; } catch(e){} if (v === 'index') set('index');
 })();
 
 /* catalogue: show all / show fewer, as one toggle under the grid */
