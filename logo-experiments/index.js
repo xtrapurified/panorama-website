@@ -15,9 +15,11 @@ const observer=new IntersectionObserver(items=>items.forEach(({target,isIntersec
 for(const item of [...entries].reverse()){
  const card=document.createElement('li');card.className='study';card.id=item.id;
  const preview=document.createElement('a');preview.className='preview';preview.href='#'+item.id;preview.setAttribute('aria-label',`Open ${item.id}: ${item.title}`);
- const id=document.createElement('span');id.className='id tc';id.textContent=item.id;
- const h=document.createElement('h2');const ha=document.createElement('a');ha.href='#'+item.id;ha.textContent=item.title;ha.title=item.description;h.append(ha);
- card.append(preview,id,h);grid.append(card);cards.set(card,item);observer.observe(card);
+ const id=document.createElement('span');id.className='id tc';const n=document.createElement('span');n.textContent=item.id;const k=document.createElement('span');k.className='k';k.textContent=item.kind==='Frame sequence'?'Recorded':item.kind;id.append(n,k);
+ const h=document.createElement('h2');const ha=document.createElement('a');ha.href='#'+item.id;ha.textContent=item.title;h.append(ha);
+ const desc=document.createElement('p');desc.textContent=item.description;
+ const links=document.createElement('div');links.className='links';for(const [label,url] of [['Open ↗','#'+item.id],['Original ↓',item.download]]){const a=document.createElement('a');a.textContent=label;a.href=url;if(url===item.download)a.download='';links.append(a);}
+ card.append(preview,id,h,desc,links);grid.append(card);cards.set(card,item);observer.observe(card);
 }
 $('#count').textContent=String(entries.length).padStart(2,'0');
 function close(){if(dialog.open)dialog.close();$('#stage').replaceChildren();active=null;document.body.classList.remove('viewing');cards.forEach((_,card)=>syncPreview(card));previousFocus?.focus({preventScroll:true});}
