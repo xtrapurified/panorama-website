@@ -109,5 +109,21 @@ window.LOGO_EXPERIMENTS = [
       "panorama-globe-clean.html",
       "README.md"
     ]
+  },
+  {
+    "id": "LE-008",
+    "slug": "particle-inflate",
+    "title": "Particle inflate",
+    "kind": "3D",
+    "description": "The flat globe turns to particles on hover and swells into a turning 3D sphere of dust, with a colour split set by depth. Drag to turn it any way.",
+    "entry": "experiments/particle-inflate/panorama-globe-inflate.html",
+    "preview": "experiments/particle-inflate/panorama-globe-inflate.html?embed=1",
+    "source": "experiments/particle-inflate/globe-inflate.js",
+    "download": "experiments/particle-inflate/panorama-globe-inflate.html",
+    "files": [
+      "globe-inflate.js",
+      "panorama-globe-inflate.html",
+      "README.md"
+    ]
   }
 ];

@@ -19,6 +19,7 @@ The page has `noindex,nofollow`, and the hosting configuration sends `X-Robots-T
 | LE-005 | Optical lens | experiments/optical-lens/panorama-globe-lens.html |
 | LE-006 | Edge prism | experiments/edge-prism/globe-optics.js |
 | LE-007 | Clean globe | experiments/clean-globe/globe-clean.js |
+| LE-008 | Particle inflate | experiments/particle-inflate/globe-inflate.js |
 
 Example request: “Use LE-006, Edge prism, in the homepage header at intensity 0.1.” The Copy reference action includes the exact source path and a direct catalogue link.
 
@@ -26,7 +27,7 @@ Example request: “Use LE-006, Edge prism, in the homepage header at intensity 
 
 1. Create `experiments/short-descriptive-name/` and put the complete working demo and its assets there.
 2. Keep the uploaded original HTML or ZIP in `originals/`.
-3. Add one object to `catalog.js`, matching the existing fields. Assign the next ID (`LE-008`), never renumber existing IDs. Use relative paths so local opening and subfolder hosting work.
+3. Add one object to `catalog.js`, matching the existing fields. Assign the next ID (`LE-009`), never renumber existing IDs. Use relative paths so local opening and subfolder hosting work.
 4. Supply a `preview.html` that hides the demo's own navigation and fills a small square viewport; point `preview` to it. Preserve the original demo unchanged at `entry`. If no adapter is needed, `preview` can point directly to `entry`.
 5. Add a row above and update project.md. Verify all entry, preview, download and source paths, then follow the repo's dev workflow.
 
