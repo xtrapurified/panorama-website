@@ -796,7 +796,9 @@ footer{font-size:calc(12*var(--fz))}
 .net-view button:hover{color:var(--fg)}
 .net-view button[aria-pressed="true"]{color:var(--fg);text-decoration-color:currentColor;cursor:default}
 .net-names{list-style:none;margin:clamp(56px,6vw,96px) 0 clamp(24px,3vw,48px);padding:0 0 0 calc((100% + var(--g)) / 12 * 4);font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.04}
-.net-names > li > button{font:inherit;letter-spacing:inherit;line-height:inherit;color:var(--fg);opacity:var(--o,1);background:none;border:0;padding:0;cursor:pointer;text-align:left;transition:opacity .25s,color .25s}
+.net-names > li > button{font:inherit;letter-spacing:inherit;line-height:inherit;color:var(--fg);opacity:var(--o,1);background:none;border:0;padding:0;cursor:pointer;text-align:left;transition:opacity .9s cubic-bezier(.2,.6,.3,1),color .9s cubic-bezier(.2,.6,.3,1)}
+/* trail: a name lights up at once and fades back slowly, so a quick sweep across the list leaves a red tail */
+.net-names > li > button.on{transition-duration:0s}
 /* one name lit at a time: the highlight follows the profile shown (set by script), never two at once */
 .net-names > li > button:focus-visible{opacity:1}
 .net-names > li > button.on{color:var(--red);opacity:1}
@@ -2421,6 +2423,8 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
    Lines come from the credits on each project page; nothing is drawn that the credits don't show. */
 (()=>{
   const cv = document.getElementById('net'); if (!cv) return;
+  /* a canvas never downloads a font by itself: load the weights the names use, or they draw in the fallback */
+  if (document.fonts) ['400','500'].forEach(w=>document.fonts.load(`${w} 16px "Untitled Sans"`));
   const LIGHT = () => document.documentElement.dataset.pf === 'light';
   const ctx = cv.getContext('2d');
   const PEOPLE = [
