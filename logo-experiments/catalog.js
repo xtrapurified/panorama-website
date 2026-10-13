@@ -158,5 +158,21 @@ window.LOGO_EXPERIMENTS = [
       "panorama-chrome-studio.html",
       "README.md"
     ]
+  },
+  {
+    "id": "LE-011",
+    "slug": "follow-cursor",
+    "title": "Follow the cursor",
+    "kind": "Vector",
+    "description": "The authentic outline logo, traced from the logo file, with only its centre line redrawn as a live meridian. The meridian swings to sit under the pointer, so the globe turns to look at you, with a slight colour split toward the pointer; on leave it springs back and rests on the original logo.",
+    "entry": "experiments/follow-cursor/panorama-globe-follow.html",
+    "preview": "experiments/follow-cursor/panorama-globe-follow.html?embed=1",
+    "source": "experiments/follow-cursor/globe-follow.js",
+    "download": "experiments/follow-cursor/panorama-globe-follow.html",
+    "files": [
+      "globe-follow.js",
+      "panorama-globe-follow.html",
+      "README.md"
+    ]
   }
 ];
