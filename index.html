@@ -1468,7 +1468,7 @@ const F = {
   ten:{n:"03", client:"Dubai Future Foundation", year:"2025", title:"10 Years of Designing Dubai’s Future", line:"A film for the Dubai Future Foundation’s ten-year milestone.", roles:"Creative direction, production", v:"1228612747", h:"6c4df67db8", dur:"1:59", clip:"ten", s:4},
   astro:{n:"04", client:"Museum of the Future", year:"2023", title:"Astronauts at the Museum", line:"Crew-6 come back to Earth and tell their story at the Museum of the Future.", roles:"Script, creative direction, production", yt:"TjI3z8T5fvg", clip:"astro", s:20},
   orchard:{ar:4/3, n:"05", client:"Abu Dhabi Fund for Development", year:"2025", title:"The Orchard Keeper", line:"One family’s orchard. A changing climate. A legacy to preserve.", roles:"Service production, cinematography", v:"1222033605", h:"a807253340", dur:"4:37", clip:"orchard", s:10},
-  docu:{subs:true, n:"06", client:"Dubai Future Foundation", year:"2024", title:"What Does the Future Hold?", line:"Season 3 of the docuseries: today’s visionaries, tomorrow’s realities.", roles:"Script, creative direction, production", v:"1103735836", dur:"1:39", clip:"docu", s:8},
+  docu:{subs:true, n:"06", client:"Dubai Future Foundation", year:"2024", same:"xwtbz61y6Ik", title:"What Does the Future Hold?", line:"Season 3 of the docuseries: today’s visionaries, tomorrow’s realities.", roles:"Script, creative direction, production", v:"1103735836", dur:"1:39", clip:"docu", s:8},
   p07:{n:"07", title:"ImagineBoka.ai", client:"Photo exhibition, curated by Andrija Kovač", roles:"", img:"thumbs/p07", page:"ImagineBoka-ai", hover:"p07", year:"2023"},
   p08:{n:"08", title:"Miracles Don’t Happen", client:"Dubai Future Forum 2024", year:"2024", roles:"Creative direction, cinematography, editing", img:"thumbs/p08", page:"Miracles-Don-t-Happen", hover:"p08", v:"1103734783"},
   p09:{n:"09", title:"Pula Film Festival", client:"Slavko Štimac, 71st Pula Film Festival", year:"2024", roles:"Cinematography", img:"thumbs/p09", page:"Pula-Film-Festival", hover:"p09", v:"988793491"},
@@ -2009,7 +2009,8 @@ function filmsOf(k){
   if (p) p.groups.forEach(g=>g.films.forEach(x=>list.push({...x, g: g.t})));
   const main = f.yt || f.v;
   if (main){   /* the film shown on the homepage plays first; it keeps its place in the project's own order */
-    const i = list.findIndex(x=>filmKey(x) === main);
+    /* same: the same film uploaded on another platform; it is not listed a second time */
+    const i = list.findIndex(x=>filmKey(x) === main || (f.same && filmKey(x) === f.same));
     if (i >= 0) list[i] = {...list[i], v: f.v, h: f.h, yt: f.yt, main: true};
     else list.unshift({v: f.v, h: f.h, yt: f.yt, t: f.title, main: true});
   }
