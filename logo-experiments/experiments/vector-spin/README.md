@@ -16,6 +16,6 @@ For integration, load `globe-spin.js` once and insert:
 <panorama-globe-spin style="width:179px" mode="hover"></panorama-globe-spin>
 ```
 
-The logo fills 80% of the element. `split` sets the aberration strength from 0 to 3 (default 1). `speed` multiplies all speeds (default 1). `demo` triggers the hover behaviour on its own every four seconds (used for the catalogue thumbnail, where nobody can hover). `reset()` returns it to the starting pose. White on a dark background only: the three colour channels add up to white when aligned. Transparent background. Respects reduced motion (no automatic turning), stops drawing offscreen, in a hidden tab, and once it has settled. On phones a tap plays the hover behaviour. No external dependencies.
+The logo fills 80% of the element. `split` sets the aberration strength from 0 to 3 (default 1). `speed` multiplies all speeds (default 1). `weight` multiplies the line thickness (default 1; the header uses 0.8, 20% thinner). `demo` triggers the hover behaviour on its own every four seconds (used for the catalogue thumbnail, where nobody can hover). `reset()` returns it to the starting pose. White on a dark background only: the three colour channels add up to white when aligned. Transparent background. Respects reduced motion (no automatic turning), stops drawing offscreen, in a hidden tab, and once it has settled. On phones a tap plays the hover behaviour. No external dependencies.
 
 This is a redrawn approximation of the mark, not the authentic logo file.

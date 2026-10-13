@@ -22,7 +22,7 @@
   let uid = 0;
 
   class PanoramaGlobeSpin extends HTMLElement {
-    static get observedAttributes() { return ['mode', 'split', 'speed']; }
+    static get observedAttributes() { return ['mode', 'split', 'speed', 'weight']; }
 
     constructor() {
       super();
@@ -46,7 +46,7 @@
       this.uses = ['#ff0000', '#00ff00', '#0000ff'].map(c => { const u = el('use', { href: '#' + gid }); u.style.color = c; svg.appendChild(u); return u; });
       this.paths = Array.from({ length: 6 }, () => { const p = el('path', {}); mer.appendChild(p); return p; });
       root.append(style, svg);
-      this.svg = svg;
+      this.svg = svg; this.g = g;
 
       this.reduce = matchMedia('(prefers-reduced-motion: reduce)');
       this.angle = 0; this.ab = 0; this.over = false; this.visible = true;
@@ -95,7 +95,9 @@
       this.io?.disconnect(); document.removeEventListener('visibilitychange', this.onVis);
       cancelAnimationFrame(this.raf); this.raf = 0;
     }
+    get weight() { const v = parseFloat(this.getAttribute('weight')); return isNaN(v) ? 1 : Math.max(.2, Math.min(3, v)); }
     attributeChangedCallback(name) {
+      if (name === 'weight') this.g.setAttribute('stroke-width', SW * this.weight);
       if (name === 'mode') this.reset();
       this.wake();
     }
