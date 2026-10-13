@@ -63,7 +63,7 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="description" content="Panorama Films is an independent creative storytelling studio in Belgrade, Serbia. Documentaries, series, campaigns and brand films.">
 <link rel="icon" href="media/logo.png">
-<script src="media/globe-optics.js" defer></script>
+<script src="media/panorama-globe.js" defer></script>
 <title>Panorama Films</title>
 <style>
 /* Layout: Swiss 12-column grid on black, film-first. Footage carries colour; type is Untitled Sans, flush left.
@@ -624,19 +624,19 @@ footer{font-size:calc(12*var(--fz))}
 .hdr-rec{white-space:nowrap;transition:opacity .3s,visibility .3s}
 /* Rec stays in the corner all the way down: it counts the time this visit has been on the site */
 @media (max-width:760px){.logo-slot{width:64px}.hdr .bar > .hdr-rec{grid-column:3;justify-self:end;margin-right:12px}}
-/* Header logo: LE-006 Edge prism from /logo-experiments/ (2026-10-13), the 3D pixel globe with refraction at intensity 0.1.
-   The element is square and the sphere fills 80% of it, so it overhangs the slot and the slot is sized to the sphere.
-   --gs sets its size: 179 px on desktop, 112 px on phones. */
-:root{--gs:179px}   /* 40% bigger than the first 128 px (2026-10-13) */
-@media (max-width:760px){:root{--gs:112px}}
-.logo-slot{width:calc(var(--gs) * .79855);aspect-ratio:1}
+/* Header logo: LE-001 Recorded globe from /logo-experiments/ (tried 2026-10-13, after LE-006 Edge prism), the recorded rotation at about 10 fps.
+   The element is square and the globe fills 96% of each frame, so it overhangs the slot a little and the slot is sized to the globe.
+   --gs sets the element's size; the globe itself is about 143 px wide on desktop and 89 px on phones (the same as Edge prism). */
+:root{--gs:149px}
+@media (max-width:760px){:root{--gs:93px}}
+.logo-slot{width:calc(var(--gs) * .9583);aspect-ratio:1}
 .logo{aspect-ratio:1}
-.logo panorama-globe-optics{position:absolute;width:var(--gs);max-width:none;left:calc(var(--gs) * -.08855);top:calc(var(--gs) * -.08908);color:#fff;pointer-events:none}
+.logo panorama-globe{position:absolute;width:var(--gs);max-width:none;left:calc(var(--gs) * -.0208);top:calc(var(--gs) * -.0188);color:#fff;pointer-events:none}
 /* scrolling down, the globe shrinks toward the top left and fades as the wordmark rises into the same place; scrolling back up reverses it */
-.logo panorama-globe-optics{transform-origin:calc(var(--gs) * .1) calc(var(--gs) * .2);transition:transform .5s var(--ease),opacity .4s var(--ease)}
+.logo panorama-globe{transform-origin:calc(var(--gs) * .1) calc(var(--gs) * .2);transition:transform .5s var(--ease),opacity .4s var(--ease)}
 .hdr.compact .logo-slot .logo{transition:visibility 0s .5s}
-.hdr.compact .logo-slot .logo panorama-globe-optics{transform:scale(.18);opacity:0}
-@media (prefers-reduced-motion:reduce){.logo panorama-globe-optics{transition:none}.hdr.compact .logo-slot .logo{transition:none}}
+.hdr.compact .logo-slot .logo panorama-globe{transform:scale(.18);opacity:0}
+@media (prefers-reduced-motion:reduce){.logo panorama-globe{transition:none}.hdr.compact .logo-slot .logo{transition:none}}
 /* links: no underline; a red one on hover */
 /* links: no underline; a red one on hover (set with the header link colours further down) */
 .hdr.compact .logo-slot .logo{visibility:hidden;pointer-events:none}
@@ -1258,7 +1258,7 @@ footer .ft-top:hover{color:var(--red)}
 <a class="skip" href="#films">Skip to films</a><a class="skip" href="#contact">Skip to contact</a>
 <header class="hdr" id="hdr">
   <div class="page bar">
-    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe-optics intensity="0.1" lens="prism" aria-hidden="true"></panorama-globe-optics></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a></div>
+    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe aria-hidden="true"></panorama-globe></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a></div>
     <span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span>
     <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a><span class="nav-ft"><a href="#search" data-search class="nav-sx" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a><button type="button" class="ft-th" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
@@ -1830,26 +1830,23 @@ const navs = document.querySelectorAll('[data-nav]');
 const nio = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) navs.forEach(a=>a.classList.toggle('on', a.dataset.nav===e.target.dataset.sec)); }),{rootMargin:'-45% 0px -50% 0px'});
 document.querySelectorAll('[data-sec]').forEach(s=>nio.observe(s));
 
-/* Logo: the Edge prism globe. Pointing at it bends its lines toward the pointer; a click fires a camera flash and goes back to the top.
-   No dragging. Once the header turns compact the globe shrinks into the wordmark's place and stops drawing. */
+/* Logo: the Recorded globe (LE-001). A click fires a camera flash and goes back to the top. No dragging.
+   Once the header turns compact the globe shrinks into the wordmark's place and stops turning. */
 (()=>{
   const lg = document.getElementById('logo'), flashEl = document.getElementById('flash'), hdrEl = document.getElementById('hdr');
-  const g = lg.querySelector('panorama-globe-optics');
+  const g = lg.querySelector('panorama-globe');
   lg.addEventListener('click', ()=>{
     if (!REDUCED){ flashEl.classList.remove('go'); void flashEl.offsetWidth; flashEl.classList.add('go'); g.animate([{scale:'1'},{scale:'.9'},{scale:'1'}],{duration:220}); }
     scrollTo({top:0, behavior: REDUCED ? 'auto' : 'smooth'});
   });
-  customElements.whenDefined('panorama-globe-optics').then(()=>{
-    const cv = g.shadowRoot && g.shadowRoot.querySelector('canvas');
-    if (cv){ cv.tabIndex = -1; cv.removeAttribute('role'); cv.removeAttribute('aria-label'); }
-    const aim = e=>{ if (!g.canvas) return; const b = g.canvas.getBoundingClientRect(); g.targetX = (e.clientX-b.left)/b.width*64; g.targetY = (e.clientY-b.top)/b.height*64; g.hover = true; g.wake(); };
-    lg.addEventListener('pointermove', aim); lg.addEventListener('pointerenter', aim);
-    lg.addEventListener('pointerleave', ()=>{ g.hover = false; g.targetX = 32; g.targetY = 30; g.wake(); });
+  customElements.whenDefined('panorama-globe').then(()=>{
+    const sf = g.shadowRoot && g.shadowRoot.querySelector('.surface');
+    if (sf){ sf.tabIndex = -1; sf.removeAttribute('role'); sf.removeAttribute('aria-label'); }
     let off = null, t = 0;
     const rest = ()=>{ const hidden = hdrEl.classList.contains('compact');
-      if (hidden === off) return; off = hidden; clearTimeout(t);
-      if (hidden){ t = setTimeout(()=>{ g.setAttribute('lens','off'); if (!REDUCED) g.paused = true; }, 500); }   /* after the shrink has played */
-      else { g.setAttribute('lens','prism'); if (!REDUCED && g.paused) g.paused = false; } };
+      if (hidden === off || REDUCED) return; off = hidden; clearTimeout(t);
+      if (hidden) t = setTimeout(()=>{ g.paused = true; }, 500);   /* after the shrink has played */
+      else if (g.paused) g.paused = false; };
     new MutationObserver(rest).observe(hdrEl, {attributes:true, attributeFilter:['class']});
     rest();
   });
