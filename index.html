@@ -844,12 +844,11 @@ footer{font-size:calc(12*var(--fz))}
 .mail-tip.ok{background:var(--red);color:#fff}
 @media (hover:hover) and (pointer:fine){:is(.end,.pj-end) .links.big .mail{cursor:copy}}
 @media (max-width:600px){:is(.end,.pj-end) .links.big .mail{font-size:min(1em,9.6vw)}}
-/* footer showreel: a frame around Let's make a film together. that the showreel fades into on hover; the words stay on top */
-.end .ask a.has-reel{position:relative;display:inline-block;isolation:isolate}
-.end .ask .ask-reel{position:absolute;z-index:-1;left:-.18em;top:-.08em;right:-.18em;bottom:-.12em;background:#000;overflow:hidden;opacity:0;transition:opacity .6s var(--ease,ease);pointer-events:none}
-.end .ask .ask-reel video{display:block;width:100%;height:100%;max-width:none;object-fit:cover;opacity:.55}
-.end .ask a.reel-on .ask-reel{opacity:1}
-:root[data-pf="light"] .end .ask a.reel-on .w{color:#f2f2f0}   /* in light mode the words turn white over the film */
+/* footer reel: a 16:9 frame that follows the mouse over Let's make a film together. and plays the quick-cut montage */
+.end .ask a{display:inline-block}   /* one box for both lines, so the mouse never falls into the gap between them */
+.ask-reel{position:fixed;left:0;top:0;z-index:60;width:clamp(220px,20vw,380px);aspect-ratio:16/9;background:#000;overflow:hidden;pointer-events:none;opacity:0;scale:.92;transform-origin:0 0;transition:opacity .25s,scale .35s cubic-bezier(.16,1,.3,1);will-change:transform}
+.ask-reel.on{opacity:1;scale:1}
+.ask-reel video{display:block;width:100%;height:100%;max-width:none;object-fit:cover}
 .end .ask{margin-bottom:.04em}
 /* Contact sits close above the closing line: two lines of space, not a screenful */
 .end{min-height:0}
@@ -2230,13 +2229,20 @@ pjEl.addEventListener('click', e=>{ const b = e.target.closest('.pj-mail'); if (
   const done = ok => { b.classList.add('done'); if (note) note.textContent = ok ? 'Copied to your clipboard.' : 'Select the address to copy it.'; setTimeout(()=>{ b.classList.remove('done'); if (note) note.textContent = ''; }, 2600); };
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(a).then(()=>done(true), ()=>done(false)); else done(false); });
 
-/* footer: hovering "Let's make a film together." plays the showreel behind the words (after sanity.io's closing button); mouse only, loaded on first hover */
+/* footer: hovering "Let's make a film together." brings up a small 16:9 frame that follows the mouse and plays a quick-cut montage of the projects (each shot about a third of a second); mouse only, loaded on first hover */
 (()=>{ const a = document.querySelector('.end .ask a'); if (!a || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   const fr = document.createElement('span'); fr.className = 'ask-reel'; fr.setAttribute('aria-hidden', 'true');
-  const v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; fr.appendChild(v);
-  a.classList.add('has-reel'); a.prepend(fr); let t = 0;
-  a.addEventListener('pointerenter', ()=>{ clearTimeout(t); if (!v.src) v.src = `${M}clips/${F.reel.clip}.${VEXT}`; v.play().catch(()=>{}); a.classList.add('reel-on'); });
-  a.addEventListener('pointerleave', ()=>{ a.classList.remove('reel-on'); t = setTimeout(()=>v.pause(), 600); });
+  const v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; fr.appendChild(v); document.body.appendChild(fr);
+  let x = 0, y = 0, tx = 0, ty = 0, raf = 0, on = false, t = 0;
+  const step = () => { x += (tx - x) * .18; y += (ty - y) * .18; fr.style.transform = `translate3d(${x}px,${y}px,0)`;
+    raf = (on || Math.abs(tx - x) + Math.abs(ty - y) > .5) ? requestAnimationFrame(step) : 0; };
+  const aim = e => { tx = e.clientX + 18; ty = e.clientY + 18; if (!raf) raf = requestAnimationFrame(step); };
+  a.addEventListener('pointerenter', e=>{ if (e.pointerType !== 'mouse') return; clearTimeout(t); if (!v.src) v.src = `${M}clips/rush.${VEXT}`;
+    if (!on){ x = tx = e.clientX + 18; y = ty = e.clientY + 18; } on = true; aim(e); v.play().catch(()=>{}); fr.classList.add('on'); });
+  a.addEventListener('pointermove', e=>{ if (on) aim(e); });
+  a.addEventListener('pointerleave', ()=>{ on = false; fr.classList.remove('on'); t = setTimeout(()=>v.pause(), 400); });
+  /* scrolling the line out from under the mouse hides the frame */
+  addEventListener('scroll', ()=>{ if (on && !a.matches(':hover')){ on = false; fr.classList.remove('on'); } }, {passive: true});
 })();
 /* ================= Interactions ================= */
 
