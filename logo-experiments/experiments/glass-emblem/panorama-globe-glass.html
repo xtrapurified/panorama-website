@@ -9,8 +9,8 @@ header,footer{position:fixed;left:24px;right:24px;display:flex;justify-content:s
 @media(max-width:600px){header,footer{left:18px;right:18px}footer{flex-direction:column;align-items:flex-start;gap:6px}}
 </style></head><body><div id="bg"></div>
 <header><p>Panorama Films</p><p>Glass emblem · LE-010</p></header>
-<main><panorama-globe-glass backdrop="../../../media/stills/reel.webp" backdrop-for="#bg" backdrop-brightness=".6" fallback="../../../media/logo.png"></panorama-globe-glass></main>
-<footer><p class="hint">Hover to magnify and relight · drag to turn</p><p><a href="panorama-chrome-studio.html">Open the chrome studio</a></p></footer>
-<script>if(/[?&]embed=1/.test(location.search)){document.documentElement.classList.add('embed');document.querySelector('panorama-globe-glass').setAttribute('demo','')}</script>
+<main><panorama-globe-glass finish="black" turn=".7" backdrop="../../../media/stills/reel.webp" backdrop-for="#bg" backdrop-brightness=".6" fallback="../../../media/logo.png"></panorama-globe-glass></main>
+<footer><p class="hint">Black chrome, turning slowly · hover to magnify and relight · drag to turn</p><p><a href="panorama-chrome-studio.html">Open the chrome studio</a></p></footer>
+<script>if(/[?&]embed=1/.test(location.search)){document.documentElement.classList.add('embed');}</script>
 <script src="globe-glass.js"></script>
 </body></html>

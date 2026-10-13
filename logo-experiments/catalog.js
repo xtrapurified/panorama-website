@@ -147,7 +147,7 @@ window.LOGO_EXPERIMENTS = [
     "slug": "glass-emblem",
     "title": "Glass emblem",
     "kind": "3D",
-    "description": "The traced globe and lettering extruded in white glass that refracts the reel behind it. Hover magnifies and relights it; drag turns it, and it reads correctly from the back. Includes the chrome studio used to tune it.",
+    "description": "The traced globe and lettering extruded in black chrome, turning slowly; white glass, silver and red are options. Hover magnifies and relights it; drag turns it, and it reads correctly from the back. Includes the chrome studio used to tune it.",
     "entry": "experiments/glass-emblem/panorama-globe-glass.html",
     "preview": "experiments/glass-emblem/panorama-globe-glass.html?embed=1",
     "source": "experiments/glass-emblem/globe-glass.js",
