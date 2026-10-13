@@ -93,5 +93,21 @@ window.LOGO_EXPERIMENTS = [
       "globe-optics.js",
       "panorama-globe-edge-prism.html"
     ]
+  },
+  {
+    "id": "LE-007",
+    "slug": "clean-globe",
+    "title": "Clean globe",
+    "kind": "3D",
+    "description": "The same tilted globe, with smooth antialiased curves and continuous rotation. Drag to turn on its fixed axis.",
+    "entry": "experiments/clean-globe/panorama-globe-clean.html",
+    "preview": "experiments/clean-globe/panorama-globe-clean.html?embed=1",
+    "source": "experiments/clean-globe/globe-clean.js",
+    "download": "experiments/clean-globe/panorama-globe-clean.html",
+    "files": [
+      "globe-clean.js",
+      "panorama-globe-clean.html",
+      "README.md"
+    ]
   }
 ];

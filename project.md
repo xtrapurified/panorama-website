@@ -129,7 +129,9 @@ Full audit and decisions: the claude.ai doc "Services & Roles — audit and syst
 
 ## Logo Experiments (2026-10-13)
 
-- `/logo-experiments/` is a separate, unlinked one-page reference catalogue of six user-supplied logo studies. It has noindex metadata and a folder-wide robots header; it is public, not access-controlled.
+- `/logo-experiments/` is a separate, unlinked one-page reference catalogue of six user-supplied logo studies plus LE-007 Clean globe. It has noindex metadata and a folder-wide robots header; it is public, not access-controlled.
 - Stable IDs LE-001–LE-006 identify the recorded globe, v09, v15, 3D globe, optical lens and Edge prism. Edge prism preserves the chosen intensity 0.1 and hidden slider.
 - Each study keeps its original upload, extracted assets and source. `logo-experiments/catalog.js` registers entries; add future studies with new IDs without renumbering. The collection README describes integration and additions.
 - Follow the existing dev preview workflow. Adding an experiment to this catalogue does not replace the website logo; LE-005 Optical lens is the one in the header (2026-10-13; LE-006 Edge prism and LE-001 Recorded globe were tried before it). Browser review of the new catalogue is still pending.
+
+- **LE-007 Clean globe (2026-10-13):** smooth monochrome version of the fitted 3D globe, same axis and grid, antialiased at display resolution, continuous ten-second rotation, horizontal drag and inertia. Source `logo-experiments/experiments/clean-globe/globe-clean.js`; standalone HTML download included.
