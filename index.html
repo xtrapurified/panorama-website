@@ -1124,13 +1124,19 @@ footer .ft-top:hover{color:var(--red)}
 .menu .sx-ic{color:#fff}
 :root[data-pf="light"] .hdr.compact .menu a,:root[data-pf="light"] .hdr.compact .menu a.go,:root[data-pf="light"] .hdr.compact .menu a.on{color:var(--fg);text-decoration-color:transparent}
 :root[data-pf="light"] .hdr.compact .menu a:hover{text-decoration-color:var(--red)}
-/* nav hover, wide screens: the word splits into cyan and red like the globe's lens, the underline arrives cyan and settles red (2026-10-13) */
+/* nav hover, wide screens: for about a second the word carries a slight chromatic aberration (cyan to the left, red to the right,
+   wavering a little before it settles); the underline is plain red, as before (2026-10-13) */
 @keyframes navHov{
-  0%{text-decoration-color:#22e4f0;text-shadow:-.07em 0 rgba(34,228,240,.9),.07em 0 rgba(226,35,26,.9)}
-  40%{text-decoration-color:#22e4f0;text-shadow:-.025em 0 rgba(34,228,240,.7),.025em 0 rgba(226,35,26,.7)}
-  100%{text-decoration-color:var(--red);text-shadow:0 0 rgba(34,228,240,0),0 0 rgba(226,35,26,0)}}
+  0%{text-shadow:-.05em 0 rgba(34,228,240,.85),.05em 0 rgba(226,35,26,.85)}
+  18%{text-shadow:-.03em .01em rgba(34,228,240,.8),.035em -.01em rgba(226,35,26,.8)}
+  36%{text-shadow:-.045em 0 rgba(34,228,240,.7),.04em 0 rgba(226,35,26,.7)}
+  60%{text-shadow:-.02em 0 rgba(34,228,240,.5),.02em 0 rgba(226,35,26,.5)}
+  100%{text-shadow:0 0 rgba(34,228,240,0),0 0 rgba(226,35,26,0)}}
 @media (min-width:761px){
-  .menu a:hover,.menu a:focus-visible{animation:navHov .6s cubic-bezier(.2,.7,.2,1) both}
+  /* the red underline is drawn as a background line, so the text's colour fringes never reach it */
+  .menu a,.menu a.go,.menu a.on,.menu a:hover,.menu a.go:hover,.menu a:focus-visible{text-decoration:none}
+  .menu a{background:linear-gradient(var(--red),var(--red)) left 100% / 100% 0 no-repeat;padding-bottom:.12em}
+  .menu a:hover,.menu a:focus-visible{background-size:100% max(1.5px,.07em);animation:navHov 1s cubic-bezier(.25,.6,.3,1) both}
 }
 @media (prefers-reduced-motion:reduce){.menu a:hover,.menu a:focus-visible{animation:none}}
 
