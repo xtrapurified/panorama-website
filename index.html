@@ -844,6 +844,12 @@ footer{font-size:calc(12*var(--fz))}
 .mail-tip.ok{background:var(--red);color:#fff}
 @media (hover:hover) and (pointer:fine){:is(.end,.pj-end) .links.big .mail{cursor:copy}}
 @media (max-width:600px){:is(.end,.pj-end) .links.big .mail{font-size:min(1em,9.6vw)}}
+/* footer showreel: a frame around Let's make a film together. that the showreel fades into on hover; the words stay on top */
+.end .ask a.has-reel{position:relative;display:inline-block;isolation:isolate}
+.end .ask .ask-reel{position:absolute;z-index:-1;left:-.18em;top:-.08em;right:-.18em;bottom:-.12em;background:#000;overflow:hidden;opacity:0;transition:opacity .6s var(--ease,ease);pointer-events:none}
+.end .ask .ask-reel video{display:block;width:100%;height:100%;max-width:none;object-fit:cover;opacity:.55}
+.end .ask a.reel-on .ask-reel{opacity:1}
+:root[data-pf="light"] .end .ask a.reel-on .w{color:#f2f2f0}   /* in light mode the words turn white over the film */
 .end .ask{margin-bottom:.04em}
 /* Contact sits close above the closing line: two lines of space, not a screenful */
 .end{min-height:0}
@@ -2217,9 +2223,21 @@ document.getElementById('lb-next').addEventListener('click', ()=>stepFilm(1));
 document.getElementById('lb-sl').addEventListener('click', e=>{ e.stopPropagation(); stepFilm(-1); });
 document.getElementById('lb-sr').addEventListener('click', e=>{ e.stopPropagation(); stepFilm(1); });
 /* the email button copied onto the project page: copies the address, says so underneath */
+/* on phones and tablets (no mouse) the email opens the mail app instead of copying */
+function TOUCH_MAIL(){ return matchMedia('(hover: none), (pointer: coarse)').matches; }
 pjEl.addEventListener('click', e=>{ const b = e.target.closest('.pj-mail'); if (!b) return; const a = ['hello', 'panoramafilms.tv'].join('@'), note = pjEl.querySelector('.pj-mail-note');
+  if (TOUCH_MAIL()){ location.href = 'mailto:' + a; return; }   /* phones: open the mail app */
   const done = ok => { b.classList.add('done'); if (note) note.textContent = ok ? 'Copied to your clipboard.' : 'Select the address to copy it.'; setTimeout(()=>{ b.classList.remove('done'); if (note) note.textContent = ''; }, 2600); };
   if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(a).then(()=>done(true), ()=>done(false)); else done(false); });
+
+/* footer: hovering "Let's make a film together." plays the showreel behind the words (after sanity.io's closing button); mouse only, loaded on first hover */
+(()=>{ const a = document.querySelector('.end .ask a'); if (!a || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const fr = document.createElement('span'); fr.className = 'ask-reel'; fr.setAttribute('aria-hidden', 'true');
+  const v = document.createElement('video'); v.muted = true; v.loop = true; v.playsInline = true; v.preload = 'none'; fr.appendChild(v);
+  a.classList.add('has-reel'); a.prepend(fr); let t = 0;
+  a.addEventListener('pointerenter', ()=>{ clearTimeout(t); if (!v.src) v.src = `${M}clips/${F.reel.clip}.${VEXT}`; v.play().catch(()=>{}); a.classList.add('reel-on'); });
+  a.addEventListener('pointerleave', ()=>{ a.classList.remove('reel-on'); t = setTimeout(()=>v.pause(), 600); });
+})();
 /* ================= Interactions ================= */
 
 
@@ -2371,6 +2389,7 @@ document.addEventListener('keydown', e=>{
 (()=>{
   const btn = document.getElementById('mailBtn'), note = document.getElementById('mailNote'); if (!btn) return;
   const addr = () => ['hello', 'panoramafilms.tv'].join('@');
+  if (TOUCH_MAIL()) btn.setAttribute('aria-label', 'Write an email');
   /* the address is written into the page by this script only, with a soft break after the @ for narrow screens */
   const ico = btn.querySelector('.bi'); btn.querySelector('.mail-t').innerHTML = '<span class="u">hello@</span><wbr><span class="nw"><span class="u">panoramafilms.tv</span> </span>';
   btn.querySelector('.nw').appendChild(ico);   /* the copy icon stays on the line with the end of the address */
@@ -2380,6 +2399,7 @@ document.addEventListener('keydown', e=>{
   btn.addEventListener('pointermove', e=>{ if (e.pointerType !== 'mouse') return; tip.style.left = e.clientX + 'px'; tip.style.top = e.clientY + 'px'; tip.classList.add('on'); });
   btn.addEventListener('pointerleave', ()=>{ tip.classList.remove('on'); setTimeout(()=>{ if (!tip.classList.contains('on')){ tip.classList.remove('ok'); tip.textContent = 'Click to copy email'; } }, 200); });
   btn.addEventListener('click', ()=>{
+    if (TOUCH_MAIL()){ location.href = 'mailto:' + addr(); return; }   /* phones: open the mail app */
     const a = addr(), done = ok => { clearTimeout(t); btn.classList.add('done'); tip.textContent = ok ? 'Copied' : 'Select to copy'; tip.classList.toggle('ok', ok); note.textContent = ok ? 'Copied to your clipboard.' : 'Select the address to copy it.';
       t = setTimeout(()=>{ btn.classList.remove('done'); note.textContent = ''; tip.classList.remove('ok'); tip.textContent = 'Click to copy email'; }, 2600); };
     /* the address is also shown, selectable, in case copying is blocked */
