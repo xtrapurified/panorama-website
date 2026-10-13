@@ -13,18 +13,17 @@ function syncPreview(card){
 }
 const observer=new IntersectionObserver(items=>items.forEach(({target,isIntersecting})=>{target.dataset.visible=String(isIntersecting);syncPreview(target);}),{rootMargin:'60px'});
 for(const item of [...entries].reverse()){
- const card=document.createElement('article');card.className='study';card.id=item.id;
- const preview=document.createElement('button');preview.type='button';preview.className='preview';preview.setAttribute('aria-label',`Open ${item.id}: ${item.title}`);
- const number=document.createElement('span');number.className='number';number.textContent=item.id;preview.append(number);
- const launch=document.createElement('span');launch.className='launch';launch.textContent='↗';launch.setAttribute('aria-hidden','true');preview.append(launch);
- preview.onclick=()=>{location.hash=item.id;};
- const caption=document.createElement('div');caption.className='caption';const h=document.createElement('h2');h.textContent=item.title;const kind=document.createElement('span');kind.textContent=item.kind;caption.append(h,kind);
+ const card=document.createElement('li');card.className='study';card.id=item.id;
+ const preview=document.createElement('a');preview.className='preview';preview.href='#'+item.id;preview.setAttribute('aria-label',`Open ${item.id}: ${item.title}`);
+ const head=document.createElement('div');const id=document.createElement('span');id.className='id tc';id.textContent=item.id;
+ const h=document.createElement('h2');const ha=document.createElement('a');ha.href='#'+item.id;ha.textContent=item.title;h.append(ha);head.append(id,h);
  const desc=document.createElement('p');desc.textContent=item.description;
- const links=document.createElement('div');links.className='links';for(const [label,url] of [['Open study ↗','#'+item.id],['Original files ↓',item.download]]){const a=document.createElement('a');a.textContent=label;a.href=url;if(url===item.download)a.download='';links.append(a);}
- card.append(preview,caption,desc,links);grid.append(card);cards.set(card,item);observer.observe(card);
+ const side=document.createElement('div');side.className='side';const kind=document.createElement('span');kind.className='lab mid';kind.textContent=item.kind==='Frame sequence'?'Recorded':item.kind;
+ const links=document.createElement('div');links.className='links lab';for(const [label,url] of [['Open ↗','#'+item.id],['Original ↓',item.download]]){const a=document.createElement('a');a.textContent=label;a.href=url;if(url===item.download)a.download='';links.append(a);}
+ side.append(kind,links);
+ card.append(preview,head,desc,side);grid.append(card);cards.set(card,item);observer.observe(card);
 }
-$('#count').textContent=String(entries.length).padStart(2,'0');$('#shown').textContent=String(entries.length).padStart(2,'0')+' studies';
-$('#filters').onclick=e=>{const btn=e.target.closest('button');if(!btn)return;document.querySelectorAll('#filters button').forEach(x=>x.setAttribute('aria-pressed',String(x===btn)));let count=0;cards.forEach((item,card)=>{card.hidden=btn.dataset.filter!=='All'&&item.kind!==btn.dataset.filter;if(!card.hidden)count++;syncPreview(card);});$('#shown').textContent=String(count).padStart(2,'0')+' studies';};
+$('#count').textContent=String(entries.length).padStart(2,'0');
 function close(){if(dialog.open)dialog.close();$('#stage').replaceChildren();active=null;document.body.classList.remove('viewing');cards.forEach((_,card)=>syncPreview(card));previousFocus?.focus({preventScroll:true});}
 function route(){const item=entries.find(x=>x.id===location.hash.slice(1));if(!item){close();return;}if(active?.id===item.id)return;active=item;previousFocus=document.activeElement;$('#viewer-id').textContent=item.id;$('#viewer-title').textContent=item.title;$('#viewer-description').textContent=item.description;$('#open').href=item.entry;$('#download').href=item.download;$('#stage').replaceChildren(frame(item.entry,item.title+' interactive experiment'));if(!dialog.open)dialog.showModal();document.body.classList.add('viewing');cards.forEach((_,card)=>syncPreview(card));}
 function dismiss(){history.replaceState(null,'',location.pathname+location.search);close();}

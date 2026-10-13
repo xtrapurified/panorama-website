@@ -4,7 +4,7 @@ An evolving, self-contained catalogue of Panorama Films logo studies.
 
 ## Open
 
-Open `index.html` locally, or visit `/logo-experiments/` on the website. No build step, dependencies, external fonts or network assets are required. The catalogue displays the newest ID first. Select a study to open its original interactive demo; closing it unloads that demo. Offscreen thumbnail demos unload to avoid running the entire collection at once.
+Open `index.html` locally, or visit `/logo-experiments/` on the website. No build step, dependencies or network assets are required; the page borrows the website's Untitled Sans from `../media/fonts/` and falls back to Helvetica when opened on its own. The catalogue displays the newest ID first. Select a study to open its original interactive demo; closing it unloads that demo. Offscreen thumbnail demos unload to avoid running the entire collection at once.
 
 The page has `noindex,nofollow`, and the hosting configuration sends `X-Robots-Tag` for this folder. It is unlinked from the homepage. This is a public reference collection, not access-controlled storage.
 
