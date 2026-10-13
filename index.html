@@ -120,7 +120,7 @@ h1,h2,h3,h4{margin:0;font-weight:500}
 .hdr .bar{display:grid;grid-template-columns:auto 1fr auto 44px;align-items:center;column-gap:clamp(20px,2.4vw,36px);padding-block:clamp(14px,2vw,28px)}
 .hdr.navopen .menu a{text-shadow:0 1px 14px rgba(0,0,0,.55)}
 .logo-slot{width:clamp(120px,11vw,168px);height:auto;aspect-ratio:714/694;position:relative;flex:none}
-.logo{position:absolute;left:0;top:0;width:100%;height:auto;cursor:pointer;user-select:none;-webkit-user-drag:none;z-index:40}
+.logo{position:absolute;left:0;top:0;width:100%;height:auto;user-select:none;-webkit-user-drag:none;z-index:40}
 .hdr .stc{justify-self:center}
 .menu{display:flex;align-items:baseline;gap:clamp(16px,1.8vw,26px);transition:opacity .3s,visibility .3s}
 .menu a{font-family:"Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif;font-size:clamp(20px,1.8vw,calc(26*var(--fzh)));font-weight:400;letter-spacing:normal;color:rgba(255,255,255,.6);text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.22em;text-decoration-color:rgba(255,255,255,.35);transition:color .2s}
@@ -443,10 +443,6 @@ footer a:hover{color:var(--red)}
 /* Scroll timecode in the header */
 .stc{display:inline-flex}
 @media (max-width:900px){.stc{display:none}}
-/* Logo: camera flash on click */
-.flash{position:fixed;inset:0;z-index:58;background:#fff;pointer-events:none;opacity:0}
-.flash.go{animation:flash .45s ease-out}
-@keyframes flash{0%{opacity:.85}100%{opacity:0}}
 
 /* ================= Design system v2 =================
    Monochrome, like a depth map: black, greys, white, and red as the only heat.
@@ -631,7 +627,7 @@ footer{font-size:calc(12*var(--fz))}
 @media (max-width:760px){:root{--gs:93px}}
 .logo-slot{width:calc(var(--gs) * .9583);aspect-ratio:1}
 .logo{aspect-ratio:1}
-.logo panorama-globe{position:absolute;width:var(--gs);max-width:none;left:calc(var(--gs) * -.0208);top:calc(var(--gs) * -.0188);color:#fff;pointer-events:none}
+.logo panorama-globe{position:absolute;width:var(--gs);max-width:none;left:calc(var(--gs) * -.0208);top:calc(var(--gs) * -.0188);color:#fff}   /* takes the pointer: drag left or right to turn it */
 /* scrolling down, the globe shrinks toward the top left and fades as the wordmark rises into the same place; scrolling back up reverses it */
 .logo panorama-globe{transform-origin:calc(var(--gs) * .1) calc(var(--gs) * .2);transition:transform .5s var(--ease),opacity .4s var(--ease)}
 .hdr.compact .logo-slot .logo{transition:visibility 0s .5s}
@@ -1265,7 +1261,6 @@ footer .ft-top:hover{color:var(--red)}
   </div>
 </header>
 <div class="navov" id="navov" hidden></div>
-<div class="flash" id="flash" aria-hidden="true"></div>
 
   
 
@@ -1830,15 +1825,10 @@ const navs = document.querySelectorAll('[data-nav]');
 const nio = new IntersectionObserver(es=>es.forEach(e=>{ if(e.isIntersecting) navs.forEach(a=>a.classList.toggle('on', a.dataset.nav===e.target.dataset.sec)); }),{rootMargin:'-45% 0px -50% 0px'});
 document.querySelectorAll('[data-sec]').forEach(s=>nio.observe(s));
 
-/* Logo: the Recorded globe (LE-001). A click fires a camera flash and goes back to the top. No dragging.
+/* Logo: the Recorded globe (LE-001). Drag it left or right to turn it (the globe's own scrub, with inertia); no click action.
    Once the header turns compact the globe shrinks into the wordmark's place and stops turning. */
 (()=>{
-  const lg = document.getElementById('logo'), flashEl = document.getElementById('flash'), hdrEl = document.getElementById('hdr');
-  const g = lg.querySelector('panorama-globe');
-  lg.addEventListener('click', ()=>{
-    if (!REDUCED){ flashEl.classList.remove('go'); void flashEl.offsetWidth; flashEl.classList.add('go'); g.animate([{scale:'1'},{scale:'.9'},{scale:'1'}],{duration:220}); }
-    scrollTo({top:0, behavior: REDUCED ? 'auto' : 'smooth'});
-  });
+  const hdrEl = document.getElementById('hdr'), g = document.querySelector('#logo panorama-globe');
   customElements.whenDefined('panorama-globe').then(()=>{
     const sf = g.shadowRoot && g.shadowRoot.querySelector('.surface');
     if (sf){ sf.tabIndex = -1; sf.removeAttribute('role'); sf.removeAttribute('aria-label'); }
