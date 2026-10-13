@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-09. Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-13. Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -27,13 +27,13 @@ Supporting facts already in use on the site:
 
 ## Operating Context
 
-- **Code:** GitHub repo `xtrapurified/panorama-website`. A static site with no build step: `index.html` (the whole page, styles and scripts inline) plus `media/`. Netlify serves the repo root as is (`netlify.toml`).
-- **Hosting:** Netlify project `panoramafilms` (panoramafilms.netlify.app), linked to the repo.
-- **Branches:** `main` = production; every deploy costs Netlify credits, so merge into `main` only when a version is approved. `dev` = working branch; its branch deploys are free and get their own preview link. Work on `dev`, review the preview, then merge.
+- **Code:** GitHub repo `xtrapurified/panorama-website`. A static site with no build step: `index.html` (the whole page, styles and scripts inline) plus `media/`. Cloudflare Pages publishes only `index.html` and `media/` (see Hosting).
+- **Hosting:** Cloudflare Pages project `panorama-website` (panorama-website.pages.dev), linked to the repo since 2026-10-13; it replaced Netlify (`panoramafilms.netlify.app`, builds stopped, kept briefly as a fallback). Build settings: framework preset None; build command `mkdir -p /tmp/site && cp -r ./* /tmp/site/ && rm -f /tmp/site/*.md /tmp/site/netlify.toml && mv /tmp/site dist`; output directory `dist`. A new top-level site file is picked up automatically; `.md` files never are.
+- **Branches:** `main` = production (panorama-website.pages.dev); merge into `main` only when Andrija approves a version. `dev` = working branch; every push gets a preview at dev.panorama-website.pages.dev. Work on `dev`, review the preview, then merge. Cloudflare deploys cost no credits.
 - The public domain panoramafilms.tv is still the old Cargo site.
 - Full films live on Vimeo (vimeo.com/panoramafilmstv) and YouTube and play in a lightbox. Background loops stream from Vimeo; YouTube films use hosted clips because YouTube's player shows its own interface.
 - The source of truth for projects, titles, clients, years, roles, thumbnails and GIFs is panoramafilms.tv: its Work page lists 35 projects in a fixed order.
-- `project.md` and `CLAUDE.md` are blocked from being served on the live site (redirects in `netlify.toml`).
+- `project.md` and `CLAUDE.md` stay off the live site: the Cloudflare build command copies the site into `dist` without any `.md` file. Unknown addresses fall back to the homepage.
 - `CLAUDE.md` holds the working rules every chat reads when it opens the repo: pull `dev` first, never push to `main` without approval, keep this file current.
 
 ## Milestones (revert targets)

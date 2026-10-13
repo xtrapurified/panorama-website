@@ -4,8 +4,8 @@ Read `project.md` first: it holds the product context, rules, site structure and
 
 ## Git workflow
 - Several chats may work on this repo at the same time. Run `git pull --rebase origin dev` before starting work and again before every push.
-- Work on `dev`. Its Netlify branch deploys are free previews.
-- Never push or merge to `main` without Andrija's explicit approval. Every `main` deploy is production and costs Netlify credits.
+- Work on `dev`. Every push gets a Cloudflare Pages preview at dev.panorama-website.pages.dev.
+- Never push or merge to `main` without Andrija's explicit approval. Every `main` deploy is production (panorama-website.pages.dev).
 - Commit and push each finished change to `dev`, with a commit message that says in plain words what changed and why.
 
 ## Keep project.md current
@@ -17,4 +17,4 @@ Read `project.md` first: it holds the product context, rules, site structure and
 - Never invent years, roles, credits, clients or claims; panoramafilms.tv or Andrija is the source.
 - Project order mirrors the Work page on panoramafilms.tv.
 - Never write the contact email in the page source; it is assembled by script.
-- `project.md` and `CLAUDE.md` must stay off the live site (redirects in `netlify.toml`).
+- `project.md` and `CLAUDE.md` must stay off the live site: the Cloudflare Pages build command leaves out every `.md` file (see Hosting in `project.md`).
