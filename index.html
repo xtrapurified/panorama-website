@@ -1024,7 +1024,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 /* Human in the loop slideshow, rebuilt 2026-10-14 to match the About page gallery on panoramafilms.tv:
    a fixed frame (column width × the tallest photo's shape, capped to the window), each photo shown whole inside it */
 .hitl{min-height:0;container-type:inline-size}
-.hitl-stage{position:relative;margin-inline:var(--m);height:min(calc((100cqw - 2 * var(--m)) * var(--hr,2.165)),calc(100svh - 74px))}
+.hitl-stage{position:relative;margin-inline:auto;width:calc((100cqw - 2 * var(--m)) * var(--hs,1));height:calc(min(calc((100cqw - 2 * var(--m)) * var(--hr,2.165)),calc(100svh - 74px)) * var(--hs,1))}
 .hitl-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 50%;opacity:0;transition:opacity .1s linear}
 .hitl-stage img.on{opacity:1}
 .hitl .over{position:absolute;inset:0}
@@ -1664,7 +1664,7 @@ const EXHIBIT_QUOTE = {p07: '“Imagine Boka” invites viewers to question thei
 const EXHIBIT_POSTER = {p07: {i: 15, cap: 'Exhibition poster. July 25 – Aug 13, 2023, Our Lady of Carmen Church, Perast, Montenegro'}};
 const EXHIBIT = {p07: [[0,1500,844],[1,1500,844],[2,843,1500],[3,844,1500],[4,844,1500],[5,843,1500],[6,1500,844],[7,844,1500],[8,844,1500],[9,844,1500],[10,1500,1072],[11,843,1500],[12,1500,1072],[13,1080,772],[14,1500,844],[15,1060,1500]]};
 /* original pixel size of each Field notes photo: larger originals show larger, so no two look alike */
-const BTS_DIMS = [[1280,720],[1280,853],[1280,854],[1500,1001],[1440,2560],[1464,981],[1500,1001],[4094,2152],[960,1280],[5444,3649],[2268,4032],[3000,2004],[2971,3000],[1280,720],[3876,2158],[1400,788],[3264,2448],[3000,2000],[2500,1667],[1022,2212],[1500,1000],[2976,3968],[4032,3024],[2000,1333],[736,981],[4096,2288],[1500,1001],[2500,1667],[1280,960],[1772,2480],[3040,1546],[2268,4032],[657,981],[3826,2148],[1280,848],[1001,1500],[1280,848],[5472,3648],[4066,2282],[2048,1365],[1500,1001],[1464,981],[960,1280],[4000,6000],[1868,1036],[1280,848],[3264,2448],[2560,1440],[1280,848],[960,1280],[3840,2160],[1470,981],[800,1200],[2538,1428],[960,1280],[6000,4000],[960,1280],[1280,720],[5365,3577],[960,1280],[1280,854],[720,1280],[3730,2098],[1280,592],[736,981],[960,1280],[1676,2234],[1944,2592],[1398,2494],[1280,720],[1280,960],[2048,1544],[1400,2342],[6000,4000],[1280,719],[960,1280],[3322,1766],[720,1280],[4450,2488],[1280,720],[1674,934],[1773,997],[3400,2271],[1280,848],[1394,2318],[1280,960],[1280,849],[5805,3870],[1280,849]];
+const BTS_DIMS = [[1280,720],[1280,853],[1280,854],[1500,1001],[1440,2560],[1464,981],[1500,1001],[4094,2152],[960,1280],[5444,3649],[2268,4032],[3000,2004],[2971,3000],[1280,720],[3876,2158],[1400,788],[2448,3264],[3000,2000],[2500,1667],[1022,2212],[1500,1000],[2976,3968],[4032,3024],[2000,1333],[736,981],[4096,2288],[1500,1001],[2500,1667],[1280,960],[1772,2480],[3040,1546],[2268,4032],[657,981],[3826,2148],[1280,848],[1001,1500],[1280,848],[5472,3648],[4066,2282],[2048,1365],[1500,1001],[1464,981],[960,1280],[4000,6000],[1868,1036],[1280,848],[3264,2448],[2560,1440],[1280,848],[960,1280],[3840,2160],[1470,981],[800,1200],[2538,1428],[960,1280],[6000,4000],[960,1280],[1280,720],[5365,3577],[960,1280],[1280,854],[720,1280],[3730,2098],[1280,592],[736,981],[960,1280],[1676,2234],[1944,2592],[1398,2494],[1280,720],[1280,960],[2048,1544],[1400,2342],[6000,4000],[1280,719],[960,1280],[3322,1766],[720,1280],[4450,2488],[1280,720],[1674,934],[1773,997],[3400,2271],[1280,848],[1394,2318],[1280,960],[1280,849],[5805,3870],[1280,849]];
 const REDUCED = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const VEXT = 'mp4';
 
@@ -1901,6 +1901,12 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
 const hs = document.getElementById('hitlStage'), fn = document.getElementById('flickNo');
 const pics = Array.from({length:BTS},(_,i)=>`${M}bts/${String(i).padStart(2,'0')}.webp`);
 hs.style.setProperty('--hr', Math.max(...BTS_DIMS.map(([w,h])=>h/w)).toFixed(4));   /* tallest photo: height ÷ width */
+/* overall scale of the frame (Andrija, 2026-10-14): full size on phones and tablets, 20% smaller on a laptop
+   (MacBook Pro, 1512 px wide), easing to 40% smaller on large screens (2560 px and up) */
+function hScale(){ const w = window.innerWidth;
+  const s = w <= 1024 ? 1 : w <= 1512 ? 1 - .2 * (w - 1024) / 488 : Math.max(.6, .8 - .2 * (w - 1512) / 1048);
+  hs.style.setProperty('--hs', s.toFixed(3)); }
+hScale(); addEventListener('resize', hScale);
 const hImgs = [hs.querySelector('img')], hOk = new Array(BTS).fill(false); hOk[0] = true;
 let fiI = 0, fiT = null, hLoaded = false;
 function preloadAll(){
