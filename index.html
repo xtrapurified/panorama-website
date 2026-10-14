@@ -2228,7 +2228,7 @@ function openFilm(k){
   const photo = !films.length && !!(PJ[k] && PJ[k].imgs.length);   /* photographs and text, no film: a photo story instead of a player */
   lb.classList.toggle('photo', photo);
   renderProject(k, photo);
-  document.getElementById('lb-title').textContent = `${f.title} — ${f.client}`;
+  document.getElementById('lb-title').textContent = same(f.title, f.client) || !f.client ? f.title : `${f.title} — ${f.client}`;   /* no "Shinobi — Shinobi" */
   document.getElementById('lb-prev').hidden = document.getElementById('lb-next').hidden = document.getElementById('lb-sl').hidden = document.getElementById('lb-sr').hidden = (k==='reel');
   if (photo){ teardown(); startShow(k); }
   else playFilm(Math.max(0, films.findIndex(x=>x.main)), false);
