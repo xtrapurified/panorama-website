@@ -654,7 +654,9 @@ footer{font-size:calc(12*var(--fz))}
 .wm .wm-p{unicode-bidi:isolate}
 .wm{transition:color .2s}
 .wm:hover,.wm:focus-visible{color:var(--red)}
-.lb-wm{display:inline-block;background:none;border:0;padding:0;cursor:pointer;align-self:center}   /* in a project: the Panorama Films wordmark leads back to the site (2026-10-14) */   /* the wordmark turns red on hover (2026-10-14) */
+.lb-wm{display:inline-block;background:none;border:0;padding:0;cursor:pointer;align-self:center;line-height:1!important}
+.lb-bar .lb-l{position:relative;top:var(--wm-dy,6.9px)}
+@media (max-width:700px){.lb-bar .lb-l{top:var(--wm-dy,-2.7px)}}   /* sits exactly where the header wordmark is; refined by script on open */   /* in a project: the Panorama Films wordmark leads back to the site (2026-10-14) */   /* the wordmark turns red on hover (2026-10-14) */
 .wm:hover .wm-f,.wm:focus-visible .wm-f{opacity:0;max-width:0}   /* Films steps aside while Panorama flicks through its scripts */   /* Films a step lighter than Panorama */
 .wm sup{font-size:.42em;font-weight:400;line-height:0;vertical-align:.95em;margin-left:.12em}
 .hdr.compact .logo-slot{width:auto;aspect-ratio:auto}
@@ -2232,6 +2234,7 @@ function openFilm(k){
   document.getElementById('lb-prev').hidden = document.getElementById('lb-next').hidden = document.getElementById('lb-sl').hidden = document.getElementById('lb-sr').hidden = (k==='reel');
   if (photo){ teardown(); startShow(k); }
   else playFilm(Math.max(0, films.findIndex(x=>x.main)), false);
+  alignWm();
   if (lb.hidden){ lb.hidden = false; lb.classList.remove('opening'); void lb.offsetWidth; lb.classList.add('opening'); document.body.style.overflow = 'hidden'; document.getElementById('lb-close').focus({focusVisible:false}); }
   lb.scrollTop = 0;
   /* opening a project adds one step to the browser history, so the iPhone's swipe from the left edge (and any back button) closes it */
@@ -2270,6 +2273,11 @@ function toggleFs(){
 }
 cPlay.addEventListener('click', toggle);
 document.getElementById('lb-home').addEventListener('click', ()=>closeFilm());
+/* the wordmark in a project sits exactly where the header one does, so closing a project doesn't make it jump */
+function alignWm(){ const h = document.querySelector('.hdr .wm'), m = document.getElementById('lb-home'), w = m && m.parentElement; if (!h || !w) return;
+  requestAnimationFrame(()=>{ if (!h.offsetParent || lb.hidden) return; w.style.removeProperty('--wm-dy'); w.style.setProperty('--wm-dy', '0px');
+    const d = h.getBoundingClientRect().top - m.getBoundingClientRect().top; if (Math.abs(d) < 40) w.style.setProperty('--wm-dy', d.toFixed(1) + 'px'); else w.style.removeProperty('--wm-dy'); }); }
+addEventListener('resize', ()=>{ if (!lb.hidden) alignWm(); });
 cSnd.addEventListener('click', ()=>P && P.mute(!P.muted));
 cFs.addEventListener('click', toggleFs);
 box.addEventListener('click', e=>{ if (e.target.classList.contains('lb-hit')) toggle(); });
