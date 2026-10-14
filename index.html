@@ -2530,7 +2530,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   const PLACEHOLDER = 'media/team/placeholder.webp';
   /* collaborators' portraits, supplied by Andrija: id → file in media/team */
   const PHOTOS = {piki:'media/team/piki.webp', babic:'media/team/babic.webp', danilo:'media/team/danilo.webp', stojanovic:'media/team/stojanovic.webp', bojan:'media/team/bojan.webp',
-    zoran:'media/team/zoran.webp', milovan:'media/team/milovan.webp', nevena:'media/team/nevena.webp', ana:'media/team/ana.webp', neda:'media/team/neda.webp'};   /* still to come: cile, matija */
+    zoran:'media/team/zoran.webp', milovan:'media/team/milovan.webp', nevena:'media/team/nevena.webp', ana:'media/team/ana.webp', neda:'media/team/neda.webp', matija:'media/team/matija.webp'};   /* still to come: cile */
   Object.entries(PHOTOS).forEach(([id, src])=>{ INFO[id] = Object.assign({photo: src}, INFO[id] || {}); });
   pn.forEach(n=>{ const i = INFO[n.id] || {}; const src = i.photo || PLACEHOLDER; if (src){ n.img = new Image(); n.img.src = src; n.ph = !i.photo; n.img.onload = () => { if (!running) draw(); }; } });
   const ini = n => n.name.split(' ').filter(w=>/^[A-ZĆČŠŽĐ]/.test(w)).slice(0,2).map(w=>w[0]).join('');
