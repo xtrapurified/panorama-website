@@ -1301,7 +1301,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .card .meta{row-gap:2px}
 .card .meta h3,.card .meta .cl,.card .meta .yr{font-size:var(--small);letter-spacing:-.01em;line-height:1.35}   /* the same size as the client under a featured film */
 .card .meta .cl{color:var(--mid)}
-/* Featured films: only the running Rec counter in the top right; the title and logline lie over the film in inverted colour
+/* Featured films: only the running Rec counter in the top right; the title and logline lie over the film in white (inverted until 2026-10-14)
    and hold their place in the window while the film scrolls past (set by script); below, just client and year */
 .works .frame .hud{grid-template-rows:auto;align-content:start}
 .works .frame .hud .top{justify-content:flex-end}
@@ -1316,6 +1316,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .ov-in{gap:0}
 .ov-t,.ov-l{font-size:var(--d1);font-weight:400;line-height:1.06;letter-spacing:-.05em;max-width:24ch}
 .ov-l{opacity:.5}
+/* trying plain white instead of inverted (Andrija, 2026-10-14): white type with a soft shadow so it holds on bright frames; the logline at 70% */
+.ov{mix-blend-mode:normal;color:#fff;text-shadow:0 1px 24px rgba(0,0,0,.28),0 0 2px rgba(0,0,0,.18)}
+.ov-l{opacity:.7}
 .works .cap .cl{grid-column:1/-1}
 .works .cap .yr{grid-column:10/span 3;text-align:right}
 @media (max-width:760px){.works .ov{display:none}.works .cap h3.sr-only{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;grid-column:1/-1;font-size:var(--small);font-weight:400;letter-spacing:-.01em;line-height:1.35;margin:0}.works .cap{row-gap:0}}
