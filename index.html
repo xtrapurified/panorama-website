@@ -136,7 +136,8 @@ h1,h2,h3,h4{margin:0;font-weight:500}
 /* Header: logo left, navigation right in the old site's style (Helvetica Neue 26px, white at 60%, underlined).
    It follows the scroll; once past the hero the links fold into a three-line menu button. */
 .hdr{position:fixed;inset:0 0 auto 0;top:env(safe-area-inset-top,0px);z-index:30}
-.hdr::before{content:"";position:fixed;inset:0 0 auto 0;height:22vh;min-height:180px;background:linear-gradient(rgba(var(--hdr-rgb,0,0,0),var(--hdr-shade,.9)),rgba(var(--hdr-rgb,0,0,0),calc(var(--hdr-shade,.9) * .6)) 45%,transparent);pointer-events:none;z-index:-1}
+/* the shade behind the compact header reaches 140px above the page top too: in-app browsers (Telegram) and Safari's floating bar show the page scrolling under their own top bar, which left a strip of unshaded page there */
+.hdr::before{content:"";position:fixed;inset:0 0 auto 0;--up:calc(140px + env(safe-area-inset-top,0px));top:calc(var(--up) * -1);height:calc(22vh + var(--up));min-height:calc(180px + var(--up));background:linear-gradient(rgba(var(--hdr-rgb,0,0,0),var(--hdr-shade,.9)) var(--up),rgba(var(--hdr-rgb,0,0,0),calc(var(--hdr-shade,.9) * .6)) calc(var(--up) + 10vh),transparent);pointer-events:none;z-index:-1}
 /* the header only catches clicks on its own logo, links and buttons; the empty band and the fade pass clicks through to the page */
 .hdr,.hdr .bar{pointer-events:none}
 .hdr .bar > *,.hdr.navopen .menu{pointer-events:auto}
@@ -836,8 +837,8 @@ footer{font-size:calc(12*var(--fz))}
 /* small red labels: a touch lighter so they pass contrast at 15px */
 .lab.red,.sx-bar .lab.red{color:#f0463d}
 /* skip links */
-.skip{position:fixed;left:var(--m);top:10px;z-index:100;padding:10px 14px;background:var(--fg);color:var(--bg);font-size:calc(15*var(--fz));transform:translateY(-200%);transition:transform .15s}
-.skip:focus{transform:none}
+.skip{position:fixed;left:var(--m);top:calc(10px + env(safe-area-inset-top,0px));z-index:100;padding:10px 14px;background:var(--fg);color:var(--bg);font-size:calc(15*var(--fz));transform:translateY(calc(-100% - 10px - env(safe-area-inset-top,0px) - 200px));transition:transform .15s}
+.skip:focus-visible{transform:none}   /* hidden well above the page (in-app browsers like Telegram draw the page under their own top bar), shown only for keyboard focus */
 /* contact: big pause after the label; first line white, second red */
 .end .top{margin-bottom:clamp(120px,18vw,320px)}
 .end .ask a .w,.pj .pj-ask .w{color:var(--fg)}
