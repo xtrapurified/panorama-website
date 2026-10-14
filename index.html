@@ -18,10 +18,20 @@
 #golden summary{cursor:pointer}
 #golden .gh-tease{transition:color .2s}
 #golden summary:hover .gh-tease,#golden summary:focus-visible .gh-tease{color:var(--fg)}
-#golden .more .pm{transition:transform .35s cubic-bezier(.16,1,.3,1)}
-#golden .more summary:hover .pm,#golden .more summary:focus-visible .pm{transform:rotate(90deg) scale(1.25)}
-#golden .more summary:hover .pm::before,#golden .more summary:hover .pm::after{background:var(--red)}
-#golden .more[open] summary:hover .pm{transform:rotate(180deg) scale(1.25)}
+/* the call: a red tally disc with a white plus, pinging like a signal until it has been opened once */
+#golden .more summary{align-items:center}
+#golden .more .pm{position:relative;flex:none;width:40px;height:40px;margin:0 0 0 18px;border-radius:50%;background:var(--red);font-size:16px;align-self:center;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+#golden .more .pm::before,#golden .more .pm::after{left:30%;width:40%;height:2px;margin-top:-1px;background:#fff}
+#golden .more summary:hover .pm,#golden .more summary:focus-visible .pm{transform:scale(1.12)}
+#golden .more summary:hover .pm::before,#golden .more summary:hover .pm::after{background:#fff}
+#golden .more summary:hover .pm::after{transform:rotate(180deg)}
+#golden .more[open] summary:hover .pm::after{transform:rotate(0deg)}
+#golden .gh-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--red);opacity:0;pointer-events:none}
+#golden:not(.seen) .more:not([open]) .gh-ring{animation:ghping 2.6s cubic-bezier(.2,.6,.3,1) infinite}
+#golden:not(.seen) .more:not([open]) .gh-ring + .gh-ring{animation-delay:.9s}
+@keyframes ghping{0%{transform:scale(1);opacity:.75}70%{opacity:0}100%{transform:scale(2.6);opacity:0}}
+@media (max-width:760px){#golden .more .pm{width:36px;height:36px;margin-left:12px}}
+@media (prefers-reduced-motion:reduce){#golden .gh-ring{animation:none!important}}
 #golden canvas{touch-action:pan-y}
 #golden canvas.drag{cursor:ew-resize}
 #golden .gh-body{--bg:#000;--fg:#f2f2f0;--mid:#7d7d7a;background:#000;color:var(--fg);margin-inline:calc(var(--m) * -1);padding:clamp(28px,4vw,64px) var(--m) clamp(40px,6vw,96px);margin-top:clamp(18px,2.4vw,32px);
@@ -1416,7 +1426,7 @@ footer .ft-top:hover{color:var(--red)}
 
   <section class="sec" id="golden" data-sec="studio">
     <details class="more" id="ghFold">
-      <summary aria-label="Golden hour"><span class="gh-tease lab" id="ghTease"></span><span class="pm" aria-hidden="true"></span></summary>
+      <summary aria-label="Golden hour"><span class="gh-tease lab" id="ghTease"></span><span class="pm" aria-hidden="true"><i class="gh-ring"></i><i class="gh-ring"></i></span></summary>
       <div class="gh-body">
         <div class="gh-code">
           <p><span class="k">Input Type:</span><br><span class="k">Time</span> <span class="v" id="ghClock"></span></p>
@@ -2789,6 +2799,9 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
 ;
   const canvas = document.getElementById('ghC'); if (!canvas || !window.d3) return;
   const fold = document.getElementById('ghFold');
+  const ghSec = document.getElementById('golden');
+  try { if (localStorage.getItem('pf-gh-seen')) ghSec.classList.add('seen'); } catch (e) {}
+  fold.addEventListener('toggle', () => { if (fold.open) { ghSec.classList.add('seen'); try { localStorage.setItem('pf-gh-seen', '1'); } catch (e) {} } });
   const R = Math.PI / 180;
   const DARK = { sea: '#0c0c0c', land: '#383837', red: [226, 35, 26], redS: '#e2231a', fg: '#f2f2f0', mid: '#5f5f5d', night: .74 };
   const LIGHT = { sea: '#f9f8f5', land: '#cfcec8', red: [226, 35, 26], redS: '#e2231a', fg: '#121211', mid: '#8d8c87', night: .24 };
