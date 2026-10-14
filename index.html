@@ -273,18 +273,6 @@ h1,h2,h3,h4{margin:0;font-weight:500}
 .idx .c{grid-column:9/span 3}
 .idx .w{grid-column:12;text-align:right;white-space:nowrap}
 .idx:hover .t,.idx:hover .w{color:var(--red)}
-/* Index: every project on one list, in the site's order (2026-10-13) */
-.pindex{border-top:1px solid var(--rule)}
-.pindex .idx{color:inherit;text-decoration:none;border-bottom:1px solid var(--rule);padding:10px 0}
-.pindex .idx .k{grid-column:1;color:var(--mid);font-variant-numeric:tabular-nums}
-.pindex .idx .th{grid-column:2/span 1}
-.pindex .idx .t{grid-column:3/span 5}
-.pindex .idx .c{grid-column:8/span 3}
-.pindex .idx .w{grid-column:11;text-align:left;justify-content:flex-start}
-.pindex .idx .n{grid-column:12;text-align:right;white-space:nowrap;font-size:var(--small);color:var(--mid)}
-.pindex .idx:hover .n,.pindex .idx:focus-visible .t{color:var(--red)}
-.pindex .idx:focus-visible{outline:none}
-@media (max-width:700px){.pindex .idx .c,.pindex .idx .n{display:none}.pindex .idx .k{display:block;grid-column:1/span 2}.pindex .idx .th{grid-column:3/span 3}.pindex .idx .t{grid-column:6/span 5}.pindex .idx .w{grid-column:11/span 2;justify-content:flex-end;text-align:right}}
 @media (max-width:700px){.idx .k,.idx .c{display:none}.idx .th{grid-column:1/span 4}.idx .t{grid-column:5/span 6;font-size:calc(16*var(--fz))}.idx .w{grid-column:11/span 2}}
 .all{display:flex;justify-content:space-between;gap:16px;padding-top:18px}
 
@@ -949,6 +937,10 @@ footer .ft-top{justify-self:center}
 .th-i{width:1em;height:1em;margin-right:.35em;vertical-align:-.15em;fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:round;stroke-linejoin:round}
 footer .ft-top{font-size:calc(12*var(--fz));letter-spacing:-.01em;color:var(--fg)}   /* a step above the rest of the footer, 30% under its old size */
 footer .ft-top:hover{color:var(--red)}
+.nav-ix{color:inherit;text-decoration:none;opacity:.6}.nav-ix:hover{opacity:1;color:var(--red)}
+footer .ft-ix{color:inherit;text-decoration:none;opacity:.5;transition:opacity .2s,color .2s}
+footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
+.sx-no{display:inline-block;min-width:2.4em;color:var(--mid);font-weight:400;font-variant-numeric:tabular-nums}
 .ft-th{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer;display:inline-flex;gap:.9em}
 .ft-th span{opacity:.5;transition:opacity .2s,color .2s}
 .ft-th span[aria-current="true"]{opacity:1;color:var(--fg)}
@@ -1197,6 +1189,8 @@ footer .ft-top:hover{color:var(--red)}
   .hdr.navopen .menu .nav-ft{display:flex;align-items:center;justify-content:space-between;padding-top:22px;border-top:1px solid rgba(255,255,255,.18)}
   .hdr.navopen .menu .nav-ft .nav-sx{min-height:0;border:0;padding:0;font-size:inherit}
   .hdr.navopen .menu .nav-ft .nav-sx::after{content:none}
+  .hdr.navopen .menu .nav-ft .nav-ix{min-height:0;border:0;padding:0;font-size:calc(14*var(--fz));letter-spacing:0}
+  .hdr.navopen .menu .nav-ft .nav-ix::after{content:none}
   .hdr.navopen .menu .nav-ft .nav-sx svg{width:30px;height:30px;fill:none;stroke:#fff;stroke-width:1.92;stroke-linecap:round}
   .hdr.navopen .menu .nav-ft .ft-th{font-size:calc(13*var(--fz));color:#fff}
   /* light mode: the phone menu turns to paper with dark type, like the rest of the page */
@@ -1320,7 +1314,7 @@ footer .ft-top:hover{color:var(--red)}
 <header class="hdr" id="hdr">
   <div class="page bar">
     <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe-follow aria-hidden="true"></panorama-globe-follow></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a><span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span></div>
-    <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Get in touch</a><span class="nav-ft"><a href="#search" data-search class="nav-sx" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a><button type="button" class="ft-th" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span></nav>
+    <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Get in touch</a><span class="nav-ft"><a href="#search" data-search class="nav-sx" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a><a href="#index" class="nav-ix" data-index>Index</a><button type="button" class="ft-th" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
 </header>
@@ -1352,8 +1346,6 @@ footer .ft-top:hover{color:var(--red)}
 
   <section class="sec" data-sec="films">
     <div class="lede cat"><span class="tag sub">Catalogue</span><h2>Archive</h2></div>
-    <div class="net-view lab cat-view" role="group" aria-label="Show the catalogue as"><button type="button" data-cv="grid" aria-pressed="true"><span>Grid</span></button><button type="button" data-cv="index" aria-pressed="false"><span>Index</span></button></div>
-    <div class="pindex" id="pindex" hidden></div>
     <div class="cards" id="cards"></div>
     <div class="reveal" id="showWrap"><button type="button" id="showAll" class="tgl" aria-controls="cards" aria-expanded="false"><span id="showT">Load more</span><span class="pm" aria-hidden="true"></span></button></div>
   </section>
@@ -1465,7 +1457,7 @@ band = "elevation(s) in [-4°, 6°]",
         <p class="mail-note lab mid" id="mailNote" aria-live="polite"></p>
       </div>
     </div>
-    <footer class="lab mid"><span class="ft-l"><span class="ft-y" id="ftY">© MMXXVI</span><button type="button" class="ft-th" id="themeBtn" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span><a href="#top" class="ft-top">Back to top <svg class="ic" aria-hidden="true"><use href="#i-u"/></svg></a><span class="ft-c">Studio Panorama Films</span></footer>
+    <footer class="lab mid"><span class="ft-l"><span class="ft-y" id="ftY">© MMXXVI</span><button type="button" class="ft-th" id="themeBtn" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button><a href="#index" class="ft-ix" data-index title="Index of all projects (I)">Index</a></span><a href="#top" class="ft-top">Back to top <svg class="ic" aria-hidden="true"><use href="#i-u"/></svg></a><span class="ft-c">Studio Panorama Films</span></footer>
   </section>
   </div>
 </main>
@@ -1497,7 +1489,7 @@ band = "elevation(s) in [-4°, 6°]",
   <div class="pj page-in" id="pj"></div>
 </div>
 <div class="sx" id="sx" hidden role="dialog" aria-modal="true" aria-label="Search">
-  <div class="sx-bar"><span class="lab red rec live">Search</span><button class="lab" id="sx-close" type="button">Close <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+  <div class="sx-bar"><span class="lab red rec live" id="sx-lab">Search</span><button class="lab" id="sx-close" type="button">Close <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></div>
   <button class="sx-x" id="sx-x" type="button" aria-label="Close search"></button>
   <input class="sx-q" id="sx-q" type="search" placeholder="Films, clients, people" autocomplete="off" spellcheck="false" aria-label="Search films, clients and people" aria-controls="sx-r">
   <p class="sx-n lab mid" id="sx-n" aria-live="polite"></p>
@@ -1649,9 +1641,6 @@ document.getElementById('chapters').innerHTML = CHAPTERS.map(([c,t,r,items],ci)=
 /* one system for every card: the title, then the client and the year, all at one size; the client line is left out when the title already names it */
 const same = (a, b) => { const n = x => String(x||'').toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,''); const x = n(a), y = n(b); return !!x && !!y && x.includes(y); };   /* the title already names the client */
 document.getElementById('cards').innerHTML = CARDS.concat(INDEX).map((k,i)=>{const f=F[k], cl = f.sub || (same(f.title, f.client) ? '' : f.client);return `<article class="card${i >= CARDS.length ? ' arch' : i >= CARDS_SHOWN ? ' later' : ''}">${frame(k, true)}<div class="meta s" data-play="${k}"><h3>${esc(f.title)}</h3><span class="cl">${esc(cl)}</span></div></article>`;}).join('');
-/* Index: all projects as one list, each a real link to its page */
-document.getElementById('pindex').innerHTML = ORDER.map(k=>{ const f = F[k], n = nFilms(k), slug = PJ[k] && PJ[k].slug;
-  return `<a class="idx" href="${slug ? '#' + slug : ext(f)}" data-play="${k}"><span class="k s">${esc(f.n)}</span><span class="th"><img src="${still(k)}" alt="" loading="lazy"></span><span class="t">${esc(f.title)}</span><span class="c s mid">${esc(f.client)}</span><span class="w s mid">${esc(f.year || '')}</span><span class="n s">${n > 1 ? n + ' films' : n === 1 ? '1 film' : ''}</span></a>`; }).join('');
 const idxEl = document.getElementById('index'); if (idxEl) idxEl.innerHTML = INDEX.map(k=>{const f=F[k];return `<div class="idx" data-play="${k}" role="button" tabindex="0" aria-label="${f.v||f.yt ? 'Play' : 'View'} ${esc(f.title)}"${f.hover?` data-hv="${f.hover}"`:''}><span class="th"><img src="${still(k)}" alt="" loading="lazy">${f.v||f.yt?'<span class="play" aria-hidden="true"></span>':''}</span><span class="t">${esc(f.title)}</span><span class="c s mid">${esc(f.client)}</span><span class="w s mid">${esc(f.year)}</span></div>`;}).join('');
 /* each discipline points to films where Panorama was credited for it (services and credits on the project), never more than three */
 const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interviewer/)), Writing: k => /script|concept/i.test(F[k].roles || ''),
@@ -2360,16 +2349,19 @@ function runSearch(){
   }
   sxOn = terms.length && sxHits.length ? 0 : -1;
   const np = sxHits.filter(h=>!h.x.sec).length;
-  sxN.textContent = !terms.length ? `All ${np} projects. Type to narrow it down.` : sxHits.length ? `${sxHits.length} result${sxHits.length>1?'s':''} for “${sxQ.value.trim()}”` : `Nothing found for “${sxQ.value.trim()}”. Try a client, a place, a person or a year.`;
+  sxN.textContent = !terms.length ? (sx.classList.contains('ix') ? `All ${np} projects, in order. Type to filter.` : `All ${np} projects. Type to narrow it down.`) : sxHits.length ? `${sxHits.length} result${sxHits.length>1?'s':''} for “${sxQ.value.trim()}”` : `Nothing found for “${sxQ.value.trim()}”. Try a client, a place, a person or a year.`;
   const hl = t => terms.length ? snippet(t, terms) || esc(t) : esc(t);
   sxR.innerHTML = sxHits.map((h,i)=>{ const x = h.x;
-    return `<li><a href="${x.sec ? '#'+x.sec : '#'}" class="${x.sec?'sec':''}${i===sxOn?' on':''}" data-i="${i}"><span class="th">${x.thumb ? `<img src="${x.thumb}" alt="" loading="lazy">` : 'Section'}</span><span class="t"><b>${hl(x.title)}</b><span>${h.sn || hl(x.sub)}</span></span><span class="y">${esc(x.year||'')}</span></a></li>`; }).join('');
+    return `<li><a href="${x.sec ? '#'+x.sec : '#'}" class="${x.sec?'sec':''}${i===sxOn?' on':''}" data-i="${i}"><span class="th">${x.thumb ? `<img src="${x.thumb}" alt="" loading="lazy">` : 'Section'}</span><span class="t"><b>${x.sec ? '' : `<span class="sx-no">${esc(x.n)}</span>`}${hl(x.title)}</b><span>${h.sn || hl(x.sub)}</span></span><span class="y">${esc(x.year||'')}</span></a></li>`; }).join('');
 }
 let sxBack = null;
-function openSearch(){ sxBack = document.activeElement; if (!lb.hidden) closeFilm(); sx.hidden = false; document.body.style.overflow = 'hidden'; sxQ.value = ''; runSearch(); requestAnimationFrame(()=>sxQ.focus()); }
+function setSxMode(ix){ sx.classList.toggle('ix', ix); document.getElementById('sx-lab').textContent = ix ? 'Index' : 'Search'; sxQ.placeholder = ix ? 'Filter projects' : 'Films, clients, people'; sx.setAttribute('aria-label', ix ? 'Index of projects' : 'Search'); }
+function openIndex(){ openSearch(); setSxMode(true); runSearch(); }
+function openSearch(){ setSxMode(false); sxBack = document.activeElement; if (!lb.hidden) closeFilm(); sx.hidden = false; document.body.style.overflow = 'hidden'; sxQ.value = ''; runSearch(); requestAnimationFrame(()=>sxQ.focus()); }
 function closeSearch(){ sx.hidden = true; document.body.style.overflow = ''; sxBack && sxBack.focus && sxBack.focus(); }
 function pick(i){ const h = sxHits[i]; if (!h) return; closeSearch();
   if (h.x.sec){ document.getElementById(h.x.sec).scrollIntoView({behavior: REDUCED ? 'auto' : 'smooth'}); } else openFilm(h.x.k); }
+document.addEventListener('click', e=>{ const ix = e.target.closest('[data-index]'); if (ix){ e.preventDefault(); if (typeof setNav === 'function' && !navov.hidden) setNav(false); openIndex(); } });
 document.addEventListener('click', e=>{ const t = e.target.closest('[data-search]'); if (!t) return; e.preventDefault();
   if (hdr.classList.contains('navopen')) document.getElementById('burger').click(); openSearch(); });
 document.getElementById('sx-close').addEventListener('click', closeSearch);
@@ -2379,6 +2371,7 @@ sxR.addEventListener('click', e=>{ const a = e.target.closest('a[data-i]'); if (
 document.addEventListener('keydown', e=>{
   if (sx.hidden){
     if ((e.key === '/' || (e.key.toLowerCase() === 'k' && (e.metaKey || e.ctrlKey))) && !e.target.closest('input, textarea, [contenteditable]')){ e.preventDefault(); openSearch(); }
+    else if (e.key.toLowerCase() === 'i' && !e.metaKey && !e.ctrlKey && !e.altKey && !e.target.closest('input, textarea, select, [contenteditable]')){ e.preventDefault(); openIndex(); }
     return;
   }
   if (e.key === 'Escape'){ e.preventDefault(); closeSearch(); }
@@ -2454,14 +2447,6 @@ document.addEventListener('keydown', e=>{
     /* the address is also shown, selectable, in case copying is blocked */
     if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(a).then(()=>done(true), ()=>done(false)); else done(false);
   });
-})();
-
-/* catalogue: Grid or Index, remembered per browser */
-(()=>{ const bs = document.querySelectorAll('.cat-view [data-cv]'), ix = document.getElementById('pindex'), cards = document.getElementById('cards'), more = document.getElementById('showWrap');
-  const set = v => { const on = v === 'index'; ix.hidden = !on; cards.hidden = on; more.style.display = on ? 'none' : '';
-    bs.forEach(b=>b.setAttribute('aria-pressed', String(b.dataset.cv === v))); try { localStorage.setItem('pf-cat-view', v); } catch(e){} };
-  bs.forEach(b=>b.addEventListener('click', ()=>{ if (b.getAttribute('aria-pressed') !== 'true') set(b.dataset.cv); }));
-  let v = 'grid'; try { v = localStorage.getItem('pf-cat-view') || 'grid'; } catch(e){} if (v === 'index') set('index');
 })();
 
 /* catalogue: show all / show fewer, as one toggle under the grid */

@@ -121,7 +121,7 @@ Decided with Andrija on 2026-10-14 in the "Panorama Project Merges" page (claude
 
 Opens with 12 films (from 07) → "Load more" shows the rest of the catalogue (07–25) → "Load more from the archive" adds 26–31 → "Show fewer".
 
-A centred Grid / Index switch under the Archive heading (same style as the Collective's List / Graph; Grid is the default, the choice is remembered per browser). Index (2026-10-13) lists every project on the site (31 since 2026-10-14), featured ones included, one row each: number, small still, title, client, year and film count (phones: number, still, title, year). Each row is a real link to the project page (`#<slug>`). Made so Andrija can see every project at once while deciding which to merge.
+**Index** (moved 2026-10-14, Andrija: the toggle under the featured films listed films that sat above it): no switch in the catalogue any more. The Index is the search panel in a second mode, headed "Index": every project on the site, numbered in the site's order, with a filter field. It opens from a quiet "Index" link in the footer (after Dark / Light), from "Index" in the phone menu (between search and Dark / Light), and with the I key on computers (`/` still opens Search).
 
 ## Services, roles and credits (system approved by Andrija, 2026-10-09)
 
