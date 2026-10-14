@@ -2509,18 +2509,18 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     const id = pn.find(n=>n.name === nm.textContent.trim()); if (!id) return;
     INFO[id.id] = {photo: img ? img.getAttribute('src') : '', role: (a.querySelector('.lab') || {}).textContent || '', bio: (a.querySelector('p') || {}).textContent || ''}; });
   /* links for everyone go here when we have them, e.g. LINKS.andrija = 'https://instagram.com/…' */
-  /* PLACEHOLDER bios (lorem ipsum, different lengths) so the profile layout can be judged; replace with real bios */
+  /* collaborators' bios, from their own profiles as sent by Andrija; the rest are still lorem ipsum PLACEHOLDERS */
   const BIO_PH = {
-    piki: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante venenatis dapibus, posuere velit aliquet.',
-    babic: 'Curabitur blandit tempus porttitor. Nullam quis risus eget urna mollis ornare vel eu leo. Donec sed odio dui, cras justo odio dapibus ac facilisis in, egestas eget quam.',
-    cile: 'Maecenas faucibus mollis interdum.',
-    danilo: 'Aenean lacinia bibendum nulla sed consectetur. Vestibulum id ligula porta felis euismod semper. Sed posuere consectetur est at lobortis, nulla vitae elit libero, a pharetra augue.',
+    piki: "Photographer and cinematographer, working independently since 2000 across portraits, advertising, fashion and promotional films. He holds a master’s in photography from the University of Applied Arts in Belgrade, founded his studio PIKI in 2010, has shot Belgrade Design Week since 2006 and co-founded the Panorama Films Collective in 2019.",
+    babic: "Director and editor, trained in film and TV editing at the Faculty of Dramatic Arts in Belgrade. He has directed five documentaries, among them Lopata je mala (best film at Balkan Beyond Borders) and Nedodirljivi (best short documentary at the SEE Film Festival in Los Angeles), and the docuseries What Does the Future Hold? for the Dubai Future Foundation. He translated Walter Murch’s In the Blink of an Eye and Paul Schrader’s Transcendental Style in Film into Serbian, and designed exhibits for the Museum of the Future.",
+    cile: "Director of photography, camera operator and photographer based in Belgrade, with more than ten years in film, TV and advertising. He won the Bronze Plaque for cinematography at the Image in Motion festival for the series A Time of Evil in 2021, and again for Besa 2 the following year.",
+    danilo: "Director, editor and graphic designer. He graduated in graphic design from the Faculty of Contemporary Arts in Belgrade in 2021 and runs his own video production focused on music videos and commercials, where he directs and edits. Now and then he works as a photographer.",
     stojanovic: 'Etiam porta sem malesuada magna mollis euismod. Cum sociis natoque penatibus et magnis dis parturient montes.',
-    bojan: 'Donec ullamcorper nulla non metus auctor fringilla. Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Morbi leo risus, porta ac consectetur ac, vestibulum at eros. Praesent commodo cursus magna.',
+    bojan: "Sound designer and composer.",
     zoran: 'Nulla vitae elit libero, a pharetra augue. Fusce dapibus, tellus ac cursus commodo.',
     milovan: 'Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum.',
     matija: 'Vestibulum id ligula porta felis euismod semper. Integer posuere erat a ante. Nullam id dolor id nibh ultricies vehicula ut id elit, sed posuere consectetur est at lobortis.',
-    ana: 'Sed posuere consectetur est at lobortis. Aenean eu leo quam, pellentesque ornare sem lacinia quam venenatis vestibulum.',
+    ana: "Project and production manager with more than ten years of coordinating creative productions, media projects, exhibitions and cultural programmes with teams across Europe and the Middle East. She studied at the Russian Academy of Theatre Arts.",
     nevena: 'Cras mattis consectetur purus sit amet fermentum. Aenean lacinia bibendum nulla sed consectetur, donec id elit non mi porta gravida at eget metus. Etiam porta sem malesuada.'
   };
   const LINKS = {};   /* until real links arrive everyone shows a placeholder website link */
@@ -2529,7 +2529,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   const PLACEHOLDER = 'media/team/placeholder.webp';
   /* collaborators' portraits, supplied by Andrija: id → file in media/team */
   const PHOTOS = {piki:'media/team/piki.webp', babic:'media/team/babic.webp', danilo:'media/team/danilo.webp', stojanovic:'media/team/stojanovic.webp', bojan:'media/team/bojan.webp',
-    zoran:'media/team/zoran.webp', milovan:'media/team/milovan.webp', nevena:'media/team/nevena.webp'};   /* still to come: cile, matija, ana */
+    zoran:'media/team/zoran.webp', milovan:'media/team/milovan.webp', nevena:'media/team/nevena.webp', ana:'media/team/ana.webp'};   /* still to come: cile, matija */
   Object.entries(PHOTOS).forEach(([id, src])=>{ INFO[id] = Object.assign({photo: src}, INFO[id] || {}); });
   pn.forEach(n=>{ const i = INFO[n.id] || {}; const src = i.photo || PLACEHOLDER; if (src){ n.img = new Image(); n.img.src = src; n.ph = !i.photo; n.img.onload = () => { if (!running) draw(); }; } });
   const ini = n => n.name.split(' ').filter(w=>/^[A-ZĆČŠŽĐ]/.test(w)).slice(0,2).map(w=>w[0]).join('');
