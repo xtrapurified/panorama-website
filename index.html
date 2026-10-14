@@ -1900,7 +1900,8 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
    at that width, capped to the window; every photo is fitted whole inside that frame (contain: never cropped, never zoomed
    past the frame), centred; a 0.1 s fade, a new photo every 0.3 s. No per-photo sizing in script, so nothing can over-zoom. */
 const hs = document.getElementById('hitlStage'), fn = document.getElementById('flickNo');
-const pics = Array.from({length:BTS},(_,i)=>`${M}bts/${String(i).padStart(2,'0')}.webp`);
+const BTS_V = '2';   /* raise when a photo file changes (2026-10-14: photo 17 rotated) so browsers fetch the new file */
+const pics = Array.from({length:BTS},(_,i)=>`${M}bts/${String(i).padStart(2,'0')}.webp?v=${BTS_V}`);
 hs.style.setProperty('--hr', Math.max(...BTS_DIMS.map(([w,h])=>h/w)).toFixed(4));   /* tallest photo: height ÷ width */
 /* overall scale of the frame (Andrija, 2026-10-14): full size on phones and tablets, 20% smaller on a laptop
    (MacBook Pro, 1512 px wide), easing to 40% smaller on large screens (2560 px and up) */
