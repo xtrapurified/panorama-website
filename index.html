@@ -411,7 +411,7 @@ footer a:hover{color:var(--red)}
 .pj-cta .ar{color:var(--red);text-decoration:none;display:inline-block;font-size:.8em}
 @media (max-width:900px){.pj-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.pj-facts,.pj-text,.pj-note{grid-column:1/-1}}
 @media (max-width:540px){.pj-next{grid-template-columns:1fr}.pj-next button + button{text-align:left;border-left:0;border-top:1px solid var(--rule);padding-left:0}}
-.lb-bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:24px;align-items:baseline;border-bottom:1px solid var(--rule);padding-bottom:14px}
+.lb-bar{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:24px;align-items:center;border-bottom:1px solid var(--rule);padding-bottom:14px}
 .lb-bar .ttl{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .lb-bar .ctl{display:flex;gap:20px}
 .lb-bar button:hover{color:var(--red)}
@@ -621,7 +621,8 @@ footer{font-size:calc(12*var(--fz))}
 .wm .wm-f{font-weight:500;display:inline-block;vertical-align:bottom;max-width:4em;overflow:hidden;white-space:nowrap;transition:opacity .25s,max-width .3s var(--ease)}
 .wm .wm-p{unicode-bidi:isolate}
 .wm{transition:color .2s}
-.wm:hover,.wm:focus-visible{color:var(--red)}   /* the wordmark turns red on hover (2026-10-14) */
+.wm:hover,.wm:focus-visible{color:var(--red)}
+.lb-wm{display:inline-block;background:none;border:0;padding:0;cursor:pointer;align-self:center}   /* in a project: the Panorama Films wordmark leads back to the site (2026-10-14) */   /* the wordmark turns red on hover (2026-10-14) */
 .wm:hover .wm-f,.wm:focus-visible .wm-f{opacity:0;max-width:0}   /* Films steps aside while Panorama flicks through its scripts */   /* Films a step lighter than Panorama */
 .wm sup{font-size:.42em;font-weight:400;line-height:0;vertical-align:.95em;margin-left:.12em}
 .hdr.compact .logo-slot{width:auto;aspect-ratio:auto}
@@ -1474,7 +1475,7 @@ band = "elevation(s) in [-4°, 6°]",
 
 <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-labelledby="lb-title">
   <div class="lb-bar">
-    <span class="lb-l"><span class="lab red rec live" id="lb-no">Project</span><span class="lab ttl" id="lb-title"></span></span>
+    <span class="lb-l"><button type="button" class="wm lb-wm" id="lb-home" aria-label="Panorama Films, back to the site"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></button><span class="lab ttl" id="lb-title"></span></span>
     <span class="ctl lab lb-pn"><button id="lb-prev" aria-label="Previous project"><svg class="ic" aria-hidden="true"><use href="#i-l"/></svg> Prev</button><button id="lb-next" aria-label="Next project">Next <svg class="ic" aria-hidden="true"><use href="#i-r"/></svg></button></span>
     <span class="ctl lab lb-x"><button id="lb-close">Close <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></span>
   </div>
@@ -1862,13 +1863,13 @@ new IntersectionObserver(([e])=>{ clearInterval(fiT); if (e.isIntersecting && !R
 /* Header */
 const hdr = document.getElementById('hdr');
 /* the wordmark on hover: Panorama flicks through Arabic, Cyrillic and Latin, and settles back on Panorama when the pointer leaves */
-(()=>{ const wm = document.querySelector('.wm'), wp = wm && wm.querySelector('.wm-p'); if (!wp) return;
+document.querySelectorAll('.wm').forEach(wm=>{ const wp = wm.querySelector('.wm-p'); if (!wp) return;
   const WORDS = ['بانوراما', 'Панорама', 'Panorama']; let i = 2, t = 0;
   const show = k => { i = k; wp.textContent = WORDS[k]; wp.lang = ['ar', 'sr-Cyrl', 'en'][k]; wp.dir = k ? 'ltr' : 'rtl'; };
   /* while hovered the wordmark keeps its full width: when Films folds away and the shorter scripts come in it would otherwise shrink
      out from under the pointer, end the hover, grow back and start it again, flickering between all three words (fixed 2026-10-14) */
   wm.addEventListener('pointerenter', ()=>{ wm.style.width = wm.getBoundingClientRect().width + 'px'; if (REDUCED) return; clearInterval(t); show(0); t = setInterval(()=>show((i + 1) % WORDS.length), 260); });
-  wm.addEventListener('pointerleave', ()=>{ clearInterval(t); show(2); wm.style.width = ''; }); })();
+  wm.addEventListener('pointerleave', ()=>{ clearInterval(t); show(2); wm.style.width = ''; }); });
 /* Rec: the time spent on the site in this visit (kept across reloads in the same tab), as hours:minutes:seconds:frames */
 (()=>{ let base = 0; try { base = +sessionStorage.getItem('pf-rec') || 0; } catch(e){}
   const t0 = performance.now() - base * 1000;
@@ -2186,7 +2187,6 @@ function openFilm(k){
   lb.classList.toggle('photo', photo);
   renderProject(k, photo);
   document.getElementById('lb-title').textContent = `${f.title} — ${f.client}`;
-  document.getElementById('lb-no').textContent = k==='reel' ? 'Reel' : 'Project';
   document.getElementById('lb-prev').hidden = document.getElementById('lb-next').hidden = document.getElementById('lb-sl').hidden = document.getElementById('lb-sr').hidden = (k==='reel');
   if (photo){ teardown(); startShow(k); }
   else playFilm(Math.max(0, films.findIndex(x=>x.main)), false);
@@ -2227,6 +2227,7 @@ function toggleFs(){
   else if (P && P.fs) P.fs();
 }
 cPlay.addEventListener('click', toggle);
+document.getElementById('lb-home').addEventListener('click', ()=>closeFilm());
 cSnd.addEventListener('click', ()=>P && P.mute(!P.muted));
 cFs.addEventListener('click', toggleFs);
 box.addEventListener('click', e=>{ if (e.target.classList.contains('lb-hit')) toggle(); });
