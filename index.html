@@ -1015,8 +1015,15 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 :root[data-pf="light"] .seek::-webkit-slider-thumb{background:var(--fg)}
 :root[data-pf="light"] .seek::-moz-range-thumb{background:var(--fg)}
 :root[data-pf="light"] .net-hint{color:#d0291f}
-:root[data-pf="light"] .hitl .media{background:var(--bg)}
 :root[data-pf="light"] .hitl h2{color:#fff}
+/* Human in the loop slideshow, rebuilt 2026-10-14 to match the About page gallery on panoramafilms.tv:
+   a fixed frame (column width × the tallest photo's shape, capped to the window), each photo shown whole inside it */
+.hitl{min-height:0;container-type:inline-size}
+.hitl-stage{position:relative;margin-inline:var(--m);height:min(calc((100cqw - 2 * var(--m)) * var(--hr,2.165)),calc(100svh - 74px))}
+.hitl-stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:50% 50%;opacity:0;transition:opacity .1s linear}
+.hitl-stage img.on{opacity:1}
+.hitl .over{position:absolute;inset:0}
+@media (prefers-reduced-motion:reduce){.hitl-stage img{transition:none}}
 /* Human in the loop: larger, a step bolder, in capitals, inverting the photo underneath (white + difference) */
 /* Helvetica Neue has no weight between Medium and Bold, so the title is Medium thickened by a hairline stroke.
    the title is drawn twice: an inverting copy underneath, and a white copy on top at 80%, so it reads as white with a fifth of the photo's inverse in it */
@@ -1134,10 +1141,8 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 
 /* ---- Enhance (v103 trial) ---- */
 /* layout: Field notes holds less empty black around the photo; Approach sits on the same line as its statement, like every other section */
-.hitl{min-height:max(82svh,560px)}
 /* phones: the slideshow block hugs its photos, and Golden hour follows close below */
-@media (max-width:760px){.hitl{min-height:min(92vw,460px)}#golden.sec{padding-top:8px}#golden .more{margin-top:0}#golden .more summary{padding-block:10px}}
-.hitl .media{background:var(--bg)}   /* no black block against the page: the photos sit straight on the page */
+@media (max-width:760px){#golden.sec{padding-top:8px}#golden .more{margin-top:0}#golden .more summary{padding-block:10px}}
 @media (min-width:761px){#approach .fold-lede{margin-top:calc(var(--t1) * .3)}}   /* the Approach label sits one line above its statement */
 /* the "Seen in" lists start on one line across the Approach columns */
 @supports (grid-template-rows:subgrid){.caps > div{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;align-content:start}.caps .cap-f{align-self:start}}
@@ -1473,10 +1478,10 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
         <article><span class="lab mid">IV</span><h3>Expression</h3><p>We celebrate those who push boundaries. Guided by athletes, explorers and outdoor pioneers, we bring to light new ways of living, moving and experiencing the world.</p></article>
       </div>
     </details>
-    <div class="band hitl flicker" id="hitl">
-      <div class="media"><img id="flickImg" src="media/bts/00.webp" alt="Behind the scenes on Panorama Films shoots"></div>
+    <div class="band hitl" id="hitl">
+      <div class="hitl-stage" id="hitlStage" role="img" aria-label="Behind the scenes on Panorama Films shoots"><img class="on" src="media/bts/00.webp" alt="" decoding="async"></div>
       <div class="over">
-        <div class="top"><span class="lab rec live">Field notes</span><span class="lab tc" id="flickNo">01 / 88</span></div>
+        <div class="top"><span class="lab rec live">Field notes</span><span class="lab tc" id="flickNo">01 / 89</span></div>
         <div class="mid-c"><h2>Human in the loop</h2></div>
         <span></span>
       </div>
@@ -1884,40 +1889,32 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
   requestAnimationFrame(tick);
 })();
 
-/* Studio: the fast slideshow from the About page */
-const fi = document.getElementById('flickImg'), fn = document.getElementById('flickNo');
+/* Human in the loop: the slideshow from the About page on panoramafilms.tv, rebuilt to work the same way (2026-10-14).
+   Measured on the live Cargo gallery: one fixed frame as wide as the page column and as tall as the tallest photo would be
+   at that width, capped to the window; every photo is fitted whole inside that frame (contain: never cropped, never zoomed
+   past the frame), centred; a 0.1 s fade, a new photo every 0.3 s. No per-photo sizing in script, so nothing can over-zoom. */
+const hs = document.getElementById('hitlStage'), fn = document.getElementById('flickNo');
 const pics = Array.from({length:BTS},(_,i)=>`${M}bts/${String(i).padStart(2,'0')}.webp`);
-let fiI = 0, fiT = null;
-/* every photo is downloaded and decoded before it is shown, and the slideshow only steps to a photo that is ready.
-   (Before, a photo that hadn't arrived yet left the previous one on screen for two or three beats, resized each time,
-   so it looked like the same photo repeating.) */
-const picOk = new Array(BTS).fill(false), imgs = [];
-let loading = false;
+hs.style.setProperty('--hr', Math.max(...BTS_DIMS.map(([w,h])=>h/w)).toFixed(4));   /* tallest photo: height ÷ width */
+const hImgs = [hs.querySelector('img')], hOk = new Array(BTS).fill(false); hOk[0] = true;
+let fiI = 0, fiT = null, hLoaded = false;
 function preloadAll(){
-  if (loading) return; loading = true; picOk[0] = true;
-  pics.forEach((src,i)=>{ const im = new Image(); im.decoding = 'async'; im.src = src; imgs[i] = im;
-    (im.decode ? im.decode() : new Promise(r=>im.onload=r)).then(()=>{ picOk[i] = true; }).catch(()=>{}); });
+  if (hLoaded) return; hLoaded = true;
+  for (let i = 1; i < BTS; i++){
+    const im = new Image(); im.alt = ''; im.decoding = 'async'; im.src = pics[i]; hs.appendChild(im); hImgs[i] = im;
+    (im.decode ? im.decode() : new Promise(r=>im.onload=r)).then(()=>{ hOk[i] = true; }).catch(()=>{});
+  }
 }
-function sizePhoto(i){
-  /* every photo covers the same area, whatever its file size or shape: a portrait is taller and narrower,
-     a landscape wider and lower, but they read as one size; capped so tall ones fit the section */
-  const box = fi.parentElement, W = box.clientWidth, H = box.clientHeight, [ow, oh] = BTS_DIMS[i], r = ow / oh;
-  const area = Math.min(W, H * 1.5) * H * .36;
-  let h = Math.sqrt(area / r), w = h * r;
-  if (h > H * .78){ h = H * .78; w = h * r; }
-  if (w > W * .9){ w = W * .9; h = w / r; }
-  fi.style.width = Math.round(w) + 'px'; fi.style.height = Math.round(h) + 'px';
-}
-sizePhoto(0); new ResizeObserver(()=>sizePhoto(fiI)).observe(document.getElementById('hitl'));
 function flick(){
   const n = (fiI + 1) % BTS;
-  if (!picOk[n]) return;   /* hold the current photo until the next one is decoded */
-  fiI = n; sizePhoto(fiI); fi.src = pics[fiI];
+  if (!hOk[n]) return;   /* hold the current photo until the next one is decoded */
+  hImgs[n].classList.add('on'); hImgs[fiI].classList.remove('on'); fiI = n;
   fn.textContent = `${String(fiI+1).padStart(2,'0')} / ${BTS}`;
 }
+fn.textContent = `01 / ${BTS}`;
 /* start downloading well before the section arrives; run only while it is on screen */
 new IntersectionObserver(([e])=>{ if (e.isIntersecting) preloadAll(); }, {rootMargin:'1500px 0px'}).observe(document.getElementById('hitl'));
-new IntersectionObserver(([e])=>{ clearInterval(fiT); if (e.isIntersecting && !REDUCED) fiT = setInterval(flick, 360); }).observe(document.getElementById('hitl'));   /* a little slower than the project slideshows */
+new IntersectionObserver(([e])=>{ clearInterval(fiT); if (e.isIntersecting && !REDUCED) fiT = setInterval(flick, 300); }).observe(document.getElementById('hitl'));
 
 /* Header */
 const hdr = document.getElementById('hdr');
