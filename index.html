@@ -32,6 +32,11 @@
 @keyframes ghping{0%{transform:scale(1);opacity:.75}70%{opacity:0}100%{transform:scale(2.6);opacity:0}}
 @media (max-width:760px){#golden .more .pm{width:36px;height:36px;margin-left:12px}}
 @media (prefers-reduced-motion:reduce){#golden .gh-ring{animation:none!important}}
+/* left aligned: the disc first, then the line */
+#golden .more summary{justify-content:flex-start}
+#golden .more .pm{order:-1;margin:0 16px 0 0}
+#golden .gh-tease{margin-left:0;padding-left:0;text-align:left;flex:0 1 auto}
+@media (max-width:760px){#golden .more .pm{margin:0 12px 0 0}#golden .gh-tease{flex:1}}
 #golden canvas{touch-action:pan-y}
 #golden canvas.drag{cursor:ew-resize}
 #golden .gh-body{--bg:#000;--fg:#f2f2f0;--mid:#7d7d7a;background:#000;color:var(--fg);margin-inline:calc(var(--m) * -1);padding:clamp(28px,4vw,64px) var(--m) clamp(40px,6vw,96px);margin-top:clamp(18px,2.4vw,32px);
