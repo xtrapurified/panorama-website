@@ -2524,7 +2524,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     nevena: "Freelance producer. She is Coordinator for Freedom of Expression and Online Media at SHARE Foundation in Belgrade, which works for a free, open and decentralised internet and the rights of the people who use it.",
     neda: "Freelance cinematographer and photographer."
   };
-  const LINKS = {};   /* id → website or Instagram; no link, no Website line in the profile */
+  const LINKS = {zoran:'https://www.instagram.com/lu.mes/', neda:'https://www.instagram.com/encapsulated_gist/', cile:'https://www.instagram.com/marko_cile/'};   /* id → website or Instagram; no link, no Website line in the profile */
   const LINK_PH = '#';
   /* until we have everyone's photos, a dark silhouette photo stands in for them (PLACEHOLDER) */
   const PLACEHOLDER = 'media/team/placeholder.webp';
@@ -2678,7 +2678,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       <h3 class="dr-nm">${esc(n.name)}<span class="dr-role">${esc(role)}</span></h3>
       ${i.bio ? `<p class="dr-bio">${esc(i.bio)}</p>` : ''}
       <div class="dr-ln"><button type="button" data-all>Browse all projects with ${esc(first)} →</button>
-        ${site === LINK_PH ? '' : `<a class="web" href="${esc(site)}" target="_blank" rel="noopener">${esc(site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} <svg class="ar" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg></a>`}</div>`;
+        ${site === LINK_PH ? '' : `<a class="web" href="${esc(site)}" target="_blank" rel="noopener">${esc(/instagram\.com\//.test(site) ? '@' + site.replace(/^.*instagram\.com\//,'').replace(/\/.*$/,'') : site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} <svg class="ar" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg></a>`}</div>`;
     dr.hidden = false; if (!peek) dr.querySelector('[data-x]').focus({preventScroll:true, focusVisible:false}); alpha = Math.max(alpha, .6); if (!wrap.hidden) start(); markNames();
     dr.classList.toggle('dr-peek', !!peek); dr.classList.remove('dr-stay');   /* the close X shows only once a name is clicked */
     /* the page never scrolls when a profile opens: the panel lines up with the top of the graph, or with the first name of the list
