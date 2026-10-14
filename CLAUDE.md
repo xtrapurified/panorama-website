@@ -15,6 +15,6 @@ Read `project.md` first: it holds the product context, rules, site structure and
 
 ## Rules that are easy to break
 - Never invent years, roles, credits, clients or claims; panoramafilms.tv or Andrija is the source.
-- Project order mirrors the Work page on panoramafilms.tv.
+- Project list and order are the website's own, set by Andrija (see "Project list and order" in `project.md`); they no longer follow panoramafilms.tv.
 - Never write the contact email in the page source; it is assembled by script.
 - `project.md` and `CLAUDE.md` must stay off the live site: the Cloudflare Pages build command leaves out every `.md` file (see Hosting in `project.md`).

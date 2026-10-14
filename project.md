@@ -33,7 +33,7 @@ Supporting facts already in use on the site:
 - **Branches:** `main` = production (panorama.mov, also panorama-website.pages.dev); merge into `main` only when Andrija approves a version. `dev` = working branch; every push gets a preview at dev.panorama-website.pages.dev. Work on `dev`, review the preview, then merge. Cloudflare deploys cost no credits.
 - The public domain panoramafilms.tv is still the old Cargo site.
 - Full films live on Vimeo (vimeo.com/panoramafilmstv) and YouTube and play in a lightbox. Background loops stream from Vimeo; YouTube films use hosted clips because YouTube's player shows its own interface.
-- The source of truth for projects, titles, clients, years, roles, thumbnails and GIFs is panoramafilms.tv: its Work page lists 35 projects in a fixed order.
+- The source of truth for projects, titles, clients, years, roles, thumbnails and GIFs is panoramafilms.tv (its Work page lists 35 projects), plus Andrija's own decisions. Since 2026-10-14 the website has its own list of projects and its own order, set by Andrija (see "Project list and order").
 - `project.md` and `CLAUDE.md` stay off the live site: the Cloudflare build command copies the site into `dist` without any `.md` file. Unknown addresses fall back to the homepage.
 - `CLAUDE.md` holds the working rules every chat reads when it opens the repo: pull `dev` first, never push to `main` without approval, keep this file current.
 
@@ -50,7 +50,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 
 ## Capabilities and Constraints
 
-- Project order and numbering always mirror the Work page on panoramafilms.tv (01 Ask More … 35 Fruškać).
+- Project order and numbering are the website's own, set by Andrija (2026-10-14); they no longer mirror panoramafilms.tv. Numbers are worked out from the order in code (`ORDER`), so they stay continuous after any change.
 - Collaborator name spelling: Nevena Krivokapić-Martinović (her full name; used everywhere, credits included).
 - Never invent years, roles, credits, clients, descriptions or claims. A fact that is not on panoramafilms.tv, its Vimeo channel, or confirmed by Andrija stays out. New copy is labelled as a proposal until approved.
 - Contact: the contact form on panoramafilms.tv (the closing "Let's make a film together." and the Contact link in the menu lead to it), the email hello@panoramafilms.tv, Vimeo and Instagram (@panoramafilms.tv, formerly @panoramafilmscollective). The email is shown with a click-to-copy button and is assembled by script, never written in the page source, to keep it from address harvesters. No phone number is published. The studio address (Hilandarska 13, Belgrade) was removed from the contact section at Andrija's request.
@@ -100,13 +100,28 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - Weights (2026-10-13, Andrija asked for the hero heading and the footer about 20% heavier): both moved one step from Regular (400) to Medium (500), the nearest weight the Untitled Sans files offer.
 - **Phones:** the menu (hamburger) has links at the big-text size, then search and the Dark / Light switch at the bottom, and follows the theme (black in dark, paper with dark type in light); the footer is one row with Back to top in the middle (no theme switch there); featured films show the title above the client under the film (no title over the film); hero and closing lines are larger (`--h1` 10.6vw).
 - **Project pages:** opening one adds a browser-history step, so the iPhone swipe from the left edge, a back button, or a swipe in from the left edge inside the page closes it; Close is always red. Top bar: project title left, Prev / Next centred, Close in the corner; thin arrows at the left and right edges of the window, level with the middle of the film (desktop), step to the previous / next project. No caption line and no Open on Vimeo / YouTube link under the player. Client, Year, Services; service work carries a red stamp with black text (e.g. "Service for Orca & Aura Films"); Credits are grouped under red headings "For Panorama Films" / "For <partner>" (an unnamed group stays "External"); films (4:3 films get black bars). At the bottom: Previous / Next project with titles, then "Like what you see? Let's make a film together." with the same Instagram / email / search links as the homepage, set as large as Get in touch, close above the footer.
-- **Search** covers every project, its films, credits and text. Projects 28–35 are reachable through the archive, search, and Previous / Next.
+- **Search** covers every project, its films, credits and text. The archive projects are reachable through the archive, search, and Previous / Next.
+
+## Project list and order (Andrija, 2026-10-14)
+
+Decided with Andrija on 2026-10-14 in the "Panorama Project Merges" page (claude.ai artifact X5n7sHC3U3Gp2mogyfTcfy, where his decisions and notes are saved). 31 projects:
+
+- **Featured:** 01 Ask More · 02 Dubai, the City of Sport · 03 What Does the Future Hold? · 04 Astronauts at the Museum · 05 The Orchard Keeper · 06 What's Next.
+- **Catalogue:** 07 ImagineBoka.ai · 08 Miracles Don't Happen · 09 Slavko Štimac · 10 Valamar Biking · 11 Air to the People: Serbia · 12 Dubai Future Forum · 13 We Will Walk · 14 Imagine Our Future · 15 The 30 Years Initiative · 16 EXPO 2020 · 17 The Great Reset · 18 Feminism 2052 · 19 As If the End Were Not Quite Near · 20 World Government Summit · 21 Metaplasm · 22 Telekom Srbija: No Species Dies Alone · 23 Vulture Foundation Serbia · 24 Tajkun · 25 Education For All
+- **Archive:** 26 European Western Balkans · 27 Under Surveillance · 28 World Drone Prix · 29 Belgrade Furniture Fair · 30 Shinobi · 31 Fruškać
+- **Merged:** What Does the Future Hold? Season 2 into the Season 3 project (one page per series; Seasons 4 and 1 to be added with Andrija). Dubai Future Forum 2022 into Dubai Future Forum (was "Dubai Future Forum Chronicles"), films grouped by year. Valamar Arba Resort and Valamar Biking into one "Valamar Biking" page whose main film is "Happiness is a bike ride away" (the 2025 film, a service for Adriabike, stamped as such); the other Valamar films keep their titles. Credits of merged projects are combined per role.
+- **Separate on purpose:** Ask More (DFF 2025 ad), Miracles Don't Happen (DFF 2024 ad) and Imagine Our Future (DFF 2023) stay their own projects.
+- **Renamed:** 10 Years of Designing Dubai's Future → What's Next. (subtitle "Dubai Future Foundation, 10 years of designing Dubai's future."); Pula Film Festival → Slavko Štimac (subtitle "71st Pula Film Festival Award Film", shown on its card via `sub`); Dubai TGR → The Great Reset; Tajkun TV Series → Tajkun; Goethe Institut → Education For All; SHARE Foundation → Under Surveillance (client written "Share Foundation", Andrija's choice). World Government Summit years: 2017–2019, 2022–2023.
+- **Films dropped:** Goethe "New Stages Southeast"; SHARE "Digital Born Media Carnival" aftermovie. **Film added:** Hiljade.Kamera (YouTube XlMldmOhYG8) as the main film of Under Surveillance.
+- **Hidden:** 4 Islands (`HIDDEN` in the code; data kept).
+- Old links to merged pages (`#What-Does-The-Future-Hold-S02`, `#Dubai-Future-Forum-Chronicles-1`, `#Dubai-Future-Forum-2022`, `#Valamar-Arba-Resort`) open the merged page (`SLUG_ALIAS`). A film shown first on a page can carry its own name (`mainT`) instead of the project title.
+- Still missing: a still for Education For All (its Vimeo is private; the card still shows the New Stages Southeast frame until Andrija sends one).
 
 ## Catalogue
 
-Opens with 12 films (from p07) → "Load more" shows the rest (p07–p27) → "Load more from the archive" adds p28–p35 → "Show fewer".
+Opens with 12 films (from 07) → "Load more" shows the rest of the catalogue (07–25) → "Load more from the archive" adds 26–31 → "Show fewer".
 
-A centred Grid / Index switch under the Archive heading (same style as the Collective's List / Graph; Grid is the default, the choice is remembered per browser). Index (2026-10-13) lists all 35 projects, 01–35 including the featured ones, one row each: number, small still, title, client, year and film count (phones: number, still, title, year). Each row is a real link to the project page (`#<slug>`). Made so Andrija can see every project at once while deciding which to merge.
+A centred Grid / Index switch under the Archive heading (same style as the Collective's List / Graph; Grid is the default, the choice is remembered per browser). Index (2026-10-13) lists every project on the site (31 since 2026-10-14), featured ones included, one row each: number, small still, title, client, year and film count (phones: number, still, title, year). Each row is a real link to the project page (`#<slug>`). Made so Andrija can see every project at once while deciding which to merge.
 
 ## Services, roles and credits (system approved by Andrija, 2026-10-09)
 
