@@ -381,6 +381,38 @@ footer a:hover{color:var(--red)}
 .pj-t{font-size:calc(14*var(--fz));line-height:1.35;color:var(--fg)}
 .pj-film:not(.on) .pj-t{color:#b9b9b6}
 .pj-film:hover .pj-t{color:#fff}
+/* Films in a project as an index (2026-10-14) */
+.pj-fh{display:flex;align-items:baseline;gap:.4em;margin:0 0 18px}
+.pj-fh .lab{font-size:calc(18*var(--fz));letter-spacing:-.01em}
+.pj-fh .pj-h{margin:0}
+.pj-ix{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+.pj-ix > li{border-bottom:1px solid var(--rule)}
+.pj-gx{display:flex;justify-content:space-between;align-items:baseline;gap:24px;padding:28px 0 10px}
+.pj-gt{font-size:calc(15*var(--fz));font-weight:500;letter-spacing:-.01em;color:var(--mid)}
+.pj-ix .pj-film{display:grid;grid-template-columns:4.5em clamp(120px,10vw,168px) minmax(0,1fr) minmax(0,auto);column-gap:clamp(16px,2vw,32px);align-items:center;width:100%;padding:10px 0;text-align:left;background:none;border:0;color:inherit;cursor:pointer}
+.pj-ix .pj-n{grid-column:1;grid-row:1;color:var(--mid);font-variant-numeric:tabular-nums}
+.pj-ix .pj-on{grid-column:1;grid-row:1;position:static;display:none;color:var(--red);text-shadow:none}
+.pj-ix .pj-th{grid-column:2;grid-row:1;aspect-ratio:16/9;max-width:100%}
+.pj-ix .pj-t{grid-column:3;grid-row:1;font-size:clamp(20px,1.75vw,calc(30*var(--fz)));line-height:1.12;letter-spacing:-.035em;font-weight:400;color:var(--mid);transition:color .2s;text-wrap:balance}
+.pj-ix .pj-m{grid-column:4;grid-row:1;text-align:right;max-width:24em}
+.pj-ix .pj-film:hover .pj-t,.pj-ix .pj-film:focus-visible .pj-t{color:var(--red)}
+.pj-ix .pj-film:focus-visible{outline:none}
+.pj-ix .pj-film.on .pj-t{color:var(--fg)}
+.pj-ix .pj-film.on .pj-n{display:none}
+.pj-ix .pj-film.on .pj-on{display:inline-flex}
+.pj-ix .pj-film.on .pj-th{outline:0}
+.pj-ix .pj-film.on .pj-th img{opacity:1}
+.pj-ix .pj-film:hover .pj-th img{opacity:1}
+@media (max-width:700px){
+  .pj-ix .pj-film{grid-template-columns:2.2em 38% minmax(0,1fr);column-gap:12px;row-gap:4px;align-items:start}
+  .pj-ix .pj-n{grid-column:1;grid-row:1 / span 2;padding-top:2px}
+  .pj-ix .pj-on{grid-column:3;grid-row:3}
+  .pj-ix .pj-film.on .pj-n{display:block;color:var(--red)}
+  .pj-ix .pj-th{grid-column:2;grid-row:1 / span 2}
+  .pj-ix .pj-t{grid-column:3;grid-row:1;font-size:17px}
+  .pj-ix .pj-m{grid-column:3;grid-row:2;text-align:left}
+  .pj-gx{flex-direction:column;gap:2px;padding-top:22px}
+}
 .pj-about{row-gap:32px;align-items:start}
 .pj-facts{grid-column:1/span 4;margin:0;display:grid}
 .pj-facts > div{display:grid;gap:4px;border-top:1px solid var(--rule);padding:12px 0 14px}
@@ -961,7 +993,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 :root[data-pf="light"] .team .face img{filter:grayscale(1) brightness(.92) contrast(1.15)}
 :root[data-pf="light"] .about p{color:#45453f}
 :root[data-pf="light"] .pj-text p{color:#3b3b37}
-:root[data-pf="light"] .pj-note p,:root[data-pf="light"] .pj-film:not(.on) .pj-t{color:#5a5a55}
+:root[data-pf="light"] .pj-note p,:root[data-pf="light"] .pj-film:not(.on):not(:hover) .pj-t{color:#5a5a55}
 :root[data-pf="light"] .pj-film:hover .pj-t{color:var(--fg)}
 :root[data-pf="light"] .pj-film.on .pj-th{outline-color:var(--fg)}
 :root[data-pf="light"] .lnk,:root[data-pf="light"] .watch,:root[data-pf="light"] .pj-cta a{text-decoration-color:rgba(18,18,17,.3)}
@@ -2105,18 +2137,28 @@ function renderProject(k, photo){
   const blocks = cr && !FACTS[k] ? (cr.type === 'service' ? [...cr.blocks.filter(b=>b.ext), ...cr.blocks.filter(b=>!b.ext)] : cr.blocks).filter(b=>b.rows.length) : [];
   let h = photo ? '' : `<header class="pj-hd"><h2>${esc(f.title)}</h2>${f.line ? `<p>${esc(f.line)}</p>` : ''}</header>`;
   if (films.length > 1){
-    let i = 0; const byGroup = [];
+    /* every film as one row of an index (2026-10-14): number, small still, the title once and large, what we did and when.
+       A group with one film is named by the group's title; a group with several gets a small heading and its films below */
+    const byGroup = [];
     films.forEach(fm=>{ const gt = fm.g || null; const last = byGroup[byGroup.length-1];
       if (last && last.t === gt) last.items.push(fm); else byGroup.push({t: gt, items: [fm]}); });
-    h += `<section class="pj-films" aria-label="Films in this project"><h3 class="pj-h">${films.length} films</h3>`;
+    const metaOf = t => { const m = (p.groups.find(x=>x.t === t) || {}).meta || [];
+      return [...new Set(m.filter(x=>/^(services|year)$/i.test(x[0])).map(x=>tidy(x[1])))].slice(0,2).join(' · '); };
+    const strip = t => { let x = cleanT(t).replace(/\s+\|\s+.*$/, '').trim();
+      const pre = nrm(f.title); if (nrm(x).startsWith(pre) && x.length > f.title.length + 3) x = x.slice(f.title.length).replace(/^[\s—–:\-]+/, '');
+      return x || cleanT(t); };
+    const two = n => String(n + 1).padStart(2, '0');
+    h += `<section class="pj-films" aria-label="Films in this project"><div class="pj-fh"><h3 class="pj-h">Films</h3><span class="lab mid">${films.length}</span></div><ol class="pj-ix">`;
     byGroup.forEach(g=>{
-      const meta = (p.groups.find(x=>x.t === g.t) || {}).meta || [];
-      if (g.t) h += `<div class="pj-gh"><h4>${esc(g.t)}</h4><span class="s mid">${[...new Set(meta.filter(m=>/^(services|year)$/i.test(m[0])).map(m=>tidy(m[1])))].slice(0,2).map(esc).join(' · ')}</span></div>`;
-      h += `<div class="pj-grid">` + g.items.map(fm=>{ const n = films.indexOf(fm);
+      const solo = g.items.length === 1 && g.t, meta = metaOf(g.t);
+      if (!solo && g.t) h += `<li class="pj-gx"><span class="pj-gt">${esc(g.t)}</span><span class="lab mid">${esc(meta)}</span></li>`;
+      g.items.forEach(fm=>{ const n = films.indexOf(fm);
         const img = fm.main ? still(k) : (fm.th ? `${M}vthumbs/${filmKey(fm)}.webp` : still(k));
-        return `<button class="pj-film" type="button" data-i="${n}"><span class="pj-th"><img src="${img}" alt="" loading="lazy"><span class="pj-on lab rec live">Playing</span></span><span class="pj-t">${esc(filmT(fm, f))}</span></button>`; }).join('') + `</div>`;
+        const t = solo ? g.t : (fm.main && f.mainT ? f.mainT : strip(fm.t || f.title));
+        h += `<li><button class="pj-film" type="button" data-i="${n}" aria-label="Play ${esc(t)}"><span class="pj-n lab">${two(n)}</span><span class="pj-on lab rec live">Playing</span><span class="pj-th"><img src="${img}" alt="" loading="lazy"></span><span class="pj-t">${esc(t)}</span><span class="pj-m lab mid">${solo || !g.t ? esc(meta) : ''}</span></button></li>`;
+      });
     });
-    h += `</section>`;
+    h += `</ol></section>`;
   }
   if ((p.intro && p.intro.length) || facts.length){
     h += `<section class="pj-about grid"><dl class="pj-facts">${(()=>{ /* what Panorama did for the client (services) first; who did what (team roles) under Credits */
