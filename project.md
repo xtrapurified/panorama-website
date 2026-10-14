@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-13. Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-14. Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -52,7 +52,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - Project order and numbering always mirror the Work page on panoramafilms.tv (01 Ask More … 35 Fruškać).
 - Collaborator name spelling: Nevena Krivokapić-Martinović (her full name; used everywhere, credits included).
 - Never invent years, roles, credits, clients, descriptions or claims. A fact that is not on panoramafilms.tv, its Vimeo channel, or confirmed by Andrija stays out. New copy is labelled as a proposal until approved.
-- Contact: the contact form on panoramafilms.tv (the closing "Let's make a film together." and the Contact link in the menu lead to it), the email hello@panoramafilms.tv, Vimeo and Instagram (@panoramafilmscollective). The email is shown with a click-to-copy button and is assembled by script, never written in the page source, to keep it from address harvesters. No phone number is published. The studio address (Hilandarska 13, Belgrade) was removed from the contact section at Andrija's request.
+- Contact: the contact form on panoramafilms.tv (the closing "Let's make a film together." and the Contact link in the menu lead to it), the email hello@panoramafilms.tv, Vimeo and Instagram (@panoramafilms.tv, formerly @panoramafilmscollective). The email is shown with a click-to-copy button and is assembled by script, never written in the page source, to keep it from address harvesters. No phone number is published. The studio address (Hilandarska 13, Belgrade) was removed from the contact section at Andrija's request.
 - Some site data is inconsistent on panoramafilms.tv itself (the "Valamar Arba Resort" page carries Dubai Future Forum 2023 text and video; Miracles Don't Happen lists year 2023 though it was made for Dubai Future Forum 2024). These need Andrija's confirmation before being treated as settled.
 - Several films have subtitles burned into the picture; these cannot be switched off, only cropped or avoided.
 
