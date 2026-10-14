@@ -32,6 +32,9 @@
 @keyframes ghping{0%{transform:scale(1);opacity:.75}70%{opacity:0}100%{transform:scale(2.6);opacity:0}}
 @media (max-width:760px){#golden .more .pm{width:36px;height:36px;margin-left:12px}}
 @media (prefers-reduced-motion:reduce){#golden .gh-ring{animation:none!important}}
+/* the two "golden hour" words in gold: warm on black, deeper on paper so it still reads */
+#golden .gh-gold{color:#d6a548}
+:root[data-pf="light"] #golden .gh-gold{color:#a8741a}
 /* left aligned: the disc first, then the line */
 #golden .more summary{justify-content:flex-start}
 #golden .more .pm{order:-1;margin:0 16px 0 0}
@@ -1486,7 +1489,7 @@ s = "subsolar(t)",
 band = "elevation(s) in [-4°, 6°]",
 "`Maps/Sinusoidal`([-40],[-100,-5,80])
 + [panoramafilms.tv]"],</pre>
-          <p><span class="k" style="white-space:nowrap">Output Type: Golden Hour</span><br><span class="v" id="ghList" aria-live="polite"></span></p>
+          <p><span class="k" style="white-space:nowrap">Output Type: <span class="gh-gold">Golden Hour</span></span><br><span class="v" id="ghList" aria-live="polite"></span></p>
           <p id="ghPin" aria-live="polite"></p>
           <p class="k">&gt; <button type="button" class="gh-now" id="ghNow">now()</button>;</p>
         </div>
@@ -2999,8 +3002,8 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
     o.textContent = (off >= 0 ? '+' : '−') + oh + 'h' + (om ? String(om).padStart(2, '0') : ''); o.setAttribute('aria-valuenow', off.toFixed(2));
     const home = hits.find(h => h.name === 'Belgrade');
     document.getElementById('ghTease').innerHTML = hits.length
-      ? `output = [golden,hour], <b>${(home || hits[0]).name}</b> ${(home || hits[0]).up ? '<svg class="ar" viewBox="0 0 10 10" aria-label="rising"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg>' : '<svg class="ar" viewBox="0 0 10 10" aria-label="setting"><path d="M2 2 8 8M8 3.5V8H3.5"/></svg>'} golden hour now${hits.length > 1 ? `, +${hits.length - 1} more` : ''}`
-      : `output = [golden,hour], ${pinNext ? (pin.name === 'Panorama Films' ? 'Belgrade' : pin.name || 'pin') + ' golden hour in ' + pinNext : 'golden hour'}`;
+      ? `output = <span class="gh-gold">[golden,hour]</span>, <b>${(home || hits[0]).name}</b> ${(home || hits[0]).up ? '<svg class="ar" viewBox="0 0 10 10" aria-label="rising"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg>' : '<svg class="ar" viewBox="0 0 10 10" aria-label="setting"><path d="M2 2 8 8M8 3.5V8H3.5"/></svg>'} golden hour now${hits.length > 1 ? `, +${hits.length - 1} more` : ''}`
+      : `output = <span class="gh-gold">[golden,hour]</span>, ${pinNext ? (pin.name === 'Panorama Films' ? 'Belgrade' : pin.name || 'pin') + ' golden hour in ' + pinNext : 'golden hour'}`;
   }
 
   function draw() {
