@@ -743,7 +743,7 @@ footer{font-size:calc(12*var(--fz))}
 .fold .caps{margin-top:clamp(48px,5vw,80px)}
 
 /* Photo story: a project with photographs and text but no film */
-.lb.photo .lb-stage,.lb.photo .lb-now,.lb.photo .lb-foot{display:none}
+.lb.photo .lb-now,.lb.photo .lb-foot{display:none}
 .lb.photo .pj{padding-top:0}
 .ps-show{min-height:calc(100svh - 64px);margin-bottom:calc(clamp(72px,8vw,120px) * -.4)}
 .ps-show .media{position:absolute;inset:0;background:none}
@@ -1289,6 +1289,11 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .lb-side svg{width:clamp(12px,1vw,calc(16*var(--fz)));height:auto;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:butt;stroke-linejoin:miter}
 .lb-side:hover,.lb-side:focus-visible{opacity:1;color:var(--red)}
 @media (max-width:760px){.lb-side{display:none}}
+/* photo projects (ImagineBoka.ai) have no player, but keep the Prev / Next arrows, level with the middle of the slideshow (2026-10-14) */
+.lb.photo .lb-stage{display:block;height:0;padding:0;overflow:visible;z-index:6}
+.lb.photo .lb-player{display:none}
+.lb.photo .lb-side{top:calc((100svh - 64px) / 2);color:#fff;opacity:.85}
+.lb.photo .lb-side:hover,.lb.photo .lb-side:focus-visible{color:var(--red);opacity:1}
 /* the line under the player repeated the title, client and services already on the page: gone */
 .lb-now,#lb-note{display:none}
 .lb-foot{display:none}   /* no Open on Vimeo / YouTube link on project pages */
