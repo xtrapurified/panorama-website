@@ -115,7 +115,7 @@ Decided with Andrija on 2026-10-14 in the "Panorama Project Merges" page (claude
 - **Films dropped:** Goethe "New Stages Southeast"; SHARE "Digital Born Media Carnival" aftermovie. **Film added:** Hiljade.Kamera (YouTube XlMldmOhYG8) as the main film of Under Surveillance.
 - **Hidden:** 4 Islands (`HIDDEN` in the code; data kept).
 - Old links to merged pages (`#What-Does-The-Future-Hold-S02`, `#Dubai-Future-Forum-Chronicles-1`, `#Dubai-Future-Forum-2022`, `#Valamar-Arba-Resort`) open the merged page (`SLUG_ALIAS`). A film shown first on a page can carry its own name (`mainT`) instead of the project title.
-- Still missing: a still for Education For All (its Vimeo is private; the card still shows the New Stages Southeast frame until Andrija sends one).
+- Education For All plays vimeo.com/486368338/2e7c1ab6bf (link from Andrija, 2026-10-14); its card uses that video's own thumbnail, the title card.
 
 ## Catalogue
 
