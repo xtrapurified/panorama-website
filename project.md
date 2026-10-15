@@ -50,6 +50,8 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - **2026-10-14 prod 2** — branch `archive/2026-10-14-prod-2`, approved by Andrija: everything on `dev` up to this point, with the two new projects as drafts (hidden on the live site), the new project order, Telekom renamed No Species Dies Alone, project pages listing films as an index and the wordmark in the project bar.
 - **2026-10-14 prod 3** — branch `archive/2026-10-14-prod-3` (commit d546d56), approved by Andrija; page source also saved as `claude/milestones/2026-10-14-prod-3-index.html`. Adds Golden hour's red calling disc (left-aligned with its line), the gold "golden hour" words, the shimmering band and the drag hint; Mina's black-and-white portrait, the Dubai crew photo opening Human in the loop, white titles on featured films. For the Human of the Future and World Sports Summit 2026 stay drafts, 4 Islands stays hidden.
 
+- **2026-10-15 prod** — branch `archive/2026-10-15-prod` (commit d9485f2), approved by Andrija; page source also saved as `claude/milestones/2026-10-15-prod-index.html`. Human in the loop slideshow rebuilt to match the panoramafilms.tv About gallery (whole photos in one fixed frame, 20% smaller on laptops, 40% on large screens), shuffled on every visit, 107 photos (18 new); photo 17 upright; the unlinked /slideshow/ page to hide, show and add photos, saving through /api/slideshow once the Cloudflare secrets are set.
+
 ## Capabilities and Constraints
 
 - Project order and numbering are the website's own, set by Andrija (2026-10-14); they no longer mirror panoramafilms.tv. Numbers are worked out from the order in code (`ORDER`), so they stay continuous after any change.
