@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-14. Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-15. Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -69,7 +69,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 
 - Films and credits for all 35 projects on panoramafilms.tv/Work, with the site's own thumbnails and GIFs (processed into `media/hover`, `media/stills`).
 - Showreel: vimeo.com/1232743611/7e23d97b0f (1:05); muted header loop in `media/clips`.
-- 89 behind-the-scenes photos (`media/bts`): the About page slideshow on panoramafilms.tv without its repeats, plus photos restored from the site's other galleries; `00` is the crew group photo from Dubai supplied by Andrija on 2026-10-14, so it opens Human in the loop (the others moved up one number). Shown in colour in "Human in the loop".
+- 89 behind-the-scenes photos (`media/bts`): the About page slideshow on panoramafilms.tv without its repeats, plus photos restored from the site's other galleries; `00` is the crew group photo from Dubai supplied by Andrija on 2026-10-14 (it opened Human in the loop until the slideshow was shuffled on every visit, 2026-10-15). Shown in colour in "Human in the loop".
 - Client logos for 17 selected collaborators, chosen by Andrija, sourced from the clients' own sites or Wikimedia Commons (`media/logos`), shown in a mixed strip of logos and names. Dubai Sports Council has no logo yet (shown as text until Andrija supplies it).
 - Team portraits of Andrija Kovač, Mina Strugar and Marija Kovačina, supplied by Andrija (`media/team`), used in the Collective graph.
 - Placeholder silhouette portrait for collaborators, supplied by Andrija (`media/team/placeholder.webp`). Portraits supplied by Andrija on 2026-10-09, cropped 4:5 into `media/team/<id>.webp` and mapped in `PHOTOS`: Piki, Nemanja Babić, Danilo Pantović, Nemanja Stojanović, Bojan Palikuća, Zoran Rašić, Milovan Ilić, Nevena Krivokapić-Martinović; new main portraits for Andrija (`andrija-4`) and Marija (`marija-2`); Mina's main portrait is `mina-4` (2026-10-14, Andrija's pick from three new photos: the black-and-white profile with sunglasses, cropped head-and-shoulders like the other two and made 30% brighter; `mina-3`, the on-set Dubai shot, and the old `mina` stay in the repo). Every collaborator now has a photo. Collaborator bios (2026-10-14): every collaborator has a real bio, written short in English from the profiles Andrija sent (Piki's from his Belgrade Design Week page). A profile shows a Website line only when `LINKS` has a real link. Portraits of Ana Ćurčin, Neda Mojsilović and Matija Đukanović and Marko Cile Mladenović supplied by Andrija 2026-10-14 (`media/team/ana.webp`, `neda.webp`, `matija.webp`, `cile.webp`).
@@ -157,9 +157,10 @@ Full audit and decisions: the claude.ai doc "Services & Roles — audit and syst
 
 ## Slideshow photos page (2026-10-15)
 
-- `/slideshow/` is a separate, unlinked page (noindex metadata and a folder-wide robots header in `_headers`; public, not access-controlled) showing every photo of the Human in the loop slideshow as a thumbnail (`media/bts/thumbs/`, 400 px), numbered 01–89 as on the slideshow counter, each with a Shown / Hidden switch (click the photo), filters All / Shown / Hidden, and a link to see the result on the site.
-- The published list is `media/bts/hidden.json` (`{"hidden": [photo numbers 1–89]}`, served with no-cache). The homepage slideshow plays every photo not in it, and its counter and frame height count only the shown photos.
-- Changes made on the page are a draft kept in that browser (`pf-bts-draft`), and the homepage slideshow in that browser already follows the draft. To publish, Andrija presses "Copy list" and sends the line to Claude, who writes it into `hidden.json` on `dev` (then `main` when approved). "Undo my changes" goes back to the published list.
+- `/slideshow/` is a separate, unlinked page (noindex metadata and a folder-wide robots header in `_headers`; public to look at, but saving needs a password) showing every photo of the Human in the loop slideshow as a thumbnail (`media/bts/thumbs/`, 400 px long side), numbered as on the slideshow counter's source list, each with a Shown / Hidden switch (click the photo), filters All / Shown / Hidden, "+ Add photos" (or drop photos anywhere on the page), Undo changes and Save.
+- The list of photos is `media/bts/photos.json` (`{"photos": [{"f": file, "w", "h", "v": version for cache busting, "hidden"}]}`, served with no-cache). The homepage slideshow plays every photo not hidden, in a new random order on every visit (Andrija, 2026-10-15; the Dubai crew photo no longer always opens it); its counter and frame height count only the shown photos. The 89 sizes built into the page (`BTS_DIMS`) are only a fallback if the list can't be read.
+- New photos are resized in the browser to 1600 px on the long side (thumbnail 400 px) and saved as WebP (JPEG where the browser can't make WebP), named with the next free number (89, 90, …).
+- Save sends everything to `/api/slideshow`, a Cloudflare Pages Function (`functions/api/slideshow.js`; Cloudflare runs anything in `functions/` as server code), which checks the password and commits the new photos, their thumbnails and `photos.json` to GitHub in one commit on `dev` (so the dev preview rebuilds; production still only changes when `dev` is merged into `main` with Andrija's approval). It needs two secrets set in Cloudflare (Workers & Pages → panorama-website → Settings → Variables and Secrets, for Production and Preview): `GITHUB_TOKEN` (fine-grained token for this repo, Contents: Read and write) and `SLIDESHOW_PASSWORD`. Optional `GITHUB_BRANCH` (default `dev`). Until they are set, the page says saving isn't switched on. The page remembers the password in that browser after the first correct save.
 
 ## Logo Experiments (2026-10-13)
 

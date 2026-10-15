@@ -4,5 +4,5 @@
 /slideshow/*
   X-Robots-Tag: noindex, nofollow
 
-/media/bts/hidden.json
+/media/bts/photos.json
   Cache-Control: no-cache

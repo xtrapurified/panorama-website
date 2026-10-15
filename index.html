@@ -1901,25 +1901,22 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
    at that width, capped to the window; every photo is fitted whole inside that frame (contain: never cropped, never zoomed
    past the frame), centred; a 0.1 s fade, a new photo every 0.3 s. No per-photo sizing in script, so nothing can over-zoom. */
 const hs = document.getElementById('hitlStage'), fn = document.getElementById('flickNo');
-const BTS_V = '2';   /* raise when a photo file changes (2026-10-14: photo 17 rotated) so browsers fetch the new file */
-const pics = Array.from({length:BTS},(_,i)=>`${M}bts/${String(i).padStart(2,'0')}.webp?v=${BTS_V}`);
-/* which photos play: all 89 minus the ones hidden on the unlinked page /slideshow/ (list in media/bts/hidden.json,
-   photo numbers 1–89 as on the counter). A draft made on that page shows only in that browser until it is published. */
-let hVis = Array.from({length:BTS},(_,i)=>i);
-const hImgs = [], hOk = new Array(BTS).fill(false);
-let hPos = 0, fiT = null, hLoaded = false, hReady = false;
-function hSetVis(hide){
-  const h = new Set(hide); hVis = Array.from({length:BTS},(_,i)=>i).filter(i=>!h.has(i));
-  if (!hVis.length) hVis = [0];
-  hs.style.setProperty('--hr', Math.max(...hVis.map(i=>BTS_DIMS[i][1]/BTS_DIMS[i][0])).toFixed(4));   /* tallest shown photo: height ÷ width */
-  const first = hs.querySelector('img'); first.src = pics[hVis[0]]; hImgs[hVis[0]] = first; hOk[hVis[0]] = true; hPos = 0;
-  fn.textContent = `01 / ${hVis.length}`;
+/* the photos: media/bts/photos.json, edited on the unlinked page /slideshow/ (add photos, hide / show).
+   Hidden photos are skipped; the order is shuffled on every visit (Andrija, 2026-10-15). Until the list arrives
+   (or if it can't be read) the 89 photos built into the page are used. */
+let hList = BTS_DIMS.map(([w,h],i)=>({f:`${String(i).padStart(2,'0')}.webp`, w, h, v:2}));
+let hPics = [], hImgs = [], hOk = [];
+let hPos = 0, fiT = null, hLoaded = false, hReady = false, hWant = false;
+function hShuffle(a){ for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+function hSet(list){
+  hList = hShuffle(list.filter(p=>!p.hidden)); if (!hList.length) return;
+  hPics = hList.map(p=>`${M}bts/${p.f}?v=${p.v || 1}`); hImgs = []; hOk = new Array(hList.length).fill(false);
+  hs.style.setProperty('--hr', Math.max(...hList.map(p=>p.h / p.w)).toFixed(4));   /* tallest shown photo: height ÷ width */
+  const first = hs.querySelector('img'); first.src = hPics[0]; hImgs[0] = first; hOk[0] = true; hPos = 0;
+  fn.textContent = `01 / ${hList.length}`;
 }
-hSetVis([]);
-fetch(`${M}bts/hidden.json`, {cache:'no-cache'}).then(r=>r.ok ? r.json() : {}).catch(()=>({})).then(j=>{
-  let hide = (j.hidden || []).map(n=>n - 1);
-  try { const d = JSON.parse(localStorage.getItem('pf-bts-draft')); if (Array.isArray(d)) hide = d; } catch(e){}
-  if (hide.length) hSetVis(hide);
+fetch(`${M}bts/photos.json`, {cache:'no-cache'}).then(r=>r.ok ? r.json() : null).catch(()=>null).then(j=>{
+  hSet(j && Array.isArray(j.photos) && j.photos.length ? j.photos : hList);
   hReady = true; if (hWant) preloadAll();
 });
 /* overall scale of the frame (Andrija, 2026-10-14): full size on phones and tablets, 20% smaller on a laptop
@@ -1928,19 +1925,18 @@ function hScale(){ const w = window.innerWidth;
   const s = w <= 1024 ? 1 : w <= 1512 ? 1 - .2 * (w - 1024) / 488 : Math.max(.6, .8 - .2 * (w - 1512) / 1048);
   hs.style.setProperty('--hs', s.toFixed(3)); }
 hScale(); addEventListener('resize', hScale);
-let hWant = false;
 function preloadAll(){
   hWant = true; if (hLoaded || !hReady) return; hLoaded = true;
-  hVis.forEach(i=>{ if (hImgs[i]) return;
-    const im = new Image(); im.alt = ''; im.decoding = 'async'; im.src = pics[i]; hs.appendChild(im); hImgs[i] = im;
+  hPics.forEach((src,i)=>{ if (hImgs[i]) return;
+    const im = new Image(); im.alt = ''; im.decoding = 'async'; im.src = src; hs.appendChild(im); hImgs[i] = im;
     (im.decode ? im.decode() : new Promise(r=>im.onload=r)).then(()=>{ hOk[i] = true; }).catch(()=>{});
   });
 }
 function flick(){
-  const p = (hPos + 1) % hVis.length, n = hVis[p], c = hVis[hPos];
-  if (n === c || !hOk[n]) return;   /* hold the current photo until the next one is decoded */
-  hImgs[n].classList.add('on'); hImgs[c].classList.remove('on'); hPos = p;
-  fn.textContent = `${String(hPos+1).padStart(2,'0')} / ${hVis.length}`;
+  const p = (hPos + 1) % hList.length;
+  if (p === hPos || !hOk[p]) return;   /* hold the current photo until the next one is decoded */
+  hImgs[p].classList.add('on'); hImgs[hPos].classList.remove('on'); hPos = p;
+  fn.textContent = `${String(hPos+1).padStart(2,'0')} / ${hList.length}`;
 }
 /* start downloading well before the section arrives; run only while it is on screen */
 new IntersectionObserver(([e])=>{ if (e.isIntersecting) preloadAll(); }, {rootMargin:'1500px 0px'}).observe(document.getElementById('hitl'));
