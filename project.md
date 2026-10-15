@@ -155,6 +155,12 @@ Full audit and decisions: the claude.ai doc "Services & Roles — audit and syst
 7. Photos (photo projects): ~1100 px long side; poster at same width.
 8. Extra-film thumbnails (optional): 640×360.
 
+## Slideshow photos page (2026-10-15)
+
+- `/slideshow/` is a separate, unlinked page (noindex metadata and a folder-wide robots header in `_headers`; public, not access-controlled) showing every photo of the Human in the loop slideshow as a thumbnail (`media/bts/thumbs/`, 400 px), numbered 01–89 as on the slideshow counter, each with a Shown / Hidden switch (click the photo), filters All / Shown / Hidden, and a link to see the result on the site.
+- The published list is `media/bts/hidden.json` (`{"hidden": [photo numbers 1–89]}`, served with no-cache). The homepage slideshow plays every photo not in it, and its counter and frame height count only the shown photos.
+- Changes made on the page are a draft kept in that browser (`pf-bts-draft`), and the homepage slideshow in that browser already follows the draft. To publish, Andrija presses "Copy list" and sends the line to Claude, who writes it into `hidden.json` on `dev` (then `main` when approved). "Undo my changes" goes back to the published list.
+
 ## Logo Experiments (2026-10-13)
 
 - `/logo-experiments/` is a separate, unlinked one-page reference catalogue of six user-supplied logo studies plus LE-007 Clean globe, LE-008 Particle inflate and LE-009 Vector spin. It has noindex metadata and a folder-wide robots header; it is public, not access-controlled. Styled like the website (2026-10-13): Untitled Sans from `media/fonts/`, the site's dark colours, the Panorama Films® wordmark as the header (no site nav), "Logo Experiments" as the large page title, the three-part footer; studies sit in an icon grid (newest first) of square previews (about 170–250 px) with small ID, type, title, description and Open/Original links underneath; the kind filters and the ID/arrow overlays on the tiles were removed.

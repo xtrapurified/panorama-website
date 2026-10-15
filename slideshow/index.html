@@ -1,0 +1,142 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Slideshow photos</title>
+<link rel="icon" href="../media/logo.png">
+<style>
+/* Hidden page (not linked from the site): every photo in the Human in the loop slideshow, with a show / hide switch each.
+   Styled after the website: Untitled Sans, the dark colours, the wordmark as header. */
+@font-face{font-family:"Untitled Sans";src:url(../media/fonts/UntitledSans-Regular.woff2) format("woff2");font-weight:400;font-display:swap}
+@font-face{font-family:"Untitled Sans";src:url(../media/fonts/UntitledSans-Medium.woff2) format("woff2");font-weight:500;font-display:swap}
+@font-face{font-family:"Untitled Sans";src:url(../media/fonts/UntitledSans-Bold.woff2) format("woff2");font-weight:700;font-display:swap}
+:root{color-scheme:dark;--fz:clamp(1px,calc(100vw / 1440),1.6px);--bg:#050505;--fg:#ededeb;--mid:#8d8d8a;--sub:#5d5d5a;--rule:#1c1c1b;--red:#e2231a;
+  --sans:"Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif;--mono:ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --m:clamp(16px,3.2vw,48px);--g:clamp(10px,1.4vw,20px);--d1:clamp(26px,3.05vw,56px)}
+*{box-sizing:border-box}
+html{background:var(--bg)}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--sans);font-size:max(14px,calc(15*var(--fz)));line-height:1.4;-webkit-font-smoothing:antialiased;padding-inline:var(--m)}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;letter-spacing:inherit;text-transform:inherit;background:none;border:0;padding:0;cursor:pointer;-webkit-tap-highlight-color:transparent}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+h1,p{margin:0}
+.lab{font-size:max(11px,calc(12*var(--fz)));font-weight:500;letter-spacing:.16em;text-transform:uppercase;line-height:1.3}
+.mid{color:var(--mid)}
+.tc{font-family:var(--mono);font-variant-numeric:tabular-nums;letter-spacing:.04em}
+.hdr{padding-block:clamp(18px,2.2vw,30px)}
+.wm{font-size:clamp(17px,1.4vw,22px);font-weight:700;letter-spacing:-.045em;line-height:1;white-space:nowrap}
+.wm .wm-f{font-weight:500}.wm sup{font-size:.42em;font-weight:500;letter-spacing:0;margin-left:.15em}
+.lede{padding-top:clamp(40px,5vw,90px);margin-bottom:clamp(28px,3vw,48px);display:grid;gap:14px}
+.lede h1{font-size:var(--d1);font-weight:400;letter-spacing:-.04em;line-height:1.03}
+.lede p{color:var(--mid);max-width:60ch}
+
+/* the bar: counts, filter, actions; stays at the top while scrolling */
+.bar{position:sticky;top:0;z-index:5;background:var(--bg);border-top:1px solid var(--fg);padding:12px 0;display:flex;flex-wrap:wrap;align-items:center;gap:10px 22px}
+.bar .count{margin-right:auto}
+.seg{display:flex;gap:16px}
+.seg button,.act{color:var(--mid)}
+.seg button[aria-pressed="true"]{color:var(--fg)}
+.seg button:hover,.act:hover{color:var(--fg)}
+.act.go{color:var(--red)}
+.state{width:100%;color:var(--mid)}
+.state b{color:var(--fg);font-weight:500}
+.state.draft b{color:var(--red)}
+
+#grid{list-style:none;padding:0;margin:clamp(18px,2vw,30px) 0 0;display:grid;grid-template-columns:repeat(auto-fill,minmax(clamp(130px,12vw,200px),1fr));gap:clamp(18px,2vw,30px) var(--g)}
+.ph{min-width:0}
+.ph button.t{position:relative;display:block;width:100%;aspect-ratio:1;background:#000;border:1px solid #191919;overflow:hidden;transition:border-color .15s}
+.ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;transition:opacity .15s,filter .15s}
+.ph button.t:hover{border-color:var(--fg)}
+.ph.off button.t{border-color:#2a0d0b}
+.ph.off img{opacity:.22;filter:grayscale(1)}
+.ph .x{position:absolute;inset:auto 8px 8px auto;display:none;background:var(--red);color:#000;padding:3px 6px;font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase}
+.ph.off .x{display:block}
+.ph .row{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-top:8px;font-size:11px}
+.ph .row .n{color:var(--mid)}
+.ph .sw{display:inline-flex;align-items:center;gap:7px;color:var(--fg)}
+.ph.off .sw{color:var(--mid)}
+.ph .sw i{position:relative;width:26px;height:14px;border-radius:7px;background:var(--fg);transition:background .15s}
+.ph .sw i::after{content:"";position:absolute;top:2px;left:14px;width:10px;height:10px;border-radius:50%;background:#000;transition:left .15s}
+.ph.off .sw i{background:#333}
+.ph.off .sw i::after{left:2px;background:var(--mid)}
+.ph .open{color:var(--sub)}.ph .open:hover{color:var(--fg)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;background:var(--fg);color:#000;padding:10px 14px;transition:.2s;pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+footer{display:flex;justify-content:space-between;gap:16px;padding:clamp(48px,6vw,96px) 0 24px}
+</style></head>
+<body>
+<header class="hdr"><a class="wm" href="../" aria-label="Panorama Films, back to the website"><span class="wm-p">Panorama</span> <span class="wm-f">Films</span><sup>®</sup></a></header>
+<main>
+  <section class="lede">
+    <h1>Human in the loop: photos</h1>
+    <p>Every photo in the slideshow. Click a photo to hide or show it. Your changes show straight away in the slideshow on the site in this browser. To make them live for everyone, press “Copy list” and send it to Claude.</p>
+  </section>
+  <div class="bar lab">
+    <span class="count tc" id="count"></span>
+    <span class="seg" role="group" aria-label="Filter">
+      <button type="button" data-f="all" aria-pressed="true">All</button>
+      <button type="button" data-f="on" aria-pressed="false">Shown</button>
+      <button type="button" data-f="off" aria-pressed="false">Hidden</button>
+    </span>
+    <a class="act" href="../#hitl" target="_blank" rel="noopener">See on site ↗</a>
+    <button type="button" class="act" id="reset">Undo my changes</button>
+    <button type="button" class="act go" id="copy">Copy list</button>
+    <span class="state" id="state"></span>
+  </div>
+  <ol id="grid"></ol>
+</main>
+<footer class="lab mid"><span>© MMXXVI</span><a href="#">Back to top ↑</a></footer>
+<div class="toast lab" id="toast" role="status"></div>
+<script>
+const N = 89, KEY = 'pf-bts-draft', pad = i => String(i).padStart(2, '0');
+const grid = document.getElementById('grid'), countEl = document.getElementById('count'), stateEl = document.getElementById('state');
+let published = [], hidden = new Set(), filter = 'all';
+const read = () => { try { const v = JSON.parse(localStorage.getItem(KEY)); return Array.isArray(v) ? v : null; } catch(e){ return null; } };
+const write = v => { try { v ? localStorage.setItem(KEY, JSON.stringify(v)) : localStorage.removeItem(KEY); } catch(e){} };
+const same = (a, b) => a.length === b.length && a.every(x => b.includes(x));
+const list = () => [...hidden].sort((a, b) => a - b);
+
+for (let i = 0; i < N; i++){
+  const li = document.createElement('li'); li.className = 'ph'; li.dataset.i = i;
+  li.innerHTML = `<button type="button" class="t" aria-pressed="true" aria-label="Photo ${pad(i+1)}: shown. Click to hide"><img src="../media/bts/thumbs/${pad(i)}.webp?v=2" alt="" loading="lazy" decoding="async"><span class="x">Hidden</span></button>
+    <div class="row"><span class="n tc">${pad(i+1)}</span><span class="sw" aria-hidden="true"><i></i><span class="w">Shown</span></span><a class="open" href="../media/bts/${pad(i)}.webp?v=2" target="_blank" rel="noopener" aria-label="Open photo ${pad(i+1)} full size">↗</a></div>`;
+  grid.appendChild(li);
+}
+function render(){
+  grid.querySelectorAll('.ph').forEach(li => {
+    const i = +li.dataset.i, off = hidden.has(i), b = li.querySelector('.t');
+    li.classList.toggle('off', off);
+    li.querySelector('.w').textContent = off ? 'Hidden' : 'Shown';
+    b.setAttribute('aria-pressed', String(!off));
+    b.setAttribute('aria-label', `Photo ${pad(i+1)}: ${off ? 'hidden. Click to show' : 'shown. Click to hide'}`);
+    li.hidden = (filter === 'on' && off) || (filter === 'off' && !off);
+  });
+  countEl.textContent = `${N - hidden.size} shown · ${hidden.size} hidden`;
+  const l = list(), changed = !same(l, published);
+  stateEl.className = 'state' + (changed ? ' draft' : '');
+  stateEl.innerHTML = changed
+    ? `<b>Not live yet.</b> Your changes show only in this browser until Claude publishes them.`
+    : `<b>Live.</b> This is what everyone sees on the site.`;
+}
+function save(){ const l = list(); write(same(l, published) ? null : l); render(); }
+grid.addEventListener('click', e => {
+  const b = e.target.closest('.t'); if (!b) return;
+  const i = +b.closest('.ph').dataset.i; hidden.has(i) ? hidden.delete(i) : hidden.add(i); save();
+});
+document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+  filter = b.dataset.f; document.querySelectorAll('.seg button').forEach(x => x.setAttribute('aria-pressed', String(x === b))); render();
+}));
+document.getElementById('reset').addEventListener('click', () => { hidden = new Set(published); write(null); render(); toast('Back to the live list'); });
+document.getElementById('copy').addEventListener('click', async () => {
+  const l = list(), txt = `Human in the loop: hide photos ${l.length ? l.map(i => pad(i+1)).join(', ') : '(none)'}`;
+  try { await navigator.clipboard.writeText(txt); toast('Copied. Paste it to Claude'); }
+  catch(e){ prompt('Copy this and send it to Claude:', txt); }
+});
+let tt; function toast(t){ const el = document.getElementById('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('on'), 1800); }
+
+fetch('../media/bts/hidden.json', {cache: 'no-store'}).then(r => r.ok ? r.json() : {hidden: []}).catch(() => ({hidden: []})).then(j => {
+  published = (j.hidden || []).map(n => n - 1).filter(i => i >= 0 && i < N);   /* the file lists photo numbers as shown on the site, 1–89 */
+  const d = read(); hidden = new Set(d || published); render();
+});
+render();
+</script>
+</body></html>

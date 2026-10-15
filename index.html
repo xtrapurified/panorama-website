@@ -1903,29 +1903,45 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
 const hs = document.getElementById('hitlStage'), fn = document.getElementById('flickNo');
 const BTS_V = '2';   /* raise when a photo file changes (2026-10-14: photo 17 rotated) so browsers fetch the new file */
 const pics = Array.from({length:BTS},(_,i)=>`${M}bts/${String(i).padStart(2,'0')}.webp?v=${BTS_V}`);
-hs.style.setProperty('--hr', Math.max(...BTS_DIMS.map(([w,h])=>h/w)).toFixed(4));   /* tallest photo: height ÷ width */
+/* which photos play: all 89 minus the ones hidden on the unlinked page /slideshow/ (list in media/bts/hidden.json,
+   photo numbers 1–89 as on the counter). A draft made on that page shows only in that browser until it is published. */
+let hVis = Array.from({length:BTS},(_,i)=>i);
+const hImgs = [], hOk = new Array(BTS).fill(false);
+let hPos = 0, fiT = null, hLoaded = false, hReady = false;
+function hSetVis(hide){
+  const h = new Set(hide); hVis = Array.from({length:BTS},(_,i)=>i).filter(i=>!h.has(i));
+  if (!hVis.length) hVis = [0];
+  hs.style.setProperty('--hr', Math.max(...hVis.map(i=>BTS_DIMS[i][1]/BTS_DIMS[i][0])).toFixed(4));   /* tallest shown photo: height ÷ width */
+  const first = hs.querySelector('img'); first.src = pics[hVis[0]]; hImgs[hVis[0]] = first; hOk[hVis[0]] = true; hPos = 0;
+  fn.textContent = `01 / ${hVis.length}`;
+}
+hSetVis([]);
+fetch(`${M}bts/hidden.json`, {cache:'no-cache'}).then(r=>r.ok ? r.json() : {}).catch(()=>({})).then(j=>{
+  let hide = (j.hidden || []).map(n=>n - 1);
+  try { const d = JSON.parse(localStorage.getItem('pf-bts-draft')); if (Array.isArray(d)) hide = d; } catch(e){}
+  if (hide.length) hSetVis(hide);
+  hReady = true; if (hWant) preloadAll();
+});
 /* overall scale of the frame (Andrija, 2026-10-14): full size on phones and tablets, 20% smaller on a laptop
    (MacBook Pro, 1512 px wide), easing to 40% smaller on large screens (2560 px and up) */
 function hScale(){ const w = window.innerWidth;
   const s = w <= 1024 ? 1 : w <= 1512 ? 1 - .2 * (w - 1024) / 488 : Math.max(.6, .8 - .2 * (w - 1512) / 1048);
   hs.style.setProperty('--hs', s.toFixed(3)); }
 hScale(); addEventListener('resize', hScale);
-const hImgs = [hs.querySelector('img')], hOk = new Array(BTS).fill(false); hOk[0] = true;
-let fiI = 0, fiT = null, hLoaded = false;
+let hWant = false;
 function preloadAll(){
-  if (hLoaded) return; hLoaded = true;
-  for (let i = 1; i < BTS; i++){
+  hWant = true; if (hLoaded || !hReady) return; hLoaded = true;
+  hVis.forEach(i=>{ if (hImgs[i]) return;
     const im = new Image(); im.alt = ''; im.decoding = 'async'; im.src = pics[i]; hs.appendChild(im); hImgs[i] = im;
     (im.decode ? im.decode() : new Promise(r=>im.onload=r)).then(()=>{ hOk[i] = true; }).catch(()=>{});
-  }
+  });
 }
 function flick(){
-  const n = (fiI + 1) % BTS;
-  if (!hOk[n]) return;   /* hold the current photo until the next one is decoded */
-  hImgs[n].classList.add('on'); hImgs[fiI].classList.remove('on'); fiI = n;
-  fn.textContent = `${String(fiI+1).padStart(2,'0')} / ${BTS}`;
+  const p = (hPos + 1) % hVis.length, n = hVis[p], c = hVis[hPos];
+  if (n === c || !hOk[n]) return;   /* hold the current photo until the next one is decoded */
+  hImgs[n].classList.add('on'); hImgs[c].classList.remove('on'); hPos = p;
+  fn.textContent = `${String(hPos+1).padStart(2,'0')} / ${hVis.length}`;
 }
-fn.textContent = `01 / ${BTS}`;
 /* start downloading well before the section arrives; run only while it is on screen */
 new IntersectionObserver(([e])=>{ if (e.isIntersecting) preloadAll(); }, {rootMargin:'1500px 0px'}).observe(document.getElementById('hitl'));
 new IntersectionObserver(([e])=>{ clearInterval(fiT); if (e.isIntersecting && !REDUCED) fiT = setInterval(flick, 300); }).observe(document.getElementById('hitl'));

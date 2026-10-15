@@ -1,2 +1,8 @@
 /logo-experiments/*
   X-Robots-Tag: noindex, nofollow
+
+/slideshow/*
+  X-Robots-Tag: noindex, nofollow
+
+/media/bts/hidden.json
+  Cache-Control: no-cache
