@@ -65,7 +65,11 @@ export async function onRequestGet({ env }){
 
 export async function onRequestPost({ request, env }){
   if (!env.GITHUB_TOKEN || !env.SLIDESHOW_PASSWORD) return json({ error: 'Saving is not switched on yet' }, 503);
-  if (!(await sameSecret(request.headers.get('x-password'), env.SLIDESHOW_PASSWORD))) return json({ error: 'Wrong password' }, 401);
+  if (!(await sameSecret(request.headers.get('x-password'), env.SLIDESHOW_PASSWORD))){
+    await new Promise(r => setTimeout(r, 1500));   /* slows down anyone trying passwords one after another */
+    return json({ error: 'Wrong password' }, 401);
+  }
+  if (+(request.headers.get('content-length') || 0) > 90 * 1024 * 1024) return json({ error: 'Too much at once: save fewer photos' }, 413);
   let body; try { body = await request.json(); } catch(e){ return json({ error: 'Could not read the request' }, 400); }
   const bad = check(body); if (bad) return json({ error: bad }, 400);
 
