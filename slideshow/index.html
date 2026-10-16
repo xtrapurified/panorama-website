@@ -113,7 +113,7 @@ const LONG = 1600, THUMB = 400, PKEY = 'pf-slideshow-pw';
 const grid = document.getElementById('grid'), countEl = document.getElementById('count'), stateEl = document.getElementById('state');
 const saveBtn = document.getElementById('save');
 const pad = i => String(i).padStart(2, '0');
-let saved = [], photos = [], uploads = new Map(), filter = 'all', configured = null, busy = false;
+let saved = [], photos = [], uploads = new Map(), local = new Map(), filter = 'all', configured = null, busy = false;
 const clone = a => a.map(p => ({...p}));
 const lsGet = k => { try { return localStorage.getItem(k); } catch(e){ return null; } };
 const lsSet = (k, v) => { try { v == null ? localStorage.removeItem(k) : localStorage.setItem(k, v); } catch(e){} };
@@ -130,7 +130,7 @@ function render(){
     const up = uploads.get(p.f), li = document.createElement('li');
     li.className = 'ph' + (p.hidden ? ' off' : '') + (up ? ' new' : ''); li.dataset.i = i;
     li.hidden = (filter === 'on' && p.hidden) || (filter === 'off' && !p.hidden);
-    const src = up ? up.url : `../media/bts/thumbs/${p.f}?v=${p.v || 1}`;
+    const src = up ? up.url : local.has(p.f) ? local.get(p.f) : `../media/bts/thumbs/${p.f}?v=${p.v || 1}`;
     li.innerHTML = `<button type="button" class="t" aria-pressed="${!p.hidden}" aria-label="Photo ${pad(i+1)}: ${p.hidden ? 'hidden. Click to show' : 'shown. Click to hide'}"><img src="${src}" alt="" loading="lazy" decoding="async"><span class="tag x">Hidden</span><span class="tag n">New</span></button>
       <div class="row"><span class="n tc">${pad(i+1)}</span><span class="sw" aria-hidden="true"><i></i><span>${p.hidden ? 'Hidden' : 'Shown'}</span></span>${up
         ? `<button type="button" class="rm" aria-label="Remove new photo ${pad(i+1)}">×</button>`
@@ -237,8 +237,10 @@ saveBtn.addEventListener('click', async () => {
       body: JSON.stringify({photos, uploads: ups, message})});
     const j = await r.json().catch(() => ({}));
     if (r.status === 401){ lsSet(PKEY, null); throw new Error('Wrong password'); }
+    if (r.status === 409){ toast(j.error); busy = false; render(); return; }
     if (!r.ok) throw new Error(j.error || `Error ${r.status}`);
     lsSet(PKEY, pw);
+    uploads.forEach((u, f) => local.set(f, u.url));   /* the site shows the new files about a minute later */
     saved = clone(photos); uploads.clear();
     toast(j.branch === 'main' ? 'Saved. The site updates in about a minute' : `Saved to ${j.branch || 'dev'}. The preview updates in about a minute`);
   } catch(e){ toast(e.message); }
@@ -248,10 +250,14 @@ saveBtn.addEventListener('click', async () => {
 let tt; function toast(t){ const el = document.getElementById('toast'); el.textContent = t; el.classList.add('on'); clearTimeout(tt); tt = setTimeout(() => el.classList.remove('on'), 3200); }
 addEventListener('beforeunload', e => { if (changes().any){ e.preventDefault(); e.returnValue = ''; } });
 
-fetch('../api/slideshow', {cache: 'no-store'}).then(r => r.ok ? r.json() : {configured: false}).catch(() => ({configured: false}))
-  .then(j => { configured = !!j.configured; render(); });
-fetch('../media/bts/photos.json', {cache: 'no-store'}).then(r => r.json()).then(j => {
-  saved = clone(j.photos || []); photos = clone(saved); render();
-}).catch(() => { stateEl.className = 'state err'; stateEl.innerHTML = '<b>Couldn’t load the photo list.</b> Reload the page.'; });
+/* the list comes from GitHub through the save function when saving is on (always current, even right after a save),
+   otherwise from the site's own copy */
+fetch('../api/slideshow?list=1', {cache: 'no-store'}).then(r => r.json()).catch(() => ({configured: false})).then(async j => {
+  configured = !!j.configured;
+  let list = Array.isArray(j.photos) ? j.photos : null;
+  if (!list) list = await fetch('../media/bts/photos.json', {cache: 'no-store'}).then(r => r.json()).then(x => x.photos).catch(() => null);
+  if (!list){ stateEl.className = 'state err'; stateEl.innerHTML = '<b>Couldn’t load the photo list.</b> Reload the page.'; return; }
+  saved = clone(list); photos = clone(saved); render();
+});
 </script>
 </body></html>

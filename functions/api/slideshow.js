@@ -59,8 +59,24 @@ function check(body){
   return '';
 }
 
-export async function onRequestGet({ env }){
-  return json({ configured: !!(env.GITHUB_TOKEN && env.SLIDESHOW_PASSWORD), branch: env.GITHUB_BRANCH || 'dev' });
+/* the live addresses save to main (the change is on panorama.mov a minute later); the dev preview saves to dev */
+const LIVE = /^(www\.)?panorama\.mov$|^panorama-website\.pages\.dev$/;
+const branchFor = (request, env) => env.GITHUB_BRANCH || (LIVE.test(new URL(request.url).hostname) ? 'main' : 'dev');
+
+async function readList(api, branch){
+  const cur = await api(`/contents/media/bts/photos.json?ref=${branch}`);
+  return JSON.parse(decodeURIComponent(escape(atob(cur.content.replace(/\n/g, ''))))).photos || [];
+}
+
+/* GET → is saving on, and where it goes; GET ?list=1 → the photo list as it is on GitHub right now
+   (the site itself shows a new list only once it has rebuilt, about a minute after a save) */
+export async function onRequestGet({ request, env }){
+  const configured = !!(env.GITHUB_TOKEN && env.SLIDESHOW_PASSWORD), branch = branchFor(request, env);
+  if (configured && new URL(request.url).searchParams.has('list')){
+    try { return json({ configured, branch, photos: await readList(gh(env), branch) }); }
+    catch(e){ return json({ configured, branch, error: e.message }, 502); }
+  }
+  return json({ configured, branch });
 }
 
 export async function onRequestPost({ request, env }){
@@ -73,12 +89,19 @@ export async function onRequestPost({ request, env }){
   let body; try { body = await request.json(); } catch(e){ return json({ error: 'Could not read the request' }, 400); }
   const bad = check(body); if (bad) return json({ error: bad }, 400);
 
-  const api = gh(env), branch = env.GITHUB_BRANCH || 'dev';
+  const api = gh(env), branch = branchFor(request, env);
   const photos = body.photos.map(({ f, w, h, v, hidden }) => ({ f, w: Math.round(w), h: Math.round(h), v: Math.max(1, Math.round(v || 1)), hidden: !!hidden }));
   const list = '{"photos": [\n' + photos.map(p => JSON.stringify(p).replace(/":/g, '": ')).join(',\n') + '\n]}\n';
   const message = (String(body.message || '').slice(0, 200) || 'Slideshow photos updated') + '\n\nSaved from the /slideshow/ page.';
 
   try {
+    /* the list on GitHub must still be the one the page started from: every photo on it is still in the page's list,
+       and no new photo takes a name already used. Otherwise someone (or another tab) saved in between. */
+    const now = await readList(api, branch);
+    const sent = new Set(photos.map(p => p.f)), taken = new Set(now.map(p => p.f));
+    if (now.some(p => !sent.has(p.f)) || (body.uploads || []).some(u => taken.has(u.f)))
+      return json({ error: 'The photo list changed since this page was opened. Reload the page and save again.' }, 409);
+
     /* the photos first: their blobs don't depend on the branch, so a retry only redoes the commit */
     const files = [];
     for (const u of body.uploads || []){
