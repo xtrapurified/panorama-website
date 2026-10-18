@@ -80,6 +80,32 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
 /* phones: the teaser stays, on up to two lines next to the +, a touch brighter so the egg is found */
 @media (max-width:900px){#golden .gh-tease{display:block;flex:1;margin-left:0;padding:0 1em 0 0;white-space:normal;text-align:left;color:#9d9d99;line-height:1.45;font-size:calc(11.5*var(--fz))}}
 @media (prefers-reduced-motion:reduce){#golden .gh-dot{animation:none}}
+
+/* Toolkit (2026-10-18): a rack focus. One line is sharp, the others sit soft behind it, like a focus pull between
+   subjects. Pointer over a line pulls focus to it; otherwise the line nearest the middle of the window is in focus,
+   so on phones scrolling pulls focus. A small focus scale with a red index follows. Reduced motion: all sharp. */
+#toolkit .kit-wrap{margin-top:clamp(40px,5vw,72px)}
+#toolkit .kit-fl{display:flex;align-items:center;gap:12px;margin:0 0 clamp(14px,1.6vw,22px)}
+#toolkit .kit-sc{position:relative;display:inline-flex;gap:14px;align-items:flex-end;height:10px;padding-inline:2px}
+#toolkit .kit-sc i{display:block;width:1px;height:6px;background:var(--mid);opacity:.6}
+#toolkit .kit-sc b{position:absolute;left:0;bottom:-4px;width:1px;height:14px;background:var(--red);transform:translateX(calc(2px + var(--k,0) * 15px));transition:transform .55s var(--ease)}
+#toolkit .kit{margin:0;padding:0;border-top:1px solid var(--rule)}
+#toolkit .kit-r{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);align-items:baseline;padding-block:clamp(10px,1.2vw,18px);border-bottom:1px solid var(--rule);cursor:default}
+#toolkit .kit-n{grid-column:1/span 4;transition:color .3s}
+#toolkit dt{grid-column:5/span 4;margin:0;font-size:var(--d1);font-weight:400;letter-spacing:-.05em;line-height:1.06;color:var(--fg)}
+#toolkit dd{grid-column:9/span 4;margin:0;font-size:var(--t1);letter-spacing:-.03em;line-height:1.2;color:var(--mid)}
+#toolkit dt,#toolkit dd{filter:blur(var(--b,0px));opacity:var(--a,1);transition:filter .6s var(--ease),opacity .6s var(--ease)}
+#toolkit .kit.js .kit-r{--b:calc(2px + var(--d,1) * 2.6px);--a:calc(.62 - var(--d,1) * .08)}
+#toolkit .kit.js .kit-r.on{--b:0px;--a:1}
+#toolkit .kit-r.on .kit-n{color:var(--red)}
+#toolkit .kit-r.on dd{color:var(--fg)}
+@media (max-width:760px){
+  #toolkit .kit-r{grid-template-columns:auto 1fr;column-gap:14px;row-gap:4px}
+  #toolkit .kit-n{grid-column:1;grid-row:1}
+  #toolkit dt{grid-column:2}
+  #toolkit dd{grid-column:2;font-size:calc(15*var(--fz))}
+}
+@media (prefers-reduced-motion:reduce){#toolkit .kit.js .kit-r{--b:0px;--a:.55}#toolkit dt,#toolkit dd,#toolkit .kit-sc b{transition:none}}
 </style></head><body>
 <!doctype html>
 <html lang="en">
@@ -1492,6 +1518,19 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <summary><span class="mt">Approach</span><span class="pm" aria-hidden="true"></span></summary>
       <p class="fold-lede">We stay with a film from the first question to the final frame: the research and the interviews, the script, the shoot and the cut, so nothing gets lost between hands.</p>
       <div class="grid caps" id="caps"></div>
+    </details>
+    <details class="more" open id="toolkit">
+      <summary><span class="mt">Toolkit</span><span class="pm" aria-hidden="true"></span></summary>
+      <div class="kit-wrap">
+      <p class="kit-fl lab mid" aria-hidden="true"><span>Focus</span><span class="kit-sc"><i></i><i></i><i></i><i></i><i></i><b id="kitMk"></b></span></p>
+      <dl class="kit" id="kit">
+        <div class="kit-r on" data-i="0"><span class="kit-n lab mid">01</span><dt>Our eye</dt><dd>Framing, emotion, presence</dd></div>
+        <div class="kit-r" data-i="1"><span class="kit-n lab mid">02</span><dt>Our questions</dt><dd>Interview intuition</dd></div>
+        <div class="kit-r" data-i="2"><span class="kit-n lab mid">03</span><dt>Our presence</dt><dd>Trust and intimacy with subjects</dd></div>
+        <div class="kit-r" data-i="3"><span class="kit-n lab mid">04</span><dt>Our values</dt><dd>Integrity and emotional depth</dd></div>
+        <div class="kit-r" data-i="4"><span class="kit-n lab mid">05</span><dt>Our editing</dt><dd>Rhythm, nuance, restraint</dd></div>
+      </dl>
+      </div>
     </details>
     <details class="more" open>
       <summary><span class="mt">Manifesto</span><span class="pm" aria-hidden="true"></span></summary>
@@ -3175,4 +3214,29 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
 </script>
 </body></html>
 
+<script>
+/* Toolkit rack focus */
+(() => {
+  const kit = document.getElementById('kit'); if (!kit) return;
+  const rows = [...kit.querySelectorAll('.kit-r')], mk = document.getElementById('kitMk');
+  let cur = -1, hover = false, raf = 0;
+  const set = i => {
+    if (i === cur) return; cur = i;
+    rows.forEach((r, j) => { r.classList.toggle('on', j === i); r.style.setProperty('--d', Math.min(Math.abs(j - i), 3)); });
+    if (mk) mk.style.setProperty('--k', i);
+  };
+  const byScroll = () => {
+    raf = 0; if (hover) return;
+    const mid = innerHeight / 2; let best = 0, bd = Infinity;
+    rows.forEach((r, j) => { const b = r.getBoundingClientRect(), d = Math.abs(b.top + b.height / 2 - mid); if (d < bd) { bd = d; best = j; } });
+    set(best);
+  };
+  kit.classList.add('js'); set(0); byScroll();
+  addEventListener('scroll', () => { if (!raf) raf = requestAnimationFrame(byScroll); }, {passive: true});
+  addEventListener('resize', byScroll);
+  rows.forEach((r, j) => r.addEventListener('pointerenter', e => { if (e.pointerType === 'mouse') { hover = true; set(j); } }));
+  kit.addEventListener('pointerleave', e => { if (e.pointerType === 'mouse') { hover = false; byScroll(); } });
+  rows.forEach((r, j) => r.addEventListener('click', () => set(j)));
+})();
+</script>
 </body></html>
