@@ -106,6 +106,41 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
   #toolkit dd{grid-column:2;font-size:calc(15*var(--fz))}
 }
 @media (prefers-reduced-motion:reduce){#toolkit .kit.js .kit-r{--b:0px;--a:.55}#toolkit dt,#toolkit dd,#toolkit .kit-sc b{transition:none}}
+
+/* We make (2026-10-18): six services as an accordion, one open at a time; the short line on the row, the longer
+   description, examples of the work and a closing line inside. Andrija's copy, AI comparisons rewritten. */
+@media (min-width:761px){#wemake .fold-lede{margin-top:calc(var(--t1) * .3)}}
+#wemake .svc{margin-top:clamp(40px,5vw,72px);border-top:1px solid var(--rule)}
+#wemake .wm-r{border-bottom:1px solid var(--rule)}
+#wemake .wm-r > summary{list-style:none;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);align-items:baseline;padding-block:clamp(12px,1.3vw,20px);cursor:pointer}
+#wemake .wm-r > summary::-webkit-details-marker{display:none}
+#wemake .wm-n{grid-column:1/span 4;transition:color .2s}
+#wemake .wm-t{grid-column:5/span 4;font-size:var(--t1);letter-spacing:-.03em;line-height:1.15;color:var(--fg);transition:color .2s}
+#wemake .wm-s{grid-column:9/span 3;font-size:var(--small);line-height:1.45;color:var(--mid)}
+#wemake .wm-pm{grid-column:12;justify-self:end;position:relative;width:12px;height:12px;align-self:center}
+#wemake .wm-pm::before,#wemake .wm-pm::after{content:"";position:absolute;left:0;top:50%;width:100%;height:1.5px;margin-top:-.75px;background:var(--red);transition:transform .35s var(--ease)}
+#wemake .wm-pm::after{transform:rotate(90deg)}
+#wemake .wm-r[open] .wm-pm::after{transform:rotate(0deg)}
+#wemake .wm-r > summary:hover .wm-t,#wemake .wm-r[open] .wm-n{color:var(--red)}
+#wemake .wm-r > summary:focus-visible{outline:1px solid var(--red);outline-offset:4px}
+#wemake .wm-b{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);padding-bottom:clamp(22px,2.6vw,40px);animation:svcIn .5s var(--ease)}
+#wemake .wm-l{grid-column:5/span 4}
+#wemake .wm-l p{margin:0 0 .8em;font-size:var(--small);line-height:1.5;color:var(--fg);max-width:46ch}
+#wemake .wm-l ul{margin:0;padding:0;list-style:none;display:grid;gap:.35em;font-size:var(--small);line-height:1.45;color:var(--mid)}
+#wemake .wm-l li{padding-left:1em;text-indent:-1em}
+#wemake .wm-l li::before{content:"–";display:inline-block;width:1em;text-indent:0;color:var(--red)}
+#wemake .wm-c{grid-column:9/span 4;margin:0;font-size:var(--t1);letter-spacing:-.03em;line-height:1.15;color:var(--fg)}
+@keyframes svcIn{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:none}}
+@media (max-width:760px){
+  #wemake .wm-r > summary{grid-template-columns:28px 1fr auto;column-gap:14px;row-gap:4px}
+  #wemake .wm-n{grid-column:1;grid-row:1}
+  #wemake .wm-t{grid-column:2;grid-row:1}
+  #wemake .wm-pm{grid-column:3;grid-row:1}
+  #wemake .wm-s{grid-column:2}
+  #wemake .wm-b{display:block;padding-left:42px}
+  #wemake .wm-c{margin-top:16px}
+}
+@media (prefers-reduced-motion:reduce){#wemake .wm-b{animation:none}#wemake .wm-pm::before,#wemake .wm-pm::after{transition:none}}
 </style></head><body>
 <!doctype html>
 <html lang="en">
@@ -1443,7 +1478,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 <a class="skip" href="#films">Skip to films</a><a class="skip" href="#contact">Skip to contact</a>
 <header class="hdr" id="hdr">
   <div class="page bar">
-    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe-follow aria-hidden="true"></panorama-globe-follow></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a><span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span></div>
+    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe-follow aria-hidden="true"></panorama-globe-follow></span><a class="svc" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a><span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span></div>
     <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Get in touch</a><span class="nav-ft"><a href="#search" data-search class="nav-sx" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a><a href="#index" class="nav-ix" data-index>Index</a><button type="button" class="ft-th" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
@@ -1537,6 +1572,18 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <summary><span class="mt">Approach</span><span class="pm" aria-hidden="true"></span></summary>
       <p class="fold-lede">We stay with a film from the first question to the final frame: the research and the interviews, the script, the shoot and the cut, so nothing gets lost between hands.</p>
       <div class="grid caps" id="caps"></div>
+    </details>
+    <details class="more fold" open id="wemake">
+      <summary><span class="mt">We make</span><span class="pm" aria-hidden="true"></span></summary>
+      <p class="fold-lede">Filmed with care. Crafted for impact.</p>
+      <div class="svc">
+        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">01</span><span class="wm-t">Short Documentaries</span><span class="wm-s">Portraits of real people and ideas that move us.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>People and place documentaries: cinematic short films about individuals, communities or regions.</p><ul><li>Portraits of unsung heroes, elders, local legends</li><li>Cultural shifts, disappearing traditions, grassroots change</li></ul></div><p class="wm-c">Real voices, real landscapes.</p></div></details>
+        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">02</span><span class="wm-t">Legacy Films</span><span class="wm-s">Personal or family stories, told with timeless care.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Legacy films and personal archives: timeless personal stories made for families or individuals.</p><ul><li>Milestone documentaries: birth, marriage, end of life</li><li>Family origin stories or “time capsule” films</li></ul></div><p class="wm-c">Hyper-personal and emotionally irreplaceable.</p></div></details>
+        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">03</span><span class="wm-t">Behind-the-Scenes &amp; Process Films</span><span class="wm-s">Craft, transformation, and the beauty of how things are made.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Craft, labour, art, and how things are made.</p><ul><li>Artisan processes, slow work, restoration, rituals</li><li>B2B storytelling for ethical brands or NGOs</li></ul></div><p class="wm-c">A real transformation, observed as it happens.</p></div></details>
+        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">04</span><span class="wm-t">Location Portraits</span><span class="wm-s">Cinematic visuals of real places — landscapes, cities, architecture.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Location-driven visual poetry: artistic, meditative portraits of places.</p><ul><li>Landscapes, architecture, urban time-lapses</li><li>Paired with poetic voice-over or ambient sound</li></ul></div><p class="wm-c">Real light, real air, real ground.</p></div></details>
+        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">05</span><span class="wm-t">Ethical Brand Storytelling</span><span class="wm-s">Authentic, mission-aligned films for conscious brands.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Short films for conscious companies.</p><ul><li>“Why we do this” founder stories</li><li>Real customer experiences, culture-focused ads</li></ul></div><p class="wm-c">Brand trust is rooted in authenticity.</p></div></details>
+        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">06</span><span class="wm-t">Participatory Video Projects</span><span class="wm-s">Co-created with communities. Empowering and inclusive.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Participatory and community-led films, co-created with the people being filmed.</p><ul><li>Collaborative workshops, community documentaries</li><li>Training and storytelling for NGOs</li></ul></div><p class="wm-c">Made with the people in it, not only about them.</p></div></details>
+      </div>
     </details>
     <details class="more" open id="toolkit">
       <summary><span class="mt">Toolkit</span><span class="pm" aria-hidden="true"></span></summary>
