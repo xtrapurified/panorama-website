@@ -587,7 +587,11 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 .about{margin-top:0;row-gap:20px}
 .about p{grid-column:5/span 4;font-size:calc(15*var(--fz));line-height:1.5;color:#c6c6c3;max-width:46ch}
 .about p + p{grid-column:9/span 4}
-@media (max-width:760px){.about p,.about p + p{grid-column:1/-1}}
+/* Studio intro in two columns of paragraphs (2026-10-18) */
+.about .ab-c{grid-column:5/span 4;display:grid;gap:1em;align-content:start}
+.about .ab-c + .ab-c{grid-column:9/span 4}
+.about .ab-c p{grid-column:auto}
+@media (max-width:760px){.about p,.about p + p,.about .ab-c,.about .ab-c + .ab-c{grid-column:1/-1}}
 .team{margin-top:clamp(96px,10vw,160px)}
 .team article{border:0;padding-top:0;gap:6px}
 .team h3{font-size:calc(22*var(--fz));font-weight:500;letter-spacing:-.025em}
@@ -906,7 +910,13 @@ footer{font-size:calc(12*var(--fz))}
 :is(.end,.pj-end) .links.big{display:grid;gap:0;margin-top:.04em;font-size:var(--h1);font-weight:400;letter-spacing:-.04em;line-height:1}
 :is(.end,.pj-end) .links.big a,:is(.end,.pj-end) .links.big .mail{display:block;font:inherit;letter-spacing:inherit;text-align:left;cursor:pointer;width:fit-content;color:var(--fg);opacity:var(--o,1);transition:opacity .2s,color .2s;text-wrap:balance}
 :is(.end,.pj-end) .links.big a .ic{width:calc(.32em + (var(--fz) - 1px) * 22);height:calc(.32em + (var(--fz) - 1px) * 22);margin-left:.12em;vertical-align:.32em}
-:is(.end,.pj-end) .links.big a:hover{opacity:1;color:var(--red)}
+/* Instagram and search: a red underline on hover instead of turning red (2026-10-18), like Email */
+:is(.end,.pj-end) .links.big a .lt{text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:max(1px,.02em);text-underline-offset:.12em;transition:text-decoration-color .2s}
+:is(.end,.pj-end) .links.big a:hover,:is(.end,.pj-end) .links.big a:focus-visible{opacity:1;color:var(--fg)}
+:is(.end,.pj-end) .links.big a:hover .lt,:is(.end,.pj-end) .links.big a:focus-visible .lt{text-decoration-color:var(--red)}
+:is(.end,.pj-end) .links.big .big-sx{position:relative}
+:is(.end,.pj-end) .links.big .big-sx::after{content:"";position:absolute;left:0;right:0;bottom:.1em;height:max(1px,.02em);background:var(--red);opacity:0;transition:opacity .2s}
+:is(.end,.pj-end) .links.big .big-sx:hover::after,:is(.end,.pj-end) .links.big .big-sx:focus-visible::after{opacity:1}
 :is(.end,.pj-end) .links.big .mail:hover,:is(.end,.pj-end) .links.big .mail.done{opacity:1;color:var(--fg)}
 :is(.end,.pj-end) .links.big .mail .mail-t{text-decoration:none}
 :is(.end,.pj-end) .links.big .mail .u{text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:max(1px,.02em);text-underline-offset:.12em;transition:text-decoration-color .2s}
@@ -1428,8 +1438,15 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   <section class="sec" id="studio" data-sec="studio">
     <div class="lede"><span class="tag">Studio<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Panorama Films is an independent creative storytelling studio working across documentaries, series, campaigns and brand films.</h2></div>
     <div class="grid about">
-      <p>We explore science, technology, culture and the human stories around them, with commissioned films for global brands, NGOs and institutions alongside our own projects.</p>
-      <p>The future, documented.</p>
+      <div class="ab-c">
+        <p>Our work is grounded in the real world, places you can feel, people you can connect with, and stories that are meant to last.</p>
+        <p>We explore science, technology, culture and the human stories around them, with commissioned films for global brands, NGOs and institutions alongside our own projects.</p>
+      </div>
+      <div class="ab-c">
+        <p>We work with NGOs, cultural institutions, ethical brands, and individuals who care about impact and who want their story told with respect and imagination.</p>
+        <p>We’ve filmed in deserts, megacities, forests, refugee camps, laboratories, kitchens, and family homes.</p>
+        <p>The future, documented.</p>
+      </div>
     </div>
     <div class="grid team">
       <article><span class="face" data-ini="AK"><img src="media/team/andrija-4.webp" data-alt="andrija-3,andrija,andrija-2" alt="Andrija Kovač" loading="lazy" onerror="this.remove()"></span><span class="lab mid">Creative Director</span><h3>Andrija Kovač</h3><p>Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.</p></article>
@@ -1437,7 +1454,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <article><span class="face" data-ini="MK"><img src="media/team/marija-2.webp" data-alt="marija" alt="Marija Kovačina" loading="lazy" onerror="this.remove()"></span><span class="lab mid">Editorial Director</span><h3>Marija Kovačina</h3><p>Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.</p></article>
     </div>
     <div class="peers" id="peers">
-      <div class="lede coll"><span class="tag sub">Collective</span><h2>An open circle of cinematographers, editors, sound designers and producers. Each film brings a different part of it together.</h2></div>
+      <div class="lede coll"><span class="tag sub">Panorama Films Collective</span><h2>An open circle of cinematographers, editors, sound designers and producers. We are small by design, so we can be close to the work.</h2></div>
       <div class="net-view lab" role="group" aria-label="Show the collective as"><button type="button" data-view="list" aria-pressed="true"><svg class="vi" viewBox="0 0 16 16" aria-hidden="true"><path d="M5.2 3h9M5.2 8h9M5.2 13h9"/><circle cx="1.9" cy="3" r="1.3" fill="currentColor"/><circle cx="1.9" cy="8" r="1.3" fill="currentColor"/><circle cx="1.9" cy="13" r="1.3" fill="currentColor"/></svg><span>List</span></button><button type="button" data-view="graph" aria-pressed="false"><svg class="vi" viewBox="0 0 16 16" aria-hidden="true"><path d="M2.6 4.2 13.4 2.6M2.6 4.2 7.6 13.6M13.4 2.6l-5.8 11"/><circle cx="2.6" cy="4.2" r="1.3" fill="currentColor"/><circle cx="13.4" cy="2.6" r="1.3" fill="currentColor"/><circle cx="7.6" cy="13.6" r="1.6" fill="currentColor"/></svg><span>Graph</span></button></div>
       <div class="net-wrap"><canvas class="net" id="net" aria-hidden="true"></canvas></div>
       <ol class="net-names" id="netNames" hidden aria-label="The collective">
@@ -1526,7 +1543,7 @@ band = "elevation(s) in [-4°, 6°]",
         <div class="top"><span class="tag">Contact<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span></span></div>
         <p class="ask"><a href="https://panoramafilms.tv/contact-form" target="_blank" rel="noopener"><span class="w">Let’s make a film together.</span><br><span class="r">Get in touch.</span></a></p>
         <div class="links big">
-          <a href="https://www.instagram.com/panoramafilms.tv/" target="_blank" rel="noopener" style="--o:.88">Instagram <svg class="ic bi" aria-hidden="true" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.8"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg></a>
+          <a href="https://www.instagram.com/panoramafilms.tv/" target="_blank" rel="noopener" style="--o:.88"><span class="lt">Instagram</span> <svg class="ic bi" aria-hidden="true" viewBox="0 0 24 24"><rect x="3.5" y="3.5" width="17" height="17" rx="4.8"/><circle cx="12" cy="12" r="4"/><circle cx="17.2" cy="6.8" r=".6"/></svg></a>
           <button type="button" class="mail" id="mailBtn" style="--o:.66" aria-describedby="mailNote" aria-label="Copy email address"><span class="mail-t">Email</span> <svg class="ic bi" aria-hidden="true" viewBox="0 0 24 24"><rect x="8" y="8" width="12" height="12" rx="1.5"/><path d="M16 8V5.5A1.5 1.5 0 0 0 14.5 4h-9A1.5 1.5 0 0 0 4 5.5v9A1.5 1.5 0 0 0 5.5 16H8"/></svg></button>
           <a href="#search" data-search class="big-sx" style="--o:.4" aria-label="Search films, clients and people" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a>
         </div>
