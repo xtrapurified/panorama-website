@@ -117,6 +117,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - **Header:** the nav hover has no colour fringe any more, only the red underline.
 - **Light mode:** the Films bar under the reel takes the page colour (was black).
 - **Fruškać:** its card now moves: it streams the Vimeo film from 1:10 for 20 s (the second half of the 2:05 film; Andrija asked for the second part). `media/hover/p35.mp4` (a slow push-in on the Vimeo poster) is only the fallback when streaming is unavailable.
+- **Vulture Foundation Serbia:** its card now moves, streaming the Vimeo film ("Dušan, A White-tailed eagle from Belgrade", 3:47) from about 12% in, for 20 s; `media/hover/p25.mp4` (push-in on the Vimeo poster) is the fallback.
 - **What's Next.:** shown 22% larger from 50% 60% (`zoom:[1.22,"50% 60%"]`, applied to the still, the clip and the stream) so the "10" logo in the top right corner stays out of frame.
 
 ## Project list and order (Andrija, 2026-10-14)
