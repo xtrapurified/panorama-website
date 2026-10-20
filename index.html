@@ -1774,7 +1774,7 @@ const SVC_ITEMS = (()=>{ const s = new Set(), add = v => String(v || '').split(/
 /* s = second where the 20-second background loop starts */
 const F = {
   reel:{title:"Showreel", client:"Panorama Films", file:"reel", still:"reel", clip:"home", own:true, dur:"1:29"},   /* V4 (2026-10-20), hosted until the final cut goes to Vimeo; old Vimeo 1232743611/7e23d97b0f */
-  hotf:{n:"01", client:"Dubai Future Week", year:"2026", title:"For the Human of the Future", line:"The future, through the eyes of a child.", roles:"Concept, script, creative direction, direction, production, editing, sound production"},
+  hotf:{n:"01", client:"Dubai Future Week", year:"2026", title:"For the Human of the Future", line:"The future, through the eyes of a child.", roles:"Concept, script, creative direction, direction, production, editing, sound production", v:"1237606218", h:"939f33d13e", dur:"1:30", s:8},
   wss26:{n:"02", client:"World Sports Summit", year:"2026", title:"World Sports Summit 2026", mainT:"What Moves Us", line:"Ambition, resilience, unity and legacy.", roles:"Concept, script, creative direction, direction, production, editing, sound production"},
   ask:{n:"01", client:"Dubai Future Forum", year:"2025", title:"Ask More", line:"A visual anthem to the questions that shape our future.", roles:"Concept, creative direction", yt:"QWbPqxAycbI", dur:"1:10", clip:"ask", s:0},
   sport:{n:"02", client:"World Sports Summit", year:"2025", title:"Dubai, the City of Sport", line:"Uniting the world through sport.", roles:"Script, creative direction, production, editing", v:"1219027164", h:"9051dc97a8", dur:"1:08", clip:"sport", s:0},
@@ -1812,7 +1812,7 @@ const F = {
 };
 /* Drafts: projects being prepared. They show on the dev preview and locally, never on the live site
    (panorama.mov, www.panorama.mov, panorama-website.pages.dev). To publish one, take it out of DRAFTS. */
-const DRAFTS = ["hotf","wss26"];
+const DRAFTS = ["wss26"];   /* For the Human of the Future published 2026-10-20 with its hero film */
 const SHOW_DRAFTS = !/^((www\.)?panorama\.mov|panorama-website\.pages\.dev)$/i.test(location.hostname);
 /* the site's order (Andrija, 2026-10-14): the first six visible projects are Featured, the rest open the catalogue */
 const LIST = ["hotf","wss26","ask","orchard","astro","docu","p13","sport","ten","p07","p08","p09","p10","p12","p14","p15","p16","p36","p17","p18","p19","p20","p21","p23","p24","p25","p26"].filter(k=>SHOW_DRAFTS || !DRAFTS.includes(k));
