@@ -38,7 +38,7 @@ Supporting facts already in use on the site:
 - `project.md` and `CLAUDE.md` stay off the live site: the Cloudflare build command copies the site into `dist` without any `.md` file. Unknown addresses fall back to the homepage.
 - `CLAUDE.md` holds the working rules every chat reads when it opens the repo: pull `dev` first, never push to `main` without approval, keep this file current.
 
-## SEO (2026-10-20, dev, for Andrija to approve)
+## SEO (2026-10-20, live)
 
 - **Generated pages.** `node tools/seo/build.mjs` reads `F`, `LIST`, `INDEX`, `DRAFTS`, `HIDDEN`, `pjdata` and `crdata` from `index.html` and writes: one crawlable page per published project at `/work/<slug>/` (slug from the title: `/work/the-orchard-keeper/`), `/work/` (all projects), `/uae/` (UAE institutions), `/sr/` (Serbian, Latin script), `404.html`, `sitemap.xml` (36 URLs, hreflang for `/` and `/sr/`) and `_redirects`. It also writes into `index.html` the `WORK` slug map, the no-JavaScript project list and the homepage JSON-LD (between `SEO:` markers). **Run it after any change to projects, titles, clients, credits or order**, then `python3 tools/seo/og.py` if a project or still is new (1200×630 share images in `media/og/`), then `build.mjs` once more. Never edit the generated files by hand.
 - **Project pages** carry title "Title — Client | Panorama Films", a description from the logline and intro, canonical, Open Graph image, the main film embedded (Vimeo with `dnt=1`, YouTube nocookie, or the hosted file), intro, director's notes, service stamp, credits from `crdata`, the list of films, three related projects, Previous / Next, the closing call, and JSON-LD (BreadcrumbList, CreativeWork with VideoObjects, the Organization). "Watch on the full site" opens `/#<old slug>` in the one-page site.
@@ -63,6 +63,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 
 - **2026-10-15 prod** — branch `archive/2026-10-15-prod` (commit d9485f2), approved by Andrija; page source also saved as `claude/milestones/2026-10-15-prod-index.html`. Human in the loop slideshow rebuilt to match the panoramafilms.tv About gallery (whole photos in one fixed frame, 20% smaller on laptops, 40% on large screens), shuffled on every visit, 107 photos (18 new); photo 17 upright; the unlinked /slideshow/ page to hide, show and add photos, saving through /api/slideshow once the Cloudflare secrets are set.
 - **2026-10-20 prod** — branch `archive/2026-10-20-prod`, approved by Andrija for going fully live; page source also saved as `claude/milestones/2026-10-20-prod-index.html`. Everything on `dev` up to this point (the changes of 2026-10-20 below, Human in the loop studies, LE-012 Chrome dither) plus the new showreel V4 (1:29) hosted with the site in the header and the lightbox.
+- **2026-10-20 SEO** — branch `archive/2026-10-20-seo` (commit 0017868), approved by Andrija and deployed: crawlable project pages at `/work/<slug>/`, `/work/`, `/uae/`, `/sr/`, 404 page, redirects from the old Cargo addresses, homepage structured data and share images, the contact call opening an email (see SEO).
 
 ## Capabilities and Constraints
 
