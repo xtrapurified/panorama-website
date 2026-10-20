@@ -1836,7 +1836,7 @@ const SVC_ITEMS = (()=>{ const s = new Set(), add = v => String(v || '').split(/
   add('Script writing, video production, edit, sound design, service production, aerial cinematography'); return s; })();   /* old spellings still found in copied text */   /* per-project films, text and photos from panoramafilms.tv */
 /* s = second where the 20-second background loop starts */
 const F = {
-  reel:{title:"Showreel", client:"Panorama Films", file:"reel", still:"reel", clip:"home", own:true, cs:2.4, dur:"1:29"},   /* header loop starts at 0:02.4 (Andrija, 2026-10-20) */   /* V4 (2026-10-20), hosted until the final cut goes to Vimeo; old Vimeo 1232743611/7e23d97b0f */
+  reel:{title:"Showreel", client:"Panorama Films", file:"reel", still:"reel", clip:"home", own:true, cs:2.4, cr:true, dur:"1:29"},   /* header loop starts at a random point on every visit, loops back to 0:02.4 (Andrija, 2026-10-20) */   /* V4 (2026-10-20), hosted until the final cut goes to Vimeo; old Vimeo 1232743611/7e23d97b0f */
   hotf:{n:"01", client:"Dubai Future Week", year:"2026", title:"For the Human of the Future", line:"The world we’re shaping, told by those who’ll inherit it.", roles:"Concept, script, creative direction, direction, production, editing, sound production", v:"1237606218", h:"939f33d13e", dur:"1:30", s:15},
   wss26:{n:"02", client:"World Sports Summit", year:"2026", title:"World Sports Summit 2026", mainT:"What Moves Us", line:"Ambition, resilience, unity and legacy.", roles:"Concept, script, creative direction, direction, production, editing, sound production"},
   ask:{n:"01", client:"Dubai Future Forum", year:"2025", title:"Ask More", line:"A visual anthem to the questions that shape our future.", roles:"Concept, creative direction", yt:"QWbPqxAycbI", dur:"1:10", clip:"ask", s:0},
@@ -2068,7 +2068,8 @@ function clipIn(m, f){
   v.setAttribute('muted',''); v.setAttribute('playsinline','');
   v.src = `${M}clips/${f.clip}.${VEXT}`;
   /* cs: the clip starts (and loops back) a few seconds in, e.g. the header reel from 0:03 */
-  if (f.cs){ v.loop = false; v.addEventListener('loadedmetadata', ()=>{ v.currentTime = f.cs; }, {once:true}); v.addEventListener('ended', ()=>{ v.currentTime = f.cs; v.play().catch(()=>{}); }); }
+  /* cr: start somewhere random in the clip on every visit (the header reel, Andrija 2026-10-20), then loop back to cs */
+  if (f.cs){ v.loop = false; v.addEventListener('loadedmetadata', ()=>{ v.currentTime = f.cr && v.duration > f.cs + 6 ? f.cs + Math.random() * (v.duration - f.cs - 4) : f.cs; }, {once:true}); v.addEventListener('ended', ()=>{ v.currentTime = f.cs; v.play().catch(()=>{}); }); }
   if (f.subs) Object.assign(v.style, {transform:'scale(1.24)', transformOrigin:'50% 30%'});
   if (f.zoom) Object.assign(v.style, {transform:`scale(${f.zoom[0]})`, transformOrigin:f.zoom[1]||'50% 50%'});
   m.appendChild(v);
