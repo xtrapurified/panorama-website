@@ -1754,14 +1754,14 @@ const F = {
 const DRAFTS = ["hotf","wss26"];
 const SHOW_DRAFTS = !/^((www\.)?panorama\.mov|panorama-website\.pages\.dev)$/i.test(location.hostname);
 /* the site's order (Andrija, 2026-10-14): the first six visible projects are Featured, the rest open the catalogue */
-const LIST = ["hotf","wss26","ask","orchard","astro","docu","p13","sport","ten","p07","p08","p09","p10","p12","p14","p15","p16","p36","p17","p18","p19","p20","p21","p23","p24","p25","p26","p27"].filter(k=>SHOW_DRAFTS || !DRAFTS.includes(k));
+const LIST = ["hotf","wss26","ask","orchard","astro","docu","p13","sport","ten","p07","p08","p09","p10","p12","p14","p15","p16","p36","p17","p18","p19","p20","p21","p23","p24","p25","p26"].filter(k=>SHOW_DRAFTS || !DRAFTS.includes(k));
 const CHAPTERS = [
   /* one section for now: documentaries and human stories are not told apart yet */
   ["Featured","Campaigns & Commissioned Films","01—07",LIST.slice(0,7)]
 ];
 const CARDS = LIST.slice(7);   /* seven featured since Dubai Future Forum joined them (Andrija, 2026-10-20) */
 const INDEX = ["p28","p29","p30","p31","p32","p35"];
-const HIDDEN = ["p34", ...(SHOW_DRAFTS ? [] : DRAFTS)];   /* kept in the data, off the site (Andrija, 2026-10-14) */
+const HIDDEN = ["p34", "p27", ...(SHOW_DRAFTS ? [] : DRAFTS)];   /* kept in the data, off the site (Andrija: 4 Islands 2026-10-14, Education For All 2026-10-20) */
 const CARDS_SHOWN = 12;   /* the catalogue opens with twelve films; the rest are one click away */
 const ORDER = [...LIST,...INDEX];
 /* numbers follow the site's own order (set by Andrija, 2026-10-14), not panoramafilms.tv */
