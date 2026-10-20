@@ -113,9 +113,10 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
 #wemake.more.fold{margin-top:clamp(80px,8vw,128px)}
 /* the label sits under the statement here, not above it (Andrija, 2026-10-20); the summary stays for screen readers */
 #wemake > summary.sr-only{position:absolute;padding:0}
-#wemake .wm-lab{margin:clamp(28px,3vw,48px) 0 0;font-size:var(--t1);font-weight:400;letter-spacing:-.045em;line-height:1.03;color:var(--sub)}
-#wemake .wm-lab + .svc{margin-top:clamp(14px,1.4vw,22px)}
-@media (min-width:761px){#wemake .fold-lede{margin-top:0}}   /* space above We make, so the label no longer sits right under the Approach lists (2026-10-20) */
+#wemake .wm-lab{margin:clamp(10px,1vw,16px) 0 0;padding-left:calc((100% + var(--g)) / 12 * 4);font-size:var(--t1);font-weight:400;letter-spacing:-.045em;line-height:1.03;color:var(--sub)}
+#wemake .wm-lab + .svc{margin-top:clamp(40px,5vw,72px)}
+@media (min-width:761px){#wemake .fold-lede{margin-top:0}}
+@media (max-width:760px){#wemake .wm-lab{padding-left:0}}   /* space above We make, so the label no longer sits right under the Approach lists (2026-10-20) */
 #wemake .svc{margin-top:clamp(40px,5vw,72px);border-top:1px solid var(--rule)}
 #wemake .wm-r{border-bottom:1px solid var(--rule)}
 #wemake .wm-r > summary{list-style:none;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);align-items:baseline;padding-block:clamp(12px,1.3vw,20px);cursor:pointer}
