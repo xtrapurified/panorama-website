@@ -1735,19 +1735,19 @@ const F = {
   p18:{n:"18", title:"The Great Reset", client:"Mohammed bin Rashid School of Government (MBRSG)", year:"2020", roles:"Direction, editing", img:"thumbs/p18", page:"DUBAI-TGR", hover:"p18", v:"501402506"},
   p19:{n:"19", title:"Feminism 2052", client:"Center for Women’s Studies Serbia", year:"2022", roles:"Direction, cinematography, editing", img:"thumbs/p19", hover:"p19", page:"Feminism-2052", v:"685445568", h:"19a3e723be"},
   p20:{n:"20", title:"As If the End Were Not Quite Near", client:"Theatre", year:"2021", roles:"Direction, cinematography, editing, sound production", img:"thumbs/p20", page:"As-If-The-End-Were-Not-Quite-Near", v:"518557853", h:"e749699d7a"},
-  p21:{n:"21", title:"World Government Summit", client:"World Government Summit", year:"2017–2019, 2022–2023", roles:"Creative direction, production, cinematography, editing", img:"thumbs/p21", page:"World-Government-Summit", hover:"p21", v:"221224130"},
+  p21:{n:"21", title:"World Government Summit", client:"World Government Summit", year:"2017–2019, 2022–2023", roles:"Creative direction, production, cinematography, editing", img:"thumbs/p21", page:"World-Government-Summit", hover:"p21", card:{v:"336303639", s:0}, v:"221224130"},
   p23:{n:"23", title:"Metaplasm", client:"Panorama Films", year:"2020", roles:"Direction, production, cinematography, editing", img:"thumbs/p23", page:"Metaplasm", hover:"p23", v:"504282491"},
   p24:{n:"24", title:"No Species Dies Alone", client:"Telekom Serbia", year:"2021", roles:"Cinematography", img:"thumbs/p24", page:"Telekom-Srbija-No-species-dies-alone", yt:"BtOsTRZckhE"},
   p25:{n:"25", title:"Vulture Foundation Serbia", client:"Birds of Prey Protection Foundation", year:"2021", roles:"Direction, production, cinematography, editing", img:"thumbs/p25", page:"Vulture-Foundation-Serbia", hover:"p25", v:"557581870", h:"fa677efccd"},
-  p26:{n:"26", title:"Tajkun", client:"Firefly Productions", year:"2019", roles:"Aerial cinematography", img:"thumbs/p26", page:"Tajkun-TV-Series", hover:"p26", v:"502243916"},
+  p26:{n:"26", title:"Tajkun", client:"Firefly Productions", year:"2019", roles:"Aerial cinematography", img:"thumbs/p26", page:"Tajkun-TV-Series", hover:"p26", at:.72, v:"502243916"},
   p27:{n:"27", title:"Education For All", client:"Goethe-Institut", year:"2020", roles:"Direction, production, editing", img:"thumbs/p27", page:"Goethe-Institut", hover:"p27", v:"486368338", h:"2e7c1ab6bf"},
   p28:{n:"28", title:"Long Way To Europe", client:"European Western Balkans", year:"2021", roles:"Direction, cinematography, editing", img:"thumbs/p28", page:"European-Western-Balkans", hover:"p28", v:"687108342", h:"96054f31ac"},
-  p29:{n:"29", title:"Under Surveillance", mainT:"Hiljade.Kamera", client:"Share Foundation", year:"", roles:"Creative direction, production", img:"thumbs/p29", page:"SHARE-Foundation", hover:"p29", yt:"XlMldmOhYG8"},
-  p30:{n:"30", title:"World Drone Prix", client:"World Drone Prix", year:"2016", roles:"Production, cinematography, editing", img:"thumbs/p30", page:"World-Drone-Prix", hover:"p30", v:"158810492"},
-  p31:{n:"31", title:"Belgrade Furniture Fair", client:"Belgrade Fair", year:"2017–2019", roles:"Production, cinematography, editing", img:"thumbs/p31", page:"Belgrade-Furniture-Fair", hover:"p31", s:90, v:"397015324"},
+  p29:{n:"29", title:"Under Surveillance", mainT:"Hiljade.Kamera", client:"Share Foundation", year:"", roles:"Creative direction, production", img:"thumbs/p29", page:"SHARE-Foundation", hover:"p29", card:{v:"437807739", yt:null, s:1}, yt:"XlMldmOhYG8"},
+  p30:{n:"30", title:"World Drone Prix", client:"World Drone Prix", year:"2016", roles:"Production, cinematography, editing", img:"thumbs/p30", page:"World-Drone-Prix", hover:"p30", s:89, loop:18, v:"158810492"},
+  p31:{n:"31", title:"Belgrade Furniture Fair", client:"Belgrade Fair", year:"2017–2019", roles:"Production, cinematography, editing", img:"thumbs/p31", page:"Belgrade-Furniture-Fair", hover:"p31", card:{v:"400261995", s:23, loop:14}, v:"397015324"},
   p32:{n:"32", title:"Shinobi", client:"Shinobi", year:"2020", roles:"Creative direction, production, cinematography", img:"thumbs/p32", page:"Shinobi", hover:"p32", v:"314829689"},
   p34:{n:"34", title:"4 Islands", client:"Mitas 4 Islands", year:"2018", roles:"Creative direction, production, cinematography, editing", img:"thumbs/p34", page:"4-Islands", hover:"p34", v:"187896738"},
-  p35:{n:"35", title:"Fruškać", client:"National Park Fruška Gora", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p35", page:"Fruskac", hover:"p35", s:95, v:"421003545"}
+  p35:{n:"35", title:"Fruškać", client:"National Park Fruška Gora", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p35", page:"Fruskac", hover:"p35", s:84, v:"421003545"}
 };
 /* Drafts: projects being prepared. They show on the dev preview and locally, never on the live site
    (panorama.mov, www.panorama.mov, panorama-website.pages.dev). To publish one, take it out of DRAFTS. */
@@ -1910,7 +1910,8 @@ function start(m){
   clearTimeout(m._kill);
   if (live.has(m)) return live.get(m).play();
   if (m.dataset.c){   /* More films card */
-    const f = F[m.dataset.c];
+    /* card: a card can loop another of the project's films than the one its page opens with, e.g. {v:"…", s:0} */
+    const f = F[m.dataset.c].card ? {...F[m.dataset.c], ...F[m.dataset.c].card} : F[m.dataset.c];
     return (STREAM && (f.v || f.yt)) ? streamIn(m, f, false, {auto:f.s === undefined, hover:m.dataset.hv}) : hoverIn(m);
   }
   const k = m.dataset.k, f = F[k], full = m.dataset.loop === 'full';
@@ -1955,7 +1956,7 @@ function streamIn(m, f, full, o = {}){
     let started = false;
     p.on('timeupdate', d=>{ t = d.seconds;
       if (d.seconds >= s0) started = true;
-      if (!full && d.seconds >= s0 + (f.loop||LOOP)) p.setCurrentTime(s0);
+      if (!full && (d.seconds >= s0 + (f.loop||LOOP) || (d.duration && d.seconds >= d.duration - .4))) p.setCurrentTime(s0);   /* never run into the film's end */
       if (full && started && d.seconds < s0 - 1) p.setCurrentTime(s0);   /* after the reel loops, skip the first seconds again */
     });
     /* show the stream only once frames are actually moving; if Vimeo refuses (privacy, error), fall back to the hosted clip */
@@ -1965,7 +1966,7 @@ function streamIn(m, f, full, o = {}){
     const fail = () => { if (m.classList.contains('on')) return; box.remove(); live.delete(m); fallback(); };
     p.on('error', fail); p.ready().catch(fail);
     p.ready().then(()=>{ p.setQuality(q).catch(()=>{});
-      if (o.auto) return p.getDuration().then(d=>{ s0 = Math.round(d * .12); return p.setCurrentTime(s0); });
+      if (o.auto) return p.getDuration().then(d=>{ s0 = Math.round(d * (f.at || .12)); return p.setCurrentTime(s0); });   /* at: where to start, as a share of the film */
       return p.setCurrentTime(s0); }).catch(()=>{});
     live.set(m, {destroy:()=>{ p.destroy().catch(()=>{}); box.remove(); }, play:()=>p.play().catch(()=>{}), pause:()=>p.pause().catch(()=>{}), time:()=>t,
       seek:fr=>{ p.pause().catch(()=>{}); p.setCurrentTime(s0 + fr*(full?100:(f.loop||LOOP))).catch(()=>{}); },
@@ -1982,7 +1983,7 @@ function streamIn(m, f, full, o = {}){
       if (e.source !== ifr.contentWindow) return;
       let d; try { d = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch(_) { return; }
       const info = d && d.info; if (!info) return;
-      if (info.duration && !autoDone){ autoDone = true; s0 = Math.round(info.duration * .12); cmd('seekTo',[s0, true]); }
+      if (info.duration && !autoDone){ autoDone = true; s0 = Math.round(info.duration * (f.at || .12)); cmd('seekTo',[s0, true]); }
       if (typeof info.playerState === 'number' && info.playerState !== st){ st = info.playerState; if (st === 1){ ytNoCC(cmd); cmd('setPlaybackQuality',[YTQ[q]]); } }
       if (info.duration){ dur = info.duration; const el = m.parentElement.querySelector('.hud .dur'); if (el && !el.textContent) el.textContent = `${Math.floor(dur/60)}:${String(Math.floor(dur%60)).padStart(2,'0')}`; }
       if (typeof info.currentTime === 'number'){
