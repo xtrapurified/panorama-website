@@ -65,9 +65,10 @@ Approved versions to go back to before trying new things. Each one is a git bran
 
 ## Brand Commitments
 
-- Name: Panorama Films. The authentic Panorama globe logo (white) from panoramafilms.tv is used as is, never redrawn (still the favicon, `media/logo.png`). In the header it is shown, at Andrija's request, as the study LE-011 Follow the cursor (back in the header 2026-10-20; see Logo Experiments; LE-006 Edge prism at intensity 0.2 was there 2026-10-18 to 10-20, and LE-009 Vector spin and LE-010 Glass emblem before).
+- Name: Panorama Films. The authentic Panorama globe logo (white) from panoramafilms.tv is used as is, never redrawn (`media/logo.png`). In the header it is shown, at Andrija's request, as the study LE-011 Follow the cursor (back in the header 2026-10-20; see Logo Experiments; LE-006 Edge prism at intensity 0.2 was there 2026-10-18 to 10-20, and LE-009 Vector spin and LE-010 Glass emblem before).
 - Voice: call the work "films", never "content". No hype words: powerful, compelling, innovative, unique, cutting-edge, world-class, high-quality, impactful, captivating. Short, specific, concrete copy.
 - Manifesto (Fields of Work: Impact, Innovation, Culture, Expression) and team bios are taken word for word from the About page on panoramafilms.tv.
+- Favicon (2026-10-20): the authentic logo unchanged, scaled onto a black disc so it shows on light and dark browser tabs (the old favicon was the white logo on transparent, nearly invisible on light tabs); the ® is left out at icon size. `/favicon.ico` (16, 32, 48) at the site root (also picked up by /slideshow/ and /logo-experiments/), `media/icons/favicon-32.png`, `apple-touch-icon.png` (180, black square), `icon-192/512.png` and a maskable 512 for `/site.webmanifest`. Built with Python/Pillow from `media/logo.png`.
 
 ## Evidence on Hand
 
