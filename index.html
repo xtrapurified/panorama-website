@@ -2130,8 +2130,8 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
 const hs = document.getElementById('hitlStage'), fn = document.getElementById('flickNo');
 /* Human in the loop, three typographic studies (2026-10-20): ?hitl=a | b | c, remembered per browser; none = the original title over the photos */
 (()=>{ let v = (new URLSearchParams(location.search).get('play') || '').toLowerCase();
-  try { if (/^[abc]$/.test(v)) localStorage.setItem('pf-play', v); else if (v === 'off') { localStorage.removeItem('pf-play'); v = ''; } else v = localStorage.getItem('pf-play') || ''; } catch(_) {}
-  if (/^[abc]$/.test(v)) document.documentElement.dataset.play = v; })();   /* touch play-mark studies, ?play=a|b|c (2026-10-20) */
+  try { if (/^[abc]$/.test(v)) localStorage.setItem('pf-play', v); else if (v === 'off') { localStorage.removeItem('pf-play'); v = 'off'; } else v = localStorage.getItem('pf-play') || ''; } catch(_) {}
+  document.documentElement.dataset.play = /^[abc]$/.test(v) ? v : (v === '' && !new URLSearchParams(location.search).has('play') ? 'b' : ''); })();   /* B chosen (Andrija, 2026-10-20); ?play=off shows the old white disc */   /* touch play-mark studies, ?play=a|b|c (2026-10-20) */
 const HL_V = (()=>{ let v = (new URLSearchParams(location.search).get('hitl') || '').toLowerCase();
   if (v === 'off') v = ''; else if (!/^[abc]$/.test(v)) v = 'b';   /* B, the terminal window, chosen (Andrija, 2026-10-20, after A); ?hitl=a|c still shows the others, ?hitl=off the old title */
   return /^[abc]$/.test(v) ? v : ''; })();
