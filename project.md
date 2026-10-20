@@ -116,6 +116,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - **Renamed:** European Western Balkans → Long Way To Europe (client stays European Western Balkans; slug unchanged). WGS film 14 is "World Government Summit Highlights 2018" (was 2023).
 - **Header:** the nav hover has no colour fringe any more, only the red underline.
 - **Light mode:** the Films bar under the reel takes the page colour (was black).
+- **Fruškać:** its card now moves: it streams the Vimeo film from 1:10 for 20 s (the second half of the 2:05 film; Andrija asked for the second part). `media/hover/p35.mp4` (a slow push-in on the Vimeo poster) is only the fallback when streaming is unavailable.
 - **What's Next.:** shown 22% larger from 50% 60% (`zoom:[1.22,"50% 60%"]`, applied to the still, the clip and the stream) so the "10" logo in the top right corner stays out of frame.
 
 ## Project list and order (Andrija, 2026-10-14)
