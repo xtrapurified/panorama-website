@@ -119,6 +119,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - **Fruškać:** its card now moves: it streams the Vimeo film from 1:10 for 20 s (the second half of the 2:05 film; Andrija asked for the second part). `media/hover/p35.mp4` (a slow push-in on the Vimeo poster) is only the fallback when streaming is unavailable.
 - **Vulture Foundation Serbia:** its card now moves, streaming the Vimeo film ("Dušan, A White-tailed eagle from Belgrade", 3:47) from about 12% in, for 20 s; `media/hover/p25.mp4` (push-in on the Vimeo poster) is the fallback.
 - **Tajkun:** its card now moves, streaming the Vimeo film from about 12% in, for 20 s; `media/hover/p26.mp4` (push-in on its card image) is the fallback.
+- **More moving cards (2026-10-20, Andrija):** World Government Summit, Education For All, Long Way To Europe, Under Surveillance (Hiljade.Kamera) and World Drone Prix stream their main film from about 12% in, for 20 s (fallbacks `media/hover/p21`, `p27`, `p28`, `p29`, `p30`: push-ins on their card images). Belgrade Furniture Fair takes another stretch: from 1:30 (`s:90`) instead of 12% in.
 - **What's Next.:** shown 22% larger from 50% 60% (`zoom:[1.22,"50% 60%"]`, applied to the still, the clip and the stream) so the "10" logo in the top right corner stays out of frame.
 
 ## Project list and order (Andrija, 2026-10-14)
