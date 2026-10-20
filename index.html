@@ -2289,7 +2289,7 @@ function playLocal(k, failed){
     ? `<video src="${src}" poster="${still(k)}" muted loop playsinline autoplay></video><span class="hud"><span class="lab rec live">Preview</span></span>`
     : `<img src="${still(k)}" alt="${esc(f.title)}">`;
   box.classList.add('ready');
-  const where = f.v||f.yt ? `The full film plays on ${f.yt?'YouTube':'Vimeo'}.` : 'More on panoramafilms.tv.';
+  const where = f.v||f.yt ? `The full film plays on ${f.yt?'YouTube':'Vimeo'}.` : '';
   document.getElementById('lb-note').textContent = failed
     ? `The player didn't load, so this is a preview without sound. ${where}`
     : `${[f.client, f.year].filter(Boolean).join(' / ')}. ${src?'Preview, no sound.':'Still from the film.'} ${where}`;
@@ -2397,6 +2397,7 @@ function playFilm(i, scroll){
   nowT.textContent = (ft === f.title && films.length <= 1) ? '' : ft;   /* no need to repeat the project title under the player */
   nowN.textContent = films.length > 1 ? `${i+1} / ${films.length}` : '';
   const ex = document.getElementById('lb-ext');
+  ex.hidden = !(fm && !fm.file) && !f.v && !f.yt;   /* no film on Vimeo or YouTube: no outside link (the old panoramafilms.tv project pages are gone) */
   ex.href = fm && !fm.file ? filmUrl(fm) : ext(f); ex.firstChild.textContent = fm && !fm.file ? (fm.yt ? 'Open on YouTube ' : 'Open on Vimeo ') : 'Open project page ';
   pjEl.querySelectorAll('.pj-film').forEach(b=>{ const on = +b.dataset.i === i; b.classList.toggle('on', on); b.setAttribute('aria-current', on ? 'true' : 'false'); });
   if (scroll) lb.scrollTo({top: 0, behavior: REDUCED ? 'auto' : 'smooth'});
