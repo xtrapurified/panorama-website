@@ -175,7 +175,7 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
 .hl-a .hl-code{margin-top:.7em;padding-left:calc((100% + var(--g)) / 12 * 4)}
 @media (max-width:760px){.hl-a-row{grid-template-columns:1fr auto;row-gap:10px}.hl-a-row .rec{grid-column:1}.hl-a .hl-n{grid-column:2;grid-row:1}.hl-a .hl-t{grid-column:1/-1}.hl-a .hl-code{padding-left:0}}
 /* B */
-.hl-b{position:absolute;left:var(--m);bottom:clamp(20px,3vw,40px);z-index:4}
+.hl-b{position:absolute;left:var(--m);top:50%;transform:translateY(-50%);z-index:4}   /* vertically centred on the gallery (Andrija, 2026-10-20) */
 .hl-term{width:min(440px,calc(100vw - 2 * var(--m)));background:rgba(5,5,5,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(237,237,235,.18);padding:0 clamp(14px,1.3vw,20px) clamp(14px,1.3vw,20px);color:#ededeb;--fg:#ededeb;--mid:#8d8d8a}
 .hl-bar{display:flex;align-items:center;gap:6px;margin:0 calc(clamp(14px,1.3vw,20px) * -1) clamp(12px,1.1vw,16px);padding:8px clamp(14px,1.3vw,20px);border-bottom:1px solid rgba(237,237,235,.14);font-size:var(--ui);color:var(--mid)}
 .hl-bar i{width:7px;height:7px;border-radius:50%;background:rgba(237,237,235,.28)}.hl-bar i:first-child{background:var(--red)}
