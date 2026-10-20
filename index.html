@@ -223,13 +223,13 @@ footer .ft-c{display:inline-flex;align-items:center;gap:14px}
    C  only a small red triangle in the top right corner, no text */
 .play-t{display:none}
 @media (hover:none){
-  :root[data-play="a"] .play{display:none}
-  :root[data-play="b"] .play,:root[data-play="c"] .play{top:auto;transform:none;width:auto;aspect-ratio:auto;border-radius:0;background:none;display:flex;align-items:center;gap:6px;color:#fff;font-size:var(--ui);letter-spacing:.02em;text-shadow:0 0 8px rgba(0,0,0,.6)}
-  :root[data-play="b"] .play{left:10px;bottom:10px}
-  :root[data-play="b"] .play::after{width:.62em;height:.72em;margin:0;order:-1}
-  :root[data-play="b"] .play-t{display:inline}
-  :root[data-play="c"] .play{left:auto;right:10px;top:10px;font-size:11px}
-  :root[data-play="c"] .play::after{width:.8em;height:.95em;margin:0;filter:drop-shadow(0 0 4px rgba(0,0,0,.5))}
+  :root[data-playmark="a"] .play{display:none}
+  :root[data-playmark="b"] .play,:root[data-playmark="c"] .play{top:auto;transform:none;width:auto;aspect-ratio:auto;border-radius:0;background:none;display:flex;align-items:center;gap:6px;color:#fff;font-size:var(--ui);letter-spacing:.02em;text-shadow:0 0 8px rgba(0,0,0,.6)}
+  :root[data-playmark="b"] .play{left:10px;bottom:10px}
+  :root[data-playmark="b"] .play::after{width:.62em;height:.72em;margin:0;order:-1}
+  :root[data-playmark="b"] .play-t{display:inline}
+  :root[data-playmark="c"] .play{left:auto;right:10px;top:10px;font-size:11px}
+  :root[data-playmark="c"] .play::after{width:.8em;height:.95em;margin:0;filter:drop-shadow(0 0 4px rgba(0,0,0,.5))}
 }
 </style>
 <meta name="description" content="Independent film studio from Belgrade making documentaries, docuseries, campaigns and brand films for UAE institutions, foundations, NGOs and brands worldwide.">
@@ -2140,7 +2140,7 @@ const hs = document.getElementById('hitlStage'), fn = document.getElementById('f
 /* Human in the loop, three typographic studies (2026-10-20): ?hitl=a | b | c, remembered per browser; none = the original title over the photos */
 (()=>{ let v = (new URLSearchParams(location.search).get('play') || '').toLowerCase();
   try { if (/^[abc]$/.test(v)) localStorage.setItem('pf-play', v); else if (v === 'off') { localStorage.removeItem('pf-play'); v = 'off'; } else v = localStorage.getItem('pf-play') || ''; } catch(_) {}
-  document.documentElement.dataset.play = /^[abc]$/.test(v) ? v : (v === '' && !new URLSearchParams(location.search).has('play') ? 'b' : ''); })();   /* B chosen (Andrija, 2026-10-20); ?play=off shows the old white disc */   /* touch play-mark studies, ?play=a|b|c (2026-10-20) */
+  document.documentElement.dataset.playmark = /^[abc]$/.test(v) ? v : (v === '' && !new URLSearchParams(location.search).has('play') ? 'b' : ''); })();   /* B chosen (Andrija, 2026-10-20); ?play=off shows the old white disc */   /* touch play-mark studies, ?play=a|b|c (2026-10-20) */
 const HL_V = (()=>{ let v = (new URLSearchParams(location.search).get('hitl') || '').toLowerCase();
   if (v === 'off') v = ''; else if (!/^[abc]$/.test(v)) v = 'b';   /* B, the terminal window, chosen (Andrija, 2026-10-20, after A); ?hitl=a|c still shows the others, ?hitl=off the old title */
   return /^[abc]$/.test(v) ? v : ''; })();
@@ -2595,7 +2595,7 @@ cSeek.addEventListener('change', ()=>{ scrubbing = false; if (P && P.dur) P.seek
 document.addEventListener('fullscreenchange', paint);
 document.addEventListener('webkitfullscreenchange', paint);
 
-document.addEventListener('click', e=>{ const t = e.target.closest('[data-play]'); if (!t || t.closest('#lb')) return;
+document.addEventListener('click', e=>{ const t = e.target.closest('[data-play]'); if (!t || t === document.documentElement || t === document.body || t.closest('#lb')) return;   /* never the page root: a page-wide data-play once swallowed every link */
   e.preventDefault(); openFilm(t.dataset.play); });
 /* a link to a project (panorama-films.netlify.app/#Telekom-Srbija-No-species-dies-alone) opens its page */
 addEventListener('load', ()=>{ const h = decodeURIComponent(location.hash.slice(1)); if (!h) return;
