@@ -943,24 +943,18 @@ footer{font-size:calc(12*var(--fz))}
 .net-view button span{text-decoration:underline;text-decoration-color:transparent;text-underline-offset:.25em;text-decoration-thickness:1px;transition:text-decoration-color .2s}
 .net-view button[aria-pressed="true"] span{text-decoration-color:currentColor}
 .net-view .vi{width:.78em;height:.78em;flex:none;fill:none;stroke:currentColor;stroke-width:1.3;stroke-linecap:square;overflow:visible}
-/* List / Graph pictograms in red, and the view you're not on moves, to invite the click (2026-10-18) */
+/* List / Graph pictograms (2026-10-20, option A from the icon study, sized to match): red; both fill the same 12 px square with the same 1.3 stroke,
+   three lines of name-like lengths against a ring with a centre and two people. Only the icon of the view you are not on moves, to invite the click:
+   the lines draw in one after another; the two people circle the centre. Faster on hover, still with reduced motion */
 .net-view .vi{color:var(--red)}
-.net-view .vi circle{transform-box:fill-box;transform-origin:center}
-.net-view button[aria-pressed="false"] .vi-list path{stroke-dasharray:10;animation:viRow 2.4s cubic-bezier(.65,0,.35,1) infinite}
-.net-view button[aria-pressed="false"] .vi-list .l2{animation-delay:.18s}
-.net-view button[aria-pressed="false"] .vi-list .l3{animation-delay:.36s}
-.net-view button[aria-pressed="false"] .vi-list circle{animation:viDot 2.4s ease-in-out infinite}
-.net-view button[aria-pressed="false"] .vi-list .d2{animation-delay:.18s}
-.net-view button[aria-pressed="false"] .vi-list .d3{animation-delay:.36s}
-@keyframes viRow{0%{stroke-dashoffset:10}35%,75%{stroke-dashoffset:0}100%{stroke-dashoffset:-10}}
-@keyframes viDot{0%,100%{transform:scale(.55)}30%,70%{transform:scale(1)}}
-.net-view button[aria-pressed="false"] .vi-graph path{stroke-dasharray:2.4 1.6;animation:viFlow 1.6s linear infinite}
-.net-view button[aria-pressed="false"] .vi-graph circle{animation:viNode 2.4s ease-in-out infinite}
-.net-view button[aria-pressed="false"] .vi-graph .n2{animation-delay:.8s}
-.net-view button[aria-pressed="false"] .vi-graph .n3{animation-delay:1.6s}
-@keyframes viFlow{to{stroke-dashoffset:-8}}
-@keyframes viNode{0%,60%,100%{transform:scale(1)}25%{transform:scale(1.6)}}
-.net-view button[aria-pressed="false"]:hover .vi *{animation-duration:1.2s}
+.net-view .vi-graph .orb{transform-box:view-box;transform-origin:8px 8px}
+.net-view button[aria-pressed="false"] .vi-list path{stroke-dasharray:10;animation:viRow 2.6s cubic-bezier(.65,0,.35,1) infinite}
+.net-view button[aria-pressed="false"] .vi-list .r2{animation-delay:.2s}
+.net-view button[aria-pressed="false"] .vi-list .r3{animation-delay:.4s}
+@keyframes viRow{0%{stroke-dashoffset:10}35%,70%{stroke-dashoffset:0}100%{stroke-dashoffset:-10}}
+.net-view button[aria-pressed="false"] .vi-graph .orb{animation:viOrb 3.2s linear infinite}
+@keyframes viOrb{to{transform:rotate(360deg)}}
+.net-view button[aria-pressed="false"]:hover .vi *{animation-duration:1.4s}
 @media (prefers-reduced-motion:reduce){.net-view .vi *{animation:none!important;stroke-dasharray:none!important}}
 .net-names{list-style:none;margin:clamp(56px,6vw,96px) 0 clamp(24px,3vw,48px);padding:0 0 0 calc((100% + var(--g)) / 12 * 4);font-size:var(--d1);font-weight:400;letter-spacing:-.037em;line-height:1.04}
 .net-names > li > button{font:inherit;letter-spacing:inherit;line-height:inherit;color:var(--fg);opacity:var(--o,1);background:none;border:0;padding:0;cursor:pointer;text-align:left;transition:opacity .9s cubic-bezier(.2,.6,.3,1),color .9s cubic-bezier(.2,.6,.3,1)}
@@ -1536,7 +1530,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
     </div>
     <div class="peers" id="peers">
       <div class="lede coll"><span class="tag sub">Panorama Films Collective</span><h2>An open circle of cinematographers, editors, sound designers and producers. We are small by design, so we can be close to the work.</h2></div>
-      <div class="net-view lab" role="group" aria-label="Show the collective as"><button type="button" data-view="list" aria-pressed="true"><svg class="vi vi-list" viewBox="0 0 16 16" aria-hidden="true"><path class="l1" pathLength="10" d="M5.2 3h9"/><path class="l2" pathLength="10" d="M5.2 8h9"/><path class="l3" pathLength="10" d="M5.2 13h9"/><circle class="d1" cx="1.9" cy="3" r="1.3" fill="currentColor"/><circle class="d2" cx="1.9" cy="8" r="1.3" fill="currentColor"/><circle class="d3" cx="1.9" cy="13" r="1.3" fill="currentColor"/></svg><span>List</span></button><button type="button" data-view="graph" aria-pressed="false"><svg class="vi vi-graph" viewBox="0 0 16 16" aria-hidden="true"><path class="e1" pathLength="12" d="M2.6 4.2 13.4 2.6"/><path class="e2" pathLength="12" d="M13.4 2.6 7.6 13.6"/><path class="e3" pathLength="12" d="M7.6 13.6 2.6 4.2"/><circle class="n1" cx="2.6" cy="4.2" r="1.3" fill="currentColor"/><circle class="n2" cx="13.4" cy="2.6" r="1.3" fill="currentColor"/><circle class="n3" cx="7.6" cy="13.6" r="1.6" fill="currentColor"/></svg><span>Graph</span></button></div>
+      <div class="net-view lab" role="group" aria-label="Show the collective as"><button type="button" data-view="list" aria-pressed="true"><svg class="vi vi-list" viewBox="0 0 16 16" aria-hidden="true"><path class="r1" pathLength="10" d="M2 2.8h12"/><path class="r2" pathLength="10" d="M2 8h9.5"/><path class="r3" pathLength="10" d="M2 13.2h11"/></svg><span>List</span></button><button type="button" data-view="graph" aria-pressed="false"><svg class="vi vi-graph" viewBox="0 0 16 16" aria-hidden="true"><circle class="ring" cx="8" cy="8" r="5.5" stroke-width="1"/><circle class="hub" cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><g class="orb"><circle cx="13.5" cy="8" r="1.25" fill="currentColor" stroke="none"/><circle cx="2.5" cy="8" r="1.25" fill="currentColor" stroke="none"/></g></svg><span>Graph</span></button></div>
       <div class="net-wrap"><canvas class="net" id="net" aria-hidden="true"></canvas></div>
       <ol class="net-names" id="netNames" hidden aria-label="The collective">
         <li class="core"><button type="button" data-p="andrija">Andrija Kovač</button></li>
