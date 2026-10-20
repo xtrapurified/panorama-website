@@ -10,7 +10,6 @@
 /* ---------- Golden hour: a fold that opens onto the shirt's code and its live output. Black, flush left, no rules; tally red marks the light. ---------- */
 #golden .more summary{border-bottom:0}
 #golden.sec{padding-top:clamp(18px,2.2vw,32px)}
-#golden + #contact .end{margin-top:clamp(36px,4.5vw,72px)}
 #golden .more[open] + *{margin:0}
 #golden .gh-body{margin-bottom:0}
 #golden .gh-tease{color:var(--mid);font-variant-numeric:tabular-nums;margin-left:auto;padding-left:1em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
@@ -191,6 +190,30 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
 .hl-c .hl-code{grid-column:5/span 5}
 .hl-c .hl-rc{grid-column:10/span 3;justify-self:end;display:flex;gap:10px;align-items:center}
 @media (max-width:760px){:root[data-hl="c"] .hl-c{grid-template-columns:1fr auto;row-gap:8px}.hl-c .hl-t{grid-column:1}.hl-c .hl-rc{grid-column:2;grid-row:1}.hl-c .hl-code{grid-column:1/-1}}
+
+/* Golden hour lives in the footer now (Andrija, 2026-10-20): a small red disc with the live line, bottom right before
+   "Studio Panorama Films"; the panel opens just above the footer. The fold's own summary is hidden. */
+#golden .more > summary{display:none}
+#golden .more{margin:0}
+#golden .more:not([open]){height:0;overflow:hidden}
+footer .ft-c{display:inline-flex;align-items:center;gap:14px}
+.ft-gh{display:inline-flex;align-items:center;gap:10px;padding:0;margin:0;background:none;border:0;color:var(--mid);font:inherit;letter-spacing:inherit;cursor:pointer}
+.ft-gh-t{white-space:nowrap;font-variant-numeric:tabular-nums;transition:color .2s}
+.ft-gh-t b{font-weight:inherit;color:var(--red)}
+.ft-gh-t .gh-gold{color:#d6a548}
+:root[data-pf="light"] .ft-gh-t .gh-gold{color:#a8741a}
+.ft-gh-t svg.ar{width:.75em;height:.75em;fill:none;stroke:currentColor;stroke-width:1.4;vertical-align:-.05em}
+.ft-gh:hover .ft-gh-t,.ft-gh:focus-visible .ft-gh-t{color:var(--fg)}
+.ft-gh-d{position:relative;flex:none;width:18px;height:18px;border-radius:50%;background:var(--red);transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.ft-gh-d::before,.ft-gh-d::after{content:"";position:absolute;left:28%;top:50%;width:44%;height:1.5px;margin-top:-.75px;background:#fff;transition:transform .35s cubic-bezier(.16,1,.3,1)}
+.ft-gh-d::after{transform:rotate(90deg)}
+.ft-gh.open .ft-gh-d::after{transform:rotate(0deg)}
+.ft-gh:hover .ft-gh-d,.ft-gh:focus-visible .ft-gh-d{transform:scale(1.15)}
+.ft-gh .gh-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--red);opacity:0;pointer-events:none}
+.ft-gh:not(.seen):not(.open) .gh-ring{animation:ghping 2.6s cubic-bezier(.2,.6,.3,1) infinite}
+.ft-gh:not(.seen):not(.open) .gh-ring + .gh-ring{animation-delay:.9s}
+@media (prefers-reduced-motion:reduce){.ft-gh .gh-ring{animation:none!important}}
+@media (max-width:1100px){.ft-gh-t{display:none}}
 </style></head><body>
 <!doctype html>
 <html lang="en">
@@ -1677,29 +1700,6 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
     <div class="hl hl-c"><h2 class="hl-t">Human in the loop</h2><p class="hl-code"><span class="k">output</span> = [<span class="v">human</span>, <span class="v">loop</span>]</p><span class="lab hl-n hl-rc"><span class="rec live">Rec</span> 01 / 89</span></div>
   </section>
 
-  <section class="sec" id="golden" data-sec="studio">
-    <details class="more" id="ghFold">
-      <summary aria-label="Golden hour"><span class="gh-tease lab" id="ghTease"></span><span class="pm" aria-hidden="true"><i class="gh-ring"></i><i class="gh-ring"></i></span></summary>
-      <div class="gh-body">
-        <div class="gh-code">
-          <p><span class="k">Input Type:</span><br><span class="k">Time</span> <span class="v" id="ghClock"></span></p>
-<pre>`Maps/sun`[`golden hour`] :=
-t = now() <span class="gh-off" id="ghOff" tabindex="0" role="slider" aria-label="Hours from now" aria-valuemin="-24" aria-valuemax="24" aria-valuenow="0">+0h</span>,
-s = "subsolar(t)",
-band = "elevation(s) in [-4°, 6°]",
-"`Maps/Sinusoidal`([-40],[-100,-5,80])
-+ [panoramafilms.tv]"],</pre>
-          <p><span class="k" style="white-space:nowrap">Output Type: <span class="gh-gold">Golden Hour</span></span><br><span class="v" id="ghList" aria-live="polite"></span></p>
-          <p id="ghPin" aria-live="polite"></p>
-          <p class="k">&gt; <button type="button" class="gh-now" id="ghNow">now()</button>;</p>
-        </div>
-        <div class="gh-map">
-          <canvas id="ghC" aria-label="World map in the shirt's interrupted sinusoidal projection showing night and where the sun is low right now."></canvas>
-          <p class="gh-hint lab" id="ghHint"><span aria-hidden="true">&larr;</span> drag the map to move the golden hour <span aria-hidden="true">&rarr;</span></p>
-        </div>
-      </div>
-    </details>
-  </section>
 
   <section id="contact" data-sec="contact">
     <div class="band end">
@@ -1714,7 +1714,30 @@ band = "elevation(s) in [-4°, 6°]",
         <p class="mail-note lab mid" id="mailNote" aria-live="polite"></p>
       </div>
     </div>
-    <footer class="lab mid"><span class="ft-l"><span class="ft-y" id="ftY">© MMXXVI</span><button type="button" class="ft-th" id="themeBtn" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button><a href="#index" class="ft-ix" data-index title="Index of all projects (I)">Index</a></span><a href="#top" class="ft-top">Back to top <svg class="ic" aria-hidden="true"><use href="#i-u"/></svg></a><span class="ft-c">Studio Panorama Films</span></footer>
+    <section id="golden" data-sec="contact" aria-label="Golden hour">
+      <details class="more" id="ghFold">
+        <summary aria-label="Golden hour"><span class="gh-tease lab" id="ghTease"></span><span class="pm" aria-hidden="true"><i class="gh-ring"></i><i class="gh-ring"></i></span></summary>
+        <div class="gh-body">
+          <div class="gh-code">
+            <p><span class="k">Input Type:</span><br><span class="k">Time</span> <span class="v" id="ghClock"></span></p>
+  <pre>`Maps/sun`[`golden hour`] :=
+  t = now() <span class="gh-off" id="ghOff" tabindex="0" role="slider" aria-label="Hours from now" aria-valuemin="-24" aria-valuemax="24" aria-valuenow="0">+0h</span>,
+  s = "subsolar(t)",
+  band = "elevation(s) in [-4°, 6°]",
+  "`Maps/Sinusoidal`([-40],[-100,-5,80])
+  + [panoramafilms.tv]"],</pre>
+            <p><span class="k" style="white-space:nowrap">Output Type: <span class="gh-gold">Golden Hour</span></span><br><span class="v" id="ghList" aria-live="polite"></span></p>
+            <p id="ghPin" aria-live="polite"></p>
+            <p class="k">&gt; <button type="button" class="gh-now" id="ghNow">now()</button>;</p>
+          </div>
+          <div class="gh-map">
+            <canvas id="ghC" aria-label="World map in the shirt's interrupted sinusoidal projection showing night and where the sun is low right now."></canvas>
+            <p class="gh-hint lab" id="ghHint"><span aria-hidden="true">&larr;</span> drag the map to move the golden hour <span aria-hidden="true">&rarr;</span></p>
+          </div>
+        </div>
+      </details>
+    </section>
+    <footer class="lab mid"><span class="ft-l"><span class="ft-y" id="ftY">© MMXXVI</span><button type="button" class="ft-th" id="themeBtn" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button><a href="#index" class="ft-ix" data-index title="Index of all projects (I)">Index</a></span><a href="#top" class="ft-top">Back to top <svg class="ic" aria-hidden="true"><use href="#i-u"/></svg></a><span class="ft-c"><button type="button" class="ft-gh" id="ftGh" aria-controls="ghFold" aria-expanded="false" aria-label="Golden hour"><span class="ft-gh-t" aria-hidden="true"></span><span class="ft-gh-d" aria-hidden="true"><i class="gh-ring"></i><i class="gh-ring"></i></span></button>Studio Panorama Films</span></footer>
   </section>
   </div>
 </main>
@@ -3117,6 +3140,16 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
   const ghSec = document.getElementById('golden');
   try { if (localStorage.getItem('pf-gh-seen')) ghSec.classList.add('seen'); } catch (e) {}
   fold.addEventListener('toggle', () => { if (fold.open) { ghSec.classList.add('seen'); try { localStorage.setItem('pf-gh-seen', '1'); } catch (e) {} } });
+  /* the footer's red disc opens and closes the fold, and carries its live line */
+  const ftGh = document.getElementById('ftGh');
+  if (ftGh){
+    if (ghSec.classList.contains('seen')) ftGh.classList.add('seen');
+    ftGh.addEventListener('click', () => { fold.open = !fold.open; if (fold.open) setTimeout(() => ghSec.scrollIntoView({behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth', block: 'start'}), 60); });
+    fold.addEventListener('toggle', () => { ftGh.classList.toggle('open', fold.open); ftGh.setAttribute('aria-expanded', String(fold.open)); if (fold.open) ftGh.classList.add('seen'); });
+    const tease = document.getElementById('ghTease'), ftT = ftGh.querySelector('.ft-gh-t');
+    const copy = () => { ftT.innerHTML = tease.innerHTML; };
+    new MutationObserver(copy).observe(tease, {childList: true, subtree: true, characterData: true}); copy();
+  }
   const R = Math.PI / 180;
   const DARK = { sea: '#0c0c0c', land: '#383837', red: [226, 35, 26], redS: '#e2231a', fg: '#f2f2f0', mid: '#5f5f5d', night: .74 };
   const LIGHT = { sea: '#f9f8f5', land: '#cfcec8', red: [226, 35, 26], redS: '#e2231a', fg: '#121211', mid: '#8d8c87', night: .24 };
