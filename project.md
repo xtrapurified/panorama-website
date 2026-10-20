@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-20. Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-20 (SEO). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -37,6 +37,16 @@ Supporting facts already in use on the site:
 - The source of truth for projects, titles, clients, years, roles, thumbnails and GIFs is panoramafilms.tv (its Work page lists 35 projects), plus Andrija's own decisions. Since 2026-10-14 the website has its own list of projects and its own order, set by Andrija (see "Project list and order").
 - `project.md` and `CLAUDE.md` stay off the live site: the Cloudflare build command copies the site into `dist` without any `.md` file. Unknown addresses fall back to the homepage.
 - `CLAUDE.md` holds the working rules every chat reads when it opens the repo: pull `dev` first, never push to `main` without approval, keep this file current.
+
+## SEO (2026-10-20, dev, for Andrija to approve)
+
+- **Generated pages.** `node tools/seo/build.mjs` reads `F`, `LIST`, `INDEX`, `DRAFTS`, `HIDDEN`, `pjdata` and `crdata` from `index.html` and writes: one crawlable page per published project at `/work/<slug>/` (slug from the title: `/work/the-orchard-keeper/`), `/work/` (all projects), `/uae/` (UAE institutions), `/sr/` (Serbian, Latin script), `404.html`, `sitemap.xml` (36 URLs, hreflang for `/` and `/sr/`) and `_redirects`. It also writes into `index.html` the `WORK` slug map, the no-JavaScript project list and the homepage JSON-LD (between `SEO:` markers). **Run it after any change to projects, titles, clients, credits or order**, then `python3 tools/seo/og.py` if a project or still is new (1200×630 share images in `media/og/`), then `build.mjs` once more. Never edit the generated files by hand.
+- **Project pages** carry title "Title — Client | Panorama Films", a description from the logline and intro, canonical, Open Graph image, the main film embedded (Vimeo with `dnt=1`, YouTube nocookie, or the hosted file), intro, director's notes, service stamp, credits from `crdata`, the list of films, three related projects, Previous / Next, the closing call, and JSON-LD (BreadcrumbList, CreativeWork with VideoObjects, the Organization). "Watch on the full site" opens `/#<old slug>` in the one-page site.
+- **Homepage:** title "Panorama Films — Documentary & Brand Film Studio · Belgrade, Dubai", new description, og:image `media/og/home.jpg`, Twitter card, hreflang en / sr, JSON-LD (WebSite, Organization with areaServed UAE / Serbia / Worldwide and sameAs Instagram / Vimeo / YouTube, the three core people as Person, featured films). Film links (`ext()`) now point to `/work/<slug>/` instead of Vimeo / YouTube (a click still opens the project in place). Film stills carry the title as alt text.
+- **Contact call fixed:** "Let's make a film together." pointed to panoramafilms.tv/contact-form, the old Cargo page, which no longer exists (it loaded the homepage). It now opens an email to the studio (subject "Film enquiry"), the address assembled by script.
+- **Old addresses:** `_redirects` sends every old Cargo project address (panoramafilms.tv/Ask-more, /DUBAI-TGR …) and `/contact-form` to the new pages with a 301, so what Google still knows from the Cargo site passes to the new pages. Unknown addresses now get `404.html` (noindex) instead of the homepage.
+- **Copy on `/uae/` and `/sr/` is a proposal** (Serbian translated from the site's English; team bios translated). The client lists use names already on the site.
+- The structured data never contains the email address.
 
 ## Milestones (revert targets)
 

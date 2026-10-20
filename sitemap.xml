@@ -1,7 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://panoramafilms.tv/</loc>
-    <lastmod>2026-10-20</lastmod>
-  </url>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url><loc>https://panoramafilms.tv/</loc><lastmod>2026-10-20</lastmod><priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://panoramafilms.tv/"/><xhtml:link rel="alternate" hreflang="sr" href="https://panoramafilms.tv/sr/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://panoramafilms.tv/"/></url>
+  <url><loc>https://panoramafilms.tv/work/</loc><lastmod>2026-10-20</lastmod><priority>0.9</priority></url>
+  <url><loc>https://panoramafilms.tv/uae/</loc><lastmod>2026-10-20</lastmod><priority>0.9</priority></url>
+  <url><loc>https://panoramafilms.tv/sr/</loc><lastmod>2026-10-20</lastmod><priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://panoramafilms.tv/"/><xhtml:link rel="alternate" hreflang="sr" href="https://panoramafilms.tv/sr/"/><xhtml:link rel="alternate" hreflang="x-default" href="https://panoramafilms.tv/"/></url>
+  <url><loc>https://panoramafilms.tv/work/for-the-human-of-the-future/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/ask-more/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/the-orchard-keeper/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/astronauts-at-the-museum/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/what-does-the-future-hold/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/dubai-future-forum/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/dubai-the-city-of-sport/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/whats-next/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/imagineboka-ai/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/miracles-dont-happen/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/slavko-stimac/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/valamar-biking/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/air-to-the-people-serbia/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/we-will-walk/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/imagine-our-future/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/the-30-years-initiative/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/the-time-of-stabilitocracy/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/expo-2020/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/the-great-reset/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/feminism-2052/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/as-if-the-end-were-not-quite-near/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/world-government-summit/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/metaplasm/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/no-species-dies-alone/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/vulture-foundation-serbia/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/tajkun/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/long-way-to-europe/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/under-surveillance/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/world-drone-prix/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/belgrade-furniture-fair/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/shinobi/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
+  <url><loc>https://panoramafilms.tv/work/fruskac/</loc><lastmod>2026-10-20</lastmod><priority>0.7</priority></url>
 </urlset>

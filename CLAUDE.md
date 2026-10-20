@@ -19,3 +19,4 @@ Read `project.md` first: it holds the product context, rules, site structure and
 - Project list and order are the website's own, set by Andrija (see "Project list and order" in `project.md`); they no longer follow panoramafilms.tv.
 - Never write the contact email in the page source; it is assembled by script.
 - `project.md` and `CLAUDE.md` must stay off the live site: the Cloudflare Pages build command leaves out every `.md` file (see Hosting in `project.md`).
+- After any change to projects (list, order, titles, clients, years, credits, films), run `node tools/seo/build.mjs` from the repo root and commit what it writes (see "SEO" in `project.md`).
