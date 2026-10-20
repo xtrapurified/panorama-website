@@ -174,5 +174,20 @@ window.LOGO_EXPERIMENTS = [
       "panorama-globe-follow.html",
       "README.md"
     ]
+  },
+  {
+    "id": "LE-012",
+    "slug": "chrome-dither",
+    "title": "Chrome dither",
+    "kind": "Shader",
+    "description": "The authentic logo filled with liquid chrome and shown as one-bit dither, white dots on black. The chrome flows round the rim and out along the lines while the logo breathes between bright and sparse dots; a small pool of chrome follows the cursor.",
+    "entry": "experiments/chrome-dither/panorama-globe-chrome-dither.html",
+    "preview": "experiments/chrome-dither/panorama-globe-chrome-dither.html?embed=1",
+    "source": "experiments/chrome-dither/panorama-globe-chrome-dither.html",
+    "download": "experiments/chrome-dither/panorama-globe-chrome-dither.html",
+    "files": [
+      "panorama-globe-chrome-dither.html",
+      "README.md"
+    ]
   }
 ];
