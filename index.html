@@ -1,4 +1,4 @@
-<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="theme-color" content="#000000"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>
 /* Type: Untitled Sans (Klim), self-hosted. The files cover Latin only; Cyrillic falls back to Helvetica Neue, Arabic to the system font. */
 @font-face{font-family:"Untitled Sans";src:url(media/fonts/UntitledSans-Light.woff2) format("woff2");font-weight:300;font-style:normal;font-display:swap}
 @font-face{font-family:"Untitled Sans";src:url(media/fonts/UntitledSans-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
@@ -1573,6 +1573,22 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .pj-dn-l{margin:0;font-size:clamp(20px,1.8vw,calc(26*var(--fzh)));letter-spacing:-.025em;line-height:1.3;color:var(--fg);max-width:46ch}
 .pj-dn-b{margin:0;font-size:calc(17*var(--fz));line-height:1.55;color:#cfcfcc;max-width:62ch}
 :root[data-pf="light"] .pj-dn-b{color:#3b3b37}
+
+/* Safari on iPhone draws its own top bar over the page and does not paint fixed layers above the page top, so the shade
+   stopped at the bar's lower edge and the page showed unshaded behind it (a hard cut). Once the header turns compact:
+   a solid strip at the very top (Safari tints its bar from a fixed element touching the top edge), theme-color to match,
+   and the shade starting fully opaque so there is no step under the bar (2026-10-20). */
+.hdr.compact{--hdr-shade:1}
+.hdr.compact::after{content:"";position:fixed;top:0;left:0;right:0;height:max(2px,env(safe-area-inset-top,0px));background-color:rgb(var(--hdr-rgb,0,0,0));pointer-events:none;z-index:-1}
+.hdr.navopen::after{display:none}
+
+/* phones: no Catalogue heading; every film shows on from Featured except the last four, which wait behind Load more (2026-10-20) */
+@media (max-width:760px){
+  .lede.cat{display:none}
+  .cards .card.later,.cards .card.arch{display:block}
+  .cards .card.m-tail{display:none}
+  .cards.m-all .card.m-tail{display:block}
+}
 </style>
 <!-- SEO:LD --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://panoramafilms.tv/#site","url":"https://panoramafilms.tv/","name":"Panorama Films","inLanguage":"en","publisher":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Organization","@id":"https://panoramafilms.tv/#org","name":"Panorama Films","alternateName":["Panorama Films Collective","Панорама Филмс"],"url":"https://panoramafilms.tv/","logo":"https://panoramafilms.tv/media/icons/icon-512.png","image":"https://panoramafilms.tv/media/og/home.jpg","description":"Independent creative storytelling studio from Belgrade, Serbia, making documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.","slogan":"Seeing the bigger picture.","address":{"@type":"PostalAddress","addressLocality":"Belgrade","addressCountry":"RS"},"areaServed":[{"@type":"Country","name":"United Arab Emirates"},{"@type":"Country","name":"Serbia"},{"@type":"Place","name":"Worldwide"}],"knowsAbout":["Documentary film production","Docuseries","Brand films","Campaign films","Event films","Cinematography","Aerial cinematography","Film editing","Sound design","Script writing","Creative direction"],"sameAs":["https://www.instagram.com/panoramafilms.tv/","https://vimeo.com/panoramafilmstv","https://www.youtube.com/@panoramafilmstv"],"founder":[{"@id":"https://panoramafilms.tv/#andrija-kovac"}],"employee":[{"@id":"https://panoramafilms.tv/#andrija-kovac"},{"@id":"https://panoramafilms.tv/#mina-strugar"},{"@id":"https://panoramafilms.tv/#marija-kovacina"}]},{"@type":"Person","@id":"https://panoramafilms.tv/#andrija-kovac","name":"Andrija Kovač","jobTitle":"Creative Director","description":"Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.","image":"https://panoramafilms.tv/media/team/andrija-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#mina-strugar","name":"Mina Strugar","jobTitle":"Producer","description":"Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.","image":"https://panoramafilms.tv/media/team/mina-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#marija-kovacina","name":"Marija Kovačina","jobTitle":"Editorial Director","description":"Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.","image":"https://panoramafilms.tv/media/team/marija-2.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}}]}</script><!-- /SEO:LD --></head>
 <body>
@@ -2867,14 +2883,18 @@ document.addEventListener('keydown', e=>{
 (()=>{ const b = document.getElementById('showAll'), c = document.getElementById('cards'), t = document.getElementById('showT');
   const extra = c.querySelectorAll('.card.later').length, arch = c.querySelectorAll('.card.arch').length;
   if (!extra && !arch){ b.parentElement.hidden = true; return; }
-  /* step 0: twelve films · step 1: all of the catalogue · step 2: the archive too */
-  let step = 0; const last = arch ? 2 : 1;
-  const set = s => { step = s; c.classList.toggle('all-on', s >= 1); c.classList.toggle('arch-on', s >= 2);
-    b.setAttribute('aria-expanded', String(s === last)); t.textContent = s === last ? 'Show fewer' : s === 1 ? 'Load more from the archive' : 'Load more'; };
+  /* phones (2026-10-20, Andrija): the films run on from Featured with no Catalogue heading; only the last four wait behind Load more */
+  const PH = matchMedia('(max-width:760px)'), cards = [...c.querySelectorAll('.card')];
+  cards.slice(-4).forEach(x=>x.classList.add('m-tail'));
+  /* step 0: twelve films · step 1: all of the catalogue · step 2: the archive too (phones: step 0 all but the last four · step 1 everything) */
+  let step = 0; const lastOf = () => PH.matches ? 1 : (arch ? 2 : 1); let last = lastOf();
+  const set = s => { last = lastOf(); step = Math.min(s, last); c.classList.toggle('all-on', step >= 1); c.classList.toggle('arch-on', step >= 2); c.classList.toggle('m-all', PH.matches && step >= 1);
+    b.setAttribute('aria-expanded', String(step === last)); t.textContent = step === last ? 'Show fewer' : (!PH.matches && step === 1) ? 'Load more from the archive' : 'Load more'; };
+  PH.addEventListener('change', ()=>set(0));
   set(0);
   b.addEventListener('click', e=>{
     if (step === last){ const y = b.getBoundingClientRect().top; set(0); /* keep the button where the hand is */ scrollBy({top: b.getBoundingClientRect().top - y, behavior: 'auto'}); return; }
-    const next = step + 1, sel = next === 1 ? '.card.later .frame' : '.card.arch .frame'; set(next);
+    const next = step + 1, sel = PH.matches ? '.card.m-tail .frame' : next === 1 ? '.card.later .frame' : '.card.arch .frame'; set(next);
     const first = c.querySelector(sel); if (first && e.detail === 0) first.focus({preventScroll:true});   /* keyboard users land on the first new film */
   });
 })();
@@ -3175,12 +3195,14 @@ if (!REDUCED && 'IntersectionObserver' in window){
 /* dark / light: every visit opens dark; light only when someone switches it on */
 try { localStorage.removeItem('pf-theme'); } catch(_){}
 (()=>{ const root = document.documentElement;
+  /* the browser's own bar colour follows the theme: black, or the paper colour in light mode */
+  const tc = () => { const m = document.querySelector('meta[name="theme-color"]'); if (m) m.content = root.dataset.pf === 'light' ? '#f1f0ec' : '#000000'; };
   const paint = () => { const t = root.dataset.pf === 'light' ? 'light' : 'dark';
     document.querySelectorAll('.ft-th').forEach(b=>{ b.querySelectorAll('[data-t]').forEach(x=>x.setAttribute('aria-current', String(x.dataset.t === t))); b.setAttribute('aria-checked', String(t === 'light')); }); };
   document.addEventListener('click', e=>{ const b = e.target.closest('.ft-th'); if (!b) return; const x = e.target.closest('[data-t]');
     const want = x ? x.dataset.t : (root.dataset.pf === 'light' ? 'dark' : 'light');
     if (want === 'light') root.dataset.pf = 'light'; else delete root.dataset.pf;
-    paint(); window.dispatchEvent(new Event('themechange')); });
+    paint(); tc(); window.dispatchEvent(new Event('themechange')); });
   new MutationObserver(paint).observe(document.getElementById('pj'), {childList: true});
   paint(); })();
 
