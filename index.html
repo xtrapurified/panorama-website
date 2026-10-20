@@ -111,12 +111,8 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
    description, examples of the work and a closing line inside. Andrija's copy, AI comparisons rewritten. */
 @media (min-width:761px){#wemake .fold-lede{margin-top:calc(var(--t1) * .3)}}
 #wemake.more.fold{margin-top:clamp(80px,8vw,128px)}
-/* the label sits under the statement here, not above it (Andrija, 2026-10-20); the summary stays for screen readers */
-#wemake > summary.sr-only{position:absolute;padding:0}
-#wemake .wm-lab{margin:clamp(10px,1vw,16px) 0 0;padding-left:calc((100% + var(--g)) / 12 * 4);font-size:var(--t1);font-weight:400;letter-spacing:-.045em;line-height:1.03;color:var(--sub)}
-#wemake .wm-lab + .svc{margin-top:clamp(40px,5vw,72px)}
-@media (min-width:761px){#wemake .fold-lede{margin-top:0}}
-@media (max-width:760px){#wemake .wm-lab{padding-left:0}}   /* space above We make, so the label no longer sits right under the Approach lists (2026-10-20) */
+#wemake .wm-after{margin-top:clamp(64px,7vw,112px)!important}   /* Filmed with care. Crafted for impact. after the list, then the discipline columns (2026-10-20) */
+   /* space above We make, so the label no longer sits right under the Approach lists (2026-10-20) */
 #wemake .svc{margin-top:clamp(40px,5vw,72px);border-top:1px solid var(--rule)}
 #wemake .wm-r{border-bottom:1px solid var(--rule)}
 #wemake .wm-r > summary{list-style:none;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);align-items:baseline;padding-block:clamp(12px,1.3vw,20px);cursor:pointer}
@@ -1311,7 +1307,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .peekbar .tag{color:var(--sub);transition:color .2s}
 .peekbar:hover .tag,.peekbar:focus-visible .tag{color:#ededeb}
 .peekbar:focus-visible{outline:1px solid var(--red);outline-offset:-4px}
-.tag .arr{color:var(--red);margin-left:.18em;display:inline-block}
+.tag .arr,.more .mt .arr{color:var(--red);margin-left:.18em;display:inline-block}   /* every grey title carries the red down arrow (2026-10-20) */
 /* the scroll-down arrow: straight sharp lines, square ends, a mitred point */
 .arr .dn{display:inline-block;width:.5em;height:.6em;vertical-align:-.04em;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:10}
 .peekbar .arr{animation:nudge 2.4s var(--ease) infinite}
@@ -1559,7 +1555,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   </section>
 
   <section class="sec" data-sec="films">
-    <div class="lede cat"><span class="tag sub">Catalogue</span><h2>Archive</h2></div>
+    <div class="lede cat"><span class="tag sub">Catalogue<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Archive</h2></div>
     <div class="cards" id="cards"></div>
     <div class="reveal" id="showWrap"><button type="button" id="showAll" class="tgl" aria-controls="cards" aria-expanded="false"><span id="showT">Load more</span><span class="pm" aria-hidden="true"></span></button></div>
   </section>
@@ -1583,7 +1579,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <article><span class="face" data-ini="MK"><img src="media/team/marija-2.webp" data-alt="marija" alt="Marija Kovačina" loading="lazy" onerror="this.remove()"></span><span class="lab mid">Editorial Director</span><h3>Marija Kovačina</h3><p>Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.</p></article>
     </div>
     <div class="peers" id="peers">
-      <div class="lede coll"><span class="tag sub">Panorama Films Collective</span><h2>An open circle of cinematographers, editors, sound designers and producers. We are small by design, so we can be close to the work.</h2></div>
+      <div class="lede coll"><span class="tag sub">Panorama Films Collective<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>An open circle of cinematographers, editors, sound designers and producers. We are small by design, so we can be close to the work.</h2></div>
       <div class="net-view lab" role="group" aria-label="Show the collective as"><button type="button" data-view="list" aria-pressed="true"><svg class="vi vi-list" viewBox="0 0 16 16" aria-hidden="true"><path class="r1" pathLength="10" d="M2 2.8h12"/><path class="r2" pathLength="10" d="M2 8h9.5"/><path class="r3" pathLength="10" d="M2 13.2h11"/></svg><span>List</span></button><button type="button" data-view="graph" aria-pressed="false"><svg class="vi vi-graph" viewBox="0 0 16 16" aria-hidden="true"><circle class="ring" cx="8" cy="8" r="5.5" stroke-width="1"/><circle class="hub" cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><g class="orb"><circle cx="13.5" cy="8" r="1.25" fill="currentColor" stroke="none"/><circle cx="2.5" cy="8" r="1.25" fill="currentColor" stroke="none"/></g></svg><span>Graph</span></button></div>
       <div class="net-wrap"><canvas class="net" id="net" aria-hidden="true"></canvas></div>
       <ol class="net-names" id="netNames" hidden aria-label="The collective">
@@ -1609,7 +1605,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <ul class="sr-only" id="netList"></ul>
     </div>
     <div class="collab">
-      <span class="tag">Selected clients</span>
+      <span class="tag">Selected clients<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span>
       <div class="featured" id="featured"></div>
       <div class="clients" id="clients"></div>
       <div class="peek" id="peek" aria-hidden="true"></div>
@@ -1618,14 +1614,11 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 
   <section class="sec" id="approach" data-sec="approach">
     <details class="more fold" open>
-      <summary><span class="mt">Approach</span><span class="pm" aria-hidden="true"></span></summary>
+      <summary><span class="mt">Approach<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
       <p class="fold-lede">We stay with a film from the first question to the final frame: the research and the interviews, the script, the shoot and the cut, so nothing gets lost between hands.</p>
-      <div class="grid caps" id="caps"></div>
     </details>
     <details class="more fold" open id="wemake">
-      <summary class="sr-only"><span class="mt">We make</span></summary>
-      <p class="fold-lede">Filmed with care. Crafted for impact.</p>
-      <p class="wm-lab" aria-hidden="true">We make</p>
+      <summary><span class="mt">We make<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
       <div class="svc">
         <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">01</span><span class="wm-t">Short Documentaries</span><span class="wm-s">Portraits of real people and ideas that move us.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>People and place documentaries: cinematic short films about individuals, communities or regions.</p><ul><li>Portraits of unsung heroes, elders, local legends</li><li>Cultural shifts, disappearing traditions, grassroots change</li></ul></div><p class="wm-c">Real voices, real landscapes.</p></div></details>
         <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">02</span><span class="wm-t">Legacy Films</span><span class="wm-s">Personal or family stories, told with timeless care.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Legacy films and personal archives: timeless personal stories made for families or individuals.</p><ul><li>Milestone documentaries: birth, marriage, end of life</li><li>Family origin stories or “time capsule” films</li></ul></div><p class="wm-c">Hyper-personal and emotionally irreplaceable.</p></div></details>
@@ -1634,14 +1627,29 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
         <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">05</span><span class="wm-t">Ethical Brand Storytelling</span><span class="wm-s">Authentic, mission-aligned films for conscious brands.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Short films for conscious companies.</p><ul><li>“Why we do this” founder stories</li><li>Real customer experiences, culture-focused ads</li></ul></div><p class="wm-c">Brand trust is rooted in authenticity.</p></div></details>
         <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">06</span><span class="wm-t">Participatory Video Projects</span><span class="wm-s">Co-created with communities. Empowering and inclusive.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Participatory and community-led films, co-created with the people being filmed.</p><ul><li>Collaborative workshops, community documentaries</li><li>Training and storytelling for NGOs</li></ul></div><p class="wm-c">Made with the people in it, not only about them.</p></div></details>
       </div>
+      <p class="fold-lede wm-after">Filmed with care. Crafted for impact.</p>
+      <div class="grid caps" id="caps"></div>
     </details>
     <details class="more" open>
-      <summary><span class="mt">Manifesto</span><span class="pm" aria-hidden="true"></span></summary>
+      <summary><span class="mt">Manifesto<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
       <div class="grid fields">
         <article><span class="lab mid">I</span><h3>Impact</h3><p>We tell the stories shaping tomorrow’s society. From education and social activism to the movements driving change, we partner with foundations, NGOs and local innovators to spotlight the people and ideas working toward a better future.</p></article>
         <article><span class="lab mid">II</span><h3>Innovation</h3><p>We explore how technology reshapes our lives. From VR to drones, to artificial intelligence and new platforms, we work with startups, researchers and visionaries to tell stories of innovation that serve the greater good.</p></article>
         <article><span class="lab mid">III</span><h3>Culture</h3><p>Culture is a story in motion. We work with artists, musicians and creators who push boundaries, capturing the energy of emerging trends and making visible the ideas shaping tomorrow’s art, music and fashion.</p></article>
         <article><span class="lab mid">IV</span><h3>Expression</h3><p>We celebrate those who push boundaries. Guided by athletes, explorers and outdoor pioneers, we bring to light new ways of living, moving and experiencing the world.</p></article>
+      </div>
+    </details>
+    <details class="more" open id="toolkit">
+      <summary><span class="mt">Toolkit<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
+      <div class="kit-wrap">
+      <p class="kit-fl lab mid" aria-hidden="true"><span>Focus</span><span class="kit-sc"><i></i><i></i><i></i><i></i><i></i><b id="kitMk"></b></span></p>
+      <dl class="kit" id="kit">
+        <div class="kit-r on" data-i="0"><span class="kit-n lab mid">01</span><dt>Our eye</dt><dd>Framing, emotion, presence</dd></div>
+        <div class="kit-r" data-i="1"><span class="kit-n lab mid">02</span><dt>Our questions</dt><dd>Interview intuition</dd></div>
+        <div class="kit-r" data-i="2"><span class="kit-n lab mid">03</span><dt>Our presence</dt><dd>Trust and intimacy with subjects</dd></div>
+        <div class="kit-r" data-i="3"><span class="kit-n lab mid">04</span><dt>Our values</dt><dd>Integrity and emotional depth</dd></div>
+        <div class="kit-r" data-i="4"><span class="kit-n lab mid">05</span><dt>Our editing</dt><dd>Rhythm, nuance, restraint</dd></div>
+      </dl>
       </div>
     </details>
     <div class="hl hl-a" aria-hidden="false">
@@ -1661,19 +1669,6 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <div class="over over-w" aria-hidden="true"><div class="top"><span class="lab">&nbsp;</span></div><div class="mid-c"><span class="h2">Human in the loop</span></div><span></span></div>
     </div>
     <div class="hl hl-c"><h2 class="hl-t">Human in the loop</h2><p class="hl-code"><span class="k">output</span> = [<span class="v">human</span>, <span class="v">loop</span>]</p><span class="lab hl-n hl-rc"><span class="rec live">Rec</span> 01 / 89</span></div>
-    <details class="more" open id="toolkit">
-      <summary><span class="mt">Toolkit</span><span class="pm" aria-hidden="true"></span></summary>
-      <div class="kit-wrap">
-      <p class="kit-fl lab mid" aria-hidden="true"><span>Focus</span><span class="kit-sc"><i></i><i></i><i></i><i></i><i></i><b id="kitMk"></b></span></p>
-      <dl class="kit" id="kit">
-        <div class="kit-r on" data-i="0"><span class="kit-n lab mid">01</span><dt>Our eye</dt><dd>Framing, emotion, presence</dd></div>
-        <div class="kit-r" data-i="1"><span class="kit-n lab mid">02</span><dt>Our questions</dt><dd>Interview intuition</dd></div>
-        <div class="kit-r" data-i="2"><span class="kit-n lab mid">03</span><dt>Our presence</dt><dd>Trust and intimacy with subjects</dd></div>
-        <div class="kit-r" data-i="3"><span class="kit-n lab mid">04</span><dt>Our values</dt><dd>Integrity and emotional depth</dd></div>
-        <div class="kit-r" data-i="4"><span class="kit-n lab mid">05</span><dt>Our editing</dt><dd>Rhythm, nuance, restraint</dd></div>
-      </dl>
-      </div>
-    </details>
   </section>
 
   <section class="sec" id="golden" data-sec="studio">
@@ -1883,7 +1878,7 @@ function work(k){
 const FEATURED_VIEW = 'chapters';
 const STACK = ["ask","sport","docu","astro","orchard","ten"];
 if (FEATURED_VIEW === 'stack'){
-  document.getElementById('chapters').innerHTML = `<div class="lede solo"><span class="tag">Featured</span></div>
+  document.getElementById('chapters').innerHTML = `<div class="lede solo"><span class="tag">Featured<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span></div>
     <div class="stack" id="stack">${STACK.map((k,i)=>{ const f = F[k], nf = nFilms(k);
       return `<article class="sp" data-play="${k}" role="link" tabindex="0" aria-label="Play ${esc(f.title)}">
         <div class="media cover" data-k="${k}" data-loop="20"><img src="${still(k)}" alt="" loading="${i ? 'lazy' : 'eager'}"></div>
@@ -1896,7 +1891,7 @@ if (FEATURED_VIEW === 'stack'){
 } else {
 /* Films (folds the featured films and the catalogue) on its own row, then Featured beside the first heading only */
 document.getElementById('chapters').innerHTML = CHAPTERS.map(([c,t,r,items],ci)=>
-  `<div class="lede"><span class="tag sub">${c}</span><h2>${esc(t)}</h2></div>
+  `<div class="lede"><span class="tag sub">${c}<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>${esc(t)}</h2></div>
    <div class="works">${items.map(it=>Array.isArray(it)?`<div class="pair">${it.map(work).join('')}</div>`:work(it)).join('')}</div>`).join('');
 }
 /* Featured titles over the film: each one holds the middle of the window while its film scrolls past, staying inside the frame */
@@ -2089,7 +2084,7 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
 const hs = document.getElementById('hitlStage'), fn = document.getElementById('flickNo');
 /* Human in the loop, three typographic studies (2026-10-20): ?hitl=a | b | c, remembered per browser; none = the original title over the photos */
 const HL_V = (()=>{ let v = (new URLSearchParams(location.search).get('hitl') || '').toLowerCase();
-  try { if (/^[abc]$/.test(v)) localStorage.setItem('pf-hitl', v); else if (v === 'off') { localStorage.removeItem('pf-hitl'); v = ''; } else v = localStorage.getItem('pf-hitl') || 'a'; } catch(_) { if (!/^[abc]$/.test(v)) v = 'a'; }
+  if (v === 'off') v = ''; else if (!/^[abc]$/.test(v)) v = 'a';   /* A chosen for now (Andrija, 2026-10-20); ?hitl=b|c still shows the others, ?hitl=off the old title */
   return /^[abc]$/.test(v) ? v : ''; })();
 document.documentElement.dataset.hl = HL_V;
 const hlN = t => document.querySelectorAll('.hl .hl-n').forEach(el=>{ const r = el.querySelector('.rec'); el.textContent = ' ' + t; if (r) el.prepend(r); else el.textContent = t; });
