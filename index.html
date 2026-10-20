@@ -174,7 +174,18 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
 .hl-a .hl-code{margin-top:.7em;padding-left:calc((100% + var(--g)) / 12 * 4)}
 @media (max-width:760px){.hl-a-row{grid-template-columns:1fr auto;row-gap:10px}.hl-a-row .rec{grid-column:1}.hl-a .hl-n{grid-column:2;grid-row:1}.hl-a .hl-t{grid-column:1/-1}.hl-a .hl-code{padding-left:0}}
 /* B */
-.hl-b{position:absolute;left:var(--m);top:50%;transform:translateY(-50%);z-index:4}   /* vertically centred on the gallery (Andrija, 2026-10-20) */
+.hl-b{position:absolute;left:var(--m);top:50%;transform:translate(var(--dx,0px),calc(-50% + var(--dy,0px)));z-index:4}   /* vertically centred on the gallery (Andrija, 2026-10-20); --dx/--dy from dragging */
+@media (hover:hover) and (pointer:fine){.hl-term{cursor:grab;touch-action:none;user-select:none}.hl-term.drag{cursor:grabbing}}
+/* phones: a small window in the bottom left corner, so the photos stay in view (2026-10-20) */
+@media (max-width:760px){
+  #hitl .hl-b{top:auto;bottom:10px;left:10px;transform:none}
+  #hitl .hl-term{width:auto;max-width:62vw;padding:0 10px 9px}
+  #hitl .hl-bar{margin:0 -10px 7px;padding:5px 10px;gap:4px;font-size:9px}
+  #hitl .hl-bar i{width:5px;height:5px}
+  #hitl .hl-b .hl-code:first-of-type{display:none}
+  #hitl .hl-b .hl-t{margin:0 0 .15em;font-size:15px}
+  #hitl .hl-b .hl-code{font-size:11px}
+}
 .hl-term{width:min(440px,calc(100vw - 2 * var(--m)));background:rgba(5,5,5,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(237,237,235,.18);padding:0 clamp(14px,1.3vw,20px) clamp(14px,1.3vw,20px);color:#ededeb;--fg:#ededeb;--mid:#8d8d8a}
 .hl-bar{display:flex;align-items:center;gap:6px;margin:0 calc(clamp(14px,1.3vw,20px) * -1) clamp(12px,1.1vw,16px);padding:8px clamp(14px,1.3vw,20px);border-bottom:1px solid rgba(237,237,235,.14);font-size:var(--ui);color:var(--mid)}
 .hl-bar i{width:7px;height:7px;border-radius:50%;background:rgba(237,237,235,.28)}.hl-bar i:first-child{background:var(--red)}
@@ -1443,6 +1454,11 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   :root[data-pf="light"] .hdr.navopen .menu .nav-ft .nav-sx svg{stroke:var(--fg)}
   :root[data-pf="light"] .hdr.navopen .menu .nav-ft .ft-th{color:var(--fg)}
   :root[data-pf="light"] .hdr.navopen .burger i::before,:root[data-pf="light"] .hdr.navopen .burger i::after{background:var(--fg)}
+  :root[data-pf="light"] .hdr.navopen .burger i{background:transparent}
+  /* the globe and Rec turn dark on the paper menu (2026-10-20) */
+  :root[data-pf="light"] .hdr.navopen .logo panorama-globe-follow{filter:invert(1)}
+  :root[data-pf="light"] .hdr.navopen .logo-slot > .hdr-rec{color:var(--fg)}
+  :root[data-pf="light"] .hdr.navopen .logo-slot > .hdr-rec .tc{color:rgba(18,18,17,.4)}
 }
 
 /* profile: Swiss, with the site's own move: the photo and the first line of the name start on the same indent */
@@ -1834,7 +1850,7 @@ const F = {
   p09:{n:"09", title:"Slavko Štimac", sub:"71st Pula Film Festival Award Film", line:"71st Pula Film Festival Award Film", client:"71st Pula Film Festival", year:"2024", roles:"Cinematography", img:"thumbs/p09", page:"Pula-Film-Festival", hover:"p09", v:"988793491"},
   p10:{n:"10", title:"Valamar Biking", mainT:"Happiness is a bike ride away", client:"Valamar", year:"2018–2025", roles:"Creative direction, direction, cinematography, editing", img:"thumbs/p10", page:"Valamar-Biking", hover:"p10", v:"1103738334"},
   p12:{n:"12", title:"Air to the People: Serbia", client:"Air to the People 2.0", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p12", page:"Air-to-the-People-Serbia", yt:"LdLfDc-AlAc"},
-  p13:{n:"13", title:"Dubai Future Forum", mainT:"Dubai Future Forum 2025 Highlights", line:"The world’s top futurists, two days at the Museum of the Future.", s:12, loop:40, client:"Dubai Future Foundation", year:"2022–2025", roles:"Script, creative direction, production, cinematography, editing", img:"stills/dff", page:"Dubai-Future-Forum-Chronicles-1", hover:"p13", yt:"PkLvj-vQygs"},
+  p13:{n:"13", title:"Dubai Future Forum", mainT:"Dubai Future Forum 2025 Highlights", line:"The world’s top futurists, two days at the Museum of the Future.", s:45, loop:40, client:"Dubai Future Foundation", year:"2022–2025", roles:"Script, creative direction, production, cinematography, editing", img:"stills/dff", page:"Dubai-Future-Forum-Chronicles-1", hover:"p13", yt:"PkLvj-vQygs"},
   p14:{n:"14", title:"We Will Walk", client:"Civil Rights Defenders", year:"2022", roles:"Creative direction, cinematography, editing", img:"thumbs/p14", page:"We-Will-Walk", hover:"p14", v:"886851613", h:"25a02b2640"},
   p15:{n:"15", title:"Imagine Our Future", client:"Dubai Future Forum 2023", year:"2023", roles:"Creative direction, cinematography, editing", img:"thumbs/p15", page:"Imagine-Our-Future", hover:"p15", yt:"tkh-cNGWigw"},
   p36:{n:"", title:"The Time of Stabilitocracy", line:"How the promise of Europe became a deal with strongmen.", client:"European Western Balkans", year:"2022", roles:"Direction, production, cinematography, editing", img:"thumbs/p36", page:"The-Time-of-Stabilitocracy", hover:"p36", mainT:"Trailer", yt:"vjJYGV315y0"},
@@ -2147,6 +2163,16 @@ const HL_V = (()=>{ let v = (new URLSearchParams(location.search).get('hitl') ||
   if (v === 'off') v = ''; else if (!/^[abc]$/.test(v)) v = 'b';   /* B, the terminal window, chosen (Andrija, 2026-10-20, after A); ?hitl=a|c still shows the others, ?hitl=off the old title */
   return /^[abc]$/.test(v) ? v : ''; })();
 document.documentElement.dataset.hl = HL_V;
+/* the terminal window can be dragged around the gallery with a mouse */
+(()=>{ const w = document.querySelector('.hl-term'), box = document.getElementById('hitl'); if (!w || !box || !matchMedia('(hover:hover) and (pointer:fine)').matches) return;
+  const wrap = w.parentElement; let sx, sy, dx = 0, dy = 0, bx, by, lim;
+  w.addEventListener('pointerdown', e => { if (e.button) return; w.setPointerCapture(e.pointerId); w.classList.add('drag'); sx = e.clientX; sy = e.clientY; bx = dx; by = dy;
+    const r = wrap.getBoundingClientRect(), R = box.getBoundingClientRect(); lim = {l: R.left - r.left + dx + 8, r: R.right - r.right + dx - 8, t: R.top - r.top + dy + 8, b: R.bottom - r.bottom + dy - 8}; });
+  w.addEventListener('pointermove', e => { if (!w.classList.contains('drag')) return;
+    dx = Math.min(lim.r, Math.max(lim.l, bx + e.clientX - sx)); dy = Math.min(lim.b, Math.max(lim.t, by + e.clientY - sy));
+    wrap.style.setProperty('--dx', dx + 'px'); wrap.style.setProperty('--dy', dy + 'px'); });
+  const up = () => w.classList.remove('drag'); w.addEventListener('pointerup', up); w.addEventListener('pointercancel', up);
+})();
 const hlN = t => document.querySelectorAll('.hl .hl-n').forEach(el=>{ const r = el.querySelector('.rec'); el.textContent = ' ' + t; if (r) el.prepend(r); else el.textContent = t; });
 /* the photos: media/bts/photos.json, edited on the unlinked page /slideshow/ (add photos, hide / show).
    Hidden photos are skipped; the order is shuffled on every visit (Andrija, 2026-10-15). Until the list arrives
@@ -2918,7 +2944,10 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   const PHOTOS = {piki:'media/team/piki.webp', babic:'media/team/babic.webp', danilo:'media/team/danilo.webp', stojanovic:'media/team/stojanovic.webp', bojan:'media/team/bojan.webp',
     zoran:'media/team/zoran.webp', milovan:'media/team/milovan.webp', nevena:'media/team/nevena.webp', ana:'media/team/ana.webp', neda:'media/team/neda.webp', matija:'media/team/matija.webp', cile:'media/team/cile.webp'};
   Object.entries(PHOTOS).forEach(([id, src])=>{ INFO[id] = Object.assign({photo: src}, INFO[id] || {}); });
-  pn.forEach(n=>{ const i = INFO[n.id] || {}; const src = i.photo || PLACEHOLDER; if (src){ n.img = new Image(); n.img.src = src; n.ph = !i.photo; n.img.onload = () => { if (!running) draw(); }; } });
+  /* a black-and-white copy of a portrait, drawn by hand: Safari on iPhone ignores the canvas grayscale filter (2026-10-20) */
+  const grey = img => { try { const c = document.createElement('canvas'), w = c.width = img.naturalWidth, h = c.height = img.naturalHeight, x = c.getContext('2d');
+    x.drawImage(img, 0, 0); const d = x.getImageData(0, 0, w, h), a = d.data; for (let k = 0; k < a.length; k += 4){ const y = a[k]*.2126 + a[k+1]*.7152 + a[k+2]*.0722; a[k] = a[k+1] = a[k+2] = y; } x.putImageData(d, 0, 0); return c; } catch(_) { return null; } };
+  pn.forEach(n=>{ const i = INFO[n.id] || {}; const src = i.photo || PLACEHOLDER; if (src){ n.img = new Image(); n.img.src = src; n.ph = !i.photo; n.img.onload = () => { n.gimg = grey(n.img); if (!running) draw(); }; } });
   const ini = n => n.name.split(' ').filter(w=>/^[A-ZĆČŠŽĐ]/.test(w)).slice(0,2).map(w=>w[0]).join('');
   /* timeline: projects appear in the year they were made; undated ones only at the end */
   const YRS = ORDER.map(year).filter(Boolean), Y0 = Math.min(...YRS), Y1 = Math.max(...YRS); let upto = Y1;
@@ -3011,7 +3040,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       /* portraits: a photo in a red ring for the three of us, initials for everyone else until we have their photos */
       ctx.save(); ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.closePath();
       if (n.img && n.img.complete && n.img.naturalWidth){ ctx.clip(); const iw = n.img.naturalWidth, ih = n.img.naturalHeight, s = (2*r) / Math.min(iw, ih);
-        ctx.fillStyle = '#000'; ctx.fillRect(n.x - r, n.y - r, 2*r, 2*r); ctx.globalAlpha *= n.ph ? .3 : .92; ctx.filter = 'grayscale(1)'; ctx.drawImage(n.img, n.x - iw*s/2, n.y - ih*s*.42, iw*s, ih*s); ctx.filter = 'none'; }
+        ctx.fillStyle = '#000'; ctx.fillRect(n.x - r, n.y - r, 2*r, 2*r); ctx.globalAlpha *= n.ph ? .3 : .92; ctx.drawImage(n.gimg || n.img, n.x - iw*s/2, n.y - ih*s*.42, iw*s, ih*s); }
       else { ctx.fillStyle = LIGHT() ? '#e4e3de' : '#1c1c1b'; ctx.fill(); }
       ctx.restore(); ctx.globalAlpha = (dim ? .3 : 1) * n.vis;
       ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.lineWidth = (n.core ? 2.5 : 1.3) * (small ? 1 : S); ctx.strokeStyle = n.core || n === act ? '#e2231a' : (LIGHT() ? '#8f8f8a' : '#5d5d5a'); ctx.stroke();
