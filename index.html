@@ -208,12 +208,29 @@ footer .ft-c{display:inline-flex;align-items:center;gap:14px}
 .ft-gh-d::before,.ft-gh-d::after{content:"";position:absolute;left:28%;top:50%;width:44%;height:1.5px;margin-top:-.75px;background:#fff;transition:transform .35s cubic-bezier(.16,1,.3,1)}
 .ft-gh-d::after{transform:rotate(90deg)}
 .ft-gh.open .ft-gh-d::after{transform:rotate(0deg)}
-.ft-gh:hover .ft-gh-d,.ft-gh:focus-visible .ft-gh-d{transform:scale(1.15)}
+.ft-gh:hover .ft-gh-d,.ft-gh:focus-visible .ft-gh-d{transform:scale(1.15);background:#d6a548}   /* gold on hover (Andrija, 2026-10-20) */
+.ft-gh-d{transition:transform .35s cubic-bezier(.16,1,.3,1),background-color .25s}
+:root[data-pf="light"] .ft-gh:hover .ft-gh-d{background:#a8741a}
 .ft-gh .gh-ring{position:absolute;inset:0;border-radius:50%;border:1.5px solid var(--red);opacity:0;pointer-events:none}
 .ft-gh:not(.seen):not(.open) .gh-ring{animation:ghping 2.6s cubic-bezier(.2,.6,.3,1) infinite}
 .ft-gh:not(.seen):not(.open) .gh-ring + .gh-ring{animation-delay:.9s}
 @media (prefers-reduced-motion:reduce){.ft-gh .gh-ring{animation:none!important}}
 @media (max-width:1100px){.ft-gh-t{display:none}}
+
+/* Touch screens: three studies for the play mark (2026-10-20), ?play=a|b|c; default = the white disc in the middle.
+   A  no mark at all: the moving covers already say film, the whole frame is the button
+   B  a small red triangle with "Play" in the bottom-left corner, in the interface type
+   C  only a small red triangle in the top right corner, no text */
+.play-t{display:none}
+@media (hover:none){
+  :root[data-play="a"] .play{display:none}
+  :root[data-play="b"] .play,:root[data-play="c"] .play{top:auto;transform:none;width:auto;aspect-ratio:auto;border-radius:0;background:none;display:flex;align-items:center;gap:6px;color:#fff;font-size:var(--ui);letter-spacing:.02em;text-shadow:0 0 8px rgba(0,0,0,.6)}
+  :root[data-play="b"] .play{left:10px;bottom:10px}
+  :root[data-play="b"] .play::after{width:.62em;height:.72em;margin:0;order:-1}
+  :root[data-play="b"] .play-t{display:inline}
+  :root[data-play="c"] .play{left:auto;right:10px;top:10px;font-size:11px}
+  :root[data-play="c"] .play::after{width:.8em;height:.95em;margin:0;filter:drop-shadow(0 0 4px rgba(0,0,0,.5))}
+}
 </style></head><body>
 <!doctype html>
 <html lang="en">
@@ -1391,7 +1408,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   /* the red underline is drawn as a background line, so the text's colour fringes never reach it */
   .menu a,.menu a.go,.menu a.on,.menu a:hover,.menu a.go:hover,.menu a:focus-visible{text-decoration:none}
   .menu a{background:linear-gradient(var(--red),var(--red)) left 100% / 100% 0 no-repeat;padding-bottom:.12em}
-  .menu a:hover,.menu a:focus-visible{background-size:100% max(1.5px,.07em)}   /* no colour fringe since 2026-10-20 (Andrija): only the red underline */
+  .menu a:hover,.menu a:focus-visible{background-size:100% max(1px,.035em)}   /* no colour fringe since 2026-10-20 (Andrija): only the red underline */
 }
 @media (prefers-reduced-motion:reduce){.menu a:hover,.menu a:focus-visible{animation:none}}
 
@@ -1888,7 +1905,7 @@ function frame(k, small){
   const f = F[k], nf = nFilms(k), more = nf > 1 ? `<span class="lab">${nf} films</span>` : '';
   return `<a class="frame" href="${ext(f)}" target="_blank" rel="noopener" data-play="${k}" aria-label="${f.v||f.yt||f.file ? 'Play' : 'View'} ${esc(f.title)}">
     <div class="media"${f.hover ? ` data-hv="${f.hover}" data-c="${k}"` : f.img ? '' : ` data-k="${k}" data-loop="20"`}><img src="${still(k)}" alt="${esc(f.title)}" loading="lazy"${f.zoom ? ` style="${zoomCss(f)}"` : ''}></div>
-    ${f.v||f.yt||f.file ? '<span class="play" aria-hidden="true"></span>' : ''}
+    ${f.v||f.yt||f.file ? '<span class="play" aria-hidden="true"><span class="play-t">Play</span></span>' : ''}
     ${small ? `<span class="hud"><span class="top"><span></span>${more}</span></span>`
       : `<span class="hud"></span>
       <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span></span>`}</a>`;
@@ -2112,6 +2129,9 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
    past the frame), centred; a 0.1 s fade, a new photo every 0.3 s. No per-photo sizing in script, so nothing can over-zoom. */
 const hs = document.getElementById('hitlStage'), fn = document.getElementById('flickNo');
 /* Human in the loop, three typographic studies (2026-10-20): ?hitl=a | b | c, remembered per browser; none = the original title over the photos */
+(()=>{ let v = (new URLSearchParams(location.search).get('play') || '').toLowerCase();
+  try { if (/^[abc]$/.test(v)) localStorage.setItem('pf-play', v); else if (v === 'off') { localStorage.removeItem('pf-play'); v = ''; } else v = localStorage.getItem('pf-play') || ''; } catch(_) {}
+  if (/^[abc]$/.test(v)) document.documentElement.dataset.play = v; })();   /* touch play-mark studies, ?play=a|b|c (2026-10-20) */
 const HL_V = (()=>{ let v = (new URLSearchParams(location.search).get('hitl') || '').toLowerCase();
   if (v === 'off') v = ''; else if (!/^[abc]$/.test(v)) v = 'b';   /* B, the terminal window, chosen (Andrija, 2026-10-20, after A); ?hitl=a|c still shows the others, ?hitl=off the old title */
   return /^[abc]$/.test(v) ? v : ''; })();
