@@ -1546,7 +1546,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       </div>
       <div class="grid hl"><div class="hd"><p class="sub">Films about people, ideas and the future.</p><h1>Seeing the bigger picture.</h1><p class="sub2">Panorama Films<span class="ph-off">, </span><span class="ph-st">creative storytelling studio</span><span class="ph-off">.</span></p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
       <div class="grid facts">
-        <a class="play-reel" data-play="reel" href="https://vimeo.com/1232743611/7e23d97b0f" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:05</span></a>
+        <a class="play-reel" data-play="reel" href="media/reel.mp4" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:29</span></a>
       </div>
     </div>
   </section>
@@ -1773,7 +1773,7 @@ const SVC_ITEMS = (()=>{ const s = new Set(), add = v => String(v || '').split(/
   add('Script writing, video production, edit, sound design, service production, aerial cinematography'); return s; })();   /* old spellings still found in copied text */   /* per-project films, text and photos from panoramafilms.tv */
 /* s = second where the 20-second background loop starts */
 const F = {
-  reel:{title:"Showreel", client:"Panorama Films", v:"1232743611", h:"7e23d97b0f", still:"reel", clip:"home", dur:"1:05", s:15},
+  reel:{title:"Showreel", client:"Panorama Films", file:"reel", still:"reel", clip:"home", own:true, dur:"1:29"},   /* V4 (2026-10-20), hosted until the final cut goes to Vimeo; old Vimeo 1232743611/7e23d97b0f */
   hotf:{n:"01", client:"Dubai Future Week", year:"2026", title:"For the Human of the Future", line:"The future, through the eyes of a child.", roles:"Concept, script, creative direction, direction, production, editing, sound production"},
   wss26:{n:"02", client:"World Sports Summit", year:"2026", title:"World Sports Summit 2026", mainT:"What Moves Us", line:"Ambition, resilience, unity and legacy.", roles:"Concept, script, creative direction, direction, production, editing, sound production"},
   ask:{n:"01", client:"Dubai Future Forum", year:"2025", title:"Ask More", line:"A visual anthem to the questions that shape our future.", roles:"Concept, creative direction", yt:"QWbPqxAycbI", dur:"1:10", clip:"ask", s:0},
@@ -2226,7 +2226,7 @@ function playFile(k, fm){
   const asBlob = () => { if (viaBlob || P === null || !box.contains(v)) return; viaBlob = true;
     box.insertAdjacentHTML('beforeend', `<span class="hud lb-load"><span class="lab rec live">Loading${reel ? ' showreel' : ''}</span></span>`);
     fetch(v.src).then(r=>{ if (!r.ok) throw 0; return r.blob(); }).then(b=>{ if (!box.contains(v)) return; v.src = URL.createObjectURL(new Blob([b], {type:'video/mp4'})); unload(); go(); })
-      .catch(()=>{ unload(); document.getElementById('lb-note').textContent = reel ? 'The showreel didn’t load here. It plays in full on Vimeo.' : 'The film didn’t load here.'; }); };
+      .catch(()=>{ unload(); document.getElementById('lb-note').textContent = reel ? 'The showreel didn’t load here.' : 'The film didn’t load here.'; }); };
   v.addEventListener('error', asBlob);
   setTimeout(()=>{ if (v.readyState < 2) asBlob(); }, 4000);
   go();
