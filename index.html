@@ -110,7 +110,12 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
 /* We make (2026-10-18): six services as an accordion, one open at a time; the short line on the row, the longer
    description, examples of the work and a closing line inside. Andrija's copy, AI comparisons rewritten. */
 @media (min-width:761px){#wemake .fold-lede{margin-top:calc(var(--t1) * .3)}}
-#wemake.more.fold{margin-top:clamp(80px,8vw,128px)}   /* space above We make, so the label no longer sits right under the Approach lists (2026-10-20) */
+#wemake.more.fold{margin-top:clamp(80px,8vw,128px)}
+/* the label sits under the statement here, not above it (Andrija, 2026-10-20); the summary stays for screen readers */
+#wemake > summary.sr-only{position:absolute;padding:0}
+#wemake .wm-lab{margin:clamp(28px,3vw,48px) 0 0;font-size:var(--t1);font-weight:400;letter-spacing:-.045em;line-height:1.03;color:var(--sub)}
+#wemake .wm-lab + .svc{margin-top:clamp(14px,1.4vw,22px)}
+@media (min-width:761px){#wemake .fold-lede{margin-top:0}}   /* space above We make, so the label no longer sits right under the Approach lists (2026-10-20) */
 #wemake .svc{margin-top:clamp(40px,5vw,72px);border-top:1px solid var(--rule)}
 #wemake .wm-r{border-bottom:1px solid var(--rule)}
 #wemake .wm-r > summary{list-style:none;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);align-items:baseline;padding-block:clamp(12px,1.3vw,20px);cursor:pointer}
@@ -1577,8 +1582,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <div class="grid caps" id="caps"></div>
     </details>
     <details class="more fold" open id="wemake">
-      <summary><span class="mt">We make</span><span class="pm" aria-hidden="true"></span></summary>
+      <summary class="sr-only"><span class="mt">We make</span></summary>
       <p class="fold-lede">Filmed with care. Crafted for impact.</p>
+      <p class="wm-lab" aria-hidden="true">We make</p>
       <div class="svc">
         <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">01</span><span class="wm-t">Short Documentaries</span><span class="wm-s">Portraits of real people and ideas that move us.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>People and place documentaries: cinematic short films about individuals, communities or regions.</p><ul><li>Portraits of unsung heroes, elders, local legends</li><li>Cultural shifts, disappearing traditions, grassroots change</li></ul></div><p class="wm-c">Real voices, real landscapes.</p></div></details>
         <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">02</span><span class="wm-t">Legacy Films</span><span class="wm-s">Personal or family stories, told with timeless care.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Legacy films and personal archives: timeless personal stories made for families or individuals.</p><ul><li>Milestone documentaries: birth, marriage, end of life</li><li>Family origin stories or “time capsule” films</li></ul></div><p class="wm-c">Hyper-personal and emotionally irreplaceable.</p></div></details>
