@@ -1855,7 +1855,7 @@ document.getElementById('caps').innerHTML = CAPS.map(([n,l])=>{ const fs = capFi
   return `<div><h3>${n}</h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`; }).join('');
 const CLIENT_FILM = {"Dubai Future Foundation":"ten", "Museum of the Future":"astro", "EXPO Dubai":"p17", "Dubai Sports Council":"sport",
   "World Government Summit":"p21", "Valamar":"p10", "SHARE Foundation":"p29", "Civil Rights Defenders":"p14",
-  "Birds of Prey Protection Foundation Serbia":"p25", "Goethe Institute":"p27", "World Drone Prix":"p30", "Firefly Production":"p26"};
+  "Birds of Prey Protection Foundation Serbia":"p25", "World Drone Prix":"p30", "Firefly Production":"p26"};
 const PREVIEW = Object.fromEntries(Object.entries(CLIENT_FILM).map(([c,k])=>[c, F[k].clip ? {clip:F[k].clip} : F[k].hover ? {hover:F[k].hover} : {img:still(k)}]));
 const cn = c => CLIENT_FILM[c] ? `<a class="cn ln" data-c="${esc(c)}" data-play="${CLIENT_FILM[c]}" href="${ext(F[CLIENT_FILM[c]])}" target="_blank" rel="noopener">${esc(c)}</a>`
   : `<span class="cn" data-c="${esc(c)}">${esc(c)}</span>`;
