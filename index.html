@@ -110,6 +110,7 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
 /* We make (2026-10-18): six services as an accordion, one open at a time; the short line on the row, the longer
    description, examples of the work and a closing line inside. Andrija's copy, AI comparisons rewritten. */
 @media (min-width:761px){#wemake .fold-lede{margin-top:calc(var(--t1) * .3)}}
+#wemake.more.fold{margin-top:clamp(80px,8vw,128px)}   /* space above We make, so the label no longer sits right under the Approach lists (2026-10-20) */
 #wemake .svc{margin-top:clamp(40px,5vw,72px);border-top:1px solid var(--rule)}
 #wemake .wm-r{border-bottom:1px solid var(--rule)}
 #wemake .wm-r > summary{list-style:none;display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);align-items:baseline;padding-block:clamp(12px,1.3vw,20px);cursor:pointer}
