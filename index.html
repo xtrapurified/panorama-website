@@ -2084,7 +2084,7 @@ const heroMedia = document.getElementById('heroMedia'), heroTc = document.getEle
 const hs = document.getElementById('hitlStage'), fn = document.getElementById('flickNo');
 /* Human in the loop, three typographic studies (2026-10-20): ?hitl=a | b | c, remembered per browser; none = the original title over the photos */
 const HL_V = (()=>{ let v = (new URLSearchParams(location.search).get('hitl') || '').toLowerCase();
-  if (v === 'off') v = ''; else if (!/^[abc]$/.test(v)) v = 'a';   /* A chosen for now (Andrija, 2026-10-20); ?hitl=b|c still shows the others, ?hitl=off the old title */
+  if (v === 'off') v = ''; else if (!/^[abc]$/.test(v)) v = 'b';   /* B, the terminal window, chosen (Andrija, 2026-10-20, after A); ?hitl=a|c still shows the others, ?hitl=off the old title */
   return /^[abc]$/.test(v) ? v : ''; })();
 document.documentElement.dataset.hl = HL_V;
 const hlN = t => document.querySelectorAll('.hl .hl-n').forEach(el=>{ const r = el.querySelector('.rec'); el.textContent = ' ' + t; if (r) el.prepend(r); else el.textContent = t; });
