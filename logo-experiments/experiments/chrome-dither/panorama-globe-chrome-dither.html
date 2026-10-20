@@ -229,11 +229,12 @@ float lumAt(vec2 fc, float side, float breath, out float m){
   lum = mix(lum, tube, uBevel);
   // A small pool of liquid chrome travels with the pointer: dark core, rippling bright rings
   float d = length(tm);
-  float near = (1.0 - smoothstep(0.025, 0.11, d)) * uHover;
+  float near = (1.0 - smoothstep(0.03, 0.3, d)) * uHover;              // wide, soft edge
   float ang = atan(tm.y, tm.x);
-  float ripple = 0.5 + 0.5*cos(d*70.0 - uT*4.0 + 0.8*sin(ang*3.0 + uT*1.5));
-  float pool = 0.04 + 0.95*pow(ripple, 3.0) * smoothstep(0.0, 0.035, d);
-  lum = mix(lum, pool, near);
+  float warp = 5.0*fbm(sp*5.0 + vec2(uT*0.35, -uT*0.2));              // breaks up the rings
+  float ripple = 0.5 + 0.5*cos(d*26.0 - uT*3.0 + warp + 0.8*sin(ang*2.0 + uT));
+  float pool = 0.12 + 0.88*pow(ripple, 2.0);
+  lum = mix(lum, pool, near*0.85);
   breath = mix(breath, 1.0, near);
   lum *= mix(1.0, 0.42 + 0.58*breath, uPulse);
   return clamp(lum, 0., 1.);

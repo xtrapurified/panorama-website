@@ -7,7 +7,7 @@ The authentic logo (`media/logo.png`, embedded as a data URI; never redrawn) use
 - **Flow:** the chrome follows the shape of the logo. A spiral phase sends a bright section of chrome round the rim and out along the latitudes, the wordmark and the meridian, with a dimmer tail behind it.
 - **Tube:** each stroke has a soft tube cross-section with a thin reflection streak along one side (Bevel).
 - **Fade:** the whole logo breathes between bright and sparse dots.
-- **Cursor:** a small pool of chrome travels with the pointer (dark core, rippling rings) and holds back the fade under it. Moving fast speeds the flow up; on leave it eases back. Touch works the same way.
+- **Cursor:** a wide, soft-edged pool of chrome travels with the pointer (irregular, noise-broken ripples) and holds back the fade under it. Moving fast speeds the flow up; on leave it eases back. Touch works the same way.
 
 Values chosen by Andrija (2026-10-20), set as the defaults: Dot 2, Speed 0.7, Fade 1.0, Size 90, Flow 2.5, Turns 1, Radial 5, Res shift 0, Bevel 1.00. Res shift (coarser dots as the chrome dims) is off in his values but kept as a slider.
 
