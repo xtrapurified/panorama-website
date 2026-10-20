@@ -4,9 +4,9 @@ Read `project.md` first: it holds the product context, rules, site structure and
 
 ## Git workflow
 - Several chats may work on this repo at the same time. Run `git pull --rebase origin dev` before starting work and again before every push.
-- `main` can also change without a chat: saving on panorama.mov/slideshow/ commits photos straight to `main`. Before starting work, and before merging `dev` into `main`, bring those commits into `dev`: `git fetch origin && git merge origin/main` on `dev` (they only touch `media/bts/`).
+- `main` can also change without a chat: saving on panoramafilms.tv/slideshow/ commits photos straight to `main`. Before starting work, and before merging `dev` into `main`, bring those commits into `dev`: `git fetch origin && git merge origin/main` on `dev` (they only touch `media/bts/`).
 - Work on `dev`. Every push gets a Cloudflare Pages preview at dev.panorama-website.pages.dev.
-- Never push or merge to `main` without Andrija's explicit approval. Every `main` deploy is production (panorama.mov).
+- Never push or merge to `main` without Andrija's explicit approval. Every `main` deploy is production (panoramafilms.tv).
 - Commit and push each finished change to `dev`, with a commit message that says in plain words what changed and why.
 
 ## Keep project.md current

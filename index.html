@@ -1,4 +1,4 @@
-<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>
 /* Type: Untitled Sans (Klim), self-hosted. The files cover Latin only; Cyrillic falls back to Helvetica Neue, Arabic to the system font. */
 @font-face{font-family:"Untitled Sans";src:url(media/fonts/UntitledSans-Light.woff2) format("woff2");font-weight:300;font-style:normal;font-display:swap}
 @font-face{font-family:"Untitled Sans";src:url(media/fonts/UntitledSans-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
@@ -231,13 +231,14 @@ footer .ft-c{display:inline-flex;align-items:center;gap:14px}
   :root[data-play="c"] .play{left:auto;right:10px;top:10px;font-size:11px}
   :root[data-play="c"] .play::after{width:.8em;height:.95em;margin:0;filter:drop-shadow(0 0 4px rgba(0,0,0,.5))}
 }
-</style></head><body>
-<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+</style>
 <meta name="description" content="Panorama Films is an independent creative storytelling studio in Belgrade, Serbia. Documentaries, series, campaigns and brand films.">
+<link rel="canonical" href="https://panoramafilms.tv/">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Panorama Films">
+<meta property="og:title" content="Panorama Films">
+<meta property="og:description" content="Panorama Films is an independent creative storytelling studio in Belgrade, Serbia. Documentaries, series, campaigns and brand films.">
+<meta property="og:url" content="https://panoramafilms.tv/">
 <link rel="icon" href="/favicon.ico" sizes="48x48">
 <link rel="icon" href="/media/icons/favicon-32.png" type="image/png" sizes="32x32">
 <link rel="apple-touch-icon" href="/media/icons/apple-touch-icon.png">
@@ -1556,6 +1557,8 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .pj-dn-b{margin:0;font-size:calc(17*var(--fz));line-height:1.55;color:#cfcfcc;max-width:62ch}
 :root[data-pf="light"] .pj-dn-b{color:#3b3b37}
 </style>
+</head>
+<body>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-ne" viewBox="0 0 12 12"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
@@ -1856,7 +1859,7 @@ const F = {
 /* Drafts: projects being prepared. They show on the dev preview and locally, never on the live site
    (panorama.mov, www.panorama.mov, panorama-website.pages.dev). To publish one, take it out of DRAFTS. */
 const DRAFTS = ["wss26"];   /* For the Human of the Future published 2026-10-20 with its hero film */
-const SHOW_DRAFTS = !/^((www\.)?panorama\.mov|panorama-website\.pages\.dev)$/i.test(location.hostname);
+const SHOW_DRAFTS = !/^((www\.)?panoramafilms\.tv|(www\.)?panorama\.mov|panorama-website\.pages\.dev)$/i.test(location.hostname);
 /* the site's order (Andrija, 2026-10-14): the first six visible projects are Featured, the rest open the catalogue */
 const LIST = ["hotf","wss26","ask","orchard","astro","docu","p13","sport","ten","p07","p08","p09","p10","p12","p14","p15","p16","p36","p17","p18","p19","p20","p21","p23","p24","p25","p26"].filter(k=>SHOW_DRAFTS || !DRAFTS.includes(k));
 const CHAPTERS = [
@@ -3416,7 +3419,6 @@ document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true
   draw();
 })();
 </script>
-</body></html>
 
 <script>
 /* Toolkit rack focus */

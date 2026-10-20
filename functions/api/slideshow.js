@@ -60,7 +60,7 @@ function check(body){
 }
 
 /* the live addresses save to main (the change is on panorama.mov a minute later); the dev preview saves to dev */
-const LIVE = /^(www\.)?panorama\.mov$|^panorama-website\.pages\.dev$/;
+const LIVE = /^(www\.)?panoramafilms\.tv$|^(www\.)?panorama\.mov$|^panorama-website\.pages\.dev$/;
 const branchFor = (request, env) => env.GITHUB_BRANCH || (LIVE.test(new URL(request.url).hostname) ? 'main' : 'dev');
 
 async function readList(api, branch){

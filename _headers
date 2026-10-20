@@ -6,3 +6,10 @@
 
 /media/bts/photos.json
   Cache-Control: no-cache
+
+# Only panoramafilms.tv should appear in search: keep the Pages addresses (live and previews) out of Google
+https://panorama-website.pages.dev/*
+  X-Robots-Tag: noindex
+
+https://:version.panorama-website.pages.dev/*
+  X-Robots-Tag: noindex
