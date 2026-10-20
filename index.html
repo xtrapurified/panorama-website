@@ -1582,7 +1582,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .hdr.compact::after{content:"";position:fixed;top:0;left:0;right:0;height:max(2px,env(safe-area-inset-top,0px));background-color:rgb(var(--hdr-rgb,0,0,0));pointer-events:none;z-index:-1}
 .hdr.navopen::after{display:none}
 
-/* phones: no Catalogue heading; every film shows on from Featured except the last four, which wait behind Load more (2026-10-20) */
+/* phones: no Catalogue heading; the first twelve catalogue films run on from Featured, the rest (archive included) behind one Load more (2026-10-20) */
 @media (max-width:760px){
   .lede.cat{display:none}
   .cards .card.later,.cards .card.arch{display:block}
@@ -1894,7 +1894,7 @@ const F = {
 const DRAFTS = ["wss26"];   /* For the Human of the Future published 2026-10-20 with its hero film */
 const SHOW_DRAFTS = !/^((www\.)?panoramafilms\.tv|(www\.)?panorama\.mov|panorama-website\.pages\.dev)$/i.test(location.hostname);
 /* the site's order (Andrija, 2026-10-14): the first six visible projects are Featured, the rest open the catalogue */
-const LIST = ["hotf","wss26","ask","orchard","astro","docu","p13","sport","ten","p07","p08","p09","p10","p12","p14","p15","p16","p36","p17","p18","p19","p20","p21","p23","p24","p25","p26"].filter(k=>SHOW_DRAFTS || !DRAFTS.includes(k));
+const LIST = ["hotf","wss26","ask","orchard","astro","docu","p13","sport","ten","p07","p08","p09","p10","p12","p14","p15","p16","p36","p18","p17","p19","p20","p21","p23","p24","p25","p26"].filter(k=>SHOW_DRAFTS || !DRAFTS.includes(k));
 const CHAPTERS = [
   /* one section for now: documentaries and human stories are not told apart yet */
   ["Featured","Campaigns & Commissioned Films","01—07",LIST.slice(0,7)]
@@ -2883,9 +2883,9 @@ document.addEventListener('keydown', e=>{
 (()=>{ const b = document.getElementById('showAll'), c = document.getElementById('cards'), t = document.getElementById('showT');
   const extra = c.querySelectorAll('.card.later').length, arch = c.querySelectorAll('.card.arch').length;
   if (!extra && !arch){ b.parentElement.hidden = true; return; }
-  /* phones (2026-10-20, Andrija): the films run on from Featured with no Catalogue heading; only the last four wait behind Load more */
+  /* phones (2026-10-20, Andrija): the films run on from Featured with no Catalogue heading; after The Great Reset everything waits behind one Load more */
   const PH = matchMedia('(max-width:760px)'), cards = [...c.querySelectorAll('.card')];
-  cards.slice(-4).forEach(x=>x.classList.add('m-tail'));
+  cards.slice(CARDS_SHOWN).forEach(x=>x.classList.add('m-tail'));
   /* step 0: twelve films · step 1: all of the catalogue · step 2: the archive too (phones: step 0 all but the last four · step 1 everything) */
   let step = 0; const lastOf = () => PH.matches ? 1 : (arch ? 2 : 1); let last = lastOf();
   const set = s => { last = lastOf(); step = Math.min(s, last); c.classList.toggle('all-on', step >= 1); c.classList.toggle('arch-on', step >= 2); c.classList.toggle('m-all', PH.matches && step >= 1);
