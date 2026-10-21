@@ -247,7 +247,7 @@ footer .ft-c{display:inline-flex;align-items:center;gap:14px}
 <link rel="canonical" href="https://panoramafilms.tv/">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="Panorama Films">
-<meta property="og:title" content="Panorama Films — Documentaries, campaigns and brand films">
+<meta property="og:title" content="Panorama Films - Documentaries, campaigns and brand films">
 <meta property="og:description" content="Independent film studio from Belgrade making documentaries, docuseries, campaigns and brand films for UAE institutions, foundations, NGOs and brands worldwide.">
 <meta property="og:image" content="https://panoramafilms.tv/media/og/home.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630"><meta property="og:locale" content="en_US"><meta name="twitter:card" content="summary_large_image">
 <meta property="og:url" content="https://panoramafilms.tv/">
@@ -256,7 +256,7 @@ footer .ft-c{display:inline-flex;align-items:center;gap:14px}
 <link rel="apple-touch-icon" href="/media/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <script src="media/globe-follow.js" defer></script>
-<title>Panorama Films — Documentaries, campaigns and brand films</title>
+<title>Panorama Films - Documentaries, campaigns and brand films</title>
 <style>
 /* Layout: Swiss 12-column grid on black, film-first. Footage carries colour; type is Untitled Sans, flush left.
    Red (#e2231a) is the camera's tally light: REC dots, play controls, active and hover states. */
@@ -1673,6 +1673,11 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 @keyframes mMenu{from{clip-path:circle(0 at calc(100% - var(--m) - 23px) 48px)}to{clip-path:circle(150% at calc(100% - var(--m) - 23px) 48px)}}
 @keyframes mLink{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
 @media (max-width:760px) and (prefers-reduced-motion:reduce){.m-rv,.m-rv .media,.m-rv :is(.cap,.meta){opacity:1!important;transform:none!important;transition:none!important}.hdr .burger,.hdr.navopen .menu,.hdr.navopen .menu > a,.hdr.navopen .menu .nav-ft{animation:none!important}}
+/* Big white type one step heavier: Medium (500) instead of Regular (400) for the hero lines, section statements and titles
+   (Andrija, 2026-10-21). Grey fold labels (Films, Studio, Approach…) stay Regular. Delete this block to go back. */
+.hero .hd,.lede h2,.fold-lede,.ov-t,.ov-l,#toolkit dt,.net-names,.hl .hl-t,
+.end .ask,:is(.end,.pj-end) .links.big,.pj .pj-ask > span:last-child,
+.pj-h,.pj-hd h2,.pj-hd p,.pj-dn h3,.pj-next button,.dr-nm,.mb-q{font-weight:500}
 </style>
 <!-- SEO:LD --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://panoramafilms.tv/#site","url":"https://panoramafilms.tv/","name":"Panorama Films","inLanguage":"en","publisher":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Organization","@id":"https://panoramafilms.tv/#org","name":"Panorama Films","alternateName":["Panorama Films Collective","Панорама Филмс"],"url":"https://panoramafilms.tv/","logo":"https://panoramafilms.tv/media/icons/icon-512.png","image":"https://panoramafilms.tv/media/og/home.jpg","description":"Independent creative storytelling studio from Belgrade, Serbia, making documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.","slogan":"Seeing the bigger picture.","address":{"@type":"PostalAddress","addressLocality":"Belgrade","addressCountry":"RS"},"areaServed":[{"@type":"Country","name":"United Arab Emirates"},{"@type":"Country","name":"Serbia"},{"@type":"Place","name":"Worldwide"}],"knowsAbout":["Documentary film production","Docuseries","Brand films","Campaign films","Event films","Cinematography","Aerial cinematography","Film editing","Sound design","Script writing","Creative direction"],"sameAs":["https://www.instagram.com/panoramafilms.tv/","https://vimeo.com/panoramafilmstv","https://www.youtube.com/@panoramafilmstv"],"founder":[{"@id":"https://panoramafilms.tv/#andrija-kovac"}],"employee":[{"@id":"https://panoramafilms.tv/#andrija-kovac"},{"@id":"https://panoramafilms.tv/#mina-strugar"},{"@id":"https://panoramafilms.tv/#marija-kovacina"}]},{"@type":"Person","@id":"https://panoramafilms.tv/#andrija-kovac","name":"Andrija Kovač","jobTitle":"Creative Director","description":"Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.","image":"https://panoramafilms.tv/media/team/andrija-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#mina-strugar","name":"Mina Strugar","jobTitle":"Producer","description":"Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.","image":"https://panoramafilms.tv/media/team/mina-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#marija-kovacina","name":"Marija Kovačina","jobTitle":"Editorial Director","description":"Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.","image":"https://panoramafilms.tv/media/team/marija-2.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}}]}</script><!-- /SEO:LD --></head>
 <body>
@@ -1946,17 +1951,17 @@ const F = {
   orchard:{ar:4/3, n:"05", client:"Abu Dhabi Fund for Development", year:"2025", title:"The Orchard Keeper", line:"One family’s orchard. A changing climate. A legacy to preserve.", roles:"Service production, cinematography", v:"1222033605", h:"a807253340", dur:"4:37", clip:"orchard", s:10},
   docu:{n:"06", client:"Dubai Future Foundation", year:"2024–2025", title:"What Does the Future Hold?", page:"What-Does-The-Future-Hold-Season-3", mainT:"Season 4: Trailer", line:"The docuseries: today’s visionaries, tomorrow’s realities.", roles:"Script, creative direction, production", file:"s4-trailer", clip:"s4", own:true, still:"s4"},
   p07:{n:"07", title:"ImagineBoka.ai", client:"Photo exhibition, curated by Andrija Kovač", roles:"", img:"thumbs/p07", page:"ImagineBoka-ai", hover:"p07", year:"2023"},
-  p08:{n:"08", title:"Miracles Don’t Happen", client:"Dubai Future Forum 2024", year:"2024", roles:"Creative direction, cinematography, editing", img:"thumbs/p08", page:"Miracles-Don-t-Happen", hover:"p08", v:"1103734783"},
+  p08:{n:"08", title:"Miracles Don’t Happen", client:"Dubai Future Forum", year:"2024", roles:"Creative direction, cinematography, editing", img:"thumbs/p08", page:"Miracles-Don-t-Happen", hover:"p08", v:"1103734783"},
   p09:{n:"09", title:"Slavko Štimac", sub:"71st Pula Film Festival Award Film", line:"71st Pula Film Festival Award Film", client:"71st Pula Film Festival", year:"2024", roles:"Cinematography", img:"thumbs/p09", page:"Pula-Film-Festival", hover:"p09", v:"988793491"},
-  p10:{n:"10", title:"Valamar Biking", mainT:"Happiness is a bike ride away", client:"Valamar", year:"2018–2025", roles:"Creative direction, direction, cinematography, editing", img:"thumbs/p10", page:"Valamar-Biking", hover:"p10", v:"1103738334"},
+  p10:{n:"10", title:"A Perfect Day on the Bike", mainT:"Happiness is a bike ride away", client:"Valamar", year:"2018–2025", roles:"Creative direction, direction, cinematography, editing", img:"thumbs/p10", page:"Valamar-Biking", hover:"p10", v:"1103738334"},
   p12:{n:"12", title:"Air to the People: Serbia", client:"Air to the People 2.0", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p12", page:"Air-to-the-People-Serbia", yt:"LdLfDc-AlAc"},
-  p13:{n:"13", title:"Dubai Future Forum", mainT:"Dubai Future Forum 2025 Highlights", line:"The world’s top futurists, two days at the Museum of the Future.", s:45, loop:40, client:"Dubai Future Foundation", year:"2022–2025", roles:"Script, creative direction, production, cinematography, editing", img:"stills/dff", page:"Dubai-Future-Forum-Chronicles-1", hover:"p13", yt:"PkLvj-vQygs"},
+  p13:{n:"13", title:"The World’s Largest Gathering of Futurists", mainT:"Dubai Future Forum 2025 Highlights", line:"The world’s top futurists, two days at the Museum of the Future.", s:45, loop:40, client:"Dubai Future Forum", year:"2022–2025", roles:"Script, creative direction, production, cinematography, editing", img:"stills/dff", page:"Dubai-Future-Forum-Chronicles-1", hover:"p13", yt:"PkLvj-vQygs"},
   p14:{n:"14", title:"We Will Walk", client:"Civil Rights Defenders", year:"2022", roles:"Creative direction, cinematography, editing", img:"thumbs/p14", page:"We-Will-Walk", hover:"p14", v:"886851613", h:"25a02b2640"},
-  p15:{n:"15", title:"Imagine Our Future", client:"Dubai Future Forum 2023", year:"2023", roles:"Creative direction, cinematography, editing", img:"thumbs/p15", page:"Imagine-Our-Future", hover:"p15", yt:"tkh-cNGWigw"},
+  p15:{n:"15", title:"Imagine Our Future", client:"Dubai Future Forum", year:"2023", roles:"Creative direction, cinematography, editing", img:"thumbs/p15", page:"Imagine-Our-Future", hover:"p15", yt:"tkh-cNGWigw"},
   p36:{n:"", title:"The Time of Stabilitocracy", line:"How the promise of Europe became a deal with strongmen.", client:"European Western Balkans", year:"2022", roles:"Direction, production, cinematography, editing", img:"thumbs/p36", page:"The-Time-of-Stabilitocracy", hover:"p36", mainT:"Trailer", yt:"vjJYGV315y0"},
   p37:{n:"", title:"Natural History Museum Abu Dhabi", client:"Natural History Museum Abu Dhabi", year:"2023–2024", roles:"Creative direction, production, sound production", img:"thumbs/p37", still:"nhmad", page:"Natural-History-Museum-Abu-Dhabi", hover:"p37"},   /* sound and music for the museum (Andrija, 2026-10-21); photos only until the films arrive */
   p16:{n:"16", title:"The 30 Years Initiative", client:"Open Society Foundations", year:"2021", roles:"Direction, service production, cinematography, editing", img:"thumbs/p16", page:"The-30-Years-Initiative", v:"604953617", h:"926354aafa"},
-  p17:{n:"17", title:"EXPO 2020", client:"EXPO 2020 Dubai", year:"2020", roles:"Creative direction, production, editing, animation, design", img:"thumbs/p17", hover:"p17", page:"EXPO2020", v:"402236480"},
+  p17:{n:"17", title:"A Lifetime of Stories", client:"EXPO 2020", year:"2020", roles:"Creative direction, production, editing, animation, design", img:"thumbs/p17", hover:"p17", page:"EXPO2020", v:"402236480"},
   p18:{n:"18", title:"The Great Reset", client:"Mohammed bin Rashid School of Government (MBRSG)", year:"2020", roles:"Direction, editing", img:"thumbs/p18", page:"DUBAI-TGR", hover:"p18", v:"501402506"},
   p19:{n:"19", title:"Feminism 2052", client:"Center for Women’s Studies Serbia", year:"2022", roles:"Direction, cinematography, editing", img:"thumbs/p19", hover:"p19", page:"Feminism-2052", v:"685445568", h:"19a3e723be"},
   p20:{n:"20", title:"As If the End Were Not Quite Near", client:"Theatre", year:"2021", roles:"Direction, cinematography, editing, sound production", img:"thumbs/p20", page:"As-If-The-End-Were-Not-Quite-Near", v:"518557853", h:"e749699d7a"},
@@ -1976,10 +1981,10 @@ const F = {
 };
 /* Drafts: projects being prepared. They show on the dev preview and locally, never on the live site
    (panorama.mov, www.panorama.mov, panorama-website.pages.dev). To publish one, take it out of DRAFTS. */
-const DRAFTS = ["wss26"];   /* For the Human of the Future published 2026-10-20 with its hero film */
+const DRAFTS = ["wss26","p37"];   /* Natural History Museum Abu Dhabi stays hidden on the live site (Andrija, 2026-10-21) */   /* For the Human of the Future published 2026-10-20 with its hero film */
 const SHOW_DRAFTS = !/^((www\.)?panoramafilms\.tv|(www\.)?panorama\.mov|panorama-website\.pages\.dev)$/i.test(location.hostname);
 /* the site's order (Andrija, 2026-10-14): the first six visible projects are Featured, the rest open the catalogue */
-const LIST = ["hotf","wss26","ask","orchard","astro","docu","p13","sport","p37","ten","p07","p08","p09","p10","p12","p14","p15","p16","p36","p18","p17","p19","p20","p21","p23","p24","p25","p26"].filter(k=>SHOW_DRAFTS || !DRAFTS.includes(k));
+const LIST = ["hotf","wss26","ask","orchard","astro","docu","p13","sport","ten","p07","p08","p37","p09","p10","p12","p14","p15","p16","p36","p18","p17","p19","p20","p21","p23","p24","p25","p26"].filter(k=>SHOW_DRAFTS || !DRAFTS.includes(k));
 const CHAPTERS = [
   /* one section for now: documentaries and human stories are not told apart yet */
   ["Featured","Campaigns & Commissioned Films","01—07",LIST.slice(0,7)]

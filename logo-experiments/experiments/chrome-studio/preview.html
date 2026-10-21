@@ -1,0 +1,8 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Panorama · Chrome studio preview</title>
+<!-- Catalogue preview adapter (not part of the upload): the component with its studio controls hidden, using settings-example.json. -->
+<link rel="stylesheet" href="panorama-chrome.css">
+<style>html,body{margin:0;height:100%;background:#000;overflow:hidden}#logo{width:min(100vw,100vh);margin:auto;position:absolute;inset:0;height:min(100vw,100vh)}</style>
+<script src="panorama-chrome.js" defer></script></head>
+<body><div id="logo"></div>
+<script>addEventListener('DOMContentLoaded',()=>PanoramaChrome.mount('#logo',{controls:false,shape:'logo',resolution:320,bevel:1.2,speed:0.65,flow:1.4,variety:0.8,contrast:1,interaction:1.5,scale:1.2}).catch(console.error));</script>
+</body></html>
