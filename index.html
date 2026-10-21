@@ -1609,12 +1609,22 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   .works .work,.works .work + .work{margin-top:0;margin-bottom:0}
   #chapters .chapter,#chapters > *{margin:0;padding:0}
   .works .work .frame,#cards .card .frame{display:block;height:auto;aspect-ratio:1/1;margin:0;border-radius:0}   /* square (Andrija, 2026-10-21; was one screen tall) */
+  /* frame studies, ?ratio=sq|45|wide|full|mix: square, 4:5 portrait, 16:9, one screen tall, or featured 4:5 with the catalogue 16:9 */
+  :root[data-mr="45"] :is(.works .work,#cards .card) .frame{aspect-ratio:4/5}
+  :root[data-mr="wide"] :is(.works .work,#cards .card) .frame{aspect-ratio:16/9}
+  :root[data-mr="full"] :is(.works .work,#cards .card) .frame{aspect-ratio:auto;height:100svh}
+  :root[data-mr="mix"] .works .work .frame{aspect-ratio:4/5}
+  :root[data-mr="mix"] #cards .card .frame{aspect-ratio:16/9}
+  :root[data-mr="wide"] :is(.works .work .cap,#cards .card .meta),:root[data-mr="mix"] #cards .card .meta{padding-top:10vw;padding-bottom:16px}
+  :root[data-mr="wide"] :is(.works .work .cap h3.sr-only,#cards .card .meta h3),:root[data-mr="mix"] #cards .card .meta h3{font-size:clamp(26px,7.4vw,32px)}
   .works .work .media img,#cards .card .media img{width:100%;height:100%;object-fit:cover}
   .works .work .cap,#cards .card .meta{position:absolute;left:0;right:0;bottom:0;z-index:4;margin:0;padding:18vw var(--m) 22px;background:linear-gradient(transparent,rgba(0,0,0,.5));pointer-events:none;display:block}
   .works .work .cap h3.sr-only,#cards .card .meta h3{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;margin:0;font-size:clamp(34px,9.6vw,44px);font-weight:400;letter-spacing:-.045em;line-height:1.08;color:#fff;text-wrap:balance}   /* as the We make words */
   .works .work .cap .cl,.works .work .cap p,#cards .card .meta .cl{display:none}
   .frame .hud,.frame .play,.works .ov{display:none!important}
-  #cards{display:block;gap:0}
+  #cards{display:block;gap:0;margin-top:0;padding-top:0}
+  #chapters,#chapters .works{margin-bottom:0!important;padding-bottom:0}
+  section.sec:has(#cards){padding-top:0}
   #showWrap{margin-top:40px}
   /* 3 Studio, shorter */
   #studio .grid.about{display:none}
@@ -2235,6 +2245,10 @@ const mio = new IntersectionObserver(es=>es.forEach(e=>{
 }),{threshold:.2});
 /* phones (mobile redesign): every film fills its screen, so its picture and stream cover the frame */
 if (matchMedia('(max-width:760px)').matches) document.querySelectorAll('.works .media, #cards .media').forEach(m=>m.classList.add('cover'));
+/* frame shape studies on phones (mobile redesign): ?ratio=sq|45|wide|full|mix, remembered per browser */
+(()=>{ let v = (new URLSearchParams(location.search).get('ratio') || '').toLowerCase();
+  try { if (/^(sq|45|wide|full|mix)$/.test(v)) localStorage.setItem('pf-mr', v); else v = localStorage.getItem('pf-mr') || 'sq'; } catch(_) { if (!/^(sq|45|wide|full|mix)$/.test(v)) v = 'sq'; }
+  document.documentElement.dataset.mr = v; })();
 /* phones: each film rises into place as it scrolls into view (mobile redesign) */
 if (matchMedia('(max-width:760px)').matches && !REDUCED){ const rv = new IntersectionObserver(es=>es.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('in'); rv.unobserve(e.target); } }), {rootMargin:'0px 0px -12% 0px'});
   document.querySelectorAll('.works .work, #cards .card').forEach(el=>{ if (el.getBoundingClientRect().top > innerHeight * .9){ el.classList.add('m-rv'); rv.observe(el); } }); }
