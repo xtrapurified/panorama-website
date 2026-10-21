@@ -1635,6 +1635,34 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   footer .ft-c{font-size:0;gap:0}   /* only the Golden hour disc stays on the right */
   .mail-note{font-size:15px}
 }
+
+/* mobile redesign, third pass (2026-10-21): films rise into place as they scroll in; the menu button is a ringed circle
+   that pops in, turns into an X, and the menu opens as a circle growing from it, links following one by one (after fried.tv) */
+@media (max-width:760px){
+  .m-rv{opacity:0;transform:translateY(48px) scale(.96);transition:opacity .9s var(--ease),transform 1.1s var(--ease)}
+  .m-rv .media{transform:scale(1.12);transition:transform 1.6s var(--ease)}
+  .m-rv :is(.cap,.meta){opacity:0;transform:translateY(18px);transition:opacity .7s var(--ease) .25s,transform .9s var(--ease) .25s}
+  .m-rv.in{opacity:1;transform:none}
+  .m-rv.in .media{transform:none}
+  .m-rv.in :is(.cap,.meta){opacity:1;transform:none}
+  .hdr .burger{width:46px;height:46px;border:1px solid rgba(255,255,255,.55);border-radius:50%;animation:mBurger .9s var(--ease) .5s both}
+  .hdr .burger i,.hdr .burger i::before,.hdr .burger i::after{width:16px;height:1.5px}
+  .hdr .burger i::before{transform:translateY(-4px)}.hdr .burger i::after{transform:translateY(4px)}
+  .hdr .burger.open i{background:transparent}
+  .hdr .burger.open i::before{transform:rotate(45deg)}.hdr .burger.open i::after{transform:rotate(-45deg)}
+  .hdr .burger i::before,.hdr .burger i::after{transition:transform .45s var(--ease)}
+  .hdr .burger{transition:transform .45s var(--ease),border-color .3s}
+  .hdr .burger.open{transform:rotate(90deg)}
+  .hdr.navopen .menu .nav-ft .nav-ix,.hdr.navopen .menu .nav-ft .ft-th{font-size:15px!important}
+  :root[data-pf="light"] .hdr.compact .burger,:root[data-pf="light"] .hdr.navopen .burger{border-color:rgba(18,18,17,.4)}
+  .hdr.navopen .menu{animation:mMenu .75s var(--ease) both}
+  .hdr.navopen .menu > a,.hdr.navopen .menu .nav-ft{animation:mLink .7s var(--ease) both}
+  .hdr.navopen .menu > a:nth-child(1){animation-delay:.18s}.hdr.navopen .menu > a:nth-child(2){animation-delay:.25s}.hdr.navopen .menu > a:nth-child(3){animation-delay:.32s}.hdr.navopen .menu .nav-ft{animation-delay:.42s}
+}
+@keyframes mBurger{from{opacity:0;transform:scale(.4) rotate(-90deg)}to{opacity:1;transform:none}}
+@keyframes mMenu{from{clip-path:circle(0 at calc(100% - var(--m) - 23px) 48px)}to{clip-path:circle(150% at calc(100% - var(--m) - 23px) 48px)}}
+@keyframes mLink{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){.m-rv,.m-rv .media,.m-rv :is(.cap,.meta){opacity:1!important;transform:none!important;transition:none!important}.hdr .burger,.hdr.navopen .menu,.hdr.navopen .menu > a,.hdr.navopen .menu .nav-ft{animation:none!important}}
 </style>
 <!-- SEO:LD --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://panoramafilms.tv/#site","url":"https://panoramafilms.tv/","name":"Panorama Films","inLanguage":"en","publisher":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Organization","@id":"https://panoramafilms.tv/#org","name":"Panorama Films","alternateName":["Panorama Films Collective","Панорама Филмс"],"url":"https://panoramafilms.tv/","logo":"https://panoramafilms.tv/media/icons/icon-512.png","image":"https://panoramafilms.tv/media/og/home.jpg","description":"Independent creative storytelling studio from Belgrade, Serbia, making documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.","slogan":"Seeing the bigger picture.","address":{"@type":"PostalAddress","addressLocality":"Belgrade","addressCountry":"RS"},"areaServed":[{"@type":"Country","name":"United Arab Emirates"},{"@type":"Country","name":"Serbia"},{"@type":"Place","name":"Worldwide"}],"knowsAbout":["Documentary film production","Docuseries","Brand films","Campaign films","Event films","Cinematography","Aerial cinematography","Film editing","Sound design","Script writing","Creative direction"],"sameAs":["https://www.instagram.com/panoramafilms.tv/","https://vimeo.com/panoramafilmstv","https://www.youtube.com/@panoramafilmstv"],"founder":[{"@id":"https://panoramafilms.tv/#andrija-kovac"}],"employee":[{"@id":"https://panoramafilms.tv/#andrija-kovac"},{"@id":"https://panoramafilms.tv/#mina-strugar"},{"@id":"https://panoramafilms.tv/#marija-kovacina"}]},{"@type":"Person","@id":"https://panoramafilms.tv/#andrija-kovac","name":"Andrija Kovač","jobTitle":"Creative Director","description":"Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.","image":"https://panoramafilms.tv/media/team/andrija-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#mina-strugar","name":"Mina Strugar","jobTitle":"Producer","description":"Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.","image":"https://panoramafilms.tv/media/team/mina-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#marija-kovacina","name":"Marija Kovačina","jobTitle":"Editorial Director","description":"Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.","image":"https://panoramafilms.tv/media/team/marija-2.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}}]}</script><!-- /SEO:LD --></head>
 <body>
@@ -2206,6 +2234,9 @@ const mio = new IntersectionObserver(es=>es.forEach(e=>{
 }),{threshold:.2});
 /* phones (mobile redesign): every film fills its screen, so its picture and stream cover the frame */
 if (matchMedia('(max-width:760px)').matches) document.querySelectorAll('.works .media, #cards .media').forEach(m=>m.classList.add('cover'));
+/* phones: each film rises into place as it scrolls into view (mobile redesign) */
+if (matchMedia('(max-width:760px)').matches && !REDUCED){ const rv = new IntersectionObserver(es=>es.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('in'); rv.unobserve(e.target); } }), {rootMargin:'0px 0px -12% 0px'});
+  document.querySelectorAll('.works .work, #cards .card').forEach(el=>{ if (el.getBoundingClientRect().top > innerHeight * .9){ el.classList.add('m-rv'); rv.observe(el); } }); }
 document.querySelectorAll('.media[data-k], .media[data-c]').forEach(m=>mio.observe(m));
 
 /* REC timecodes */
