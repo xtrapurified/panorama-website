@@ -2268,6 +2268,8 @@ const setNav = open => {
   burger.setAttribute('aria-expanded', open); burger.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
 };
 burger.addEventListener('click', ()=>setNav(navov.hidden));
+/* tapping the logo or the wordmark while the phone menu is open closes it (Andrija, 2026-10-21) */
+document.getElementById('slot').addEventListener('click', ()=>{ if (!navov.hidden) setNav(false); });
 navov.addEventListener('click', ()=>setNav(false));
 document.getElementById('menu').addEventListener('click', e=>{ if (e.target.closest('a')) setNav(false); });
 addEventListener('scroll', ()=>{ if (!navov.hidden && !hdr.classList.contains('compact') && innerWidth > 760) setNav(false); }, {passive:true});
