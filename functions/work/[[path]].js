@@ -37,8 +37,8 @@ export async function onRequest({ request, env, params }) {
       [cr.type === 'service' ? 'contributor' : 'creator']: { '@id': `${SITE}/#org` },
       ...(p.client && p.client !== 'Panorama Films' ? { sourceOrganization: { '@type': 'Organization', name: p.client } } : {}),
       ...(crew.length ? { contributor: crew } : {}),
-      ...(p.yt ? { video: { '@type': 'VideoObject', name: p.mainT || p.title, description: desc, thumbnailUrl: `https://i.ytimg.com/vi/${p.yt}/hqdefault.jpg`, embedUrl: `https://www.youtube-nocookie.com/embed/${p.yt}` } }
-        : p.v ? { video: { '@type': 'VideoObject', name: p.mainT || p.title, description: desc, thumbnailUrl: og, embedUrl: `https://player.vimeo.com/video/${p.v}${p.h ? '?h=' + p.h : ''}` } } : {}) }] };
+      /* no VideoObject: Google requires an uploadDate, and we have no real one (Search Console, 2026-10-21) */
+      }] };
 
   const set = (sel, attr, val) => [sel, { element(e) { e.setAttribute(attr, val); } }];
   let rw = new HTMLRewriter()
