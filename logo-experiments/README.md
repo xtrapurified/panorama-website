@@ -22,6 +22,7 @@ The page has `noindex,nofollow`, and the hosting configuration sends `X-Robots-T
 | LE-008 | Particle inflate | experiments/particle-inflate/globe-inflate.js |
 | LE-009 | Vector spin | experiments/vector-spin/globe-spin.js |
 | LE-012 | Chrome dither | experiments/chrome-dither/panorama-globe-chrome-dither.html |
+| LE-013 | Chrome studio | experiments/chrome-studio/panorama-chrome.js |
 
 Example request: “Use LE-006, Edge prism, in the homepage header at intensity 0.1.” The Copy reference action includes the exact source path and a direct catalogue link.
 

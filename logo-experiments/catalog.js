@@ -189,5 +189,30 @@ window.LOGO_EXPERIMENTS = [
       "panorama-globe-chrome-dither.html",
       "README.md"
     ]
+  },
+  {
+    "id": "LE-013",
+    "slug": "chrome-studio",
+    "title": "Chrome studio",
+    "kind": "Shader",
+    "description": "Liquid chrome in black-and-white dither, as a full studio: the globe, the P from the wordmark or an uploaded logo, with presets and sliders for bevel, flow, speed, contrast and cursor response. WebGL, no dependencies.",
+    "entry": "experiments/chrome-studio/index.html",
+    "preview": "experiments/chrome-studio/preview.html",
+    "source": "experiments/chrome-studio/panorama-chrome.js",
+    "download": "originals/chrome-studio.zip",
+    "files": [
+      "index.html",
+      "demo.js",
+      "panorama-chrome.js",
+      "panorama-chrome.css",
+      "standalone.html",
+      "embed-example.html",
+      "embed-example.js",
+      "settings-example.json",
+      "README.md",
+      "assets/panorama-globe-original.png",
+      "assets/panorama-globe-mask.png",
+      "assets/panorama-p-mask.png"
+    ]
   }
 ];
