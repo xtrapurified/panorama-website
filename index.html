@@ -842,6 +842,8 @@ footer{font-size:calc(12*var(--fz))}
 .wm:hover .wm-f,.wm:focus-visible .wm-f{opacity:0;max-width:0}   /* Films steps aside while Panorama flicks through its scripts */   /* Films a step lighter than Panorama */
 /* a red bullet leads the wordmark, like Rec (2026-10-22, Andrija); it stays put while Panorama flicks through Cyrillic and Arabic */
 .wm::before{content:"";display:inline-block;width:.34em;height:.34em;border-radius:50%;background:var(--red);margin-right:.24em;vertical-align:.12em}
+.wm::before{animation:blink 1s steps(1,end) infinite}   /* blinks like the Rec dot (Andrija, 2026-10-22) */
+@media (prefers-reduced-motion:reduce){.wm::before{animation:none}}
 .wm sup{font-size:.42em;font-weight:400;line-height:0;vertical-align:.95em;margin-left:.12em}
 .hdr.compact .logo-slot{width:auto;aspect-ratio:auto}
 /* header layout: logo on the left, the links starting a quarter of the page in from the right edge, the reel's Rec in the top right corner */
