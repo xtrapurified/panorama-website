@@ -1356,6 +1356,16 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 /* Services (2026-10-22, Andrija): its label two lines further down from Formats; on computers the five columns share the full page width */
 #services.more{margin-top:calc(clamp(80px,8vw,128px) + var(--t1) * 2.06)}
 @media (min-width:901px){#services .caps{grid-template-columns:repeat(5,minmax(0,1fr))}#services .caps > div{grid-column:auto}}
+/* Services as a slate (2026-10-22): number, a big white discipline, its items small and grey under it; the one under the pointer turns red and its items type out in white, the others dim */
+#services .sv{border-top:1px solid var(--rule)!important;padding-top:12px!important;transition:opacity .3s}
+#services .sv h3{display:grid;gap:clamp(10px,1vw,16px);margin-bottom:clamp(14px,1.4vw,22px);font-size:var(--t1);font-weight:500;letter-spacing:-.037em;line-height:1.03;color:var(--fg)}
+#services .sv .sv-n{font-size:var(--small);letter-spacing:0;color:var(--mid);transition:color .2s}
+#services .sv .sv-t{transition:color .2s}
+#services .sv li{min-height:1.35em;transition:color .2s}
+#services .sv li.ty::after{content:"";display:inline-block;width:.45em;height:.9em;margin-left:1px;vertical-align:-.1em;background:var(--red)}
+#services .caps.hov .sv:not(.on){opacity:.35}
+#services .sv.on .sv-t,#services .sv.on .sv-n{color:var(--red)}
+#services .sv.on li{color:var(--fg)}
 /* motion: one ease everywhere; big statements arrive once, top to bottom, as they scroll in */
 .rv{clip-path:inset(0 -2em 100% -2em);transform:translateY(.22em);transition:clip-path 1.2s var(--ease),transform 1.2s var(--ease)}
 .rv.in{clip-path:inset(-.3em -2em -.4em -2em);transform:none}
@@ -1983,8 +1993,16 @@ const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interv
   Direction: k => /direction|directing/i.test(F[k].roles || ''), Production: k => /production|cinematograph/i.test(F[k].roles || ''),
   Post: k => /edit|sound design|grading/i.test(F[k].roles || '')};
 const capFilms = n => CAP_MATCH[n] ? ORDER.filter(k=>F[k] && CAP_MATCH[n](k)) : [];
-document.getElementById('caps').innerHTML = CAPS.map(([n,l])=>{ const fs = capFilms(n);
-  return `<div><h3>${n}</h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`; }).join('');
+document.getElementById('caps').innerHTML = CAPS.map(([n,l],i)=>`<div class="sv"><h3><span class="sv-n lab mid">${String(i+1).padStart(2,'0')}</span><span class="sv-t">${n}</span></h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
+/* Services as a slate (2026-10-22, Andrija): pointing at a discipline turns it red and types its items out again; the text is always there, the typing is only a flourish */
+(()=>{ const box = document.getElementById('caps'); if (!box || !matchMedia('(hover:hover) and (pointer:fine)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const cols = [...box.querySelectorAll('.sv')]; let run = 0;
+  cols.forEach(c=>{ const lis = [...c.querySelectorAll('li')]; lis.forEach(li=>li.dataset.x = li.textContent);
+    c.addEventListener('mouseenter', ()=>{ cols.forEach(o=>o.classList.toggle('on', o === c)); box.classList.add('hov'); const me = ++run;
+      lis.forEach(li=>{ li.textContent = ''; li.classList.remove('ty'); });
+      let k = 0, j = 0; const step = ()=>{ if (me !== run) return; const li = lis[j]; if (!li) return; const x = li.dataset.x; li.classList.add('ty'); k += 2; li.textContent = x.slice(0, k);
+        if (k >= x.length){ li.classList.remove('ty'); li.textContent = x; j++; k = 0; } setTimeout(step, 16); }; step(); });
+    c.addEventListener('mouseleave', ()=>{ c.classList.remove('on'); box.classList.remove('hov'); ++run; lis.forEach(li=>{ li.textContent = li.dataset.x; li.classList.remove('ty'); }); }); }); })();
 const CLIENT_FILM = {"Dubai Future Foundation":"ten", "Museum of the Future":"astro", "EXPO Dubai":"p17", "Dubai Sports Council":"sport",
   "World Government Summit":"p21", "Valamar":"p10", "SHARE Foundation":"p29", "Civil Rights Defenders":"p14",
   "Birds of Prey Protection Foundation Serbia":"p25", "World Drone Prix":"p30", "Firefly Production":"p26"};
