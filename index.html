@@ -1387,11 +1387,12 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 #services .sv h3{display:grid;gap:clamp(10px,1vw,16px);margin-bottom:clamp(14px,1.4vw,22px);font-size:var(--t1);font-weight:500;letter-spacing:-.037em;line-height:1.03;color:var(--fg)}
 #services .sv .sv-n{font-size:var(--small);letter-spacing:0;color:var(--mid);transition:color .2s}
 #services .sv .sv-t{transition:color .2s}
-#services .sv li{min-height:1.35em;transition:color .2s}
-#services .sv li.ty::after{content:"";display:inline-block;width:.45em;height:.9em;margin-left:1px;vertical-align:-.1em;background:var(--red)}
+#services .sv li{position:relative;min-height:1.35em}
+#services .sv .sv-w{position:absolute;left:0;top:0;color:var(--fg);white-space:nowrap;pointer-events:none}
+#services .sv .sv-w.ty::after{content:"";display:inline-block;width:.45em;height:.9em;margin-left:1px;vertical-align:-.1em;background:var(--red)}
 #services .caps.hov .sv:not(.on){opacity:.35}
 #services .sv.on .sv-t,#services .sv.on .sv-n{color:var(--red)}
-#services .sv.on li{color:var(--fg)}
+
 /* motion: one ease everywhere; big statements arrive once, top to bottom, as they scroll in */
 .rv{clip-path:inset(0 -2em 100% -2em);transform:translateY(.22em);transition:clip-path 1.2s var(--ease),transform 1.2s var(--ease)}
 .rv.in{clip-path:inset(-.3em -2em -.4em -2em);transform:none}
@@ -2120,15 +2121,15 @@ document.getElementById('caps').innerHTML = CAPS.map(([n,l],i)=>`<div class="sv"
   let raf = 0; const pick = ()=>{ raf = 0; const r = box.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight){ on(null); return; }
     let best = null, d = 1e9; lis.forEach(li=>{ const q = li.getBoundingClientRect(), dd = Math.abs(q.top + q.height / 2 - innerHeight / 2); if (dd < d){ d = dd; best = li; } }); on(best); };
   addEventListener('scroll', ()=>{ if (!raf) raf = requestAnimationFrame(pick); }, {passive:true}); pick(); })();
-/* Services as a slate (2026-10-22, Andrija): pointing at a discipline turns it red and types its items out again; the text is always there, the typing is only a flourish */
+/* Services as a slate (2026-10-22, Andrija): pointing at a discipline turns it red and types its items out in white over the grey, which stays in place underneath */
 (()=>{ const box = document.getElementById('caps'); if (!box || !matchMedia('(hover:hover) and (pointer:fine)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   const cols = [...box.querySelectorAll('.sv')]; let run = 0;
-  cols.forEach(c=>{ const lis = [...c.querySelectorAll('li')]; lis.forEach(li=>li.dataset.x = li.textContent);
+  cols.forEach(c=>{ const lis = [...c.querySelectorAll('li')]; lis.forEach(li=>{ const w = document.createElement('span'); w.className = 'sv-w'; w.setAttribute('aria-hidden', 'true'); li.appendChild(w); });
     c.addEventListener('mouseenter', ()=>{ cols.forEach(o=>o.classList.toggle('on', o === c)); box.classList.add('hov'); const me = ++run;
-      lis.forEach(li=>{ li.textContent = ''; li.classList.remove('ty'); });
-      let k = 0, j = 0; const step = ()=>{ if (me !== run) return; const li = lis[j]; if (!li) return; const x = li.dataset.x; li.classList.add('ty'); k += 2; li.textContent = x.slice(0, k);
-        if (k >= x.length){ li.classList.remove('ty'); li.textContent = x; j++; k = 0; } setTimeout(step, 16); }; step(); });
-    c.addEventListener('mouseleave', ()=>{ c.classList.remove('on'); box.classList.remove('hov'); ++run; lis.forEach(li=>{ li.textContent = li.dataset.x; li.classList.remove('ty'); }); }); }); })();
+      lis.forEach(li=>{ const w = li.lastChild; w.textContent = ''; w.classList.remove('ty'); });
+      let k = 0, j = 0; const step = ()=>{ if (me !== run) return; const li = lis[j]; if (!li) return; const w = li.lastChild, x = li.firstChild.textContent; w.classList.add('ty'); k += 2; w.textContent = x.slice(0, k);
+        if (k >= x.length){ w.classList.remove('ty'); w.textContent = x; j++; k = 0; } setTimeout(step, 16); }; step(); });
+    c.addEventListener('mouseleave', ()=>{ c.classList.remove('on'); box.classList.remove('hov'); ++run; lis.forEach(li=>{ const w = li.lastChild; w.textContent = ''; w.classList.remove('ty'); }); }); }); })();
 const CLIENT_FILM = {"Dubai Future Foundation":"ten", "Museum of the Future":"astro", "EXPO Dubai":"p17", "Dubai Sports Council":"sport",
   "World Government Summit":"p21", "Valamar":"p10", "SHARE Foundation":"p29", "Civil Rights Defenders":"p14",
   "Birds of Prey Protection Foundation Serbia":"p25", "World Drone Prix":"p30", "Firefly Production":"p26"};
