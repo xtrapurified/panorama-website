@@ -2493,7 +2493,7 @@ function playLocal(k, failed){
 
 function playVimeo(k, fm){
   const f = fm || F[k];
-  const src = `https://player.vimeo.com/video/${f.v}?${f.h?`h=${f.h}&`:''}autoplay=1&controls=0&title=0&byline=0&portrait=0&dnt=1&transparent=0&quality=1080p&color=e2231a`;
+  const src = `https://player.vimeo.com/video/${f.v}?${f.h?`h=${f.h}&`:''}autoplay=1&controls=0&title=0&byline=0&portrait=0&dnt=1&transparent=0&color=e2231a`;
   box.insertAdjacentHTML('beforeend', `<iframe src="${src}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen tabindex="-1" title="${esc(f.title)}"></iframe><button class="lb-hit" type="button" tabindex="-1" aria-hidden="true"></button>`);
   const lp = new Vimeo.Player(box.querySelector('iframe')), off = () => lp.disableTextTrack().catch(()=>{});
   const st = { sound:true, nativeFs:true, paused:true, muted:false, time:0, dur:0,
@@ -2501,9 +2501,20 @@ function playVimeo(k, fm){
     seek(t){ lp.setCurrentTime(t).catch(()=>{}); }, mute(m){ lp.setMuted(m).then(()=>{ st.muted = m; paint(); }).catch(()=>{}); },
     fs(){ lp.requestFullscreen().catch(()=>{}); }, destroy(){ lp.destroy().catch(()=>{}); } };
   P = st;
-  lp.ready().then(()=>{ off(); lp.getQualities().then(qs=>{ const ids = qs.map(x=>x.id), want = ['1080p','2k','720p'].find(x=>ids.includes(x)); if (want) lp.setQuality(want).catch(()=>{}); }).catch(()=>{}); lp.getDuration().then(d=>{ st.dur = d; paint(); }); lp.getMuted().then(m=>{ st.muted = m; paint(); }); setTimeout(()=>{ if (P === st && st.paused) unload(); }, 1500); }).catch(()=>playLocal(k, true));
+  lp.ready().then(()=>{ off(); best(); lp.getDuration().then(d=>{ st.dur = d; paint(); }); lp.getMuted().then(m=>{ st.muted = m; paint(); }); setTimeout(()=>{ if (P === st && st.paused) unload(); }, 1500); }).catch(()=>playLocal(k, true));
+  /* sharpest version the screen can show: the player's width in device pixels (the whole screen in full screen), never below 1080p;
+     asked again once playback starts and on entering full screen, because Vimeo's automatic quality starts low and climbs.
+     Vimeo only honours this when the account allows choosing quality; otherwise it stays on automatic (2026-10-22) */
+  const VQ = [['4k',3840],['2k',2560],['1080p',1920],['720p',1280],['540p',960],['360p',640],['240p',426]];
+  let picked = '';
+  function best(){ lp.getQualities().then(qs=>{ const ids = qs.map(x=>x.id), fs = document.fullscreenElement || document.webkitFullscreenElement;
+    const need = Math.max(1920, (fs ? screen.width : lbp.clientWidth) * Math.min(devicePixelRatio || 1, 3));
+    const have = VQ.filter(([q])=>ids.includes(q)), fit = have.filter(([,w])=>w <= need * 1.1), want = (fit[0] || have[have.length - 1] || [])[0];
+    if (want && want !== picked) lp.setQuality(want).then(()=>{ picked = want; }).catch(()=>{}); }).catch(()=>{}); }
+  const reBest = () => { if (P === st) best(); };
+  document.addEventListener('fullscreenchange', reBest); const oldDestroy = st.destroy; st.destroy = () => { document.removeEventListener('fullscreenchange', reBest); oldDestroy(); };
   lp.on('loaded', off);
-  lp.on('play', ()=>{ off(); st.paused = false; ready(); lp.getMuted().then(m=>{ st.muted = m; paint(); }); paint(); });
+  lp.on('play', ()=>{ off(); if (!picked) best(); st.paused = false; ready(); lp.getMuted().then(m=>{ st.muted = m; paint(); }); paint(); });
   lp.on('pause', ()=>{ st.paused = true; paint(); });
   lp.on('timeupdate', d=>{ st.time = d.seconds; st.dur = d.duration; paint(); });
   lp.on('volumechange', ()=>lp.getMuted().then(m=>{ st.muted = m; paint(); }));
