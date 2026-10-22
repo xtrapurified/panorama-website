@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-22 (About redesign, first pass from the doc). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-22 (About redesign, first pass from the doc; new header lines). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -22,6 +22,7 @@ A full-service studio that takes a film from first question to final frame: rese
 
 Supporting facts already in use on the site:
 - Identity line: "Seeing the bigger picture." Supporting selected phrases: "Stories with perspective", "The future, documented."
+- Header (hero) text, 2026-10-22 (Andrija): "Films about people, ideas and the future." (grey) / "Panorama Films" (white, the page's h1) / "Creative storytelling studio." (grey) / "Београд دبي Worldwide" (red). "Seeing the bigger picture." left the header; it stays as the slogan in the structured data. Phones show the last three lines.
 - Work spans documentaries, series, campaigns and brand films, with an interest in science, technology, culture and human stories. A large part of the client base is in the UAE (Dubai Future Foundation, Museum of the Future, World Government Summit, World Sports Summit).
 - Generative media is one method among live action, archive, design and animation, always under human judgement ("Human in the loop"). It is not the proposition.
 
