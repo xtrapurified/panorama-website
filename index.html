@@ -840,6 +840,8 @@ footer{font-size:calc(12*var(--fz))}
 .lb-bar .lb-l{position:relative;top:var(--wm-dy,6.9px)}
 @media (max-width:700px){.lb-bar .lb-l{top:var(--wm-dy,-2.7px)}}   /* sits exactly where the header wordmark is; refined by script on open */   /* in a project: the Panorama Films wordmark leads back to the site (2026-10-14) */   /* the wordmark turns red on hover (2026-10-14) */
 .wm:hover .wm-f,.wm:focus-visible .wm-f{opacity:0;max-width:0}   /* Films steps aside while Panorama flicks through its scripts */   /* Films a step lighter than Panorama */
+/* a red bullet leads the wordmark, like Rec (2026-10-22, Andrija); it stays put while Panorama flicks through Cyrillic and Arabic */
+.wm::before{content:"";display:inline-block;width:.34em;height:.34em;border-radius:50%;background:var(--red);margin-right:.24em;vertical-align:.12em}
 .wm sup{font-size:.42em;font-weight:400;line-height:0;vertical-align:.95em;margin-left:.12em}
 .hdr.compact .logo-slot{width:auto;aspect-ratio:auto}
 /* header layout: logo on the left, the links starting a quarter of the page in from the right edge, the reel's Rec in the top right corner */
