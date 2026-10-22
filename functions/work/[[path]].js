@@ -43,7 +43,7 @@ export async function onRequest({ request, env, params }) {
 
   const set = (sel, attr, val) => [sel, { element(e) { e.setAttribute(attr, val); } }];
   let rw = new HTMLRewriter()
-    .on('head', { element(e) { e.prepend('<base href="/">', { html: true }); e.append(`<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`, { html: true }); } })
+    .on('head', { element(e) { e.append(`<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`, { html: true }); } })
     .on('title', { element(e) { e.setInnerContent(title); } })
     .on('html', { element(e) { e.setAttribute('data-work', k); } });
   for (const [s, a, v] of [
