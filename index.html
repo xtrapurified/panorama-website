@@ -697,7 +697,7 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 #studio > .lede h2,.lede.coll h2{padding-top:1.03em}
 .lede.coll{margin-bottom:clamp(24px,3vw,48px)}
 /* the t-shirt lines, word for word, in the dot-matrix face (Andrija, 2026-10-22) */
-.pf-codes{list-style:none;margin:clamp(96px,10vw,160px) 0 0;padding:0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(20px,3.3vw,56px);line-height:1.22;letter-spacing:.2em;--pfc:#3a3a37;color:var(--pfc);white-space:nowrap}
+.pf-codes{list-style:none;margin:clamp(48px,6vw,96px) 0 clamp(14px,1.6vw,24px) auto;width:max-content;padding:0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(14px,1.35vw,22px);line-height:1.22;letter-spacing:.2em;--pfc:#3a3a37;color:var(--pfc);white-space:nowrap}
 :root[data-pf="light"] .pf-codes{--pfc:#c2c2bc}
 .pf-codes li{margin:0;width:max-content;cursor:default;transition:color .35s}
 /* crew codes: beside each name in the Collective list, and above the bio in a profile (trial, 2026-10-22) */
@@ -707,8 +707,11 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 .dr-code{margin:14px 0 0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:var(--small);letter-spacing:.2em;color:var(--mid)}
 @media (max-width:760px){.net-names .crew{display:none}}
 .peers:has(.net-dr:not([hidden])) .net-names .crew{opacity:0}
-.pf-codes li.dec{color:var(--fg)}   /* under clients, dark grey; a line decodes and lights up while pointed at (Andrija, 2026-10-22) */
-@media (max-width:760px){.pf-codes{font-size:min(5.4vw,24px);letter-spacing:.12em}}
+.pf-codes li.dec{color:var(--fg)}
+.pf-codes .fl{display:inline-block;white-space:pre}
+.pf-codes .fl.fp{animation:pfFlap .11s linear}
+@keyframes pfFlap{0%{transform:scaleY(.15)}100%{transform:scaleY(1)}}   /* under clients, dark grey; a line decodes and lights up while pointed at (Andrija, 2026-10-22) */
+@media (max-width:760px){.pf-codes{font-size:min(3.6vw,16px);letter-spacing:.12em}}   /* in the corner above the Golden hour easter egg, right-aligned and small (Andrija, 2026-10-22) */
 .lede.coll .tag{position:static;display:inline-flex;margin-bottom:calc(var(--t1) * 1.03)}   /* List / Graph sits one line under the Collective label (Andrija, 2026-10-22) */
 #studio > .lede.h-shut h2{padding-top:0}
 @media (max-width:760px){#studio > .lede h2,.lede.coll h2{padding-top:0}}
@@ -1824,7 +1827,6 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <div class="clients" id="clients"></div>
       <div class="peek" id="peek" aria-hidden="true"></div>
     </div>
-    <ol class="pf-codes" aria-label="What Panorama Films works with"><li>PF-AV/001 AUDIOVISUAL</li><li>PF-FR/002 FIELD RESEARCH</li><li>PF-NR/003 NARRATIVE</li><li>PF-HM/004 HUMAN/MACHINE</li></ol>
   </section>
 
   <section class="sec" id="approach" data-sec="approach">
@@ -1861,6 +1863,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
         <p class="mail-note lab mid" id="mailNote" aria-live="polite"></p>
       </div>
     </div>
+    <ol class="pf-codes" aria-label="What Panorama Films works with"><li>PF-AV/001 AUDIOVISUAL</li><li>PF-FR/002 FIELD RESEARCH</li><li>PF-NR/003 NARRATIVE</li><li>PF-HM/004 HUMAN/MACHINE</li></ol>
     <section id="golden" data-sec="contact" aria-label="Golden hour">
       <details class="more" id="ghFold">
         <summary aria-label="Golden hour"><span class="gh-tease lab" id="ghTease"></span><span class="pm" aria-hidden="true"><i class="gh-ring"></i><i class="gh-ring"></i></span></summary>
@@ -2094,19 +2097,23 @@ const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interv
   Post: k => /edit|sound design|grading/i.test(F[k].roles || '')};
 const capFilms = n => CAP_MATCH[n] ? ORDER.filter(k=>F[k] && CAP_MATCH[n](k)) : [];
 document.getElementById('caps').innerHTML = CAPS.map(([n,l],i)=>`<div class="sv"><h3><span class="sv-n lab mid">${String(i+1).padStart(2,'0')}</span><span class="sv-t">${n}</span></h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
-/* the t-shirt lines: dark grey under the clients; pointing at a line (or the block scrolling into view on touch screens) scrambles it and decodes it left to right */
-(()=>{ const box = document.querySelector('.pf-codes'); if (!box || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-  const G = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-#%*+=<>';
-  const run = (li, keep) => { const x = li.dataset.x || (li.dataset.x = li.textContent); const id = (li._r = (li._r || 0) + 1); const t0 = performance.now(), dur = 520 + x.length * 14;
-    li.classList.add('dec');
-    const f = now => { if (li._r !== id) return; const p = Math.min(1, (now - t0) / dur), k = Math.floor(p * x.length);
-      li.textContent = x.slice(0, k) + [...x.slice(k)].map(c => c === ' ' ? ' ' : G[Math.random() * G.length | 0]).join('');
-      if (p < 1) requestAnimationFrame(f); else { li.textContent = x; if (!keep) setTimeout(()=>{ if (li._r === id) li.classList.remove('dec'); }, 900); } };
-    requestAnimationFrame(f); };
+/* the t-shirt lines by the Golden hour easter egg, dark grey; they change like an airport split-flap board: every character flips through the board's letters in order until it lands on its own, the line lighting up while pointed at (on touch screens once, when the lines come into view) */
+(()=>{ const box = document.querySelector('.pf-codes'); if (!box) return;
+  const B = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/';
+  [...box.children].forEach(li=>{ const x = li.textContent; li.setAttribute('aria-label', x); li.innerHTML = [...x].map(c=>`<span class="fl" aria-hidden="true">${c}</span>`).join(''); });
+  if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
+  const flap = (li, keep) => { const id = (li._r = (li._r || 0) + 1); li.classList.add('dec');
+    const cells = [...li.children], tgt = li.getAttribute('aria-label'); let left = 0;
+    cells.forEach((c, i)=>{ const want = tgt[i], wi = B.indexOf(want); if (want === ' ' || wi < 0){ c.textContent = want; return; }
+      const steps = 4 + (Math.random() * 7 | 0); let k = (wi - steps + B.length * 4) % B.length; left++;
+      const tick = ()=>{ if (li._r !== id) return; c.textContent = B[k]; c.classList.remove('fp'); void c.offsetWidth; c.classList.add('fp');
+        if (B[k] === want){ if (--left === 0 && !keep) setTimeout(()=>{ if (li._r === id) li.classList.remove('dec'); }, 1100); return; }
+        k = (k + 1) % B.length; setTimeout(tick, 55); };
+      setTimeout(tick, i * 22); }); };
   const lis = [...box.children];
   if (matchMedia('(hover:hover) and (pointer:fine)').matches){
-    lis.forEach(li=>{ li.addEventListener('mouseenter', ()=>run(li, true)); li.addEventListener('mouseleave', ()=>{ li._r++; li.textContent = li.dataset.x || li.textContent; li.classList.remove('dec'); }); });
-  } else new IntersectionObserver((en, o)=>{ if (!en[0].isIntersecting) return; o.disconnect(); lis.forEach((li, i)=>setTimeout(()=>run(li, false), i * 260)); }, {threshold:.6}).observe(box); })();
+    lis.forEach(li=>{ li.addEventListener('mouseenter', ()=>flap(li, true)); li.addEventListener('mouseleave', ()=>{ li._r++; const t = li.getAttribute('aria-label'); [...li.children].forEach((c,i)=>c.textContent = t[i]); li.classList.remove('dec'); }); });
+  } else new IntersectionObserver((en, o)=>{ if (!en[0].isIntersecting) return; o.disconnect(); lis.forEach((li, i)=>setTimeout(()=>flap(li, false), i * 320)); }, {threshold:.6}).observe(box); })();
 /* Services as a slate (2026-10-22, Andrija): pointing at a discipline turns it red and types its items out again; the text is always there, the typing is only a flourish */
 (()=>{ const box = document.getElementById('caps'); if (!box || !matchMedia('(hover:hover) and (pointer:fine)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   const cols = [...box.querySelectorAll('.sv')]; let run = 0;
