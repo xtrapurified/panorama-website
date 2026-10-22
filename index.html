@@ -695,6 +695,7 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 /* Studio: the sentence starts one row under the label */
 #studio > .lede h2,.lede.coll h2{padding-top:1.03em}
 .lede.coll{margin-bottom:clamp(24px,3vw,48px)}
+.lede.coll .tag{position:static;display:inline-flex;margin-bottom:calc(var(--t1) * 1.03)}   /* List / Graph sits one line under the Collective label (Andrija, 2026-10-22) */
 #studio > .lede.h-shut h2{padding-top:0}
 @media (max-width:760px){#studio > .lede h2,.lede.coll h2{padding-top:0}}
 .peers.shut .net,.peers.shut .net-hint{display:none}.peers.shut .net-wrap{height:auto;z-index:0}.peers.shut .net-tag{position:static;margin-left:var(--m)}
@@ -1716,7 +1717,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 <a class="skip" href="#films">Skip to films</a><a class="skip" href="#contact">Skip to contact</a>
 <header class="hdr" id="hdr">
   <div class="page bar">
-    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe-follow aria-hidden="true"></panorama-globe-follow></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a><span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span></div>
+    <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe-follow split="0" aria-hidden="true"></panorama-globe-follow></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a><span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span></div>
     <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a><span class="nav-ft"><a href="#search" data-search class="nav-sx" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a><a href="#index" class="nav-ix" data-index>Index</a><button type="button" class="ft-th" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
@@ -1756,7 +1757,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   <section class="sec" id="studio" data-sec="studio">
     <div class="lede"><span class="tag">About Us.<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Panorama Films is an open circle of creatives telling stories that matter in ways that make you care.</h2></div>
     <details class="more" open id="toolkit">
-      <summary class="sr-only"><span class="mt">Formats</span><span class="pm" aria-hidden="true"></span></summary>
+      <summary><span class="mt">We make<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
       <div class="kit-wrap">
       <p class="kit-fl lab mid" aria-hidden="true"><span>Formats</span><span class="kit-sc"><i></i><i></i><i></i><i></i><i></i><b id="kitMk"></b></span></p>
       <dl class="kit" id="kit">
@@ -3268,8 +3269,8 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     netNames.addEventListener('mouseleave', ()=>{ clearTimeout(leaveT); leaveT = setTimeout(settle, 450); });
     dr.addEventListener('mouseenter', ()=>{ if (!wrap.hidden) return; clearTimeout(leaveT); dr.classList.add('dr-stay'); });
     dr.addEventListener('mouseleave', ()=>{ if (!wrap.hidden) return; clearTimeout(leaveT); leaveT = setTimeout(settle, 300); }); }
-  /* every visit opens on the list; a switch to the graph lasts only for this visit (an older version remembered it for good, which kept some phones on the graph) */
-  { let v = 'list'; try { v = sessionStorage.getItem('pf-net-view') || 'list'; localStorage.removeItem('pf-net-view'); } catch(e){} if (v === 'list') setView('list'); }
+  /* every visit opens on the graph on computers and on the list on phones (Andrija, 2026-10-22); a switch lasts only for this visit */
+  { let v = matchMedia('(max-width:760px)').matches ? 'list' : 'graph'; try { v = sessionStorage.getItem('pf-net-view') || v; localStorage.removeItem('pf-net-view'); } catch(e){} setView(v); }
   netList.addEventListener('click', e=>{ const b = e.target.closest('[data-p]'); if (!b) return; opener = b; openDr(pn.find(n=>n.id === b.dataset.p)); });
   function closeDr(){ if (opener && dr.contains(document.activeElement)){ opener.focus({preventScroll:true}); } opener = null; pinned = null; dr.hidden = true; sel = null; markNames(); alpha = Math.max(alpha, .6); if (visible) start(); else draw(); }
   dr.addEventListener('click', e=>{ if (e.target.closest('[data-ph]')){ e.preventDefault(); return; } const g = e.target.closest('[data-go]'); if (g){ openFilm(g.dataset.go); return; }
