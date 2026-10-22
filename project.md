@@ -49,6 +49,10 @@ Supporting facts already in use on the site:
 - **Not now (Andrija, 2026-10-20):** no separate plain copies of the site. A UAE page and a Serbian page stay an idea for a later promotional push (a first version was live for an hour on 2026-10-20; its copy is in git history, commit 0017868).
 - **Before every push to `main`:** run the click-through test (nav, search, Index, films, projects, Close/Back, `/work/` addresses, phone menu). The play-mark bug of 2026-10-20 showed why.
 
+## About redesign (2026-10-22, in progress)
+
+All About texts and tables (Studio, Core team, Collective bios, Selected clients, Approach, We make, Capabilities, Toolkit, Manifesto, Human in the loop) were copied word for word into the Claude Doc "About — Panorama Films website" (claude.ai/artifact/857v1DkwzopTVvU9Stf2LP) for Andrija to edit and reorder. When he is done, the doc's text and order are carried back to `index.html` on `dev`. Lines in *(brackets)* there are notes, not site text.
+
 ## Milestones (revert targets)
 
 Approved versions to go back to before trying new things. Each one is a git branch (`archive/…`) with the full site; the page sources are also saved in the claude.ai Project under `claude/milestones/`.
