@@ -1,5 +1,6 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><base href="/"><meta name="theme-color" content="#000000"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover"><style>
 /* Type: Untitled Sans (Klim), self-hosted. The files cover Latin only; Cyrillic falls back to Helvetica Neue, Arabic to the system font. */
+@font-face{font-family:"Data Error Horiz";src:url(media/fonts/DataErrorHoriz.woff) format("woff");font-weight:400;font-style:normal;font-display:swap}   /* dot-matrix face from Andrija's t-shirt graphic (Data Error Horiz AOE Pro, Astigmatic); check the web licence before main */
 @font-face{font-family:"Untitled Sans";src:url(media/fonts/UntitledSans-Light.woff2) format("woff2");font-weight:300;font-style:normal;font-display:swap}
 @font-face{font-family:"Untitled Sans";src:url(media/fonts/UntitledSans-Regular.woff2) format("woff2");font-weight:400;font-style:normal;font-display:swap}
 @font-face{font-family:"Untitled Sans";src:url(media/fonts/UntitledSans-Medium.woff2) format("woff2");font-weight:500;font-style:normal;font-display:swap}
@@ -695,6 +696,10 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 /* Studio: the sentence starts one row under the label */
 #studio > .lede h2,.lede.coll h2{padding-top:1.03em}
 .lede.coll{margin-bottom:clamp(24px,3vw,48px)}
+/* the t-shirt lines, word for word, in the dot-matrix face (Andrija, 2026-10-22) */
+.pf-codes{list-style:none;margin:0;padding:0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(20px,3.3vw,56px);line-height:1.22;letter-spacing:.2em;color:var(--fg);white-space:nowrap}
+.pf-codes li{margin:0}
+@media (max-width:760px){.pf-codes{font-size:min(5.4vw,24px);letter-spacing:.12em}}
 .lede.coll .tag{position:static;display:inline-flex;margin-bottom:calc(var(--t1) * 1.03)}   /* List / Graph sits one line under the Collective label (Andrija, 2026-10-22) */
 #studio > .lede.h-shut h2{padding-top:0}
 @media (max-width:760px){#studio > .lede h2,.lede.coll h2{padding-top:0}}
@@ -1675,6 +1680,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 
   <section class="sec" id="studio" data-sec="studio">
     <div class="lede"><span class="tag">About Us.<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Panorama Films is an open circle of creatives telling stories that matter in ways that make you care.</h2></div>
+    <ol class="pf-codes" aria-label="What Panorama Films works with"><li>PF-AV/001 AUDIOVISUAL</li><li>PF-FR/002 FIELD RESEARCH</li><li>PF-NR/003 NARRATIVE</li><li>PF-HM/004 HUMAN/MACHINE</li></ol>
     <details class="more" open id="toolkit">
       <summary><span class="mt">We make<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
       <div class="kit-wrap">
