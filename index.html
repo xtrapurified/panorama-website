@@ -700,6 +700,13 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 .pf-codes{list-style:none;margin:clamp(96px,10vw,160px) 0 0;padding:0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(20px,3.3vw,56px);line-height:1.22;letter-spacing:.2em;--pfc:#3a3a37;color:var(--pfc);white-space:nowrap}
 :root[data-pf="light"] .pf-codes{--pfc:#c2c2bc}
 .pf-codes li{margin:0;width:max-content;cursor:default;transition:color .35s}
+/* crew codes: beside each name in the Collective list, and above the bio in a profile (trial, 2026-10-22) */
+.net-names .crew{position:absolute;right:calc(100% + var(--g));top:.42em;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:var(--small);letter-spacing:.2em;color:#3a3a37;white-space:nowrap;pointer-events:none;transition:color .2s}
+:root[data-pf="light"] .net-names .crew{color:#c2c2bc}
+.net-names > li:has(> button.on) .crew,.net-names > li:has(> button:hover) .crew{color:var(--red)}
+.dr-code{margin:14px 0 0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:var(--small);letter-spacing:.2em;color:var(--mid)}
+@media (max-width:760px){.net-names .crew{display:none}}
+.peers:has(.net-dr:not([hidden])) .net-names .crew{opacity:0}
 .pf-codes li.dec{color:var(--fg)}   /* under clients, dark grey; a line decodes and lights up while pointed at (Andrija, 2026-10-22) */
 @media (max-width:760px){.pf-codes{font-size:min(5.4vw,24px);letter-spacing:.12em}}
 .lede.coll .tag{position:static;display:inline-flex;margin-bottom:calc(var(--t1) * 1.03)}   /* List / Graph sits one line under the Collective label (Andrija, 2026-10-22) */
@@ -3053,6 +3060,9 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     ['piki','Vladimir Miladinović Piki','vladimir miladinovic',0], ['babic','Nemanja Babić','nemanja babic',0], ['cile','Marko Cile Mladenović','marko mladenovic',0],
     ['danilo','Danilo Pantović','danilo pantovic',0], ['stojanovic','Nemanja Stojanović','nemanja stojanovic',0], ['bojan','Bojan Palikuća','bojan palikuca',0],
     ['zoran','Zoran Rašić','zoran rasic',0], ['milovan','Milovan Ilić','milovan ilic',0], ['matija','Matija Đukanović','matija dukanovic|matija djukanovic',0], ['ana','Ana Ćurčin','ana curcin',0], ['nevena','Nevena Krivokapić-Martinović','nevena krivokapic',0], ['neda','Neda Mojsilović','neda mojsilovic',0]];
+  /* crew codes in the t-shirt format, PF-CR/001 onwards, numbered down the Collective list as it is shown (Andrija, 2026-10-22, a trial) */
+  const CREWN = {}, CREW = id => 'PF-CR/' + String(CREWN[id] || 0).padStart(3, '0');
+  document.querySelectorAll('#netNames > li > button').forEach(b=>{ const c = document.createElement('span'); c.className = 'crew'; c.setAttribute('aria-hidden', 'true'); b.parentNode.appendChild(c); });
   const nodes = [], links = [];
   const pn = PEOPLE.map(([id,name,key,core])=>{ const n = {id, name, key, core:!!core, person:true, x:0, y:0, vx:0, vy:0, deg:0}; nodes.push(n); return n; });
   const ourRows = k => ((CR[k] || {}).blocks || []).filter(b=>!b.ext).flatMap(b=>b.rows);   /* external crew never counts */
@@ -3247,6 +3257,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     dr.innerHTML = `<button type="button" class="x" data-x aria-label="Close ${esc(n.name)}’s profile"></button>
       ${(i.photo || PLACEHOLDER) ? `<div class="dr-ph"><img src="${i.photo || PLACEHOLDER}" alt="${i.photo ? esc(n.name) : ''}"></div>` : `<div class="dr-ini" aria-hidden="true">${ini(n)}</div>`}
       <h3 class="dr-nm">${esc(n.name)}<span class="dr-role">${esc(role)}</span></h3>
+      <p class="dr-code">${CREW(n.id)}</p>
       ${i.bio ? `<p class="dr-bio">${esc(i.bio)}</p>` : ''}
       <div class="dr-ln">${site === LINK_PH ? '' : `<a class="web" href="${esc(site)}" target="_blank" rel="noopener">${esc(/instagram\.com\//.test(site) ? '@' + site.replace(/^.*instagram\.com\//,'').replace(/\/.*$/,'') : site.replace(/^https?:\/\/(www\.)?/,'').replace(/\/$/,''))} <svg class="ar" viewBox="0 0 10 10" aria-hidden="true"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg></a>`}
         <button type="button" data-all>Browse all projects with ${esc(first)} →</button></div>`;
@@ -3268,6 +3279,8 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   { const others = pn.filter(p=>!p.core), lo = Math.min(...others.map(p=>p.deg)), hi = Math.max(...others.map(p=>p.deg));
     const lis = [...netNames.children], node = li => pn.find(n=>n.id === li.firstElementChild.dataset.p);
     lis.sort((a,b)=>{ const x = node(a), y = node(b); return (y.core - x.core) || (x.core ? 0 : y.deg - x.deg); }).forEach(li=>netNames.appendChild(li));
+    [...netNames.children].forEach((li, i)=>{ CREWN[li.firstElementChild.dataset.p] = i + 1; li.querySelector('.crew').textContent = CREW(li.firstElementChild.dataset.p); });
+    pn.forEach(n=>{ if (!CREWN[n.id]) CREWN[n.id] = Object.keys(CREWN).length + 1; });
     lis.forEach(li=>{ const n = node(li); if (!n.core) li.firstElementChild.style.setProperty('--o', (.28 + .44 * (hi > lo ? (n.deg - lo) / (hi - lo) : 1)).toFixed(2)); }); }
   const setView = v => { const list = v === 'list'; if (!dr.hidden) closeDr();
     wrap.hidden = list; netHint.hidden = list; netNames.hidden = !list;
