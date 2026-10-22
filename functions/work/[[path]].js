@@ -14,7 +14,8 @@ export async function onRequest({ request, env, params }) {
   if (!slug) return Response.redirect(`${url.origin}/#films`, 301);
   const res = await env.ASSETS.fetch(new URL('/', url));
   const html = await res.text();
-  const site = readSite(html);
+  const live = /^((www\.)?panoramafilms\.tv|(www\.)?panorama\.mov|panorama-website\.pages\.dev)$/i.test(url.hostname);   /* same test as SHOW_DRAFTS in the page */
+  const site = readSite(html, { drafts: !live });
   const k = site.bySlug[slug.toLowerCase()];
   if (!k) return Response.redirect(`${url.origin}/`, 302);
   if (slug !== site.slug[k] || !url.pathname.endsWith('/')) return Response.redirect(`${url.origin}/work/${site.slug[k]}/`, 301);
