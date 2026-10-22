@@ -910,11 +910,11 @@ footer{font-size:calc(12*var(--fz))}
 
 /* hero: three lines at one size; play and the running timecode together in the bottom-right corner */
 .hero .hd .sub2{color:rgba(237,237,235,.38)}
-/* phones: just two lines at one size, "Panorama Films" and the cities; the rest stays in the page for search engines and screen readers */
+/* phones: Panorama Films, the studio line in grey and the cities; the first line stays in the page for search engines and screen readers */
 @media (max-width:760px){
-  .hero .hd .sub,.hero .hd h1,.hero .hd .ph-off{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
-  .hero .hd .sub2{color:#f2f2f0!important;mix-blend-mode:normal!important;opacity:1!important}
-  .hero .hd .ph-st{display:block;color:rgba(242,242,240,.45);text-transform:capitalize}   /* the studio line under the name, in grey, as Creative Storytelling Studio */
+  .hero .hd .sub{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  .hero .hd h1{color:#f2f2f0!important;mix-blend-mode:normal!important;opacity:1!important}
+  .hero .hd .sub2{color:rgba(242,242,240,.45)!important;mix-blend-mode:normal!important;opacity:1!important}
 }
 .facts{justify-content:flex-end;gap:clamp(20px,2.4vw,40px)}
 .facts .rec{font-size:var(--small)}
@@ -1633,7 +1633,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
         <span></span>
         <span class="lab" id="heroNow"></span>
       </div>
-      <div class="grid hl"><div class="hd"><p class="sub">Films about people, ideas and the future.</p><h1>Seeing the bigger picture.</h1><p class="sub2">Panorama Films<span class="ph-off">, </span><span class="ph-st">creative storytelling studio</span><span class="ph-off">.</span></p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
+      <div class="grid hl"><div class="hd"><p class="sub">Films about people, ideas and the future.</p><h1>Panorama Films</h1><p class="sub2">Creative storytelling studio.</p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
       <div class="grid facts">
         <a class="play-reel" data-play="reel" href="media/reel.mp4" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:29</span></a>
       </div>
