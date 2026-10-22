@@ -1261,8 +1261,8 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 @media (prefers-reduced-motion:reduce){.sp .media{transform:none;inset:0}}
 
 /* Approach and Manifesto: always open, no +/- */
-#approach > details.more > summary{cursor:default;pointer-events:none}
-#approach > details.more > summary .pm{display:none}
+#studio > details.more > summary,#approach > details.more > summary{cursor:default;pointer-events:none}
+#studio > details.more > summary .pm,#approach > details.more > summary .pm{display:none}
 
 /* Films sits right above Featured */
 .lede.films-h{margin-bottom:.25em}
@@ -1653,25 +1653,31 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   </section>
 
   <section class="sec" id="studio" data-sec="studio">
-    <div class="lede"><span class="tag">Studio<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Panorama Films is an independent creative storytelling studio working across documentaries, series, campaigns and brand films.</h2></div>
-    <div class="grid about">
-      <div class="ab-c">
-        <p>Our work is grounded in the real world, places you can feel, people you can connect with, and stories that are meant to last.</p>
-        <p>We explore science, technology, culture and the human stories around them, with commissioned films for global brands, NGOs and institutions alongside our own projects.</p>
+    <div class="lede"><span class="tag">About Us.<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Panorama Films is an open circle of creatives telling stories that matter in ways that make you care.</h2></div>
+    <details class="more" open id="toolkit">
+      <summary><span class="mt">Formats<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
+      <div class="kit-wrap">
+      <p class="kit-fl lab mid" aria-hidden="true"><span>Focus</span><span class="kit-sc"><i></i><i></i><i></i><i></i><i></i><b id="kitMk"></b></span></p>
+      <dl class="kit" id="kit">
+        <div class="kit-r on" data-i="0"><span class="kit-n lab mid">01</span><dt>Documentaries</dt><dd>Cultural shifts, disappearing traditions, grassroots change. Real.</dd></div>
+        <div class="kit-r" data-i="1"><span class="kit-n lab mid">02</span><dt>Campaigns</dt><dd>Authentic, mission-aligned films and storytelling for conscious brands. Narratives.</dd></div>
+        <div class="kit-r" data-i="2"><span class="kit-n lab mid">03</span><dt>Legacy Films</dt><dd>Legacy films and personal archives: timeless stories. Storytelling.</dd></div>
+        <div class="kit-r" data-i="3"><span class="kit-n lab mid">04</span><dt>BTS &amp; Process Films</dt><dd>Craft, transformation, and the beauty of how things are made. Insights.</dd></div>
+        <div class="kit-r" data-i="4"><span class="kit-n lab mid">05</span><dt>Experiences</dt><dd>Curation.</dd></div>
+      </dl>
       </div>
-      <div class="ab-c">
-        <p>We work with NGOs, forward-thinking organizations, cultural institutions, ethical brands, and individuals who care about impact, value depth over spectacle, and want their stories told with honesty and imagination.</p>
-        <p>We’ve filmed in deserts, megacities, forests, refugee camps, laboratories, kitchens, and family homes.</p>
-        <p>The future, documented.</p>
-      </div>
-    </div>
+    </details>
+    <details class="more fold" open id="services">
+      <summary><span class="mt">Services<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
+      <div class="grid caps" id="caps"></div>
+    </details>
     <div class="grid team">
       <article><span class="face" data-ini="AK"><img src="media/team/andrija-4.webp" data-alt="andrija-3,andrija,andrija-2" alt="Andrija Kovač" loading="lazy" onerror="this.remove()"></span><span class="lab mid">Creative Director</span><h3>Andrija Kovač</h3><p>Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.</p></article>
       <article><span class="face" data-ini="MS"><img src="media/team/mina-4.webp" data-alt="mina-2" alt="Mina Strugar" loading="lazy" onerror="this.remove()"></span><span class="lab mid">Producer</span><h3>Mina Strugar</h3><p>Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.</p></article>
       <article><span class="face" data-ini="MK"><img src="media/team/marija-2.webp" data-alt="marija" alt="Marija Kovačina" loading="lazy" onerror="this.remove()"></span><span class="lab mid">Editorial Director</span><h3>Marija Kovačina</h3><p>Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.</p></article>
     </div>
     <div class="peers" id="peers">
-      <div class="lede coll"><span class="tag sub">Panorama Films Collective<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>An open circle of cinematographers, editors, sound designers and producers. We are small by design, so we can be close to the work.</h2></div>
+      <div class="lede coll"><span class="tag sub">Panorama Films Collective<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span></div>
       <div class="net-view lab" role="group" aria-label="Show the collective as"><button type="button" data-view="list" aria-pressed="true"><svg class="vi vi-list" viewBox="0 0 16 16" aria-hidden="true"><path class="r1" pathLength="10" d="M2 2.8h12"/><path class="r2" pathLength="10" d="M2 8h9.5"/><path class="r3" pathLength="10" d="M2 13.2h11"/></svg><span>List</span></button><button type="button" data-view="graph" aria-pressed="false"><svg class="vi vi-graph" viewBox="0 0 16 16" aria-hidden="true"><circle class="ring" cx="8" cy="8" r="5.5" stroke-width="1"/><circle class="hub" cx="8" cy="8" r="1.3" fill="currentColor" stroke="none"/><g class="orb"><circle cx="13.5" cy="8" r="1.25" fill="currentColor" stroke="none"/><circle cx="2.5" cy="8" r="1.25" fill="currentColor" stroke="none"/></g></svg><span>Graph</span></button></div>
       <div class="net-wrap"><canvas class="net" id="net" aria-hidden="true"></canvas></div>
       <ol class="net-names" id="netNames" hidden aria-label="The collective">
@@ -1705,48 +1711,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   </section>
 
   <section class="sec" id="approach" data-sec="approach">
-    <details class="more fold" open>
-      <summary><span class="mt">Approach<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
-      <p class="fold-lede">We stay with a film from the first question to the final frame: the research and the interviews, the script, the shoot and the cut, so nothing gets lost between hands.</p>
-    </details>
-    <details class="more fold" open id="wemake">
-      <summary><span class="mt">We make<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
-      <div class="svc">
-        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">01</span><span class="wm-t">Short Documentaries</span><span class="wm-s">Portraits of real people and ideas that move us.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>People and place documentaries: cinematic short films about individuals, communities or regions.</p><ul><li>Portraits of unsung heroes, elders, local legends</li><li>Cultural shifts, disappearing traditions, grassroots change</li></ul></div><p class="wm-c">Real voices, real landscapes.</p></div></details>
-        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">02</span><span class="wm-t">Legacy Films</span><span class="wm-s">Personal or family stories, told with timeless care.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Legacy films and personal archives: timeless personal stories made for families or individuals.</p><ul><li>Milestone documentaries: birth, marriage, end of life</li><li>Family origin stories or “time capsule” films</li></ul></div><p class="wm-c">Hyper-personal and emotionally irreplaceable.</p></div></details>
-        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">03</span><span class="wm-t">Behind-the-Scenes &amp; Process Films</span><span class="wm-s">Craft, transformation, and the beauty of how things are made.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Craft, labour, art, and how things are made.</p><ul><li>Artisan processes, slow work, restoration, rituals</li><li>B2B storytelling for ethical brands or NGOs</li></ul></div><p class="wm-c">A real transformation, observed as it happens.</p></div></details>
-        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">04</span><span class="wm-t">Location Portraits</span><span class="wm-s">Cinematic visuals of real places — landscapes, cities, architecture.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Location-driven visual poetry: artistic, meditative portraits of places.</p><ul><li>Landscapes, architecture, urban time-lapses</li><li>Paired with poetic voice-over or ambient sound</li></ul></div><p class="wm-c">Real light, real air, real ground.</p></div></details>
-        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">05</span><span class="wm-t">Ethical Brand Storytelling</span><span class="wm-s">Authentic, mission-aligned films for conscious brands.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Short films for conscious companies.</p><ul><li>“Why we do this” founder stories</li><li>Real customer experiences, culture-focused ads</li></ul></div><p class="wm-c">Brand trust is rooted in authenticity.</p></div></details>
-        <details class="wm-r" name="wm"><summary><span class="wm-n lab mid">06</span><span class="wm-t">Participatory Video Projects</span><span class="wm-s">Co-created with communities. Empowering and inclusive.</span><span class="wm-pm" aria-hidden="true"></span></summary><div class="wm-b"><div class="wm-l"><p>Participatory and community-led films, co-created with the people being filmed.</p><ul><li>Collaborative workshops, community documentaries</li><li>Training and storytelling for NGOs</li></ul></div><p class="wm-c">Made with the people in it, not only about them.</p></div></details>
-      </div>
-      <div class="grid caps" id="caps"></div>
-      <p class="fold-lede wm-after">Filmed with care. Crafted for impact.</p>
-    </details>
-    <details class="more" open id="toolkit">
-      <summary><span class="mt">Toolkit<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
-      <div class="kit-wrap">
-      <p class="kit-fl lab mid" aria-hidden="true"><span>Focus</span><span class="kit-sc"><i></i><i></i><i></i><i></i><i></i><b id="kitMk"></b></span></p>
-      <dl class="kit" id="kit">
-        <div class="kit-r on" data-i="0"><span class="kit-n lab mid">01</span><dt>Our eye</dt><dd>Framing, emotion, presence</dd></div>
-        <div class="kit-r" data-i="1"><span class="kit-n lab mid">02</span><dt>Our questions</dt><dd>Interview intuition</dd></div>
-        <div class="kit-r" data-i="2"><span class="kit-n lab mid">03</span><dt>Our presence</dt><dd>Trust and intimacy with subjects</dd></div>
-        <div class="kit-r" data-i="3"><span class="kit-n lab mid">04</span><dt>Our values</dt><dd>Integrity and emotional depth</dd></div>
-        <div class="kit-r" data-i="4"><span class="kit-n lab mid">05</span><dt>Our editing</dt><dd>Rhythm, nuance, restraint</dd></div>
-      </dl>
-      </div>
-    </details>
-    <details class="more" open>
-      <summary><span class="mt">Manifesto<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
-      <div class="grid fields">
-        <article><span class="lab mid">I</span><h3>Impact</h3><p>We tell the stories shaping tomorrow’s society. From education and social activism to the movements driving change, we partner with foundations, NGOs and local innovators to spotlight the people and ideas working toward a better future.</p></article>
-        <article><span class="lab mid">II</span><h3>Innovation</h3><p>We explore how technology reshapes our lives. From VR to drones, to artificial intelligence and new platforms, we work with startups, researchers and visionaries to tell stories of innovation that serve the greater good.</p></article>
-        <article><span class="lab mid">III</span><h3>Culture</h3><p>Culture is a story in motion. We work with artists, musicians and creators who push boundaries, capturing the energy of emerging trends and making visible the ideas shaping tomorrow’s art, music and fashion.</p></article>
-        <article><span class="lab mid">IV</span><h3>Expression</h3><p>We celebrate those who push boundaries. Guided by athletes, explorers and outdoor pioneers, we bring to light new ways of living, moving and experiencing the world.</p></article>
-      </div>
-    </details>
     <div class="hl hl-a" aria-hidden="false">
       <div class="hl-a-row"><span class="lab rec live">Field notes</span><h2 class="hl-t">Human in the loop</h2><span class="lab hl-n">01 / 89</span></div>
-      <p class="hl-code"><span class="k">while</span> (filming) { <span class="v">human</span>.in(<span class="v">loop</span>) }</p>
+      <p class="hl-code">(filming in progress) { <span class="v">human</span>.in(<span class="v">loop</span>) }</p>
     </div>
     <div class="band hitl" id="hitl">
       <div class="hl hl-b"><div class="hl-term"><div class="hl-bar"><i></i><i></i><i></i><span>field-notes</span></div>
@@ -1923,7 +1890,7 @@ const SLUG_ALIAS = {"What-Does-The-Future-Hold-S02":"docu", "Dubai-Future-Forum-
 const HOME_CUES = [[0.0,"Astronauts at the Museum"],[1.2,"What’s Next."],[3.3,"Dubai, the City of Sport"],[5.5,"The Orchard Keeper"],[8.5,"Valamar"],[11.3,"What Does the Future Hold?"],[14.3,"Dubai, the City of Sport"],[16.5,"Ask More"]];
 const FEAT = ["Dubai Future Foundation","Museum of the Future","EXPO Dubai","Dubai Sports Council","World Government Summit","Valamar","SHARE Foundation","UN Women","British Council","Civil Rights Defenders","Miro"];
 const ALL = ["BIRN","Birds of Prey Protection Foundation Serbia","Conflux Center","Danube Competence Center","Digital Freedom Fund","Edge Dubai","European Fund for Balkans","Firefly Production","Goethe Institute","Galerija 12","Hemopharm Foundation","Internet Society Serbia","Korean Embassy Serbia","Lovefest","Milenijum Osiguranje","NCR","Nelt","NIS Gazpromneft","Nova Iskra","NUNS","Porto Montenegro","Serbian Chamber of Commerce","SOS Children's Villages","Startit.rs","Strawberry Energy","Street Performers Festival Novi Sad","SUN Africa","Swedish Embassy Serbia","Telenor Foundation","University of Arts Belgrade","World Drone Prix"];
-const CAPS = [["Research",["Research and story development","Interviews","Archival research","Editorial planning"]],["Writing",["Concept development","Scriptwriting","Treatments","Subtitles and translation"]],["Direction",["Creative direction","Directing","Casting and talent","Visual approach"]],["Production",["Cinematography","Aerial cinematography","Sound recording","Lighting and grip","Locations and permits"]],["Post",["Editing","Colour grading","Sound design and mix","Motion graphics","Generative media"]],["Formats",["Documentary","Brand films","Series","Campaigns","Short-form"]]];
+const CAPS = [["Research",["Research and story development","Interviews","Archival research","Editorial planning"]],["Writing",["Concept development","Scriptwriting","Treatments","Subtitles and translation"]],["Direction",["Creative direction","Directing","Casting and talent","Visual approach"]],["Production",["Cinematography","Aerial cinematography","Sound recording","Lighting and grip","Locations and permits"]],["Post",["Editing","Colour grading","Sound design and mix","Motion graphics","Generative media"]]];
 const BTS = 89, LOOP = 20;
 /* photographs from the exhibition itself (panoramafilms.tv/ImagineBoka-ai), shown below the project text */
 /* the spread: [photo, first column, columns wide, row, drop from the top of its row in vw] */
@@ -2030,7 +1997,7 @@ if (CLIENTS_VIEW === 'logos'){
   document.getElementById('featured').hidden = true;
   const box = document.getElementById('clients'); box.classList.add('logos');
   /* two rows, chosen by the studio: the main commissioners, then the foundations and institutions */
-  const ROW1 = ["SHARE Foundation", "Dubai Future Foundation", "UN Women", "The Executive Office", "British Council", "EXPO Dubai", "Civil Rights Defenders", "Dubai Sports Council", "BIRN", "World Government Summit", "Goethe Institute", "Museum of the Future", "Digital Freedom Fund", "Natural History Museum Abu Dhabi", "European Fund for Balkans", "Valamar", "Internet Society Serbia", "SOS Children's Villages", "University of Arts Belgrade"];   /* UAE institutions and NGO / European clients alternate, so every visitor finds their kind of client early */
+  const ROW1 = ["SHARE Foundation", "Dubai Future Foundation", "UN Women", "The Executive Office", "British Council", "EXPO Dubai", "Civil Rights Defenders", "Dubai Sports Council", "BIRN", "World Government Summit", "Goethe Institute", "Museum of the Future", "Digital Freedom Fund", "Natural History Museum Abu Dhabi", "European Fund for Balkans", "Valamar", "Internet Society Serbia", "SOS Children's Villages", "University of Arts Belgrade", "NCR"];   /* UAE institutions and NGO / European clients alternate, so every visitor finds their kind of client early */
   const ROW2 = [];
   /* one line that drifts slowly to the left; the set is drawn twice so the loop has no seam */
   const set = [...ROW1, ...ROW2].map(c=>logo(c) + '<i class="dv" aria-hidden="true"></i>').join('');   /* a thin divider after each logo */
@@ -2776,7 +2743,7 @@ ORDER.forEach(k=>{ const f = F[k], p = PJ[k] || {intro:[], credits:[], groups:[]
     fields:[[f.title,10],[f.client||'',6],[f.roles||'',3],[f.year||'',4],[films.join(' · '),3],[people.join(' · '),3],[text.join(' ').replace(/\s+/g,' '),1]]});
 });
 const secText = id => (document.getElementById(id)?.innerText || '').replace(/\s+/g,' ');
-[['studio','Studio'],['approach','Approach and Manifesto'],['contact','Start a project']].forEach(([id,t])=>
+[['studio','About us'],['approach','Field notes'],['contact','Start a project']].forEach(([id,t])=>
   SX.push({sec:id, title:t, sub:'On this page', thumb:'', fields:[[t,10],[secText(id),1]]}));
 let sxHits = [], sxOn = -1;
 function snippet(txt, terms){
@@ -3243,7 +3210,7 @@ try { localStorage.removeItem('pf-theme'); } catch(_){}
 })();
 
 /* Approach and Manifesto stay open */
-document.querySelectorAll('#approach > details.more').forEach(d=>{ d.open = true; const s = d.querySelector('summary'); s.tabIndex = -1; s.setAttribute('role','heading'); s.setAttribute('aria-level','2');
+document.querySelectorAll('#studio > details.more, #approach > details.more').forEach(d=>{ d.open = true; const s = d.querySelector('summary'); s.tabIndex = -1; s.setAttribute('role','heading'); s.setAttribute('aria-level','2');
   s.addEventListener('click', e=>e.preventDefault()); d.addEventListener('toggle', ()=>{ if (!d.open) d.open = true; }); });
 </script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.9.0/d3.min.js"></script>
