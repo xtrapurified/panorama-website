@@ -8,6 +8,7 @@ Read `project.md` first: it holds the product context, rules, site structure and
 - Work on `dev`. Every push gets a Cloudflare Pages preview at dev.panorama-website.pages.dev.
 - Never push or merge to `main` without Andrija's explicit approval. Every `main` deploy is production (panoramafilms.tv).
 - Commit and push each finished change to `dev`, with a commit message that says in plain words what changed and why.
+- While the `mobile-redesign` branch exists, keep it in step with `dev`: after every push to `dev`, merge `dev` into `mobile-redesign` (`git checkout mobile-redesign && git merge origin/dev`) and push it, so its preview shows the latest content. Never merge the other way without Andrija's approval.
 
 ## Keep project.md current
 - Update `project.md` in the same commit whenever the site structure, a rule, the workflow, the evidence on hand or a milestone changes. Bump its "Last updated" date.
