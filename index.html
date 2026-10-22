@@ -697,22 +697,22 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 /* Studio: the sentence starts one row under the label */
 #studio > .lede h2,.lede.coll h2{padding-top:1.03em}
 .lede.coll{margin-bottom:clamp(24px,3vw,48px)}
-/* the t-shirt lines, word for word, in the dot-matrix face (Andrija, 2026-10-22): below Human in the loop, centred, very dark, set like rows on a departures board between hairlines;
-   the row under the pointer (on touch screens the one nearest the middle of the window) comes into focus: it lightens and its letter spacing pulls in, no blur */
-.pf-codes{list-style:none;margin:clamp(96px,10vw,160px) 0 0;padding:0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(24px,4.4vw,80px);line-height:1;--pfc:#1d1d1b;--pfr:#1a1a19;color:var(--pfc);white-space:nowrap;border-top:1px solid var(--pfr)}
-:root[data-pf="light"] .pf-codes{--pfc:#dddcd6;--pfr:#e3e2dd}
-.pf-codes li{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--g);padding:.32em 0;border-bottom:1px solid var(--pfr);cursor:default;transition:color .5s var(--ease),border-color .5s var(--ease)}
-.pf-codes .pf-t{grid-column:2;letter-spacing:.3em;margin-right:-.3em;transition:letter-spacing .7s var(--ease),margin .7s var(--ease)}
-.pf-codes .pf-m,.pf-codes .pf-n{font-size:var(--small);letter-spacing:.2em;color:var(--pfc);transition:color .5s var(--ease)}
-.pf-codes .pf-m{justify-self:start;display:flex;align-items:center;gap:.8em}
-.pf-codes .pf-m::before{content:"";width:.6em;height:.6em;border-radius:50%;background:var(--red);opacity:0;transition:opacity .3s}
-.pf-codes .pf-n{justify-self:end}
-.pf-codes li.on{color:var(--fg);border-bottom-color:var(--rule)}
-.pf-codes li.on .pf-t{letter-spacing:.2em;margin-right:-.2em}
-.pf-codes li.on .pf-m,.pf-codes li.on .pf-n{color:var(--mid)}
-.pf-codes li.on .pf-m::before{opacity:1}
-@media (max-width:760px){.pf-codes{font-size:min(5.6vw,30px)}.pf-codes li{grid-template-columns:1fr;padding:.5em 0}.pf-codes .pf-m,.pf-codes .pf-n{display:none}.pf-codes .pf-t{grid-column:1;justify-self:center;letter-spacing:.14em;margin-right:-.14em}.pf-codes li.on .pf-t{letter-spacing:.1em;margin-right:-.1em}}
-@media (prefers-reduced-motion:reduce){.pf-codes li,.pf-codes .pf-t,.pf-codes .pf-m,.pf-codes .pf-n{transition:none}}
+/* the t-shirt lines, word for word, in the dot-matrix face (Andrija, 2026-10-22): below Human in the loop, set like Formats: the serial number on the left,
+   the name from the fourth column, rows between hairlines, a small tick scale above whose red index follows the row in focus. At rest very dark and slightly soft;
+   the row under the pointer (on touch screens the one nearest the middle of the window) turns sharp and light, and its name flicks a little like a decoder. Size and spacing never change. */
+.pf-board{margin-top:clamp(96px,10vw,160px)}
+.pf-fl{display:flex;align-items:center;gap:12px;margin:0 0 clamp(14px,1.6vw,22px)}
+.pf-sc{position:relative;display:inline-flex;gap:14px;align-items:flex-end;height:10px;padding-inline:2px}
+.pf-sc i{display:block;width:1px;height:6px;background:var(--mid);opacity:.6}
+.pf-sc b{position:absolute;left:0;bottom:-4px;width:1px;height:14px;background:var(--red);transform:translateX(calc(2px + var(--k,0) * 15px));transition:transform .55s var(--ease)}
+.pf-codes{list-style:none;margin:0;padding:0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(20px,3.2vw,60px);line-height:1;letter-spacing:.2em;--pfc:#232321;color:var(--pfc);white-space:nowrap;border-top:1px solid var(--rule)}
+:root[data-pf="light"] .pf-codes{--pfc:#d6d5cf}
+.pf-codes li{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g);align-items:baseline;padding:.36em 0;border-bottom:1px solid var(--rule);cursor:default;filter:blur(1.2px);transition:color .5s var(--ease),filter .5s var(--ease)}
+.pf-codes .pf-s{grid-column:1/span 4}
+.pf-codes .pf-t{grid-column:5/-1}
+.pf-codes li.on{color:var(--fg);filter:none}
+@media (max-width:760px){.pf-codes{font-size:min(4.6vw,26px);letter-spacing:.12em}.pf-codes li{grid-template-columns:auto 1fr;column-gap:1em}.pf-codes .pf-s,.pf-codes .pf-t{grid-column:auto}}
+@media (prefers-reduced-motion:reduce){.pf-codes li,.pf-sc b{transition:none}}
 /* crew codes: beside each name in the Collective list, and above the bio in a profile (trial, 2026-10-22) */
 .net-names .crew{position:absolute;right:calc(100% + var(--g));top:.42em;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:var(--small);letter-spacing:.2em;color:#3a3a37;white-space:nowrap;pointer-events:none;transition:color .2s}
 :root[data-pf="light"] .net-names .crew{color:#c2c2bc}
@@ -1855,7 +1855,8 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <div class="over over-w" aria-hidden="true"><div class="top"><span class="lab">&nbsp;</span></div><div class="mid-c"><span class="h2">Human in the loop</span></div><span></span></div>
     </div>
     <div class="hl hl-c"><h2 class="hl-t">Human in the loop</h2><p class="hl-code"><span class="k">output</span> = [<span class="v">human</span>, <span class="v">loop</span>]</p><span class="lab hl-n hl-rc"><span class="rec live">Rec</span> 01 / 89</span></div>
-    <ol class="pf-codes" aria-label="What Panorama Films works with"><li>PF-AV/001 AUDIOVISUAL</li><li>PF-FR/002 FIELD RESEARCH</li><li>PF-NR/003 NARRATIVE</li><li>PF-HM/004 HUMAN/MACHINE</li></ol>
+    <div class="pf-board"><p class="pf-fl lab mid" aria-hidden="true"><span class="pf-sc"><i></i><i></i><i></i><i></i><b id="pfMk"></b></span></p>
+    <ol class="pf-codes" aria-label="What Panorama Films works with"><li>PF-AV/001 AUDIOVISUAL</li><li>PF-FR/002 FIELD RESEARCH</li><li>PF-NR/003 NARRATIVE</li><li>PF-HM/004 HUMAN/MACHINE</li></ol></div>
   </section>
 
 
@@ -2105,11 +2106,17 @@ const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interv
   Post: k => /edit|sound design|grading/i.test(F[k].roles || '')};
 const capFilms = n => CAP_MATCH[n] ? ORDER.filter(k=>F[k] && CAP_MATCH[n](k)) : [];
 document.getElementById('caps').innerHTML = CAPS.map(([n,l],i)=>`<div class="sv"><h3><span class="sv-n lab mid">${String(i+1).padStart(2,'0')}</span><span class="sv-t">${n}</span></h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
-/* the t-shirt lines: each row gets a red marker and a 01 / 04 count either side; the row under the pointer comes into focus (on touch screens, the row nearest the middle of the window) */
-(()=>{ const box = document.querySelector('.pf-codes'); if (!box) return; const lis = [...box.children], n = lis.length;
-  lis.forEach((li, i)=>{ const x = li.textContent; li.innerHTML = `<span class="pf-m lab" aria-hidden="true"></span><span class="pf-t">${x}</span><span class="pf-n lab" aria-hidden="true">${String(i+1).padStart(2,'0')} / ${String(n).padStart(2,'0')}</span>`; });
-  const on = li => lis.forEach(o=>o.classList.toggle('on', o === li));
-  if (matchMedia('(hover:hover) and (pointer:fine)').matches){ lis.forEach(li=>{ li.addEventListener('mouseenter', ()=>on(li)); li.addEventListener('mouseleave', ()=>li.classList.remove('on')); }); return; }
+/* the t-shirt lines: serial number and name in their own columns; the row in focus (pointer, or the middle of the window on touch screens) sharpens, lightens and its name flicks a little; the red index on the scale follows it */
+(()=>{ const box = document.querySelector('.pf-codes'), mk = document.getElementById('pfMk'); if (!box) return; const lis = [...box.children];
+  lis.forEach(li=>{ const x = li.textContent, k = x.indexOf(' '); li.setAttribute('aria-label', x); li.innerHTML = `<span class="pf-s" aria-hidden="true">${x.slice(0, k)}</span><span class="pf-t" aria-hidden="true">${x.slice(k + 1)}</span>`; });
+  const calm = matchMedia('(prefers-reduced-motion:reduce)').matches, G = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789/-';
+  const flick = li => { if (calm) return; const t = li.querySelector('.pf-t'), x = t.dataset.x || (t.dataset.x = t.textContent), id = (li._r = (li._r || 0) + 1), t0 = performance.now(), dur = 360;
+    const f = now => { if (li._r !== id) return; const p = Math.min(1, (now - t0) / dur), k = Math.floor(p * x.length);
+      t.textContent = x.slice(0, k) + [...x.slice(k)].map(c => c === ' ' || c === '/' || Math.random() < .6 ? c : G[Math.random() * G.length | 0]).join('');
+      if (p < 1) requestAnimationFrame(f); else t.textContent = x; };
+    requestAnimationFrame(f); };
+  let cur = null; const on = li => { if (li === cur) return; cur = li; lis.forEach(o=>o.classList.toggle('on', o === li)); if (mk) mk.style.setProperty('--k', li ? lis.indexOf(li) : 0); if (li) flick(li); };
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches){ lis.forEach(li=>li.addEventListener('mouseenter', ()=>on(li))); box.addEventListener('mouseleave', ()=>on(null)); return; }
   let raf = 0; const pick = ()=>{ raf = 0; const r = box.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight){ on(null); return; }
     let best = null, d = 1e9; lis.forEach(li=>{ const q = li.getBoundingClientRect(), dd = Math.abs(q.top + q.height / 2 - innerHeight / 2); if (dd < d){ d = dd; best = li; } }); on(best); };
   addEventListener('scroll', ()=>{ if (!raf) raf = requestAnimationFrame(pick); }, {passive:true}); pick(); })();
