@@ -697,10 +697,22 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 /* Studio: the sentence starts one row under the label */
 #studio > .lede h2,.lede.coll h2{padding-top:1.03em}
 .lede.coll{margin-bottom:clamp(24px,3vw,48px)}
-/* the t-shirt lines, word for word, in the dot-matrix face (Andrija, 2026-10-22) */
-.pf-codes{list-style:none;margin:clamp(96px,10vw,160px) 0 0;padding:0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(24px,4.4vw,80px);line-height:1.22;letter-spacing:.2em;--pfc:#3a3a37;color:var(--pfc);white-space:nowrap}
-:root[data-pf="light"] .pf-codes{--pfc:#c2c2bc}
-.pf-codes li{margin:0;width:max-content;cursor:default;transition:color .35s}
+/* the t-shirt lines, word for word, in the dot-matrix face (Andrija, 2026-10-22): below Human in the loop, centred, very dark, set like rows on a departures board between hairlines;
+   the row under the pointer (on touch screens the one nearest the middle of the window) comes into focus: it lightens and its letter spacing pulls in, no blur */
+.pf-codes{list-style:none;margin:clamp(96px,10vw,160px) 0 0;padding:0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(24px,4.4vw,80px);line-height:1;--pfc:#1d1d1b;--pfr:#1a1a19;color:var(--pfc);white-space:nowrap;border-top:1px solid var(--pfr)}
+:root[data-pf="light"] .pf-codes{--pfc:#dddcd6;--pfr:#e3e2dd}
+.pf-codes li{display:grid;grid-template-columns:1fr auto 1fr;align-items:center;gap:var(--g);padding:.32em 0;border-bottom:1px solid var(--pfr);cursor:default;transition:color .5s var(--ease),border-color .5s var(--ease)}
+.pf-codes .pf-t{grid-column:2;letter-spacing:.3em;margin-right:-.3em;transition:letter-spacing .7s var(--ease),margin .7s var(--ease)}
+.pf-codes .pf-m,.pf-codes .pf-n{font-size:var(--small);letter-spacing:.2em;color:var(--pfc);transition:color .5s var(--ease)}
+.pf-codes .pf-m{justify-self:start;display:flex;align-items:center;gap:.8em}
+.pf-codes .pf-m::before{content:"";width:.6em;height:.6em;border-radius:50%;background:var(--red);opacity:0;transition:opacity .3s}
+.pf-codes .pf-n{justify-self:end}
+.pf-codes li.on{color:var(--fg);border-bottom-color:var(--rule)}
+.pf-codes li.on .pf-t{letter-spacing:.2em;margin-right:-.2em}
+.pf-codes li.on .pf-m,.pf-codes li.on .pf-n{color:var(--mid)}
+.pf-codes li.on .pf-m::before{opacity:1}
+@media (max-width:760px){.pf-codes{font-size:min(5.6vw,30px)}.pf-codes li{grid-template-columns:1fr;padding:.5em 0}.pf-codes .pf-m,.pf-codes .pf-n{display:none}.pf-codes .pf-t{grid-column:1;justify-self:center;letter-spacing:.14em;margin-right:-.14em}.pf-codes li.on .pf-t{letter-spacing:.1em;margin-right:-.1em}}
+@media (prefers-reduced-motion:reduce){.pf-codes li,.pf-codes .pf-t,.pf-codes .pf-m,.pf-codes .pf-n{transition:none}}
 /* crew codes: beside each name in the Collective list, and above the bio in a profile (trial, 2026-10-22) */
 .net-names .crew{position:absolute;right:calc(100% + var(--g));top:.42em;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:var(--small);letter-spacing:.2em;color:#3a3a37;white-space:nowrap;pointer-events:none;transition:color .2s}
 :root[data-pf="light"] .net-names .crew{color:#c2c2bc}
@@ -708,11 +720,6 @@ body{font-kerning:normal;font-feature-settings:"kern" 1,"liga" 1,"calt" 1;text-r
 .dr-code{margin:14px 0 0;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:var(--small);letter-spacing:.2em;color:var(--mid)}
 @media (max-width:760px){.net-names .crew{display:none}}
 .peers:has(.net-dr:not([hidden])) .net-names .crew{opacity:0}
-.pf-codes li.dec{color:var(--mid)}
-.pf-codes .fl{display:inline-block;white-space:pre}
-.pf-codes .fl.fp{animation:pfFlap .11s linear}
-@keyframes pfFlap{0%{transform:scaleY(.15)}100%{transform:scaleY(1)}}   /* under clients, dark grey; a line decodes and lights up while pointed at (Andrija, 2026-10-22) */
-@media (max-width:760px){.pf-codes{font-size:min(5.8vw,30px);letter-spacing:.1em}}
 .lede.coll .tag{position:static;display:inline-flex;margin-bottom:calc(var(--t1) * 1.03)}   /* List / Graph sits one line under the Collective label (Andrija, 2026-10-22) */
 #studio > .lede.h-shut h2{padding-top:0}
 @media (max-width:760px){#studio > .lede h2,.lede.coll h2{padding-top:0}}
@@ -2098,25 +2105,14 @@ const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interv
   Post: k => /edit|sound design|grading/i.test(F[k].roles || '')};
 const capFilms = n => CAP_MATCH[n] ? ORDER.filter(k=>F[k] && CAP_MATCH[n](k)) : [];
 document.getElementById('caps').innerHTML = CAPS.map(([n,l],i)=>`<div class="sv"><h3><span class="sv-n lab mid">${String(i+1).padStart(2,'0')}</span><span class="sv-t">${n}</span></h3><ul>${l.map(x=>`<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
-/* the t-shirt lines below Human in the loop, dark grey; a very light split-flap: pointing at a line flicks about half the letters of its name one step and back, the serial number stays still, and the line lifts a shade (on touch screens once, when the lines come into view) */
-(()=>{ const box = document.querySelector('.pf-codes'); if (!box) return;
-  const B = ' ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-/';
-  [...box.children].forEach(li=>{ const x = li.textContent; li.setAttribute('aria-label', x); li.innerHTML = [...x].map(c=>`<span class="fl" aria-hidden="true">${c}</span>`).join(''); });
-  if (matchMedia('(prefers-reduced-motion:reduce)').matches) return;
-  const flap = (li, keep) => { const id = (li._r = (li._r || 0) + 1); li.classList.add('dec');
-    const cells = [...li.children], tgt = li.getAttribute('aria-label'); let left = 0;
-    const from = tgt.indexOf(' ') + 1;   /* the serial number (PF-AV/001) stays still; only the name flicks */
-    cells.forEach((c, i)=>{ const want = tgt[i], wi = B.indexOf(want); if (i < from || want === ' ' || wi < 0 || Math.random() < .5){ c.textContent = want; return; }
-      const steps = 1; let k = (wi - steps + B.length * 4) % B.length; left++;
-      const tick = ()=>{ if (li._r !== id) return; c.textContent = B[k]; c.classList.remove('fp'); void c.offsetWidth; c.classList.add('fp');
-        if (B[k] === want){ if (--left === 0 && !keep) setTimeout(()=>{ if (li._r === id) li.classList.remove('dec'); }, 1100); return; }
-        k = (k + 1) % B.length; setTimeout(tick, 45); };
-      setTimeout(tick, i * 14); });
-    if (!left && !keep) setTimeout(()=>{ if (li._r === id) li.classList.remove('dec'); }, 1100); };
-  const lis = [...box.children];
-  if (matchMedia('(hover:hover) and (pointer:fine)').matches){
-    lis.forEach(li=>{ li.addEventListener('mouseenter', ()=>flap(li, true)); li.addEventListener('mouseleave', ()=>{ li._r++; const t = li.getAttribute('aria-label'); [...li.children].forEach((c,i)=>c.textContent = t[i]); li.classList.remove('dec'); }); });
-  } else new IntersectionObserver((en, o)=>{ if (!en[0].isIntersecting) return; o.disconnect(); lis.forEach((li, i)=>setTimeout(()=>flap(li, false), i * 320)); }, {threshold:.6}).observe(box); })();
+/* the t-shirt lines: each row gets a red marker and a 01 / 04 count either side; the row under the pointer comes into focus (on touch screens, the row nearest the middle of the window) */
+(()=>{ const box = document.querySelector('.pf-codes'); if (!box) return; const lis = [...box.children], n = lis.length;
+  lis.forEach((li, i)=>{ const x = li.textContent; li.innerHTML = `<span class="pf-m lab" aria-hidden="true"></span><span class="pf-t">${x}</span><span class="pf-n lab" aria-hidden="true">${String(i+1).padStart(2,'0')} / ${String(n).padStart(2,'0')}</span>`; });
+  const on = li => lis.forEach(o=>o.classList.toggle('on', o === li));
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches){ lis.forEach(li=>{ li.addEventListener('mouseenter', ()=>on(li)); li.addEventListener('mouseleave', ()=>li.classList.remove('on')); }); return; }
+  let raf = 0; const pick = ()=>{ raf = 0; const r = box.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight){ on(null); return; }
+    let best = null, d = 1e9; lis.forEach(li=>{ const q = li.getBoundingClientRect(), dd = Math.abs(q.top + q.height / 2 - innerHeight / 2); if (dd < d){ d = dd; best = li; } }); on(best); };
+  addEventListener('scroll', ()=>{ if (!raf) raf = requestAnimationFrame(pick); }, {passive:true}); pick(); })();
 /* Services as a slate (2026-10-22, Andrija): pointing at a discipline turns it red and types its items out again; the text is always there, the typing is only a flourish */
 (()=>{ const box = document.getElementById('caps'); if (!box || !matchMedia('(hover:hover) and (pointer:fine)').matches || matchMedia('(prefers-reduced-motion:reduce)').matches) return;
   const cols = [...box.querySelectorAll('.sv')]; let run = 0;
