@@ -14,7 +14,8 @@ export async function onRequest({ request, env, params }) {
   if (!slug) return Response.redirect(`${url.origin}/#films`, 301);
   const res = await env.ASSETS.fetch(new URL('/', url));
   const html = await res.text();
-  const site = readSite(html);
+  const live = /^((www\.)?panoramafilms\.tv|(www\.)?panorama\.mov|panorama-website\.pages\.dev)$/i.test(url.hostname);   /* same test as SHOW_DRAFTS in the page */
+  const site = readSite(html, { drafts: !live });
   const k = site.bySlug[slug.toLowerCase()];
   if (!k) return Response.redirect(`${url.origin}/`, 302);
   if (slug !== site.slug[k] || !url.pathname.endsWith('/')) return Response.redirect(`${url.origin}/work/${site.slug[k]}/`, 301);
@@ -42,7 +43,7 @@ export async function onRequest({ request, env, params }) {
 
   const set = (sel, attr, val) => [sel, { element(e) { e.setAttribute(attr, val); } }];
   let rw = new HTMLRewriter()
-    .on('head', { element(e) { e.prepend('<base href="/">', { html: true }); e.append(`<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`, { html: true }); } })
+    .on('head', { element(e) { e.append(`<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>`, { html: true }); } })
     .on('title', { element(e) { e.setInnerContent(title); } })
     .on('html', { element(e) { e.setAttribute('data-work', k); } });
   for (const [s, a, v] of [

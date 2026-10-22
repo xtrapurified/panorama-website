@@ -6,7 +6,7 @@ from PIL import Image
 src = json.loads(subprocess.check_output(['node', '--input-type=module', '-e', """
 import fs from 'node:fs'; import { readSite } from './lib/site.js';
 const s = readSite(fs.readFileSync('index.html', 'utf8'));
-const o = { home: 'media/stills/reel.webp' };
+const o = {};   /* media/og/home.jpg is hand-picked (showreel V4 at 0:59.7, Andrija 2026-10-21), never regenerated */
 for (const k of s.ORDER) o[s.slug[k]] = 'media/' + (s.F[k].img || 'stills/' + (s.F[k].still || k)) + '.webp';
 console.log(JSON.stringify(o));"""]))
 os.makedirs('media/og', exist_ok=True)
