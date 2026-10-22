@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-22 (mobile-redesign kept in step with dev). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-22 (milestone 2026-10-22 prod, before the About redesign). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -66,6 +66,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - **2026-10-20 prod** — branch `archive/2026-10-20-prod`, approved by Andrija for going fully live; page source also saved as `claude/milestones/2026-10-20-prod-index.html`. Everything on `dev` up to this point (the changes of 2026-10-20 below, Human in the loop studies, LE-012 Chrome dither) plus the new showreel V4 (1:29) hosted with the site in the header and the lightbox.
 - **2026-10-20 SEO** — branch `archive/2026-10-20-seo` (commit 0017868), approved by Andrija and deployed: crawlable plain project pages at `/work/<slug>/`, `/work/`, `/uae/`, `/sr/` (replaced the same day by real-site project addresses, see SEO), 404 page, redirects from the old Cargo addresses, homepage structured data and share images, the contact call opening an email (see SEO).
 - **2026-10-20 work pages** — branch `archive/2026-10-20-work-pages` (commit f1b8690), approved by Andrija and deployed: each project's address `/work/<slug>/` is the real site with the project open (no plain copies), sitemap from `index.html`, `/uae/` and `/sr/` off, nav fix for the play-mark bug.
+- **2026-10-22 prod** — branch `archive/2026-10-22-prod`, approved by Andrija; page source also saved as `claude/milestones/2026-10-22-prod-index.html`. Everything on `dev` up to this point, without the phone redesign (still on `mobile-redesign`): Natural History Museum Abu Dhabi (still a draft on the live site), Dubai Future Forum and sport projects retitled with new covers, homepage title and share image, big white type in Medium, header reel random start, phone films and menu fixes, project pages keeping their images (`<base href="/">`), the blinking red bullet before the Panorama Films wordmark. Taken before the About section redesign.
 
 ## Capabilities and Constraints
 
