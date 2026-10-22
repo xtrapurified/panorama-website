@@ -1139,7 +1139,7 @@ footer .ft-top{white-space:nowrap}
 @media (max-width:420px){footer{column-gap:12px}}
 .menu .sx-ic svg{width:.9em;height:.9em;fill:none;stroke:currentColor;stroke-width:1.92;stroke-linecap:round}
 /* client logos */
-.clients.logos{--u:clamp(55px,5.2vw,85px);--gap:clamp(57px,6.5vw,114px);margin:clamp(48px,6vw,96px) calc(var(--m) * -1) 0}
+.clients.logos{--u:clamp(66px,6.24vw,102px);--gap:clamp(68px,7.8vw,137px);margin:clamp(48px,6vw,96px) calc(var(--m) * -1) 0}
 .marq{overflow-x:auto;overflow-y:hidden;scrollbar-width:none;cursor:grab;touch-action:pan-x pan-y;-webkit-mask:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent);mask:linear-gradient(90deg,transparent,#000 20%,#000 80%,transparent);padding-block:12px}
 .marq::-webkit-scrollbar{display:none}
 .marq.drag{cursor:grabbing;user-select:none}
@@ -1147,13 +1147,13 @@ footer .ft-top{white-space:nowrap}
 .set{display:flex;align-items:center;gap:calc(var(--gap) / 2);padding-right:calc(var(--gap) / 2)}
 .set .dv{flex:none;width:1px;height:calc(var(--u) * .55);background:rgba(237,237,235,.2)}
 .clients.logos .lg{display:block;width:calc(var(--w) * var(--u));height:calc(var(--h) * var(--u));background:var(--mid);opacity:.78;-webkit-mask:var(--src) center/contain no-repeat;mask:var(--src) center/contain no-repeat;transition:background-color .25s,opacity .25s,filter .25s}
-.clients.logos .lg.lt{width:auto;height:auto;background:none;-webkit-mask:none;mask:none;color:var(--mid);font-size:clamp(13px,1.05vw,calc(16*var(--fz)));white-space:nowrap;font-weight:500;letter-spacing:-.01em;text-transform:uppercase}
+.clients.logos .lg.lt{width:auto;height:auto;background:none;-webkit-mask:none;mask:none;color:var(--mid);font-size:clamp(15.6px,1.26vw,calc(19.2*var(--fz)));white-space:nowrap;font-weight:500;letter-spacing:-.01em;text-transform:uppercase}
 .clients.logos .lg:hover,.collab.hov .clients.logos .lg.on{background-color:var(--fg);opacity:1}
 .collab.hov .clients.logos .lg.on.ln{background-color:var(--red)}
 .clients.logos .lg.lt:hover,.collab.hov .clients.logos .lg.lt.on{color:var(--fg)}
 .collab.hov .clients.logos .lg{filter:blur(2px);opacity:.4}
 .collab.hov .clients.logos .lg.on{filter:none}
-@media (max-width:600px){.clients.logos{--u:50px;--gap:62px}}
+@media (max-width:600px){.clients.logos{--u:60px;--gap:74px}}
 
 /* wide screens keep the navigation in place while scrolling; the menu button is for phones only */
 @media (min-width:761px){
@@ -1349,6 +1349,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 @media (min-width:761px){#approach .fold-lede{margin-top:calc(var(--t1) * .3)}}   /* the Approach label sits one line above its statement */
 /* the "Seen in" lists start on one line across the Approach columns */
 @supports (grid-template-rows:subgrid){.caps > div{display:grid;grid-row:span 3;grid-template-rows:subgrid;row-gap:0;align-content:start}.caps .cap-f{align-self:start}}
+/* Services (2026-10-22, Andrija): its label two lines further down from Formats; on computers the five columns share the full page width */
+#services.more{margin-top:calc(clamp(80px,8vw,128px) + var(--t1) * 2.06)}
+@media (min-width:901px){#services .caps{grid-template-columns:repeat(5,minmax(0,1fr))}#services .caps > div{grid-column:auto}}
 /* motion: one ease everywhere; big statements arrive once, top to bottom, as they scroll in */
 .rv{clip-path:inset(0 -2em 100% -2em);transform:translateY(.22em);transition:clip-path 1.2s var(--ease),transform 1.2s var(--ease)}
 .rv.in{clip-path:inset(-.3em -2em -.4em -2em);transform:none}
@@ -1736,9 +1739,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   <section class="sec" id="studio" data-sec="studio">
     <div class="lede"><span class="tag">About Us.<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Panorama Films is an open circle of creatives telling stories that matter in ways that make you care.</h2></div>
     <details class="more" open id="toolkit">
-      <summary><span class="mt">Formats<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
+      <summary class="sr-only"><span class="mt">Formats</span><span class="pm" aria-hidden="true"></span></summary>
       <div class="kit-wrap">
-      <p class="kit-fl lab mid" aria-hidden="true"><span>Focus</span><span class="kit-sc"><i></i><i></i><i></i><i></i><i></i><b id="kitMk"></b></span></p>
+      <p class="kit-fl lab mid" aria-hidden="true"><span>Formats</span><span class="kit-sc"><i></i><i></i><i></i><i></i><i></i><b id="kitMk"></b></span></p>
       <dl class="kit" id="kit">
         <div class="kit-r on" data-i="0"><span class="kit-n lab mid">01</span><dt>Documentaries</dt><dd>Cultural shifts, disappearing traditions, grassroots change. Real.</dd></div>
         <div class="kit-r" data-i="1"><span class="kit-n lab mid">02</span><dt>Campaigns</dt><dd>Authentic, mission-aligned films and storytelling for conscious brands. Narratives.</dd></div>
@@ -1784,7 +1787,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <ul class="sr-only" id="netList"></ul>
     </div>
     <div class="collab">
-      <span class="tag">Selected clients<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span>
+      <h2 class="sr-only">Selected clients</h2>
       <div class="featured" id="featured"></div>
       <div class="clients" id="clients"></div>
       <div class="peek" id="peek" aria-hidden="true"></div>
