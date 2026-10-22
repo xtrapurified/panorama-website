@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-22 (milestone 2026-10-22 prod, before the About redesign). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-22 (About redesign, first pass from the doc). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -52,6 +52,8 @@ Supporting facts already in use on the site:
 ## About redesign (2026-10-22, in progress)
 
 All About texts and tables (Studio, Core team, Collective bios, Selected clients, Approach, We make, Capabilities, Toolkit, Manifesto, Human in the loop) were copied word for word into the Claude Doc "About — Panorama Films website" (claude.ai/artifact/857v1DkwzopTVvU9Stf2LP) for Andrija to edit and reorder. When he is done, the doc's text and order are carried back to `index.html` on `dev`. Lines in *(brackets)* there are notes, not site text.
+
+First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us." with the new statement (Panorama Films is an open circle of creatives telling stories that matter in ways that make you care.); the two intro columns, Approach, We make (accordion and "Filmed with care"), Manifesto and the Collective's own statement are gone. Inside About, after the statement: **Formats** (the rack-focus list that was Toolkit, five rows: Documentaries, Campaigns, Legacy Films, BTS & Process Films, Experiences; `#toolkit` kept as id), then **Services** (`#services`, the discipline columns without Formats), then the Collective and Selected clients (NCR added at the end of the strip). `#approach` now holds only Human in the loop, whose first code line reads `(filming in progress) { human.in(loop) }`. Search lists the two parts as About us and Field notes.
 
 ## Milestones (revert targets)
 
