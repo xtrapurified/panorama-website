@@ -844,6 +844,10 @@ footer{font-size:calc(12*var(--fz))}
 .wm::before{content:"";display:inline-block;width:.34em;height:.34em;border-radius:50%;background:var(--red);margin-right:.24em;vertical-align:.12em}
 .wm::before{animation:blink 1s steps(1,end) infinite}   /* blinks like the Rec dot (Andrija, 2026-10-22) */
 @media (prefers-reduced-motion:reduce){.wm::before{animation:none}}
+/* the same blinking red bullet before Panorama Films in the header text (Andrija, 2026-10-22); outside the h1 so the blend mode leaves it red */
+.hero .hd .h1l h1{display:inline;margin:0;font:inherit;letter-spacing:inherit;line-height:inherit}
+.hero .hd .hdot{display:inline-block;width:.2em;height:.2em;border-radius:50%;background:var(--red);margin-right:.2em;vertical-align:.24em;animation:blink 1s steps(1,end) infinite}
+@media (prefers-reduced-motion:reduce){.hero .hd .hdot{animation:none}}
 .wm sup{font-size:.42em;font-weight:400;line-height:0;vertical-align:.95em;margin-left:.12em}
 .hdr.compact .logo-slot{width:auto;aspect-ratio:auto}
 /* header layout: logo on the left, the links starting a quarter of the page in from the right edge, the reel's Rec in the top right corner */
@@ -1636,7 +1640,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
         <span></span>
         <span class="lab" id="heroNow"></span>
       </div>
-      <div class="grid hl"><div class="hd"><p class="sub">Films about people, ideas and the future.</p><h1>Panorama Films</h1><p class="sub2">Creative storytelling studio.</p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
+      <div class="grid hl"><div class="hd"><p class="sub">Films about people, ideas and the future.</p><div class="h1l"><span class="hdot" aria-hidden="true"></span><h1>Panorama Films</h1></div><p class="sub2">Creative storytelling studio.</p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
       <div class="grid facts">
         <a class="play-reel" data-play="reel" href="media/reel.mp4" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:29</span></a>
       </div>
