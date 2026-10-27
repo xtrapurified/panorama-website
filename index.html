@@ -1918,7 +1918,7 @@ const F = {
 };
 /* Drafts: projects being prepared. They show on the dev preview and locally, never on the live site
    (panorama.mov, www.panorama.mov, panorama-website.pages.dev). To publish one, take it out of DRAFTS. */
-const DRAFTS = ["wss26","p37"];   /* Natural History Museum Abu Dhabi stays hidden on the live site (Andrija, 2026-10-21) */   /* For the Human of the Future published 2026-10-20 with its hero film */
+const DRAFTS = ["wss26"];   /* Natural History Museum Abu Dhabi published 2026-10-27 */   /* For the Human of the Future published 2026-10-20 with its hero film */
 const SHOW_DRAFTS = !/^((www\.)?panoramafilms\.tv|(www\.)?panorama\.mov|panorama-website\.pages\.dev)$/i.test(location.hostname);
 /* the site's order (Andrija, 2026-10-14): the first six visible projects are Featured, the rest open the catalogue */
 const LIST = ["hotf","wss26","ask","orchard","astro","docu","p13","sport","ten","p07","p08","p37","p09","p10","p12","p14","p15","p16","p36","p18","p17","p19","p20","p21","p23","p24","p25","p26"].filter(k=>SHOW_DRAFTS || !DRAFTS.includes(k));
