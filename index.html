@@ -1653,9 +1653,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .lb-bar #lb-share:hover{color:var(--red)}
 .lb-bar #lb-share.done{color:var(--mid)}
 @media (max-width:600px){.lb-bar #lb-share .sh-t{display:none}.lb-bar #lb-share .ic{width:.9em;height:.9em}.lb-bar .lb-x.ctl{gap:20px}}   /* phones: Share is just the arrow, so the project title keeps its room */
-/* catalogue cards (not Featured), 2026-10-27, Andrija: the moving thumbnails rest in black and white, dimmed to dark grey, and slowly turn to colour under the pointer;
+/* catalogue cards (not Featured), 2026-10-27, Andrija: the moving thumbnails rest dark, at 70% saturation, and slowly come up to full colour and brightness under the pointer;
    on touch screens the card nearest the middle of the window is the one in colour */
-#cards .card .media{filter:grayscale(1) brightness(.55) contrast(.92);transition:filter 1.8s cubic-bezier(.25,.1,.25,1)}
+#cards .card .media{filter:saturate(.7) brightness(.5);transition:filter 1.8s cubic-bezier(.25,.1,.25,1)}
 #cards .card:hover .media,#cards .card .media.lit{filter:none;transition-duration:1.4s}
 @media (prefers-reduced-motion:reduce){#cards .card .media{transition:none}}
 </style>
@@ -2860,7 +2860,7 @@ ORDER.forEach(k=>{ const f = F[k], p = PJ[k] || {intro:[], credits:[], groups:[]
   (CR[k] ? [] : p.credits||[]).forEach(([a,b])=>people.push(`${a}: ${b}`));   /* old credit rows only where no structured credits exist */
   ((CR[k] || {}).blocks || []).forEach(b=>{ b.rows.forEach(([a,n])=>people.push(`${a}: ${n}`)); if (b.ext) people.push(b.h); });
   (p.groups||[]).forEach(g=>{ if (g.t) films.push(g.t); (CR[k] ? [] : g.meta||[]).forEach(([a,b])=>people.push(`${a}: ${b}`)); (g.films||[]).forEach(x=>x.t && films.push(cleanT(x.t))); (g.text||[]).forEach(t=>text.push(t)); });
-  SX.push({k, n:f.n||'', title:f.title, sub:[f.client, f.year].filter(Boolean).join(' / '), year:f.year||'', thumb:still(k),
+  SX.push({k, n:f.n||'', title:f.title, sub:f.client || '',   /* the year has its own column, so it is not repeated after the client (Andrija, 2026-10-27) */ year:f.year||'', thumb:still(k),
     fields:[[f.title,10],[f.client||'',6],[f.roles||'',3],[f.year||'',4],[films.join(' · '),3],[people.join(' · '),3],[text.join(' ').replace(/\s+/g,' '),1]]});
 });
 const secText = id => (document.getElementById(id)?.innerText || '').replace(/\s+/g,' ');
