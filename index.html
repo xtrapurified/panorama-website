@@ -858,8 +858,8 @@ footer{font-size:calc(12*var(--fz))}
 .wm{transition:color .2s}
 .wm:hover,.wm:focus-visible{color:var(--red)}
 .lb-wm{display:inline-block;background:none;border:0;padding:0;cursor:pointer;align-self:center;line-height:1!important}
-.lb-bar .lb-l{position:relative;top:var(--wm-dy,6.9px)}
-@media (max-width:700px){.lb-bar .lb-l{top:var(--wm-dy,-2.7px)}}   /* sits exactly where the header wordmark is; refined by script on open */   /* in a project: the Panorama Films wordmark leads back to the site (2026-10-14) */   /* the wordmark turns red on hover (2026-10-14) */
+.lb-bar .lb-l,.lb-bar .lb-x{position:relative;top:var(--wm-dy,6.9px)}
+@media (max-width:700px){.lb-bar .lb-l,.lb-bar .lb-x{top:var(--wm-dy,-2.7px)}}   /* sits exactly where the header wordmark is; refined by script on open */   /* in a project: the Panorama Films wordmark leads back to the site (2026-10-14) */   /* the wordmark turns red on hover (2026-10-14) */
 .wm:hover .wm-f,.wm:focus-visible .wm-f{opacity:0;max-width:0}   /* Films steps aside while Panorama flicks through its scripts */   /* Films a step lighter than Panorama */
 /* a red bullet leads the wordmark, like Rec (2026-10-22, Andrija); it stays put while Panorama flicks through Cyrillic and Arabic */
 .wm::before{content:"";display:inline-block;width:.34em;height:.34em;border-radius:50%;background:var(--red);margin-right:.24em;vertical-align:.12em}
@@ -1646,6 +1646,13 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 /* header text and the closing "Let's make a film together." with its links one step lighter again, Regular (Andrija, 2026-10-22) */
 .hero .hd,.end .ask,:is(.end,.pj-end) .links.big,.pj .pj-ask > span:last-child{font-weight:400}
 .hero .hd .h1p{font-weight:500}   /* trial: only "Panorama" in Medium, like the wordmark (Andrija, 2026-10-22) */
+/* project bar (Andrija, 2026-10-27): Share and Close at the size of the Panorama Films wordmark and level with it, on every screen */
+.lb-bar .lb-x.ctl{font-size:clamp(17px,1.4vw,22px);gap:clamp(18px,2vw,32px);align-self:center;line-height:1}
+.lb-bar .lb-x button{line-height:1;min-height:44px}
+.lb-bar #lb-share{color:var(--fg)}
+.lb-bar #lb-share:hover{color:var(--red)}
+.lb-bar #lb-share.done{color:var(--mid)}
+@media (max-width:600px){.lb-bar #lb-share .sh-t{display:none}.lb-bar #lb-share .ic{width:.9em;height:.9em}.lb-bar .lb-x.ctl{gap:20px}}   /* phones: Share is just the arrow, so the project title keeps its room */
 </style>
 <!-- SEO:LD --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://panoramafilms.tv/#site","url":"https://panoramafilms.tv/","name":"Panorama Films","inLanguage":"en","publisher":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Organization","@id":"https://panoramafilms.tv/#org","name":"Panorama Films","alternateName":["Panorama Films Collective","Панорама Филмс"],"url":"https://panoramafilms.tv/","logo":"https://panoramafilms.tv/media/icons/icon-512.png","image":"https://panoramafilms.tv/media/og/home.jpg","description":"Independent creative storytelling studio from Belgrade, Serbia, making documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.","slogan":"Seeing the bigger picture.","address":{"@type":"PostalAddress","addressLocality":"Belgrade","addressCountry":"RS"},"areaServed":[{"@type":"Country","name":"United Arab Emirates"},{"@type":"Country","name":"Serbia"},{"@type":"Place","name":"Worldwide"}],"knowsAbout":["Documentary film production","Docuseries","Brand films","Campaign films","Event films","Cinematography","Aerial cinematography","Film editing","Sound design","Script writing","Creative direction"],"sameAs":["https://www.instagram.com/panoramafilms.tv/","https://vimeo.com/panoramafilmstv","https://www.youtube.com/@panoramafilmstv"],"founder":[{"@id":"https://panoramafilms.tv/#andrija-kovac"}],"employee":[{"@id":"https://panoramafilms.tv/#andrija-kovac"},{"@id":"https://panoramafilms.tv/#mina-strugar"},{"@id":"https://panoramafilms.tv/#marija-kovacina"}]},{"@type":"Person","@id":"https://panoramafilms.tv/#andrija-kovac","name":"Andrija Kovač","jobTitle":"Creative Director","description":"Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.","image":"https://panoramafilms.tv/media/team/andrija-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#mina-strugar","name":"Mina Strugar","jobTitle":"Producer","description":"Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.","image":"https://panoramafilms.tv/media/team/mina-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#marija-kovacina","name":"Marija Kovačina","jobTitle":"Editorial Director","description":"Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.","image":"https://panoramafilms.tv/media/team/marija-2.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}}]}</script><!-- /SEO:LD --></head>
 <body>
@@ -1656,6 +1663,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   <symbol id="i-l" viewBox="0 0 12 12"><path d="M10.5 6h-9M5 2.5 1.5 6 5 9.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
   <symbol id="i-d" viewBox="0 0 12 12"><path d="M6 1.5v9M2.5 7 6 10.5 9.5 7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
   <symbol id="i-u" viewBox="0 0 12 12"><path d="M6 10.5v-9M2.5 5 6 1.5 9.5 5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
+  <symbol id="i-sh" viewBox="0 0 12 12"><path d="M6 7.5V1.2M3.6 3.4 6 1 8.4 3.4M4 5.2H2.2v5.6h7.6V5.2H8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
   <symbol id="i-x" viewBox="0 0 12 12"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
   <filter id="heat" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".33 .5 .17 0 0 .33 .5 .17 0 0 .33 .5 .17 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues="0 .32 .89 1 1"/><feFuncG type="table" tableValues="0 .02 .14 .62 1"/><feFuncB type="table" tableValues="0 .03 .1 .55 1"/></feComponentTransfer></filter>
 </svg>
@@ -1825,7 +1833,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   <div class="lb-bar">
     <span class="lb-l"><button type="button" class="wm lb-wm" id="lb-home" aria-label="Panorama Films, back to the site"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></button><span class="lab ttl" id="lb-title"></span></span>
     <span class="ctl lab lb-pn"><button id="lb-prev" aria-label="Previous project"><svg class="ic" aria-hidden="true"><use href="#i-l"/></svg> Prev</button><button id="lb-next" aria-label="Next project">Next <svg class="ic" aria-hidden="true"><use href="#i-r"/></svg></button></span>
-    <span class="ctl lab lb-x"><button id="lb-close">Close <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></span>
+    <span class="ctl lab lb-x"><button type="button" id="lb-share" aria-label="Share this project"><span class="sh-t">Share</span> <svg class="ic" aria-hidden="true"><use href="#i-sh"/></svg></button><button id="lb-close">Close <svg class="ic" aria-hidden="true"><use href="#i-x"/></svg></button></span>
   </div>
   <div class="lb-stage">
     <button type="button" class="lb-side l" id="lb-sl" aria-label="Previous project"><svg viewBox="0 0 14 24" aria-hidden="true"><path d="M12 1.5 2 12l10 10.5"/></svg><span class="lb-side-t lab" aria-hidden="true"></span></button>
@@ -2664,6 +2672,7 @@ function openFilm(k){
   lb.classList.toggle('photo', photo);
   renderProject(k, photo);
   document.getElementById('lb-title').textContent = same(f.title, f.client) || !f.client ? f.title : `${f.title} — ${f.client}`;   /* no "Shinobi — Shinobi" */
+  document.getElementById('lb-share').hidden = (k==='reel');
   document.getElementById('lb-prev').hidden = document.getElementById('lb-next').hidden = document.getElementById('lb-sl').hidden = document.getElementById('lb-sr').hidden = (k==='reel');
   if (photo){ teardown(); startShow(k); curI = 0; sideLabels(); }
   else playFilm(Math.max(0, films.findIndex(x=>x.main)), false);
@@ -2720,8 +2729,15 @@ function toggleFs(){
 }
 cPlay.addEventListener('click', toggle);
 document.getElementById('lb-home').addEventListener('click', ()=>closeFilm());
+/* Share: the phone's share sheet where there is one, otherwise the project's address goes to the clipboard */
+{ const sb = document.getElementById('lb-share');
+  sb.addEventListener('click', ()=>{ const k = curK, f = F[k]; if (!f) return; const url = location.origin + (workUrl(k) || location.pathname);
+    const st = sb.querySelector('.sh-t'), say = t => { st.textContent = t; sb.classList.add('done'); clearTimeout(sb._t); sb._t = setTimeout(()=>{ st.textContent = 'Share'; sb.classList.remove('done'); }, 1800); };
+    if (navigator.share && matchMedia('(pointer:coarse)').matches) navigator.share({title: f.title + ' | Panorama Films', url}).catch(()=>{});
+    else if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(()=>say('Link copied'), ()=>say('Copy failed'));
+    else say(url); }); }
 /* the wordmark in a project sits exactly where the header one does, so closing a project doesn't make it jump */
-function alignWm(){ const h = document.querySelector('.hdr .wm'), m = document.getElementById('lb-home'), w = m && m.parentElement; if (!h || !w) return;
+function alignWm(){ const h = document.querySelector('.hdr .wm'), m = document.getElementById('lb-home'), w = m && m.closest('.lb-bar'); if (!h || !w) return;   /* the offset sits on the whole bar, so Share and Close stay level with the wordmark */
   requestAnimationFrame(()=>{ if (!h.offsetParent || lb.hidden) return; w.style.removeProperty('--wm-dy'); w.style.setProperty('--wm-dy', '0px');
     const d = h.getBoundingClientRect().top - m.getBoundingClientRect().top; if (Math.abs(d) < 40) w.style.setProperty('--wm-dy', d.toFixed(1) + 'px'); else w.style.removeProperty('--wm-dy'); }); }
 addEventListener('resize', ()=>{ if (!lb.hidden) alignWm(); });
