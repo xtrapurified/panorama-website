@@ -982,6 +982,8 @@ footer{font-size:calc(12*var(--fz))}
 .mb video{display:block;width:100%;height:auto;background:var(--field);filter:grayscale(1) contrast(1.06) brightness(.9);transition:filter .8s cubic-bezier(.16,1,.3,1)}
 .mb:hover video,.mb.focus video{filter:none}
 .mb video{cursor:pointer}
+.pj-top{margin:0 0 clamp(48px,6vw,96px);display:grid;gap:10px}
+.pj-top video{filter:none}
 .mb img,.mb-poster img{display:block;width:100%;height:auto;background:var(--field);filter:grayscale(1) contrast(1.06) brightness(.9);transition:filter .8s cubic-bezier(.16,1,.3,1)}
 .mb:hover img,.mb.focus img,.mb-poster:hover img,.mb-poster.focus img{filter:none}
 .mb-q{grid-column:3/span 8;grid-row:var(--r);margin:clamp(24px,4vw,64px) 0;text-align:center;font-size:clamp(24px,2.6vw,calc(42*var(--fzh)));font-weight:400;letter-spacing:-.03em;line-height:1.15;text-wrap:balance;color:var(--fg)}
@@ -1950,7 +1952,9 @@ const EXHIBIT_QUOTE = {p07: '“Imagine Boka” invites viewers to question thei
 const EXHIBIT_POSTER = {p07: {i: 15, cap: 'Exhibition poster. July 25 – Aug 13, 2023, Our Lady of Carmen Church, Perast, Montenegro'}};
 /* Natural History Museum Abu Dhabi (2026-10-27, Andrija): the timelapse of the sun-dome hall (05.mp4) opens the project, looping, silent;
    below the text the museum photos as a spread like ImagineBoka.ai's, with the behind-the-scenes film (08) playing on its own, muted (click for sound). Photos sit in the project folder itself (no ex/). */
-const EXHIBIT_LAYOUTS = {p37: [[3,2,8,1,0],[1,10,3,1,9],[0,1,6,2,6],[6,8,3,2,0],[8,2,10,4,0],[2,1,5,5,7],[7,7,6,5,0],[4,3,6,6,0]]};   /* 8: the behind-the-scenes film, playing on its own below the middle (Andrija, 2026-10-27) */
+const EXHIBIT_LAYOUTS = {p37: [[3,2,8,1,0],[1,10,3,1,9],[0,1,6,2,6],[6,8,3,2,0],[2,1,5,4,7],[7,7,6,4,0],[4,3,6,5,0]]};
+/* a second film right under the header, playing on its own, muted, click for sound: [folder file, width, height] (Natural History Museum Abu Dhabi: the behind-the-scenes film, Andrija 2026-10-27) */
+const TOPFILM = {p37: ['proj/Natural-History-Museum-Abu-Dhabi/08', 1920, 1080]};
 const EXHIBIT_QROWS = {p37: 3};
 const EXHIBIT_DIR = {p37: ''};
 const EXHIBIT_HEAD = {p37: 'At the museum'};
@@ -2374,8 +2378,8 @@ function teardown(){ clearTimeout(watchdog); if (P && P.destroy) P.destroy(); P 
 function playFile(k, fm){
   const f = F[k], file = fm ? fm.file : f.file, reel = k === 'reel'; teardown();
   box.innerHTML = `<video src="${M}${file}.mp4" poster="${fm && fm.th ? `${M}vthumbs/${file}.webp` : still(k)}" playsinline autoplay preload="auto"></video><button class="lb-hit" type="button" tabindex="-1" aria-hidden="true"></button>`;
-  const v = box.querySelector('video');
-  if (f.mute && (!fm || fm.main)){ v.loop = true; v.muted = true; }   /* a silent moving shot as the project's header: loops, no sound (Natural History Museum Abu Dhabi) */
+  const v = box.querySelector('video'), quiet = f.mute && (!fm || fm.main);
+  if (quiet){ v.loop = true; v.muted = true; box.querySelector('.lb-hit').remove(); }   /* a silent moving shot as the project's header: loops, no controls (Natural History Museum Abu Dhabi, 2026-10-27) */   /* a silent moving shot as the project's header: loops, no sound (Natural History Museum Abu Dhabi) */
   P = { sound:true, nativeFs:!!v.webkitEnterFullscreen, get paused(){ return v.paused; }, get muted(){ return v.muted; }, get time(){ return v.currentTime; }, get dur(){ return v.duration||0; },
         play(){ v.play().catch(()=>{}); }, pause(){ v.pause(); }, seek(t){ v.currentTime = t; }, mute(m){ v.muted = m; }, fs(){ v.webkitEnterFullscreen && v.webkitEnterFullscreen(); } };
   ['play','pause','timeupdate','loadedmetadata','volumechange'].forEach(ev=>v.addEventListener(ev, paint));
@@ -2391,7 +2395,7 @@ function playFile(k, fm){
   setTimeout(()=>{ if (v.readyState < 2) asBlob(); }, 4000);
   go();
   document.getElementById('lb-note').textContent = reel ? `${f.client}. Full showreel, ${f.dur}.` : [f.client, f.year, f.roles].filter(Boolean).join(' / ');
-  ctl.hidden = false; paint();
+  ctl.hidden = quiet; paint();
 }
 function playLocal(k, failed){
   const f = F[k]; if (f.file) return playFile(k); teardown();
@@ -2616,6 +2620,8 @@ function renderProject(k, photo){
   { const y = (document.getElementById('ftY') || {}).textContent || '';
     h += `<footer class="lab mid lb-ft"><span class="ft-l"><span class="ft-y">${esc(y)}</span><button type="button" class="ft-th" role="switch" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span><a href="#" class="ft-top" data-lbtop>Back to top <svg class="ic" aria-hidden="true"><use href="#i-u"/></svg></a><span class="ft-c">Studio Panorama Films</span></footer>`;
   }
+  if (TOPFILM[k] && !photo){ const [b,w,hh] = TOPFILM[k];
+    h = `<figure class="pj-top mb"><video muted loop autoplay playsinline preload="metadata" poster="${M}${b}.webp" width="${w}" height="${hh}" aria-label="${esc(f.title)}, behind the scenes"><source src="${M}${b}.webm" type="video/webm"><source src="${M}${b}.mp4" type="video/mp4"></video><figcaption class="lab mid">Behind the scenes · click for sound</figcaption></figure>` + h; }
   pjEl.innerHTML = h;
 }
 pjEl.addEventListener('click', e=>{
