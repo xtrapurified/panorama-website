@@ -1703,7 +1703,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   footer .ft-top,footer .ft-y{font-size:15px}
   footer .ft-c{font-size:0;gap:0}   /* only the Golden hour disc stays on the right */
   .mail-note{font-size:15px}
-  .clients.logos{--u:72px;--gap:89px}   /* client logos 20% bigger than the main site's phone size (60 / 74 px), Andrija 2026-10-28 */
+  .clients.logos{--u:72px;--gap:89px}
+  .net-view{margin-bottom:clamp(40px,12vw,64px)}   /* more room between List / Graph and the graph or list (Andrija, 2026-10-28) */
+  .pf-codes{font-size:var(--pff,min(4.6vw,26px))}   /* PF codes sized by script so the longest line spans the page (Andrija, 2026-10-28) */   /* client logos 20% bigger than the main site's phone size (60 / 74 px), Andrija 2026-10-28 */
 }
 
 /* mobile redesign, third pass (2026-10-21): films rise into place as they scroll in; the menu button is a ringed circle
@@ -1714,8 +1716,8 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   .m-rv.in{opacity:1;transform:none}
   .m-rv.in :is(.cap,.meta){opacity:1;transform:none}
   .hdr .burger{width:46px;height:46px;border:0;animation:mBurger .9s var(--ease) .5s both}
-  .hdr .burger i,.hdr .burger i::before,.hdr .burger i::after{width:16px;height:1.5px}
-  .hdr .burger i::before{transform:translateY(-4px)}.hdr .burger i::after{transform:translateY(4px)}
+  .hdr .burger i,.hdr .burger i::before,.hdr .burger i::after{width:22px;height:1.75px}   /* a step larger (Andrija, 2026-10-28; was 16 px) */
+  .hdr .burger i::before{transform:translateY(-6px)}.hdr .burger i::after{transform:translateY(6px)}
   .hdr .burger.open i{background:transparent}
   .hdr .burger.open i::before{transform:rotate(45deg)}.hdr .burger.open i::after{transform:rotate(-45deg)}
   .hdr .burger i::before,.hdr .burger i::after{transition:transform .45s var(--ease)}
@@ -2349,6 +2351,13 @@ if (matchMedia('(max-width:760px)').matches) document.querySelectorAll('.works .
   const ask = () => { if (!raf) raf = requestAnimationFrame(place); };
   addEventListener('scroll', ask, {passive:true}); addEventListener('resize', ask); phone.addEventListener('change', ()=>{ if (!phone.matches) document.querySelectorAll('.works .work .cap h3, #cards .card .meta h3').forEach(h=>h.style.transform = ''); ask(); });
   addEventListener('load', ask); setTimeout(ask, 300); ask(); })();
+(()=>{ const box = document.querySelector('.pf-codes'); if (!box) return; const phone = matchMedia('(max-width:760px)');
+  const fit = () => { if (!phone.matches){ box.style.removeProperty('--pff'); return; }
+    box.style.setProperty('--pff', '20px'); const lis = [...box.children]; if (!lis.length) return;
+    const tw = el => { if (!el) return 0; const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width; };
+    const natural = Math.max(...lis.map(li=>tw(li.children[0]) + tw(li.children[1]) + parseFloat(getComputedStyle(li).columnGap || 0)));
+    if (natural) box.style.setProperty('--pff', (20 * box.clientWidth / natural * .985).toFixed(2) + 'px'); };
+  addEventListener('resize', fit); phone.addEventListener('change', fit); (document.fonts ? document.fonts.ready : Promise.resolve()).then(fit); fit(); })();
 /* phones: each film rises into place as it scrolls into view (mobile redesign) */
 if (matchMedia('(max-width:760px)').matches && !REDUCED){ const rv = new IntersectionObserver(es=>es.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('in'); rv.unobserve(e.target); } }), {rootMargin:'0px 0px -12% 0px'});
   document.querySelectorAll('.works .work, #cards .card').forEach(el=>{ if (el.getBoundingClientRect().top > innerHeight * .9){ el.classList.add('m-rv'); rv.observe(el); } }); }
