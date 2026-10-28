@@ -1639,6 +1639,107 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   .cards .card.m-tail{display:none}
   .cards.m-all .card.m-tail{display:block}
 }
+
+/* ================= MOBILE REDESIGN (branch mobile-redesign, 2026-10-21) =================
+   Phones only. 1 hero: the reel full screen, the name and one line. 2 films: one per screen, cover filling it, a big
+   title, nothing else. 3 Studio: the long Approach part folds down to one statement and the six things we make as big
+   words. 5 no small text: the smallest type on phones is 15 px; labels, counters and code lines go. */
+@media (max-width:760px){
+  /* 1 hero */
+  .hero{height:100svh;min-height:0}
+  .hero .facts,#heroNow{display:none}   /* the header text stays as on the main site (Andrija, 2026-10-21) */
+  .hero .hd{display:flex;flex-direction:column}
+  .hero .hd .sub{order:-1}   /* header: Stories about people…, then Panorama Films, then the cities (Andrija, 2026-10-28) */
+  .hero .hd .sub{position:static!important;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal}   /* "Stories about people, ideas and the future." back in the header text (Andrija, 2026-10-28) */
+  .peekbar{display:none}
+  .logo-slot > .hdr-rec{display:none}
+  /* 2 films: one per screen */
+  #chapters > .lede,#chapters .lede{display:none}
+  #films.sec{padding-top:0}
+  .works .work,#cards .card{position:relative;margin:0 calc(var(--m) * -1);scroll-snap-align:start}
+  .works{display:block;gap:0;row-gap:0}
+  .works .work,.works .work + .work{margin-top:0;margin-bottom:0}
+  #chapters .chapter,#chapters > *{margin:0;padding:0}
+  .works .work .frame,#cards .card .frame{display:block;height:auto;aspect-ratio:1/1;margin:0;border-radius:0}   /* square (Andrija, 2026-10-21; was one screen tall) */
+  /* frame studies, ?ratio=sq|45|wide|full|mix: square, 4:5 portrait, 16:9, one screen tall, or featured 4:5 with the catalogue 16:9 */
+  :root[data-mr="45"] :is(.works .work,#cards .card) .frame{aspect-ratio:4/5}
+  :root[data-mr="wide"] :is(.works .work,#cards .card) .frame{aspect-ratio:16/9}
+  :root[data-mr="full"] :is(.works .work,#cards .card) .frame{aspect-ratio:auto;height:100svh}
+  :root[data-mr="mix"] .works .work .frame{aspect-ratio:4/5}
+  :root[data-mr="mix"] #cards .card .frame{aspect-ratio:16/9}
+  :root[data-mr="wide"] :is(.works .work .cap,#cards .card .meta),:root[data-mr="mix"] #cards .card .meta{padding-top:10vw;padding-bottom:16px}
+  :root[data-mr="wide"] :is(.works .work .cap h3.sr-only,#cards .card .meta h3),:root[data-mr="mix"] #cards .card .meta h3{font-size:var(--mt)}
+  .works .work .media img,#cards .card .media img{width:100%;height:100%;object-fit:cover}
+  .works .work .cap,#cards .card .meta{position:absolute;left:0;right:0;bottom:0;z-index:4;margin:0;padding:18vw var(--m) 22px;background:linear-gradient(transparent,rgba(0,0,0,.5));pointer-events:none;display:block}
+  .works .work .cap h3.sr-only,#cards .card .meta h3{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;margin:0;font-size:var(--mt);font-weight:500;letter-spacing:-.05em;line-height:1.06;color:#fff;text-wrap:balance}   /* same size and weight as the About Us statement (Andrija, 2026-10-28) */
+  .works .work .cap .cl,.works .work .cap p,#cards .card .meta .cl{display:none}
+  .frame .hud,.frame .play,.works .ov{display:none!important}
+  #cards{display:block;gap:0;margin-top:0;padding-top:0}
+  #chapters,#chapters .works{margin-bottom:0!important;padding-bottom:0}
+  section.sec:has(#cards){padding-top:0}
+  #showWrap{margin-top:40px}
+  /* 3 Studio, shorter */
+  #studio .grid.about{display:none}
+  .lede.coll h2{display:none}   /* the Studio statement already says it; the Collective goes straight to the names (2026-10-21) */
+  #approach > details.more.fold:first-of-type,#approach details.more:has(.fields){display:none}
+  #services{display:none}   /* Services off on phones; We make sits right under the About Us statement (Andrija, 2026-10-28) */
+  #toolkit .kit-fl,#toolkit .kit-n{display:none}   /* no small type: the Formats scale and the 01–05 numbers go */
+  #toolkit .kit-r{display:block}
+  #toolkit dt{font-size:var(--mt)}   /* the whole We make list at the About Us statement's size (Andrija, 2026-10-28) */
+  #toolkit dd,#toolkit .kit-r.on dd{font-size:var(--mt);letter-spacing:-.05em;line-height:1.06;font-weight:500;margin-top:.1em;color:var(--sub)}   /* same weight as the title, dark grey (Andrija, 2026-10-28) */   /* We make: the description at the title's size, Regular under the Medium title (Andrija, 2026-10-28) */
+  :root{--mt:clamp(28px,7.8vw,34px)}   /* one size for the film titles and the About Us statement, a step up from 26 px (30 px on a 390 px phone) */
+  #studio > .lede h2{font-size:var(--mt)}
+  #wemake.more.fold{margin-top:clamp(56px,14vw,96px)}
+  #wemake .svc{border-top:0;margin-top:20px}
+  #wemake .wm-r{border-bottom:0}
+  #wemake .wm-r > summary{display:block;padding:0;pointer-events:none}
+  #wemake .wm-n,#wemake .wm-s,#wemake .wm-pm,#wemake .wm-b{display:none!important}
+  #wemake .wm-t{display:block;font-size:clamp(34px,9.6vw,44px);letter-spacing:-.045em;line-height:1.08;color:var(--fg);transition:opacity .35s linear}
+  /* lighter on phones (2026-10-21, scrolling felt sluggish): one fixed soft blur instead of a graded, animated one */
+  #wemake .svc.rf .wm-r:not(.on) .wm-t{filter:blur(2.5px);opacity:.4}
+  /* 5 no small text */
+  footer.lab{font-size:15px}
+  footer .ft-ix{display:none}
+  footer .ft-top,footer .ft-y{font-size:15px}
+  footer .ft-c{font-size:0;gap:0}   /* only the Golden hour disc stays on the right */
+  .mail-note{font-size:15px}
+  .clients.logos{--u:72px;--gap:89px}
+  .net-view{margin-bottom:clamp(40px,12vw,64px)}   /* more room between List / Graph and the graph or list (Andrija, 2026-10-28) */
+  .pf-codes{font-size:var(--pff,min(4.6vw,26px))}   /* PF codes sized by script so the longest line spans the page (Andrija, 2026-10-28) */   /* client logos 20% bigger than the main site's phone size (60 / 74 px), Andrija 2026-10-28 */
+}
+
+/* mobile redesign, third pass (2026-10-21): films rise into place as they scroll in; the menu button is a ringed circle
+   that pops in, turns into an X, and the menu opens as a circle growing from it, links following one by one (after fried.tv) */
+@media (max-width:760px){
+  .m-rv{opacity:0;transform:translateY(32px);transition:opacity .6s var(--ease),transform .7s var(--ease)}
+  .m-rv :is(.cap,.meta){opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease) .15s,transform .6s var(--ease) .15s}
+  .m-rv.in{opacity:1;transform:none}
+  .m-rv.in :is(.cap,.meta){opacity:1;transform:none}
+  .hdr .burger{width:46px;height:46px;border:0;animation:mBurger .9s var(--ease) .5s both}
+  .hdr .burger i,.hdr .burger i::before,.hdr .burger i::after{width:22px;height:1.75px}   /* a step larger (Andrija, 2026-10-28; was 16 px) */
+  .hdr .burger i::before{transform:translateY(-6px)}.hdr .burger i::after{transform:translateY(6px)}
+  .hdr .burger.open i{background:transparent}
+  .hdr .burger.open i::before{transform:rotate(45deg)}.hdr .burger.open i::after{transform:rotate(-45deg)}
+  .hdr .burger i::before,.hdr .burger i::after{transition:transform .45s var(--ease)}
+  .hdr .burger{transition:transform .45s var(--ease),border-color .3s}
+  .hdr .burger.open{transform:rotate(90deg)}
+  .hdr.navopen .menu .nav-ft .nav-ix,.hdr.navopen .menu .nav-ft .ft-th{font-size:15px!important}
+  .hdr.navopen .menu{animation:mMenu .75s var(--ease) both}
+  .hdr.navopen .menu > a,.hdr.navopen .menu .nav-ft{animation:mLink .7s var(--ease) both}
+  .hdr.navopen .menu > a:nth-child(1){animation-delay:.18s}.hdr.navopen .menu > a:nth-child(2){animation-delay:.25s}.hdr.navopen .menu > a:nth-child(3){animation-delay:.32s}.hdr.navopen .menu .nav-ft{animation-delay:.42s}
+}
+/* film titles that follow the scroll (Andrija, 2026-10-28, after the earlier desktop version): each title sits over its film,
+   inverting what is underneath, and holds the middle of the screen while its film scrolls past, staying inside the frame.
+   ?title=bottom brings back the titles at the bottom of the frame (remembered per browser) */
+@media (max-width:760px){
+  :root:not([data-mt="bottom"]) :is(.works .work .cap,#cards .card .meta){inset:0;padding:0 var(--m);background:none;mix-blend-mode:difference;overflow:hidden}
+  :root:not([data-mt="bottom"]) :is(.works .work .cap h3.sr-only,#cards .card .meta h3){color:#fff;will-change:transform}
+  :root[data-pf="light"]:not([data-mt="bottom"]) :is(.works .work .cap h3.sr-only,#cards .card .meta h3){color:#fff}
+}
+@keyframes mBurger{from{opacity:0;transform:scale(.4) rotate(-90deg)}to{opacity:1;transform:none}}
+@keyframes mMenu{from{clip-path:circle(0 at calc(100% - var(--m) - 23px) 48px)}to{clip-path:circle(150% at calc(100% - var(--m) - 23px) 48px)}}
+@keyframes mLink{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@media (max-width:760px) and (prefers-reduced-motion:reduce){.m-rv,.m-rv .media,.m-rv :is(.cap,.meta){opacity:1!important;transform:none!important;transition:none!important}.hdr .burger,.hdr.navopen .menu,.hdr.navopen .menu > a,.hdr.navopen .menu .nav-ft{animation:none!important}}
 /* Big white type one step heavier: Medium (500) instead of Regular (400) for the hero lines, section statements and titles
    (Andrija, 2026-10-21). Grey fold labels (Films, Studio, Approach…) stay Regular. Delete this block to go back. */
 .hero .hd,.lede h2,.fold-lede,.ov-t,.ov-l,#toolkit dt,.net-names,.hl .hl-t,
@@ -2231,6 +2332,35 @@ const mio = new IntersectionObserver(es=>es.forEach(e=>{
     /* streams in small cards are released a few seconds after they leave the screen, so dozens of players never pile up */
     if (m.dataset.c && c.destroy){ clearTimeout(m._kill); m._kill = setTimeout(()=>{ c.destroy(); live.delete(m); m.classList.remove('on'); }, 5000); } }
 }),{threshold:.2});
+/* phones (mobile redesign): every film fills its screen, so its picture and stream cover the frame */
+if (matchMedia('(max-width:760px)').matches) document.querySelectorAll('.works .media, #cards .media').forEach(m=>m.classList.add('cover'));
+/* frame shape studies on phones (mobile redesign): ?ratio=sq|45|wide|full|mix, remembered per browser */
+(()=>{ let v = (new URLSearchParams(location.search).get('ratio') || '').toLowerCase();
+  try { if (/^(sq|45|wide|full|mix)$/.test(v)) localStorage.setItem('pf-mr', v); else v = localStorage.getItem('pf-mr') || 'sq'; } catch(_) { if (!/^(sq|45|wide|full|mix)$/.test(v)) v = 'sq'; }
+  document.documentElement.dataset.mr = v; })();
+(()=>{ let v = (new URLSearchParams(location.search).get('title') || '').toLowerCase();
+  try { if (/^(follow|bottom)$/.test(v)) localStorage.setItem('pf-mt', v); else v = localStorage.getItem('pf-mt') || 'follow'; } catch(_) { if (!/^(follow|bottom)$/.test(v)) v = 'follow'; }
+  document.documentElement.dataset.mt = v;
+  if (v !== 'follow') return;
+  const phone = matchMedia('(max-width:760px)'); let raf = 0;
+  const place = () => { raf = 0; if (!phone.matches) return; const vh = innerHeight;
+    document.querySelectorAll('.works .work .cap h3, #cards .card .meta h3').forEach(h=>{ const box = h.parentElement, r = box.getBoundingClientRect();
+      if (r.bottom < -50 || r.top > vh + 50 || !r.height) return;
+      const hh = h.offsetHeight, pad = Math.min(24, r.height * .06), y = Math.max(pad, Math.min(r.height - hh - pad, vh / 2 - r.top - hh / 2));
+      h.style.transform = `translateY(${Math.round(y)}px)`; }); };
+  const ask = () => { if (!raf) raf = requestAnimationFrame(place); };
+  addEventListener('scroll', ask, {passive:true}); addEventListener('resize', ask); phone.addEventListener('change', ()=>{ if (!phone.matches) document.querySelectorAll('.works .work .cap h3, #cards .card .meta h3').forEach(h=>h.style.transform = ''); ask(); });
+  addEventListener('load', ask); setTimeout(ask, 300); ask(); })();
+(()=>{ const box = document.querySelector('.pf-codes'); if (!box) return; const phone = matchMedia('(max-width:760px)');
+  const fit = () => { if (!phone.matches){ box.style.removeProperty('--pff'); return; }
+    box.style.setProperty('--pff', '20px'); const lis = [...box.children]; if (!lis.length) return;
+    const tw = el => { if (!el) return 0; const r = document.createRange(); r.selectNodeContents(el); return r.getBoundingClientRect().width; };
+    const natural = Math.max(...lis.map(li=>tw(li.children[0]) + tw(li.children[1]) + parseFloat(getComputedStyle(li).columnGap || 0)));
+    if (natural) box.style.setProperty('--pff', (20 * box.clientWidth / natural * .985).toFixed(2) + 'px'); };
+  addEventListener('resize', fit); phone.addEventListener('change', fit); (document.fonts ? document.fonts.ready : Promise.resolve()).then(fit); fit(); })();
+/* phones: each film rises into place as it scrolls into view (mobile redesign) */
+if (matchMedia('(max-width:760px)').matches && !REDUCED){ const rv = new IntersectionObserver(es=>es.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('in'); rv.unobserve(e.target); } }), {rootMargin:'0px 0px -12% 0px'});
+  document.querySelectorAll('.works .work, #cards .card').forEach(el=>{ if (el.getBoundingClientRect().top > innerHeight * .9){ el.classList.add('m-rv'); rv.observe(el); } }); }
 document.querySelectorAll('.media[data-k], .media[data-c]').forEach(m=>mio.observe(m));
 /* touch screens: the catalogue card crossing the middle of the window turns to colour (there is no hover there) */
 if (!matchMedia('(hover:hover) and (pointer:fine)').matches){ const lio = new IntersectionObserver(es=>es.forEach(e=>e.target.classList.toggle('lit', e.isIntersecting)), {rootMargin:'-45% 0px -45% 0px'});
@@ -3177,7 +3307,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     nodes.filter(n=>!n.person).forEach(n=>{ if (n.vis <= .01) return; const dim = act && !hi.has(n), r = R_(n), on = act && hi.has(n);
       ctx.globalAlpha = (dim ? .18 : 1) * n.vis;
       ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.fillStyle = n === hover ? '#e2231a' : on ? (LIGHT() ? '#3a3a37' : '#bdbdba') : (LIGHT() ? '#8f8f8a' : '#6a6a67'); ctx.fill();
-      if (!small || on) label(n, r, (small ? 11 : 13 * S) * GS, 400, on || n === hover ? (LIGHT() ? '#121211' : '#ededeb') : (LIGHT() ? 'rgba(110,110,105,.9)' : 'rgba(110,110,107,.85)'));
+      label(n, r, (small ? 11 : 13 * S) * GS, 400, on || n === hover ? (LIGHT() ? '#121211' : '#ededeb') : (LIGHT() ? 'rgba(110,110,105,.9)' : 'rgba(110,110,107,.85)'));
       ctx.globalAlpha = 1; });
     nodes.filter(n=>n.person).forEach(n=>{ if (n.vis <= .01) return; const dim = act && !hi.has(n), r = R_(n);
       ctx.globalAlpha = (dim ? .3 : 1) * n.vis;
@@ -3614,6 +3744,14 @@ document.querySelectorAll('#studio > details.more, #approach > details.more').fo
 </script>
 
 <script>
+/* phones (mobile redesign): the six things we make take the same rack focus as Toolkit, the line nearest the middle of the screen sharp */
+(()=>{ if (!matchMedia('(max-width:760px)').matches || REDUCED) return; const box = document.querySelector('#wemake .svc'); if (!box) return;
+  const rows = [...box.querySelectorAll('.wm-r')]; let cur = -1, raf = 0; box.classList.add('rf');
+  const pick = () => { raf = 0; const mid = innerHeight / 2; let best = 0, bd = Infinity;
+    rows.forEach((r, j) => { const b = r.getBoundingClientRect(), d = Math.abs(b.top + b.height / 2 - mid); if (d < bd){ bd = d; best = j; } });
+    if (best === cur) return; cur = best; rows.forEach((r, j) => { r.classList.toggle('on', j === best); r.style.setProperty('--d', Math.min(Math.abs(j - best), 3)); }); };
+  let near = false; new IntersectionObserver(([e]) => { near = e.isIntersecting; if (near) pick(); }, {rootMargin: '200px 0px'}).observe(box);   /* only while the list is on screen */
+  addEventListener('scroll', () => { if (near && !raf) raf = requestAnimationFrame(pick); }, {passive: true}); pick(); })();
 /* Toolkit rack focus */
 (() => {
   const kit = document.getElementById('kit'); if (!kit) return;
