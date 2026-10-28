@@ -1648,6 +1648,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   /* 1 hero */
   .hero{height:100svh;min-height:0}
   .hero .facts,#heroNow{display:none}   /* the header text stays as on the main site (Andrija, 2026-10-21) */
+  .hero .hd .sub{position:static!important;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal}   /* "Stories about people, ideas and the future." back in the header text (Andrija, 2026-10-28) */
   .peekbar{display:none}
   .logo-slot > .hdr-rec{display:none}
   /* 2 films: one per screen */
@@ -1678,7 +1679,11 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   /* 3 Studio, shorter */
   #studio .grid.about{display:none}
   .lede.coll h2{display:none}   /* the Studio statement already says it; the Collective goes straight to the names (2026-10-21) */
-  #approach > details.more.fold:first-of-type,#caps,#toolkit,#approach details.more:has(.fields),#wemake .wm-after{display:none}
+  #approach > details.more.fold:first-of-type,#approach details.more:has(.fields){display:none}
+  #services{display:none}   /* Services off on phones; We make sits right under the About Us statement (Andrija, 2026-10-28) */
+  #toolkit .kit-fl,#toolkit .kit-n{display:none}   /* no small type: the Formats scale and the 01–05 numbers go */
+  #toolkit .kit-r{display:block}
+  #toolkit dd{font-size:15px;margin-top:4px}
   #wemake.more.fold{margin-top:clamp(56px,14vw,96px)}
   #wemake .svc{border-top:0;margin-top:20px}
   #wemake .wm-r{border-bottom:0}
@@ -1693,6 +1698,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   footer .ft-top,footer .ft-y{font-size:15px}
   footer .ft-c{font-size:0;gap:0}   /* only the Golden hour disc stays on the right */
   .mail-note{font-size:15px}
+  .clients.logos{--u:72px;--gap:89px}   /* client logos 20% bigger than the main site's phone size (60 / 74 px), Andrija 2026-10-28 */
 }
 
 /* mobile redesign, third pass (2026-10-21): films rise into place as they scroll in; the menu button is a ringed circle
@@ -1702,7 +1708,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   .m-rv :is(.cap,.meta){opacity:0;transform:translateY(14px);transition:opacity .5s var(--ease) .15s,transform .6s var(--ease) .15s}
   .m-rv.in{opacity:1;transform:none}
   .m-rv.in :is(.cap,.meta){opacity:1;transform:none}
-  .hdr .burger{width:46px;height:46px;border:1px solid rgba(255,255,255,.55);border-radius:50%;animation:mBurger .9s var(--ease) .5s both}
+  .hdr .burger{width:46px;height:46px;border:0;animation:mBurger .9s var(--ease) .5s both}
   .hdr .burger i,.hdr .burger i::before,.hdr .burger i::after{width:16px;height:1.5px}
   .hdr .burger i::before{transform:translateY(-4px)}.hdr .burger i::after{transform:translateY(4px)}
   .hdr .burger.open i{background:transparent}
@@ -1711,7 +1717,6 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   .hdr .burger{transition:transform .45s var(--ease),border-color .3s}
   .hdr .burger.open{transform:rotate(90deg)}
   .hdr.navopen .menu .nav-ft .nav-ix,.hdr.navopen .menu .nav-ft .ft-th{font-size:15px!important}
-  :root[data-pf="light"] .hdr.compact .burger,:root[data-pf="light"] .hdr.navopen .burger{border-color:rgba(18,18,17,.4)}
   .hdr.navopen .menu{animation:mMenu .75s var(--ease) both}
   .hdr.navopen .menu > a,.hdr.navopen .menu .nav-ft{animation:mLink .7s var(--ease) both}
   .hdr.navopen .menu > a:nth-child(1){animation-delay:.18s}.hdr.navopen .menu > a:nth-child(2){animation-delay:.25s}.hdr.navopen .menu > a:nth-child(3){animation-delay:.32s}.hdr.navopen .menu .nav-ft{animation-delay:.42s}
