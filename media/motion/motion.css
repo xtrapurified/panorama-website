@@ -7,7 +7,7 @@
 html.pf-intro .pf-curtain{display:block;position:fixed;inset:0;z-index:90;background:#000;will-change:transform}
 html.pf-intro,html.pf-intro body{overflow:hidden}
 /* the real heading waits under the curtain while its stand-in plays the opening; they swap on the same frame */
-html.pf-intro .hero .hd .h1l{visibility:hidden}
+html.pf-intro .hero .h1l{visibility:hidden}
 
 /* the stand-in: one layer of letters (blends like the real heading), one for the red bullet (stays red) */
 .pf-word,.pf-dot{position:fixed;z-index:91;pointer-events:none;margin:0}

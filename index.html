@@ -260,9 +260,11 @@ footer .ft-c{display:inline-flex;align-items:center;gap:14px}
 <script src="media/globe-follow.js" defer></script>
 <!-- experimental motion (branch experimental, 2026-10-29): the opening and scroll reveals; remove these lines and media/motion/ to take it out -->
 <link rel="stylesheet" href="media/motion/motion.css">
+<link rel="stylesheet" href="media/motion/layout.css">
 <script>(()=>{const d=document.documentElement,q=new URLSearchParams(location.search);if(q.has('nointro')||matchMedia('(prefers-reduced-motion: reduce)').matches||/^\/work\//.test(location.pathname)||location.hash)return;d.classList.add('pf-intro');setTimeout(()=>d.classList.remove('pf-intro'),12000);})();</script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/smooothy@0.0.35/dist/smooothy.min.js" defer></script>
 <script src="media/motion/motion.js" defer></script>
 <title>Panorama Films - Documentaries, campaigns and brand films</title>
 <style>
@@ -1821,16 +1823,25 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 
 <noscript><p class="page lab" style="padding:120px 0 24px">The films on this page need JavaScript to load. Every film is also on <a href="https://vimeo.com/panoramafilmstv">Vimeo</a>, and you can write to hello [at] panoramafilms.tv.</p></noscript>
 <main id="top">
-  <section class="hero" id="hero">
-    <div class="media cover" id="heroMedia" data-k="reel" data-loop="full"></div><!-- black until the reel loads (Andrija, 2026-10-20); the reel starts at a random point, so no still would match -->
-    <div class="over page">
-      <div class="top">
-        <span></span>
-        <span class="lab" id="heroNow"></span>
+  <!-- experimental layout (2026-10-29): the name set huge across the top, the tagline beside it, the reel in a frame below, then a stage of stills and two short texts (after the EDDY reference) -->
+  <section class="hero x-hero" id="hero">
+    <div class="page">
+      <div class="grid x-brand">
+        <div class="h1l x-mark"><span class="hdot" aria-hidden="true"></span><h1><span class="h1p">Panorama</span> Films</h1><sup aria-hidden="true">®</sup></div>
+        <div class="x-side"><p class="sub">Stories about people, ideas and the future.</p><p class="sub2 sr-only">Creative storytelling studio.</p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div>
       </div>
-      <div class="grid hl"><div class="hd"><div class="h1l"><span class="hdot" aria-hidden="true"></span><h1><span class="h1p">Panorama</span> Films</h1></div><p class="sub">Stories about people, ideas and the future.</p><p class="sub2 sr-only">Creative storytelling studio.</p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
-      <div class="grid facts">
-        <a class="play-reel" data-play="reel" href="media/reel.mp4" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:29</span></a>
+      <div class="x-reel" data-play="reel" aria-hidden="true">
+        <div class="media cover" id="heroMedia" data-k="reel" data-loop="full"></div><!-- black until the reel loads; the reel starts at a random point -->
+        <span class="lab x-now" id="heroNow"></span>
+      </div>
+      <div class="x-cap"><a class="play-reel" data-play="reel" href="media/reel.mp4" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:29</span></a></div>
+    </div>
+  </section>
+  <section class="x-stage page" aria-label="Studio">
+    <div class="grid x-st" id="xStage">
+      <div class="x-about">
+        <div class="x-ab"><h2 class="x-lab">About</h2><p class="x-txt">Panorama Films is an open circle of creatives telling stories that matter in ways that make you care.</p></div>
+        <div class="x-ab"><h2 class="x-lab">Focus</h2><p class="x-txt">Documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.</p></div>
       </div>
     </div>
   </section>
@@ -2149,9 +2160,20 @@ function work(k){
 }
 /* Featured, two ways. 'stack': full-screen panels that slide over each other as you scroll, the film moving
    slower than the page inside each one (a test). 'chapters': the earlier layout, kept to switch back. */
-const FEATURED_VIEW = 'chapters';
+const FEATURED_VIEW = 'strip';   /* experimental (2026-10-29): 'strip' = one endless drifting strip, after the EDDY roster; 'chapters' to go back */
 const STACK = ["ask","sport","docu","astro","orchard","ten"];
-if (FEATURED_VIEW === 'stack'){
+/* the stage under the hero: four stills from the featured films, each opening its project (experimental) */
+const STAGE = ["hotf","ask","orchard","astro"];
+{ const st = document.getElementById('xStage');
+  if (st) st.insertAdjacentHTML('afterbegin', STAGE.filter(k=>F[k]).map((k,i)=>`<a class="x-im x-im${i+1}" href="${ext(F[k])}" target="_blank" rel="noopener" data-play="${k}" aria-label="${F[k].v||F[k].yt||F[k].file ? 'Play' : 'View'} ${esc(F[k].title)}"><img src="${still(k)}" alt="${esc(F[k].title)}" loading="eager" decoding="async" draggable="false"></a>`).join('')); }
+if (FEATURED_VIEW === 'strip'){
+  const [c, t, , items] = CHAPTERS[0], ks = items.flat().filter(k=>F[k]);
+  document.getElementById('chapters').innerHTML = `<div class="lede"><span class="tag sub">${c}<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>${esc(t)}</h2></div>
+    <div class="x-strip"><div class="x-track" data-track aria-roledescription="carousel" aria-label="Featured films">${ks.map((k,i)=>{ const f = F[k];
+      return `<div class="x-slide" role="group" aria-roledescription="slide" aria-label="${i+1} of ${ks.length}"><a class="x-card" href="${ext(f)}" target="_blank" rel="noopener" data-play="${k}" draggable="false" aria-label="${f.v||f.yt||f.file ? 'Play' : 'View'} ${esc(f.title)}">
+        <span class="x-cm"><span class="media" data-p${f.hover ? ` data-hv="${f.hover}" data-c="${k}"` : f.img ? '' : ` data-k="${k}" data-loop="20"`}><img src="${still(k)}" alt="" loading="lazy" draggable="false"${f.zoom ? ` style="${zoomCss(f)}"` : ''}></span></span>
+        <span class="x-ct"><span class="x-cn">${String(i+1).padStart(2,'0')}</span><span class="x-cti">${esc(f.title)}</span></span><span class="x-cc">${esc(f.client)}</span></a></div>`; }).join('')}</div></div>`;
+} else if (FEATURED_VIEW === 'stack'){
   document.getElementById('chapters').innerHTML = `<div class="lede solo"><span class="tag">Featured<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span></div>
     <div class="stack" id="stack">${STACK.map((k,i)=>{ const f = F[k], nf = nFilms(k);
       return `<article class="sp" data-play="${k}" role="link" tabindex="0" aria-label="Play ${esc(f.title)}">
@@ -2500,7 +2522,7 @@ document.querySelectorAll('.wm').forEach(wm=>{ const wp = wm.querySelector('.wm-
   const save = () => { try { sessionStorage.setItem('pf-rec', ((performance.now() - t0) / 1000).toFixed(2)); } catch(e){} };
   addEventListener('pagehide', save); setInterval(save, 5000); })();
 /* the globe turns into the wordmark before the heading reaches it: as soon as the first line of the reel's text comes within a gap of the globe's lower edge */
-const heroHd = document.querySelector('.hero .hd'), slotEl = document.getElementById('slot');
+const heroHd = document.querySelector('.hero .hd, .hero .x-mark'), slotEl = document.getElementById('slot');
 /* one switch point both ways: the globe's lower edge is measured while the globe is showing and reused, so scrolling back up brings the globe back exactly where it left */
 let globeBottom = 0;
 const measureGlobe = () => { if (!hdr.classList.contains('compact')) globeBottom = slotEl.getBoundingClientRect().bottom; };

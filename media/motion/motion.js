@@ -83,7 +83,8 @@
   function heroParts() {
     const desk = matchMedia('(min-width: 761px)').matches;
     return {
-      text: $$('.hero .hd .sub, .hero .hd .locs').filter(el => el.offsetParent),
+      text: $$('.hero .hd .sub, .hero .hd .locs, .x-side .sub, .x-side .locs').filter(el => el.offsetParent),
+      images: $$('.x-reel'),
       blocks: [
         ...(desk ? $$('#menu > a') : [$('#burger')]),
         $('#heroNow'), $('.hero .play-reel'), $('.peekbar .tag'), $('#logo'), $('.hdr-rec'),
@@ -93,11 +94,12 @@
   function revealHero(parts) {
     parts.text.forEach((el, i) => revealText(el, 0.1 + i * M.text.group));
     parts.blocks.forEach((el, i) => revealBlock(el, i * 0.06));
+    parts.images.forEach((el, i) => revealImage(el, 0.15 + i * M.image.stagger));
   }
 
   /* ---------- the opening ---------- */
   function intro() {
-    const h1l = $('.hero .hd .h1l'), h1 = h1l && $('h1', h1l), dot = h1l && $('.hdot', h1l), curtain = $('.pf-curtain');
+    const h1l = $('.hero .h1l'), h1 = h1l && $('h1', h1l), dot = h1l && $('.hdot', h1l), curtain = $('.pf-curtain');
     if (!d.classList.contains('pf-intro') || !h1 || !curtain) { finishIntro(); return; }
     if ('scrollRestoration' in history) history.scrollRestoration = 'manual';
     scrollTo(0, 0);
@@ -105,6 +107,7 @@
     const parts = heroParts();
     parts.text.forEach(split);
     parts.blocks.forEach(prepBlock);
+    parts.images.forEach(prepImage);
 
     /* the stand-in letters, each placed where the browser draws it in the real heading */
     const hr = h1.getBoundingClientRect(), cs = getComputedStyle(h1);
@@ -117,7 +120,7 @@
     });
     const chars = [], rest = [];   /* "Panorama" plays the opening; "Films" joins as the curtain lifts (Andrija, 2026-10-29) */
     const lead = $('.h1p', h1) || h1;
-    const walk = document.createTreeWalker(h1, NodeFilter.SHOW_TEXT);
+    const walk = document.createTreeWalker(h1l, NodeFilter.SHOW_TEXT);   /* the whole line: the ® sits outside the h1 */
     const range = document.createRange();
     for (let n; (n = walk.nextNode());) {
       for (let i = 0; i < n.length; i++) {
@@ -128,7 +131,7 @@
         Object.assign(m.style, { left: r.left - hr.left + 'px', top: r.top - hr.top + 'px', width: r.width + 'px', height: r.height + 'px' });
         const c = document.createElement('span'); c.className = 'pf-c'; c.textContent = ch; c.style.lineHeight = r.height + 'px';
         const ps = getComputedStyle(n.parentElement);   /* "Panorama" is a weight heavier than "Films" */
-        c.style.fontWeight = ps.fontWeight; c.style.fontStyle = ps.fontStyle; c.style.letterSpacing = ps.letterSpacing;
+        c.style.fontWeight = ps.fontWeight; c.style.fontStyle = ps.fontStyle; c.style.letterSpacing = ps.letterSpacing; c.style.fontSize = ps.fontSize;
         m.appendChild(c); word.appendChild(m); (lead.contains(n) ? chars : rest).push(c);
       }
     }
@@ -183,7 +186,7 @@
       .to(layers, { x: 0, y: 0, duration: p.curtain, ease: p.curtainEase }, 'curtain')
       .add(() => revealHero(parts), `curtain+=${narrow ? p.heroDelayPhone : p.heroDelay}`)
       .to(rest, { yPercent: 0, duration: p.letter, ease: p.ease, stagger: p.letterStagger }, `curtain+=${p.filmsDelay}`);
-    if (media) tl.fromTo(media, { scale: p.reelScale }, { scale: 1, duration: p.curtain, ease: p.curtainEase, clearProps: 'transform' }, 'curtain');
+    if (media && !parts.images.length) tl.fromTo(media, { scale: p.reelScale }, { scale: 1, duration: p.curtain, ease: p.curtainEase, clearProps: 'transform' }, 'curtain');
 
     let finished = false;
     function done() {
@@ -199,19 +202,83 @@
       tl.kill(); gsap.set(curtain, { autoAlpha: 0 });
       parts.text.forEach(el => { const s = split(el); s.revealed = true; gsap.set(s.split.lines, { yPercent: 0 }); });
       parts.blocks.forEach(el => gsap.set(el, { clearProps: 'transform,clipPath' }));
+      parts.images.forEach(el => { gsap.set(el, { clearProps: 'clipPath' }); const i = inner(el); if (i) gsap.set(i, { clearProps: 'transform' }); });
       if (media) gsap.set(media, { clearProps: 'transform' });
       done();
     }
     addEventListener('resize', bail);
   }
 
+
+  /* ---------- Featured strip: endless, drifting, draggable (after the EDDY roster) ----------
+     It drifts slowly on its own, stops under the pointer, follows a drag or a sideways swipe and settles on a
+     film when let go, then drifts again. Each picture slides inside its frame by its distance from the middle,
+     a little more while the strip moves fast. A click that ends a drag never opens a film. */
+  M.strip = { speed: 0.12 /* films per second */, rampIn: 0.5, rampOut: 0.5, resume: 0.9, parallax: 5, speedParallax: 2.5, lerp: 0.3 };
+  const damp = (a, b, l, dt) => a + (b - a) * (1 - Math.exp(-l * dt));
+  function initStrip() {
+    const track = $('[data-track]');
+    if (!track || !window.Smooothy) return null;
+    const Core = window.Smooothy, S = M.strip;
+    const fine = matchMedia('(hover: hover) and (pointer: fine)').matches;
+    class Strip extends Core {
+      constructor(el) {
+        super(el, { infinite: true, snap: false, lerpFactor: S.lerp, speedDecay: 0.9 });
+        this.pEls = [...el.querySelectorAll('[data-p]')];
+        this.autoVel = RM ? 0 : S.speed; this.lspeed = 0; this.prev = 0; this.hovered = false; this.interacting = false;
+        this.slotLeft = 0; this.wheel = false; this.wheelT = 0; this.resumeCall = null; this.velTween = null;
+        this.tick = this.tick.bind(this); gsap.ticker.add(this.tick);
+        if (fine) { el.addEventListener('mouseenter', () => { this.hovered = true; this.resumeCall && this.resumeCall.kill(); this.ramp(0, S.rampOut); });
+                    el.addEventListener('mouseleave', () => { this.hovered = false; if (!this.isDragging) this.later(this.snap ? S.resume * 0.5 : 0); }); }
+        el.addEventListener('wheel', e => { if (Math.abs(e.deltaX) <= Math.abs(e.deltaY)) return; if (!this.interacting) this.start();
+          this.wheel = true; clearTimeout(this.wheelT); this.wheelT = setTimeout(() => { this.wheel = false; }, 160); }, { passive: true });
+      }
+      onResize = () => { this.slotLeft = parseFloat(getComputedStyle(this.items[0]).left) || 0; };
+      onUpdate = ({ parallaxValues, current, deltaTime, viewport }) => {
+        if (!parallaxValues) return;
+        const dt = Math.max(Math.min(deltaTime, 0.05), 1 / 240);
+        this.lspeed = damp(this.lspeed, (current - this.prev) / dt, 3, dt); this.prev = current;
+        if (RM) return;
+        const centre = (viewport.wrapperWidth - this.slotLeft) / (viewport.itemWidth || 1) / 2 - 0.5;
+        const sp = Math.tanh(this.lspeed / 4) * S.speedParallax;
+        this.pEls.forEach((el, i) => {
+          const pos = gsap.utils.clamp(-7.5, 7.5, -(parallaxValues[i] - centre) * S.parallax);
+          el.style.transform = `translate3d(${gsap.utils.clamp(-10, 10, pos + sp)}%,0,0)`;
+        });
+      };
+      tick() {
+        const moved = Math.abs(this.target - this.dragStartTarget) > 0.02;
+        if (this.isDragging && moved && !this.interacting) this.start();
+        else if (!this.isDragging && this.interacting && !this.wheel) this.end();
+        this.wrapper.classList.toggle('drag', this.isDragging);
+        const dt = Math.min(gsap.ticker.deltaRatio(60) / 60, 0.05);
+        if (this.autoVel > 0 && this.isVisible && !this.isDragging) this.target -= this.autoVel * dt;
+        this.update();
+      }
+      ramp(v, d) { this.velTween && this.velTween.kill(); this.velTween = gsap.to(this, { autoVel: v, duration: d, ease: 'sine.inOut' }); }
+      play() { if (RM || this.hovered || this.interacting) return; this.snap = false; this.ramp(S.speed, S.rampIn); }
+      later(d = S.resume) { this.resumeCall && this.resumeCall.kill(); this.resumeCall = gsap.delayedCall(d, () => this.play()); }
+      start() { this.interacting = true; this.resumeCall && this.resumeCall.kill(); this.velTween && this.velTween.kill(); this.autoVel = 0; this.snap = true; }
+      end() { this.interacting = false; if (!this.hovered) this.later(); }
+    }
+    const strip = new Strip(track);
+    /* a press that turned into a drag must not open the film under it */
+    let downX = 0;
+    track.addEventListener('pointerdown', e => { downX = e.clientX; });
+    track.addEventListener('click', e => { if (e.detail !== 0 && Math.abs(e.clientX - downX) > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+    track.addEventListener('dragstart', e => e.preventDefault());
+    /* keyboard: a film that gets focus is brought into place */
+    track.addEventListener('focusin', e => { const sl = e.target.closest('.x-slide'); if (sl && e.target.matches(':focus-visible')) { strip.start(); strip.goToIndex(strip.items.indexOf(sl)); strip.end(); } });
+    return strip;
+  }
+
   /* ---------- scroll reveals ---------- */
   const TEXT = [
     '.lede .tag', '.lede h2', '.works .cap .cl', '#cards .meta h3', '#cards .meta .cl',
-    '.team .lab', '.team h3', '.team p', '.collab > .tag', '.hl-c .hl-t',
+    '.team .lab', '.team h3', '.team p', '.collab > .tag', '.hl-c .hl-t', '.x-lab', '.x-txt',
   ];
   const BLOCK = ['.end .ask', '.end .links', '#showWrap', '.net-view', '.peers .coll .tag'];
-  const IMAGE = ['.works .frame', '#cards .frame', '.team .face'];
+  const IMAGE = ['.works .frame', '#cards .frame', '.team .face', '.x-im'];
 
   function startScrollReveals() {
     if (RM) return;
@@ -221,6 +288,9 @@
     $$(TEXT.join(',')).filter(below).forEach(el => { split(el); kind.set(el, 'text'); });
     $$(BLOCK.join(',')).filter(below).forEach(el => { prepBlock(el); kind.set(el, 'block'); });
     $$(IMAGE.join(',')).filter(below).forEach(el => { prepImage(el); kind.set(el, 'image'); });
+    /* the strip arrives as one group: films open left to right, then their titles */
+    const sx = $('.x-strip');
+    if (sx && below(sx)) { $$('.x-cm', sx).forEach(el => gsap.set(el, { clipPath: 'inset(100% 0% 0% 0%)' })); $$('.x-ct, .x-cc', sx).forEach(prepBlock); kind.set(sx, 'strip'); }
 
     /* what enters together arrives together, in reading order, a beat apart */
     let queue = [], raf = 0;
@@ -230,7 +300,10 @@
       let t = 0, im = 0;
       queue.forEach(el => {
         const k = kind.get(el);
-        if (k === 'image') revealImage(el, im++ * M.image.stagger);
+        if (k === 'strip') {
+          $$('.x-cm', el).forEach((c, i) => gsap.to(c, { clipPath: 'inset(0% 0% 0% 0%)', duration: M.image.duration, ease: M.image.ease, delay: i * M.image.stagger, onComplete: () => gsap.set(c, { clearProps: 'clipPath' }) }));
+          $$('.x-slide', el).forEach((sl, i) => $$('.x-ct, .x-cc', sl).forEach((b, j) => revealBlock(b, 0.35 + i * M.image.stagger + j * 0.06)));
+        } else if (k === 'image') revealImage(el, im++ * M.image.stagger);
         else if (k === 'text') revealText(el, t++ * M.text.group);
         else revealBlock(el, t++ * M.text.group);
       });
@@ -246,5 +319,5 @@
 
   /* fonts first: lines can only be found once the real font is in */
   const fontsIn = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(r => setTimeout(r, 2500))]);
-  fontsIn.then(() => (d.classList.contains('pf-intro') ? intro() : startScrollReveals()));
+  fontsIn.then(() => { window.PF_STRIP = initStrip(); d.classList.contains('pf-intro') ? intro() : startScrollReveals(); });
 })();

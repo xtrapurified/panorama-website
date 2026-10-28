@@ -1,0 +1,90 @@
+/* Experimental layout (branch: experimental, 2026-10-29), after the EDDY reference:
+   the name set huge across the top with the tagline beside it, the showreel in a frame below,
+   a stage of stills and two short texts, and Featured as one endless drifting strip. */
+
+/* ---------- hero: wordmark + tagline, reel in a frame ---------- */
+.hero.x-hero{height:auto;min-height:0;overflow:visible;padding-top:calc(var(--gs) * .8 + clamp(14px,2vw,28px) + clamp(40px,5vw,88px) + env(safe-area-inset-top,0px))}
+.x-hero .media::after{content:none}
+/* nine columns of the grid carry the name; its size is set so "Panorama Films®" fills them (measured: the whole line, bullet and ® included, is 7.40em wide) */
+.x-brand{--wcols:9;align-items:start;row-gap:clamp(20px,2.4vw,32px)}
+.x-mark{grid-column:1/span var(--wcols);font-size:calc((100vw - 2 * var(--m) - 11 * var(--g)) / 12 * var(--wcols) / 7.4 + (var(--wcols) - 1) * var(--g) / 7.4);
+  font-weight:400;letter-spacing:-.055em;line-height:.86;white-space:nowrap;color:var(--fg)}
+.x-mark h1{display:inline;margin:0;font:inherit;letter-spacing:inherit;line-height:inherit}
+.x-mark .h1p{font-weight:500}
+.x-mark .hdot{display:inline-block;width:.13em;height:.13em;border-radius:50%;background:var(--red);margin-right:.12em;vertical-align:.27em;animation:blink 1s steps(1,end) infinite}
+.x-mark sup{font-size:.28em;font-weight:400;letter-spacing:0;line-height:0;vertical-align:1.95em;margin-left:.08em}
+@media (prefers-reduced-motion:reduce){.x-mark .hdot{animation:none}}
+.x-side{grid-column:10/-1;padding-top:.35em;font-size:var(--t1);letter-spacing:-.03em;line-height:1.12}
+.x-side p{margin:0}
+.x-side .sub{color:var(--fg);text-wrap:balance}
+.x-side .locs{color:var(--red);margin-top:.35em}
+.x-reel{position:relative;margin-top:clamp(36px,4.6vw,80px);aspect-ratio:16/9;max-height:calc(100svh - 120px);width:100%;overflow:hidden;background:#000;cursor:pointer}
+.x-reel .media{position:absolute;inset:0}
+.x-now{position:absolute;top:14px;right:16px;color:#fff;z-index:2}
+.x-cap{display:flex;justify-content:space-between;align-items:baseline;padding-top:14px}
+.x-hero ~ .page .peekbar{display:none}   /* the hero no longer fills the window */
+
+@media (max-width:991px){
+  .x-brand{--wcols:12}
+  .x-side{grid-column:5/-1;padding-top:0}
+}
+@media (max-width:760px){
+  .hero.x-hero{padding-top:calc(var(--gs) * .8 + 28px + env(safe-area-inset-top,0px))}
+  .x-side{grid-column:1/-1}
+  .x-reel{aspect-ratio:4/5;max-height:none}
+}
+
+/* ---------- stage: stills on the grid, two short texts ---------- */
+.x-stage{margin-top:var(--sec,clamp(104px,12vw,200px))}
+.x-st{--span2:calc((100vw - 2 * var(--m) - 11 * var(--g)) / 12 * 2 + var(--g));grid-template-rows:var(--span2) var(--span2) auto;row-gap:var(--g)}
+.x-im{position:relative;display:block;overflow:hidden;background:#000}
+.x-im img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform 1.2s cubic-bezier(.16,1,.3,1)}
+.x-im:hover img{transform:scale(1.035)}
+.x-im1{grid-column:5/8;grid-row:1/3}
+.x-im2{grid-column:10/12;grid-row:1}
+.x-im3{grid-column:8/10;grid-row:2}
+.x-im4{grid-column:10/13;grid-row:2/4;height:calc(2 * var(--span2) + var(--g));align-self:start}
+.x-about{grid-column:1/8;grid-row:3;display:grid;grid-template-columns:subgrid;row-gap:clamp(32px,3vw,48px);margin-top:clamp(48px,9vw,152px)}
+.x-ab{grid-column:1/-1;display:grid;grid-template-columns:subgrid;align-items:start}
+.x-lab{grid-column:1;margin:0;font-size:var(--small);font-weight:400;letter-spacing:-.01em;color:var(--mid);padding-top:.5em}
+.x-txt{grid-column:2/-1;margin:0;font-size:var(--d1);font-weight:400;letter-spacing:-.045em;line-height:1.04;text-wrap:pretty;color:var(--fg)}
+@media (max-width:991px){
+  .x-st{grid-template-rows:auto auto auto}
+  .x-im1{grid-column:1/8;grid-row:1/3}
+  .x-im2{grid-column:8/13;grid-row:1;aspect-ratio:1}
+  .x-im3{grid-column:8/13;grid-row:2;aspect-ratio:1}
+  .x-im4{grid-column:6/13;grid-row:3;height:auto;aspect-ratio:4/5}
+  .x-about{grid-column:1/-1;grid-row:4;margin-top:64px}
+  .x-lab{grid-column:1/3}.x-txt{grid-column:3/-1}
+}
+@media (max-width:760px){
+  .x-im4{grid-column:5/13;aspect-ratio:1}
+  .x-ab{row-gap:10px}
+  .x-lab,.x-txt{grid-column:1/-1}
+}
+
+/* ---------- Featured: one endless strip, edge to edge, resting on the page margin ---------- */
+.x-strip{--cv:3.12;--cw:calc((100vw - var(--m)) / var(--cv));width:100vw;margin-inline:calc(var(--m) * -1);margin-top:clamp(28px,3.4vw,52px)}
+@media (max-width:991px){.x-strip{--cv:2.3}}
+@media (max-width:760px){.x-strip{--cv:1.28}}
+.x-track{display:flex;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:pan-y;cursor:grab}
+.x-track.drag{cursor:grabbing}
+.x-slide{position:relative;left:var(--m);flex:none;width:var(--cw);padding-right:var(--g)}
+.x-card{display:block;color:inherit;text-decoration:none;-webkit-tap-highlight-color:transparent;-webkit-user-drag:none}
+.x-cm{position:relative;display:block;aspect-ratio:4/5;overflow:hidden;background:#000}
+.x-cm .media{position:absolute;top:0;bottom:0;left:-10%;right:auto;width:120%;will-change:transform}
+.x-cm .media img,.x-cm .media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+.x-ct{display:flex;gap:.55em;align-items:baseline;margin-top:clamp(12px,1.1vw,18px);font-size:var(--t1);font-weight:500;letter-spacing:-.03em;line-height:1.1}
+.x-cn{font-size:var(--small);font-weight:400;color:var(--mid);font-variant-numeric:tabular-nums;letter-spacing:0}
+.x-cc{display:block;margin-top:4px;font-size:var(--small);color:var(--mid);letter-spacing:-.01em}
+.x-card:hover .x-cti,.x-card:focus-visible .x-cti{color:var(--red)}
+.x-card:focus-visible{outline:2px solid var(--red);outline-offset:-2px}
+/* the site's rule holds: films rest in black and white and come to colour under the pointer; touch screens have no pointer, so there they are in colour */
+.x-card:hover .media > img,.x-card:hover .media > video,.x-card:focus-visible .media > img,.x-card:focus-visible .media > video{filter:none}
+@media (hover:none),(pointer:coarse){.x-cm .media > img,.x-cm .media > video{filter:none}}
+.x-strip{margin-bottom:clamp(72px,9vw,160px)}
+/* phones: the name on two lines, much larger; the globe keeps its place above it */
+@media (max-width:760px){
+  .hero.x-hero{padding-top:calc(var(--gs) * .8 + 76px + env(safe-area-inset-top,0px))}
+  .x-mark{white-space:normal;font-size:calc((100vw - 2 * var(--m)) / 4.62);line-height:.84}
+}
