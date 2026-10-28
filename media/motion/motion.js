@@ -27,6 +27,7 @@
       reelWait: 1.6,        // the curtain waits at most this long for the showreel to have a frame
       curtain: 1.3, curtainEase: 'expo.inOut',
       reelScale: 1.08,      // the reel settles from this size as the curtain lifts
+      filmsDelay: 0.55,     // "Films" rises beside "Panorama" this far into the curtain
       heroDelay: 0.45,      // the hero's other lines start this far into the curtain
       heroDelayPhone: 0.9,  // later on phones, once the heading has passed the line above it
     },
@@ -114,7 +115,8 @@
       fontFamily: cs.fontFamily, fontSize: cs.fontSize, fontWeight: cs.fontWeight, fontStyle: cs.fontStyle,
       letterSpacing: cs.letterSpacing, fontFeatureSettings: cs.fontFeatureSettings, color: cs.color,
     });
-    const chars = [];
+    const chars = [], rest = [];   /* "Panorama" plays the opening; "Films" joins as the curtain lifts (Andrija, 2026-10-29) */
+    const lead = $('.h1p', h1) || h1;
     const walk = document.createTreeWalker(h1, NodeFilter.SHOW_TEXT);
     const range = document.createRange();
     for (let n; (n = walk.nextNode());) {
@@ -127,7 +129,7 @@
         const c = document.createElement('span'); c.className = 'pf-c'; c.textContent = ch; c.style.lineHeight = r.height + 'px';
         const ps = getComputedStyle(n.parentElement);   /* "Panorama" is a weight heavier than "Films" */
         c.style.fontWeight = ps.fontWeight; c.style.fontStyle = ps.fontStyle; c.style.letterSpacing = ps.letterSpacing;
-        m.appendChild(c); word.appendChild(m); chars.push(c);
+        m.appendChild(c); word.appendChild(m); (lead.contains(n) ? chars : rest).push(c);
       }
     }
     const layers = [word];
@@ -140,14 +142,13 @@
     }
     document.body.append(...layers);
 
-    /* start with the whole heading in the middle of the window */
-    /* the heading's own extent (bullet + words), not its column, which runs wider */
-    const box = [h1, dot].filter(Boolean).map(e => e.getBoundingClientRect());
+    /* start with the bullet and "Panorama" in the middle of the window (their own extent, not the heading's column) */
+    const box = [lead, dot].filter(Boolean).map(e => e.getBoundingClientRect());
     const gr = { left: Math.min(...box.map(b => b.left)), right: Math.max(...box.map(b => b.right)), top: Math.min(...box.map(b => b.top)), bottom: Math.max(...box.map(b => b.bottom)) };
     gr.width = gr.right - gr.left; gr.height = gr.bottom - gr.top;
     const dx = innerWidth / 2 - (gr.left + gr.width / 2), dy = innerHeight / 2 - (gr.top + gr.height / 2);
     gsap.set(layers, { x: dx, y: dy });
-    gsap.set(chars, { yPercent: 115 });
+    gsap.set([...chars, ...rest], { yPercent: 115 });
     if (dotEl) gsap.set(dotEl, { autoAlpha: 0 });
 
     const p = M.intro, media = $('#heroMedia');
@@ -180,7 +181,8 @@
 
     tl.to(curtain, { yPercent: -100, duration: p.curtain, ease: p.curtainEase }, 'curtain')
       .to(layers, { x: 0, y: 0, duration: p.curtain, ease: p.curtainEase }, 'curtain')
-      .add(() => revealHero(parts), `curtain+=${narrow ? p.heroDelayPhone : p.heroDelay}`);
+      .add(() => revealHero(parts), `curtain+=${narrow ? p.heroDelayPhone : p.heroDelay}`)
+      .to(rest, { yPercent: 0, duration: p.letter, ease: p.ease, stagger: p.letterStagger }, `curtain+=${p.filmsDelay}`);
     if (media) tl.fromTo(media, { scale: p.reelScale }, { scale: 1, duration: p.curtain, ease: p.curtainEase, clearProps: 'transform' }, 'curtain');
 
     let finished = false;
