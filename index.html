@@ -258,6 +258,12 @@ footer .ft-c{display:inline-flex;align-items:center;gap:14px}
 <link rel="apple-touch-icon" href="/media/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <script src="media/globe-follow.js" defer></script>
+<!-- experimental motion (branch experimental, 2026-10-29): the opening and scroll reveals; remove these lines and media/motion/ to take it out -->
+<link rel="stylesheet" href="media/motion/motion.css">
+<script>(()=>{const d=document.documentElement,q=new URLSearchParams(location.search);if(q.has('nointro')||matchMedia('(prefers-reduced-motion: reduce)').matches||/^\/work\//.test(location.pathname)||location.hash)return;d.classList.add('pf-intro');setTimeout(()=>d.classList.remove('pf-intro'),12000);})();</script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
+<script src="media/motion/motion.js" defer></script>
 <title>Panorama Films - Documentaries, campaigns and brand films</title>
 <style>
 /* Layout: Swiss 12-column grid on black, film-first. Footage carries colour; type is Untitled Sans, flush left.
@@ -1789,6 +1795,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 </style>
 <!-- SEO:LD --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://panoramafilms.tv/#site","url":"https://panoramafilms.tv/","name":"Panorama Films","inLanguage":"en","publisher":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Organization","@id":"https://panoramafilms.tv/#org","name":"Panorama Films","alternateName":["Panorama Films Collective","Панорама Филмс"],"url":"https://panoramafilms.tv/","logo":"https://panoramafilms.tv/media/icons/icon-512.png","image":"https://panoramafilms.tv/media/og/home.jpg","description":"Independent creative storytelling studio from Belgrade, Serbia, making documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.","slogan":"Seeing the bigger picture.","address":{"@type":"PostalAddress","addressLocality":"Belgrade","addressCountry":"RS"},"areaServed":[{"@type":"Country","name":"United Arab Emirates"},{"@type":"Country","name":"Serbia"},{"@type":"Place","name":"Worldwide"}],"knowsAbout":["Documentary film production","Docuseries","Brand films","Campaign films","Event films","Cinematography","Aerial cinematography","Film editing","Sound design","Script writing","Creative direction"],"sameAs":["https://www.instagram.com/panoramafilms.tv/","https://vimeo.com/panoramafilmstv","https://www.youtube.com/@panoramafilmstv"],"founder":[{"@id":"https://panoramafilms.tv/#andrija-kovac"}],"employee":[{"@id":"https://panoramafilms.tv/#andrija-kovac"},{"@id":"https://panoramafilms.tv/#mina-strugar"},{"@id":"https://panoramafilms.tv/#marija-kovacina"}]},{"@type":"Person","@id":"https://panoramafilms.tv/#andrija-kovac","name":"Andrija Kovač","jobTitle":"Creative Director","description":"Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.","image":"https://panoramafilms.tv/media/team/andrija-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#mina-strugar","name":"Mina Strugar","jobTitle":"Producer","description":"Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.","image":"https://panoramafilms.tv/media/team/mina-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#marija-kovacina","name":"Marija Kovačina","jobTitle":"Editorial Director","description":"Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.","image":"https://panoramafilms.tv/media/team/marija-2.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}}]}</script><!-- /SEO:LD --></head>
 <body>
+<div class="pf-curtain" aria-hidden="true"></div>
 
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <symbol id="i-ne" viewBox="0 0 12 12"><path d="M3 9 9 3M4 3h5v5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
@@ -2393,7 +2400,7 @@ if (matchMedia('(max-width:760px)').matches) document.querySelectorAll('.works .
     if (natural) box.style.setProperty('--pff', (20 * box.clientWidth / natural * .985).toFixed(2) + 'px'); };
   addEventListener('resize', fit); phone.addEventListener('change', fit); (document.fonts ? document.fonts.ready : Promise.resolve()).then(fit); fit(); })();
 /* phones: each film rises into place as it scrolls into view (mobile redesign) */
-if (matchMedia('(max-width:760px)').matches && !REDUCED){ const rv = new IntersectionObserver(es=>es.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('in'); rv.unobserve(e.target); } }), {rootMargin:'0px 0px -12% 0px'});
+if (false /* experimental: media/motion/motion.js reveals the films */ && matchMedia('(max-width:760px)').matches && !REDUCED){ const rv = new IntersectionObserver(es=>es.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('in'); rv.unobserve(e.target); } }), {rootMargin:'0px 0px -12% 0px'});
   document.querySelectorAll('.works .work, #cards .card').forEach(el=>{ if (el.getBoundingClientRect().top > innerHeight * .9){ el.classList.add('m-rv'); rv.observe(el); } }); }
 document.querySelectorAll('.media[data-k], .media[data-c]').forEach(m=>mio.observe(m));
 /* touch screens: the catalogue card crossing the middle of the window turns to colour (there is no hover there) */
@@ -3472,7 +3479,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
 })();
 
 /* motion: the big statements arrive once as they scroll in (only those still below the fold when the page opens, so nothing on screen ever hides) */
-if (!REDUCED && 'IntersectionObserver' in window){
+if (false /* experimental: media/motion/motion.js reveals the statements line by line */ && !REDUCED && 'IntersectionObserver' in window){
   const rio = new IntersectionObserver(es=>es.forEach(e=>{ if (e.isIntersecting){ e.target.classList.add('in'); rio.unobserve(e.target); } }), {rootMargin:'0px 0px -12% 0px'});
   document.querySelectorAll('.lede h2, .fold-lede, .end .ask').forEach(el=>{ if (el.getBoundingClientRect().top > innerHeight){ el.classList.add('rv'); rio.observe(el); } });
 }

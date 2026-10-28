@@ -1,0 +1,21 @@
+/* Experimental motion (branch: experimental, 2026-10-29). The opening and the scroll reveals,
+   after the EDDY reference Andrija liked. Everything lives in this file and media/motion/motion.js,
+   so the experiment comes out by removing two lines in index.html. */
+
+/* the curtain covers the page from the first paint; the head script sets html.pf-intro */
+.pf-curtain{display:none}
+html.pf-intro .pf-curtain{display:block;position:fixed;inset:0;z-index:90;background:#000;will-change:transform}
+html.pf-intro,html.pf-intro body{overflow:hidden}
+/* the real heading waits under the curtain while its stand-in plays the opening; they swap on the same frame */
+html.pf-intro .hero .hd .h1l{visibility:hidden}
+
+/* the stand-in: one layer of letters (blends like the real heading), one for the red bullet (stays red) */
+.pf-word,.pf-dot{position:fixed;z-index:91;pointer-events:none;margin:0}
+.pf-word{mix-blend-mode:difference;white-space:pre}
+.pf-word .pf-m{position:absolute;clip-path:inset(-.08em -.3em -.08em -.3em)}
+.pf-word .pf-c{position:absolute;left:0;top:0;display:block}
+.pf-dot{z-index:92;border-radius:50%;background:var(--red,#ff3b30)}
+.pf-dot.on{animation:blink 1s steps(1,end) infinite}
+
+/* line masks made by SplitText: let ascents and accents breathe sideways */
+.pf-line-mask{padding-inline:.06em;margin-inline:-.06em}
