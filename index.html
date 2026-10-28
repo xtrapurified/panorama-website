@@ -1766,16 +1766,25 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   #cards .card .media::after{content:"";position:absolute;inset:0;z-index:1;background:#000;opacity:.5;transition:opacity 1.8s cubic-bezier(.25,.1,.25,1);pointer-events:none}
   #cards .card .media.lit::after{opacity:0;transition-duration:1.4s}
 }
-/* Load more (2026-10-29, Andrija): no lines; left-aligned like the grey section labels, the red down arrow before the words. Hover: the words turn white and the arrow drops a little; once everything is open it points up (Show fewer) */
-#showWrap.reveal{justify-content:flex-start}
+/* Load more (2026-10-29, Andrija): one big grey line in the statements' indent, "+ 19 more films", the red + leading. Hover: the line turns white,
+   the + turns a quarter and the words slide a little to the right; when everything is open the + becomes a − (Show fewer) */
+#showWrap.reveal{justify-content:flex-start;margin-top:clamp(56px,6vw,104px)}
 #showWrap.reveal::before,#showWrap.reveal::after{content:none}
-#showWrap .tgl{gap:.28em;font-size:var(--t1);letter-spacing:-.037em;line-height:1.03;color:var(--sub);transition:color .2s}
+#showWrap .tgl{display:flex;align-items:center;gap:.32em;width:100%;padding:0 0 0 calc((100% + var(--g)) / 12 * 4);font-size:var(--d1);font-weight:400;letter-spacing:-.045em;line-height:1.03;color:var(--sub);text-align:left;min-height:44px;transition:color .45s var(--ease)}
+#showWrap .tgl #showT{display:inline-block;transition:transform .6s var(--ease)}
+#showWrap .tgl .pm{position:relative;flex:none;width:.5em;height:.5em;margin:0;transition:transform .6s var(--ease)}
+#showWrap .tgl .pm::before,#showWrap .tgl .pm::after{height:max(2px,.07em);margin-top:max(-1px,-.035em);background:var(--red)}
 #showWrap .tgl:hover,#showWrap .tgl:focus-visible{color:var(--fg)}
-#showWrap .arr{color:var(--red);display:inline-block;transition:transform .45s cubic-bezier(.16,1,.3,1)}
-#showWrap .tgl:hover .arr{transform:translateY(.18em)}
-#showWrap .tgl[aria-expanded="true"] .arr{transform:rotate(180deg)}
-#showWrap .tgl[aria-expanded="true"]:hover .arr{transform:rotate(180deg) translateY(.18em)}
-@media (prefers-reduced-motion:reduce){#showWrap .arr{transition:none}}
+#showWrap .tgl:hover .pm,#showWrap .tgl:focus-visible .pm{transform:rotate(90deg)}
+#showWrap .tgl:hover #showT,#showWrap .tgl:focus-visible #showT{transform:translateX(.12em)}
+@media (max-width:760px){#showWrap .tgl{padding-left:0;font-size:var(--mt,var(--d1))}}
+@media (prefers-reduced-motion:reduce){#showWrap .tgl .pm,#showWrap .tgl #showT{transition:none}}
+/* We make: the grey line beside each format a step darker (Andrija, 2026-10-29) */
+#toolkit dd,#toolkit .kit-r.on dd{color:#474745!important}
+:root[data-pf="light"] #toolkit dd,:root[data-pf="light"] #toolkit .kit-r.on dd{color:#a6a5a0!important}
+/* every grey section label carries its red arrow before the word, "↓ About us" (Andrija, 2026-10-29) */
+.tag .arr,.more .mt .arr{order:-1;margin:0 .18em 0 0}
+.tag,.more .mt{display:inline-flex;align-items:baseline}
 </style>
 <!-- SEO:LD --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://panoramafilms.tv/#site","url":"https://panoramafilms.tv/","name":"Panorama Films","inLanguage":"en","publisher":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Organization","@id":"https://panoramafilms.tv/#org","name":"Panorama Films","alternateName":["Panorama Films Collective","Панорама Филмс"],"url":"https://panoramafilms.tv/","logo":"https://panoramafilms.tv/media/icons/icon-512.png","image":"https://panoramafilms.tv/media/og/home.jpg","description":"Independent creative storytelling studio from Belgrade, Serbia, making documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.","slogan":"Seeing the bigger picture.","address":{"@type":"PostalAddress","addressLocality":"Belgrade","addressCountry":"RS"},"areaServed":[{"@type":"Country","name":"United Arab Emirates"},{"@type":"Country","name":"Serbia"},{"@type":"Place","name":"Worldwide"}],"knowsAbout":["Documentary film production","Docuseries","Brand films","Campaign films","Event films","Cinematography","Aerial cinematography","Film editing","Sound design","Script writing","Creative direction"],"sameAs":["https://www.instagram.com/panoramafilms.tv/","https://vimeo.com/panoramafilmstv","https://www.youtube.com/@panoramafilmstv"],"founder":[{"@id":"https://panoramafilms.tv/#andrija-kovac"}],"employee":[{"@id":"https://panoramafilms.tv/#andrija-kovac"},{"@id":"https://panoramafilms.tv/#mina-strugar"},{"@id":"https://panoramafilms.tv/#marija-kovacina"}]},{"@type":"Person","@id":"https://panoramafilms.tv/#andrija-kovac","name":"Andrija Kovač","jobTitle":"Creative Director","description":"Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.","image":"https://panoramafilms.tv/media/team/andrija-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#mina-strugar","name":"Mina Strugar","jobTitle":"Producer","description":"Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.","image":"https://panoramafilms.tv/media/team/mina-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#marija-kovacina","name":"Marija Kovačina","jobTitle":"Editorial Director","description":"Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.","image":"https://panoramafilms.tv/media/team/marija-2.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}}]}</script><!-- /SEO:LD --></head>
 <body>
@@ -1827,7 +1836,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   <section class="sec" data-sec="films">
     <div class="lede cat"><span class="tag sub">Catalogue<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Archive</h2></div>
     <div class="cards" id="cards"></div>
-    <div class="reveal" id="showWrap"><button type="button" id="showAll" class="tgl" aria-controls="cards" aria-expanded="false"><span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span><span id="showT">Load more</span></button></div>
+    <div class="reveal" id="showWrap"><button type="button" id="showAll" class="tgl" aria-controls="cards" aria-expanded="false"><span class="pm" aria-hidden="true"></span><span id="showT">Load more</span></button></div>
   </section>
 
   <section class="sec" id="studio" data-sec="studio">
@@ -3161,7 +3170,10 @@ document.addEventListener('keydown', e=>{
   /* step 0: twelve films · step 1: all of the catalogue · step 2: the archive too (phones: step 0 all but the last four · step 1 everything) */
   let step = 0; const lastOf = () => PH.matches ? 1 : (arch ? 2 : 1); let last = lastOf();
   const set = s => { last = lastOf(); step = Math.min(s, last); c.classList.toggle('all-on', step >= 1); c.classList.toggle('arch-on', step >= 2); c.classList.toggle('m-all', PH.matches && step >= 1);
-    b.setAttribute('aria-expanded', String(step === last)); t.textContent = step === last ? 'Show fewer' : (!PH.matches && step === 1) ? 'Load more from the archive' : 'Load more'; };
+    b.setAttribute('aria-expanded', String(step === last));
+    /* the line says how many films are still waiting (Andrija, 2026-10-29): '19 more films', then '6 from the archive', then 'Show fewer' */
+    const left = PH.matches ? c.querySelectorAll('.card.m-tail').length : step === 0 ? extra : arch, pl = n => n === 1 ? 'film' : 'films';
+    t.textContent = step === last ? 'Show fewer' : (!PH.matches && step === 1) ? `${left} more from the archive` : `${left} more ${pl(left)}`; };
   PH.addEventListener('change', ()=>set(0));
   set(0);
   b.addEventListener('click', e=>{
