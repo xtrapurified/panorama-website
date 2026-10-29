@@ -9,7 +9,7 @@
 @font-face{font-family:"Untitled Sans";src:url(/media/fonts/UntitledSans-Regular.woff2) format("woff2");font-weight:400}
 @font-face{font-family:"Untitled Sans";src:url(/media/fonts/UntitledSans-Medium.woff2) format("woff2");font-weight:500}
 @font-face{font-family:"Data Error Horiz";src:url(/media/fonts/DataErrorHoriz.woff) format("woff")}
-:root{--bg:#050505;--fg:#ededeb;--mid:#8d8d8a;--sub:#5d5d5a;--dim:#333331;--rule:#1c1c1b;--red:#e2231a;--m:clamp(16px,3.2vw,48px);--small:clamp(13px,1vw,15px);--ui:12px;--t1:clamp(20px,1.8vw,28px)}
+:root{--bg:#050505;--fg:#ededeb;--mid:#8d8d8a;--sub:#5d5d5a;--dim:#2e2e2c;--rule:#1c1c1b;--red:#e2231a;--m:clamp(16px,3.2vw,48px);--small:clamp(13px,1vw,15px);--ui:12px;--t1:clamp(20px,1.8vw,28px);--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace;--dot:"Data Error Horiz",ui-monospace,monospace}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:"Untitled Sans",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 header{padding:28px var(--m) 0;display:flex;flex-wrap:wrap;gap:18px 40px;align-items:end;justify-content:space-between}
@@ -17,15 +17,13 @@ header h1{margin:0;font-weight:500;font-size:clamp(26px,3vw,44px);letter-spacing
 header p{margin:.45em 0 0;color:var(--mid);max-width:60ch;font-size:15px;line-height:1.45}
 nav{display:flex;flex-wrap:wrap;gap:6px}
 nav button{font:inherit;font-size:14px;letter-spacing:-.01em;background:none;color:var(--mid);border:1px solid var(--rule);padding:7px 12px 8px;cursor:pointer}
-nav button b{font-family:"Data Error Horiz",monospace;font-weight:400;letter-spacing:.14em;margin-right:8px;font-size:12px}
+nav button b{font-family:var(--dot);font-weight:400;letter-spacing:.14em;margin-right:8px;font-size:12px}
 nav button:hover{color:var(--fg)}
 nav button.on{color:var(--fg);border-color:var(--fg)}nav button.on b{color:var(--red)}
 .note{padding:14px var(--m) 0;color:var(--mid);font-size:14px;min-height:2.6em;max-width:110ch}
 .wrap{padding:clamp(24px,3vw,44px) var(--m) 0}
-.code{font-family:"Data Error Horiz",ui-monospace,monospace;letter-spacing:.14em;font-size:12px;text-transform:uppercase;font-variant-numeric:tabular-nums}
 
-/* the stage, as live: a fixed frame, every photo fitted whole, 0.1 s fade, a new photo every 0.3 s.
-   Scaled like the live one (smaller on laptops and up) and a little shorter, so the scrubber under it is in view */
+/* the stage, as live: a fixed frame, every photo fitted whole, 0.1 s fade, a new photo every 0.3 s; scaled like the live one */
 .box{display:grid;gap:clamp(14px,1.4vw,22px);width:calc((100vw - 2 * var(--m)) * var(--hs,1));margin-inline:auto}
 .stage{position:relative;width:100%;height:min(calc((100vw - 2 * var(--m)) * var(--hs,1) * var(--hr,1.2)),calc(100svh - 330px));min-height:260px;user-select:none;-webkit-user-select:none}
 .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .1s linear}
@@ -43,46 +41,35 @@ nav button.on{color:var(--fg);border-color:var(--fg)}nav button.on b{color:var(-
 .cur{display:inline-block;width:.55em;height:1.05em;margin-left:.3em;vertical-align:-.15em;background:var(--red);animation:bl 1.1s steps(1) infinite}
 @keyframes bl{50%{opacity:0}}
 
-.sc{display:none;touch-action:none;user-select:none;-webkit-user-select:none}
-[data-v="1"] .s1,[data-v="2"] .s2,[data-v="3"] .s3,[data-v="4"] .s4{display:block}
+.sc{display:none;user-select:none;-webkit-user-select:none}
+[data-v="1"] .s1,[data-v="2"] .s1,[data-v="3"] .s2{display:block}
 /* the three states, the same in every version: not shown yet, shown already, now */
 .sc [data-k]{color:var(--dim);transition:color .12s}
 .sc [data-k].seen{color:var(--mid)}
 .sc [data-k].on{color:var(--red)}
 @media (hover:hover){.sc [data-k]:hover{color:var(--fg)}}
 
-/* S1 running names: every file name, set as one paragraph under the frame */
-.s1 p{margin:0;word-spacing:.5em;font-size:var(--small);line-height:1.5;letter-spacing:-.01em;text-align:justify;text-align-last:left;font-variant-numeric:tabular-nums}
-.s1 span{cursor:pointer;white-space:nowrap}
+/* S1 running code: each photo as a different statement built from its own data, ragged, in a code face */
+.s1{touch-action:none}
+.s1 p{margin:0;text-align:left;font-variant-numeric:tabular-nums;word-spacing:0}
+.s1 span{cursor:pointer;white-space:nowrap;display:inline-block;margin:0 1.4ch .1em 0}
+.s1 span u{text-decoration:none;opacity:.5}
+.s1 span.on u,.s1 span:hover u{opacity:.7}
+.s1 span.nl{display:block;height:0;margin:0}
+[data-v="1"] .s1 p{font-family:var(--dot);font-size:12px;letter-spacing:.1em;line-height:1.75;text-transform:uppercase}
+[data-v="2"] .s1 p{font-family:var(--mono);font-size:12px;letter-spacing:0;line-height:1.7}
 
-/* S2 index column: the list beside the frame, one line per file, the current line held in the middle */
-[data-v="2"] .box{grid-template-columns:minmax(0,1fr) minmax(230px,22%);align-items:stretch}
-.s2{position:relative;overflow:hidden;border-left:1px solid var(--rule);-webkit-mask:linear-gradient(transparent,#000 22%,#000 78%,transparent);mask:linear-gradient(transparent,#000 22%,#000 78%,transparent)}
-.s2 ol{list-style:none;margin:0;padding:0 0 0 16px;position:absolute;left:0;right:0;top:50%;transition:transform .25s cubic-bezier(.2,.7,.2,1)}
-.s2 li{display:grid;grid-template-columns:5ch 1fr auto;gap:12px;height:22px;align-items:center;cursor:pointer;font-size:11px}
+/* S2 index column: the list beside the frame, one line per file; it glides steadily with the slideshow and holds still under the pointer */
+[data-v="3"] .box{grid-template-columns:minmax(0,1fr) minmax(250px,23%);align-items:stretch}
+.s2{position:relative;overflow:hidden;border-left:1px solid var(--rule);-webkit-mask:linear-gradient(transparent,#000 18%,#000 82%,transparent);mask:linear-gradient(transparent,#000 18%,#000 82%,transparent)}
+.s2 .sl{position:absolute;inset:0;overflow-y:scroll;scrollbar-width:none;overscroll-behavior:contain}
+.s2 .sl::-webkit-scrollbar{display:none}
+.s2 ol{list-style:none;margin:0;padding:0 0 0 16px}
+.s2 li{display:grid;grid-template-columns:5ch 1fr auto;gap:12px;height:22px;align-items:center;cursor:pointer;font-size:11px;font-variant-numeric:tabular-nums}
 .s2 li b{font-weight:400}
-.s2 li.on b::before{content:"▸ ";}
-@media (max-width:760px){[data-v="2"] .box{grid-template-columns:1fr}.s2{height:150px;border-left:0;border-top:1px solid var(--rule)}}
-
-/* S3 odometer: the current file name large, its neighbours either side getting quieter; slide along the line to scrub */
-.s3{position:relative;height:76px;overflow:hidden;cursor:ew-resize;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
-.s3 .row{position:absolute;left:50%;top:0;display:flex;align-items:baseline;gap:clamp(18px,2vw,32px);white-space:nowrap;transition:transform .22s cubic-bezier(.2,.7,.2,1)}
-.s3 .row span{font-size:var(--small);letter-spacing:-.01em;line-height:56px;transition:font-size .22s,color .12s}
-.s3 .row span.on{font-size:clamp(30px,3.4vw,52px);letter-spacing:-.04em}
-.s3 .meta{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;color:var(--sub)}
-.s3 .meta .w{color:var(--fg)}
-
-/* S4 timeline: a hairline ruler like an edit timeline, a numbered mark every ten frames, the file name riding on a red playhead */
-.s4{position:relative;height:64px;cursor:ew-resize}
-.s4 .rl{position:absolute;left:0;right:0;bottom:22px;height:14px;border-bottom:1px solid var(--sub)}
-.s4 .rl i{position:absolute;bottom:0;width:1px;height:5px;background:var(--dim)}
-.s4 .rl i.seen{background:var(--mid)}
-.s4 .rl i.ten{height:14px}
-.s4 .nums span{position:absolute;bottom:0;transform:translateX(-1px);color:var(--sub)}
-.s4 .ph{position:absolute;top:0;bottom:22px;width:1px;background:var(--red);transition:left .12s linear}
-.s4 .ph b{position:absolute;left:8px;top:-2px;font-weight:400;white-space:nowrap;color:var(--fg)}
-.s4 .ph b em{font-style:normal;color:var(--red)}
-.s4 .ph.flip b{left:auto;right:8px}
+.s2 li.on b::before{content:"▸ "}
+.s2.hold li.on{color:var(--fg)}
+@media (max-width:760px){[data-v="3"] .box{grid-template-columns:1fr}.s2{height:170px;border-left:0;border-top:1px solid var(--rule)}}
 
 @media (max-width:760px){
   .stage{height:min(calc((100vw - 2 * var(--m)) * 1.25),calc(100svh - 300px))}
@@ -90,23 +77,21 @@ nav button.on{color:var(--fg);border-color:var(--fg)}nav button.on b{color:var(-
   .hl-term{width:auto;max-width:66vw;padding:0 10px 9px}
   .hl-bar{margin:0 -10px 7px;padding:5px 10px;gap:4px;font-size:9px}.hl-bar i{width:5px;height:5px}
   .hl-t{margin:0 0 .15em;font-size:15px}.hl-code{font-size:11px}.hl-code.cmd{display:none}
-  .code{font-size:10px}
-  .s1 p{font-size:11px}
+  [data-v="1"] .s1 p,[data-v="2"] .s1 p{font-size:10px}
 }
-@media (prefers-reduced-motion:reduce){.stage img,.s2 ol,.s3 .row,.s4 .ph{transition:none}.cur{animation:none}}
+@media (prefers-reduced-motion:reduce){.stage img{transition:none}.cur{animation:none}}
 footer{padding:60px var(--m) 60px;color:var(--sub);font-size:13px;line-height:1.5;max-width:80ch}
 </style>
 </head>
 <body data-v="1">
 <header>
-<div><h1>Human in the loop — scrubber</h1>
-<p>The current slideshow with a scrubber made of type: the file names themselves instead of grey ticks. Four layouts; every one scrubs when you point at it or drag along it, and plays on when you let go.</p></div>
+<div><h1>Human in the loop — scrubber, round 2</h1>
+<p>Running names rewritten as machine language, in two code faces; the index column with a steady scroll that holds still under the pointer.</p></div>
 <nav aria-label="Versions">
 <button data-k="0"><b>00</b>Current</button>
-<button data-k="1"><b>S1</b>Running names</button>
-<button data-k="2"><b>S2</b>Index column</button>
-<button data-k="3"><b>S3</b>Odometer</button>
-<button data-k="4"><b>S4</b>Timeline</button>
+<button data-k="1"><b>S1</b>Running code · dot</button>
+<button data-k="2"><b>S1</b>Running code · mono</button>
+<button data-k="3"><b>S2</b>Index column</button>
 </nav>
 </header>
 <p class="note" id="note"></p>
@@ -121,89 +106,124 @@ footer{padding:60px var(--m) 60px;color:var(--sub);font-size:13px;line-height:1.
     <p class="hl-code" id="ln"></p>
   </div></div>
 </div>
-<div class="sc s2" id="s2"><ol id="s2l"></ol></div>
+<div class="sc s2" id="s2"><div class="sl" id="s2s"><ol id="s2l"></ol></div></div>
 <div class="sc s1" id="s1"><p id="s1p"></p></div>
-<div class="sc s3" id="s3"><div class="row" id="s3r"></div><div class="meta code"><span id="s3a"></span><span>SLIDE TO SCRUB</span><span id="s3b"></span></div></div>
-<div class="sc s4" id="s4"><div class="rl" id="s4r"></div><div class="nums code" id="s4n"></div><div class="ph" id="s4p"><b class="code" id="s4b"></b></div></div>
 </div>
 </div>
 
-<footer>Unlinked page, for comparing only. The names and sizes are the photo files' own. The page keeps only a handful of photos loaded at a time and runs only while the frame is on screen.</footer>
+<footer>Unlinked page, for comparing only. Every statement in the running code is made from the photo file's own data: its place in the loop, its name, its pixel size, shape, megapixels and version, written out in different code forms. The page keeps only a handful of photos loaded at a time and runs only while the frame is on screen.</footer>
 
 <script>
 (async()=>{
 const R = matchMedia('(prefers-reduced-motion:reduce)').matches;
 const NOTES = ['The slideshow as it is on the site today, no scrubber.',
-  'Running names: every file name, set as one justified paragraph under the frame, in the page’s own type. Not shown yet is dark, already shown is grey, the one on screen is red. Point at a name to jump to it.',
-  'Index column: the list sits beside the frame, one line per file with its size and shape; the current line stays in the middle and the list rolls past it. Point at a line to jump. On phones it moves under the frame.',
-  'Odometer: the current file name large under the frame, its neighbours either side, rolling along as the photos change. Slide along the line to scrub through all of them.',
-  'Timeline: a hairline ruler like an edit timeline, a numbered mark every ten frames, a red playhead carrying the file name and size. Point anywhere on it or drag to scrub.'];
+  'Running code in the dot-matrix face: every photo is a statement made from its own data (number, file name, size, shape), each written a different way, so the block reads like a program rather than a list. Ragged, left-aligned, a line break now and then. Point at a statement to jump to it.',
+  'The same running code in a plain monospace face, lower case, as it would look in a code editor.',
+  'Index column, fixed: the list now glides steadily with the slideshow instead of stepping, and holds completely still while the pointer is on it, so the line you point at is the photo you get. Scroll the list with the wheel or a finger to reach the rest; it loops round with no jump back to the top.'];
 const $ = id => document.getElementById(id), st = $('st'), pad = (n, k = 2) => String(n).padStart(k, '0');
 let L = [];
 try { L = (await (await fetch('/media/bts/photos.json', {cache:'no-cache'})).json()).photos.filter(p=>!p.hidden); } catch(e){}
 if (!L.length) return;
 for (let i = L.length - 1; i > 0; i--){ const j = Math.random() * (i + 1) | 0; [L[i], L[j]] = [L[j], L[i]]; }
 const N = L.length;
-const ratio = p => { const r = p.w / p.h; for (const [a, b] of [[16,9],[3,2],[4,3],[1,1],[2,3],[3,4],[9,16]]) if (Math.abs(r - a / b) < .02) return a + ':' + b; return r.toFixed(2) + ':1'; };
+const ratio = p => { const r = p.w / p.h; for (const [a, b] of [[16,9],[3,2],[4,3],[1,1],[2,3],[3,4],[9,16]]) if (Math.abs(r - a / b) < .02) return a + ':' + b; return r.toFixed(2); };
+const shape = p => p.w > p.h * 1.05 ? 'land' : p.h > p.w * 1.05 ? 'port' : 'sq';
 st.style.setProperty('--hr', Math.max(...L.map(p=>p.h / p.w)).toFixed(4));
-/* the live frame's scale: full size up to tablets, 20% smaller on a laptop, up to 40% smaller on large screens */
 const box = document.querySelector('.box');
 const hScale = () => { const w = innerWidth, s = w <= 1024 ? 1 : w <= 1512 ? 1 - .2 * (w - 1024) / 488 : Math.max(.6, .8 - .2 * (w - 1512) / 1048); box.style.setProperty('--hs', s.toFixed(3)); };
 hScale(); addEventListener('resize', hScale);
 
-/* the scrubbers, built once */
-$('s1p').innerHTML = L.map((p, k)=>`<span data-k="${k}">${p.f}</span>`).join(' ');
-$('s2l').innerHTML = L.map((p, k)=>`<li data-k="${k}"><b>${pad(k + 1, 3)}</b><span>${p.f}</span><span>${p.w}×${p.h}</span></li>`).join('');
-$('s3r').innerHTML = L.map((p, k)=>`<span data-k="${k}">${p.f}</span>`).join('');
-$('s4r').innerHTML = L.map((p, k)=>`<i data-k="${k}" class="${(k + 1) % 10 === 0 || k === 0 ? 'ten' : ''}" style="left:${(k + .5) / N * 100}%"></i>`).join('');
-$('s4n').innerHTML = L.map((p, k)=>(k + 1) % 10 === 0 || k === 0 ? `<span style="left:${(k + .5) / N * 100}%">${pad(k + 1, 3)}</span>` : '').join('');
-const groups = ['s1', 's2', 's3', 's4'].map(id=>[...$(id).querySelectorAll('[data-k]')]);
+/* S1: one statement per photo, its form picked from the file name so every visit reads differently but each photo keeps its own */
+const u = s => `<u>${s}</u>`;
+const FORMS = [
+  (p, k) => `${p.f}`,
+  (p, k) => `${u('{')}${p.f} ${p.w}${u('×')}${p.h}${u('}')}`,
+  (p, k) => `${u('frame[')}${pad(k + 1, 3)}${u(']=')}${p.f}`,
+  (p, k) => `${p.f}${u('::')}${ratio(p)}`,
+  (p, k) => `${u(shape(p) + '(')}${p.f}${u(')')}`,
+  (p, k) => `${u('0x')}${k.toString(16).padStart(2, '0')}${u('→')}${p.f}`,
+  (p, k) => `${p.f}${u('/')}${(p.w * p.h / 1e6).toFixed(2)}${u('mp')}`,
+  (p, k) => `${u('w')}${p.w}${u('h')}${p.h}`,
+  (p, k) => `${u('read(')}${p.f}${u(') ok;')}`,
+  (p, k) => `${u('<')}${p.f.replace('.webp', '')}${u(' v=')}${p.v || 1}${u('>')}`,
+  (p, k) => `${u('[')}${pad(k + 1, 3)}${u(']')} ${p.f} ${u(shape(p))}`,
+  (p, k) => `${u('human.in(')}${p.f}${u(')')}`,
+  (p, k) => `${p.w}${u('x')}${p.h}${u('@')}${p.f}`,
+  (p, k) => `${u('loop++ ')}${pad(k + 1, 3)}`,
+];
+const hash = s => { let h = 7; for (const c of s) h = (h * 31 + c.charCodeAt(0)) >>> 0; return h; };
+$('s1p').innerHTML = L.map((p, k)=>{ const h = hash(p.f + k); return `<span data-k="${k}">${FORMS[h % FORMS.length](p, k)}</span>` + (h % 9 === 0 && k ? '<span class="nl"></span>' : ''); }).join('');
 
-/* a rolling window of photos: the current one and the next few are loaded, older ones are dropped */
+/* S2: the list three times over, so it can glide past the end and back to the start without a jump */
+const ROW = 22;
+$('s2l').innerHTML = [0, 1, 2].map(()=>L.map((p, k)=>`<li data-k="${k}"><b>${pad(k + 1, 3)}</b><span>${p.f}</span><span>${p.w}×${p.h}</span></li>`).join('')).join('');
+const groups = [[...$('s1').querySelectorAll('[data-k]')], [...$('s2').querySelectorAll('[data-k]')]];
+
+/* a rolling window of photos around the current one; a few more around the line under the pointer */
 const pool = new Map(), ok = new Set();
-let V = 1, pos = 0, pend = -1, scrubbing = false, seen = new Set([0]);
+let V = 1, pos = 0, pend = -1, scrubbing = false;
 const want = k => { k = (k % N + N) % N; if (pool.has(k)) return; const im = new Image(); im.alt = ''; im.decoding = 'async'; im.src = `/media/bts/${L[k].f}?v=${L[k].v || 1}`; st.prepend(im); pool.set(k, im);
   (im.decode ? im.decode() : new Promise(r=>im.onload = r)).then(()=>{ ok.add(k); if (k === pend) show(k); }).catch(()=>{}); };
-const trim = () => { for (const [k, im] of pool){ const d = (k - pos + N) % N; if (d > 6 && d < N - 2){ im.remove(); pool.delete(k); ok.delete(k); } } };
+const dist = (a, b) => { const d = Math.abs(a - b) % N; return Math.min(d, N - d); };
+const trim = () => { for (const [k, im] of pool) if (dist(k, pos) > 10 && dist(k, pend < 0 ? pos : pend) > 10){ im.remove(); pool.delete(k); ok.delete(k); } };
 
 let last = -1;
-const paint = () => { const p = L[pos];
+const paint = () => {
   $('ln').innerHTML = `<span>frame</span> <span class="v">${pad(pos + 1)} / ${N}</span> <span>· loop =</span> <span class="v">${scrubbing ? 'scrub' : 'true'}</span><span class="cur"></span>`;
-  for (const g of groups){ if (last >= 0 && g[last]) g[last].classList.remove('on'); g[pos].classList.add('on', 'seen'); }
-  last = pos;
-  if (V === 2){ $('s2l').style.transform = `translateY(${-(pos + .5) * 22}px)`; }
-  if (V === 3){ const s = $('s3r').children[pos]; $('s3r').style.transform = `translateX(${-(s.offsetLeft + s.offsetWidth / 2)}px)`;
-    $('s3a').innerHTML = `FRAME <span class="w">${pad(pos + 1, 3)}</span> / ${pad(N, 3)}`; $('s3b').innerHTML = `<span class="w">${p.w} × ${p.h}</span> · ${ratio(p)}`; }
-  if (V === 4){ const x = (pos + .5) / N; $('s4p').style.left = x * 100 + '%'; $('s4p').classList.toggle('flip', x > .8);
-    $('s4b').innerHTML = `<em>${pad(pos + 1, 3)}</em> ${p.f.toUpperCase()} · ${p.w}×${p.h}`; } };
+  const [a, b] = groups;
+  if (last >= 0){ a[last].classList.remove('on'); for (let c = 0; c < 3; c++) b[last + c * N].classList.remove('on'); }
+  a[pos].classList.add('on', 'seen'); for (let c = 0; c < 3; c++) b[pos + c * N].classList.add('on', 'seen');
+  last = pos; };
 
 function show(k){ k = (k % N + N) % N; pend = k; want(k); if (!ok.has(k)) return;
-  pool.get(pos)?.classList.remove('on'); pool.get(k).classList.add('on'); pos = k; pend = -1; seen.add(k);
-  paint(); for (let j = 1; j <= 5; j++) want(k + j); trim(); }
+  pool.get(pos)?.classList.remove('on'); pool.get(k).classList.add('on');
+  if (!scrubbing && k === (pos + 1) % N) vi++; else if (k !== pos) vi = N + k;   /* vi: the line in the tripled list that follows the slideshow */
+  pos = k; pend = -1; paint(); for (let j = 1; j <= 5; j++) want(k + j); trim(); }
 
 /* versions */
 const setV = k => { V = k; document.body.dataset.v = k; $('note').textContent = NOTES[k];
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on', +b.dataset.k === k));
-  requestAnimationFrame(paint); try { history.replaceState(null, '', '?v=' + k); } catch(e){} };
+  if (k === 3){ vi = N + pos; sl.scrollTop = target(); }
+  try { history.replaceState(null, '', '?v=' + k); } catch(e){} };
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click', ()=>setV(+b.dataset.k)));
-const q = new URLSearchParams(location.search).get('v'); setV(q !== null && +q >= 0 && +q <= 4 ? +q : 1);
+
+/* S2 glide: every frame the list eases a little towards the current line, so it moves at a steady pace instead of jumping a line at a time.
+   While the pointer (or a finger) is on the list it is left alone; when it lets go the list picks up from where it was. */
+const sl = $('s2s'), s2 = $('s2'); let vi = N, hold = false, rolled = 0;
+const target = () => vi * ROW + ROW / 2 - sl.clientHeight / 2;
+(function glide(){ if (V === 3 && !hold && !R){
+    if (vi >= 2 * N){ vi -= N; sl.scrollTop -= N * ROW; }   /* past the second copy: step back one copy, which looks identical */
+    const d = target() - sl.scrollTop; sl.scrollTop += Math.abs(d) < .5 ? d : d * .12; }
+  requestAnimationFrame(glide); })();
+/* scrolling by hand: keep the view inside the middle copy so it never runs out */
+sl.addEventListener('scroll', ()=>{ if (!hold) return; const c = N * ROW; if (sl.scrollTop < c * .5) sl.scrollTop += c; else if (sl.scrollTop > c * 1.5) sl.scrollTop -= c; });
+
+const q = new URLSearchParams(location.search).get('v'); setV(q !== null && +q >= 0 && +q <= 3 ? +q : 1);
 
 /* the loop: a new photo every 0.3 s, only while the frame is on screen and the tab is open */
 let on = true, t = null; const run = () => { clearInterval(t); if (on && !R && !document.hidden) t = setInterval(()=>{ if (!scrubbing) show(pos + 1); }, 300); };
 new IntersectionObserver(([e])=>{ on = e.isIntersecting; run(); }).observe(st); document.addEventListener('visibilitychange', run);
-show(0); addEventListener('resize', paint);
+show(0);
 
-/* scrubbing: S1 and S2 by the name under the pointer, S3 and S4 by the pointer's place along the line */
-const along = (el, e) => { const b = el.getBoundingClientRect(); return Math.max(0, Math.min(N - 1, Math.floor((e.clientX - b.left) / b.width * N))); };
-const pick = (id, e) => { if (id === 's3' || id === 's4') return along($(id), e);
-  const t = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-k]'); return t && $(id).contains(t) ? +t.dataset.k : -1; };
-['s1', 's2', 's3', 's4'].forEach(id=>{ const el = $(id); let down = false;
-  const go = e => { const k = pick(id, e); if (k >= 0 && k !== pos && k !== pend){ scrubbing = true; show(k); } else if (k >= 0) scrubbing = true; paint(); };
-  el.addEventListener('pointerdown', e=>{ down = true; el.setPointerCapture(e.pointerId); go(e); });
-  el.addEventListener('pointermove', e=>{ if (down || e.pointerType === 'mouse') go(e); });
-  const end = () => { down = false; scrubbing = false; paint(); };
-  el.addEventListener('pointerup', e=>{ down = false; if (e.pointerType !== 'mouse') end(); });
-  el.addEventListener('pointerleave', end); el.addEventListener('pointercancel', end); });
+/* scrubbing by the statement or line under the pointer */
+const under = (el, e) => { const t = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-k]'); return t && el.contains(t) ? +t.dataset.k : -1; };
+const pick = (el, e) => { const k = under(el, e); if (k < 0) return; scrubbing = true; for (let j = -2; j <= 3; j++) want(k + j); if (k !== pos && k !== pend) show(k); else paint(); };
+const resume = () => { scrubbing = false; hold = false; s2.classList.remove('hold'); if (V === 3){ vi = Math.round((sl.scrollTop + sl.clientHeight / 2 - ROW / 2) / ROW); vi = vi - ((vi - pos) % N + N) % N + (((vi - pos) % N + N) % N > N / 2 ? N : 0); } paint(); };
+/* S1: point with a mouse, or press and drag with a finger */
+const s1 = $('s1'); let down = false;
+s1.addEventListener('pointerdown', e=>{ down = true; s1.setPointerCapture(e.pointerId); pick(s1, e); });
+s1.addEventListener('pointermove', e=>{ if (down || e.pointerType === 'mouse') pick(s1, e); });
+s1.addEventListener('pointerup', e=>{ down = false; if (e.pointerType !== 'mouse') resume(); });
+s1.addEventListener('pointerleave', ()=>{ down = false; resume(); }); s1.addEventListener('pointercancel', resume);
+/* S2: with a mouse, hovering holds the list and picks the line; on touch, the list scrolls natively and a tap picks a line */
+s2.addEventListener('pointerenter', e=>{ hold = true; s2.classList.add('hold'); });
+s2.addEventListener('pointermove', e=>{ if (e.pointerType === 'mouse') pick(s2, e); });
+sl.addEventListener('scroll', ()=>{ if (hold && lastPt) pick(s2, lastPt); });
+let lastPt = null; s2.addEventListener('pointermove', e=>{ lastPt = {clientX: e.clientX, clientY: e.clientY}; });
+s2.addEventListener('pointerleave', e=>{ lastPt = null; if (e.pointerType === 'mouse') resume(); });
+s2.addEventListener('touchstart', ()=>{ hold = true; clearTimeout(s2.t); }, {passive: true});
+s2.addEventListener('touchend', ()=>{ clearTimeout(s2.t); s2.t = setTimeout(resume, 1600); }, {passive: true});
+s2.addEventListener('click', e=>{ const k = under(s2, e); if (k < 0) return; scrubbing = true; show(k); clearTimeout(s2.t); s2.t = setTimeout(resume, 1600); });
 })();
 </script>
 </body>
