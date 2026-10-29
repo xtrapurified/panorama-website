@@ -9,7 +9,7 @@
 @font-face{font-family:"Untitled Sans";src:url(/media/fonts/UntitledSans-Regular.woff2) format("woff2");font-weight:400}
 @font-face{font-family:"Untitled Sans";src:url(/media/fonts/UntitledSans-Medium.woff2) format("woff2");font-weight:500}
 @font-face{font-family:"Data Error Horiz";src:url(/media/fonts/DataErrorHoriz.woff) format("woff")}
-:root{--bg:#050505;--fg:#ededeb;--mid:#8d8d8a;--sub:#5d5d5a;--rule:#1c1c1b;--red:#e2231a;--m:clamp(16px,3.2vw,48px);--small:clamp(13px,1vw,15px);--ui:12px;--t1:clamp(20px,1.8vw,28px)}
+:root{--bg:#050505;--fg:#ededeb;--mid:#8d8d8a;--sub:#5d5d5a;--dim:#333331;--rule:#1c1c1b;--red:#e2231a;--m:clamp(16px,3.2vw,48px);--small:clamp(13px,1vw,15px);--ui:12px;--t1:clamp(20px,1.8vw,28px)}
 *{box-sizing:border-box}
 body{margin:0;background:var(--bg);color:var(--fg);font-family:"Untitled Sans",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 header{padding:28px var(--m) 0;display:flex;flex-wrap:wrap;gap:18px 40px;align-items:end;justify-content:space-between}
@@ -20,192 +20,190 @@ nav button{font:inherit;font-size:14px;letter-spacing:-.01em;background:none;col
 nav button b{font-family:"Data Error Horiz",monospace;font-weight:400;letter-spacing:.14em;margin-right:8px;font-size:12px}
 nav button:hover{color:var(--fg)}
 nav button.on{color:var(--fg);border-color:var(--fg)}nav button.on b{color:var(--red)}
-.note{padding:14px var(--m) 0;color:var(--mid);font-size:14px;min-height:2.6em}
-.wrap{padding:clamp(28px,4vw,56px) 0 0}
-.code{font-family:"Data Error Horiz",ui-monospace,monospace;letter-spacing:.14em;font-size:12px;text-transform:uppercase;color:var(--mid);font-variant-numeric:tabular-nums}
-.r{color:var(--red)}.w{color:var(--fg)}
+.note{padding:14px var(--m) 0;color:var(--mid);font-size:14px;min-height:2.6em;max-width:110ch}
+.wrap{padding:clamp(24px,3vw,44px) var(--m) 0}
+.code{font-family:"Data Error Horiz",ui-monospace,monospace;letter-spacing:.14em;font-size:12px;text-transform:uppercase;font-variant-numeric:tabular-nums}
 
-/* the stage: the live one (a fixed frame, every photo fitted whole, 0.1 s fade, a new photo every 0.3 s) */
-.stage{position:relative;margin-inline:auto;width:calc(100vw - 2 * var(--m));height:min(calc((100vw - 2 * var(--m)) * var(--hr,1.2)),calc(100svh - 74px));user-select:none;-webkit-user-select:none}
+/* the stage, as live: a fixed frame, every photo fitted whole, 0.1 s fade, a new photo every 0.3 s.
+   Scaled like the live one (smaller on laptops and up) and a little shorter, so the scrubber under it is in view */
+.box{display:grid;gap:clamp(14px,1.4vw,22px);width:calc((100vw - 2 * var(--m)) * var(--hs,1));margin-inline:auto}
+.stage{position:relative;width:100%;height:min(calc((100vw - 2 * var(--m)) * var(--hs,1) * var(--hr,1.2)),calc(100svh - 330px));min-height:260px;user-select:none;-webkit-user-select:none}
 .stage img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;opacity:0;transition:opacity .1s linear}
 .stage img.on{opacity:1}
-.ov{position:absolute;pointer-events:none;z-index:3}
-.ov[hidden]{display:none}
 
 /* the terminal window, as live */
-.hl-b{position:absolute;left:var(--m);top:50%;transform:translateY(-50%);z-index:6}
+.hl-b{position:absolute;left:0;top:50%;transform:translateY(-50%);z-index:6}
 .hl-term{width:min(440px,calc(100vw - 2 * var(--m)));background:rgba(5,5,5,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(237,237,235,.18);padding:0 clamp(14px,1.3vw,20px) clamp(14px,1.3vw,20px)}
 .hl-bar{display:flex;align-items:center;gap:6px;margin:0 calc(clamp(14px,1.3vw,20px) * -1) clamp(12px,1.1vw,16px);padding:8px clamp(14px,1.3vw,20px);border-bottom:1px solid rgba(237,237,235,.14);font-size:var(--ui);color:var(--mid)}
 .hl-bar i{width:7px;height:7px;border-radius:50%;background:rgba(237,237,235,.28)}.hl-bar i:first-child{background:var(--red)}
-.hl-bar span{margin-left:8px;letter-spacing:.02em}.hl-bar em{margin-left:auto;font-style:normal}
-.hl-code{margin:0;font-size:var(--small);line-height:1.4;color:var(--mid);font-variant-numeric:tabular-nums;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hl-bar span{margin-left:8px;letter-spacing:.02em}
+.hl-code{margin:0;font-size:var(--small);line-height:1.4;color:var(--mid);font-variant-numeric:tabular-nums;white-space:nowrap}
 .hl-code .v{color:var(--fg)}
 .hl-t{margin:.25em 0 .35em;font-size:var(--t1);font-weight:400;letter-spacing:-.03em;line-height:1.1}
 .cur{display:inline-block;width:.55em;height:1.05em;margin-left:.3em;vertical-align:-.15em;background:var(--red);animation:bl 1.1s steps(1) infinite}
 @keyframes bl{50%{opacity:0}}
-.log{display:none}
-.log p{margin:0;font-size:var(--small);line-height:1.4;color:#3f3f3d;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
-.log p:last-child{color:var(--mid)}
-.log p .ok{color:var(--fg)}
 
-/* 01 viewfinder: corner marks on the photo itself, crosshair, Rec timecode, file name and size */
-.vf>i{position:absolute;width:18px;height:18px;border:0 solid rgba(237,237,235,.85)}
-.vf .a{left:-1px;top:-1px;border-width:1px 0 0 1px}.vf .b{right:-1px;top:-1px;border-width:1px 1px 0 0}
-.vf .c{left:-1px;bottom:-1px;border-width:0 0 1px 1px}.vf .d{right:-1px;bottom:-1px;border-width:0 1px 1px 0}
-.vf .x{left:50%;top:50%;width:22px;height:22px;transform:translate(-50%,-50%);border:0}
-.vf .x::before,.vf .x::after{content:"";position:absolute;background:rgba(237,237,235,.6)}
-.vf .x::before{left:50%;top:0;bottom:0;width:1px}.vf .x::after{top:50%;left:0;right:0;height:1px}
-.vf .tl,.vf .tr,.vf .bl,.vf .br,.ms .wd,.ms .ht,.hair .c{background:rgba(5,5,5,.72);padding:4px 7px 3px;line-height:1}
-.vf .tl,.vf .tr,.vf .bl,.vf .br{position:absolute;white-space:nowrap;color:#ededeb}
-.vf .tl{left:12px;top:12px}.vf .tr{right:12px;top:12px}.vf .bl{left:12px;bottom:12px}.vf .br{right:12px;bottom:12px}
-.dot{display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--red);margin-right:7px;vertical-align:1px;animation:bl 1s steps(1) infinite}
+.sc{display:none;touch-action:none;user-select:none;-webkit-user-select:none}
+[data-v="1"] .s1,[data-v="2"] .s2,[data-v="3"] .s3,[data-v="4"] .s4{display:block}
+/* the three states, the same in every version: not shown yet, shown already, now */
+.sc [data-k]{color:var(--dim);transition:color .12s}
+.sc [data-k].seen{color:var(--mid)}
+.sc [data-k].on{color:var(--red)}
+@media (hover:hover){.sc [data-k]:hover{color:var(--fg)}}
 
-/* 03 scrubber: one tick per photo under the frame */
-.scrub{position:relative;margin:14px auto 0;width:calc(100vw - 2 * var(--m));height:34px;display:none;cursor:ew-resize;touch-action:none}
-.scrub .ticks{position:absolute;left:0;right:0;top:0;height:16px;display:flex;gap:2px}
-.scrub .ticks i{flex:1;background:#262625;transition:background .15s}
-.scrub .ticks i.seen{background:#4a4a48}
-.scrub .ticks i.on{background:var(--red)}
-.scrub .lb{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between}
+/* S1 running names: every file name, set as one paragraph under the frame */
+.s1 p{margin:0;word-spacing:.5em;font-size:var(--small);line-height:1.5;letter-spacing:-.01em;text-align:justify;text-align-last:left;font-variant-numeric:tabular-nums}
+.s1 span{cursor:pointer;white-space:nowrap}
 
-/* 04 measure: the photo's outline with its size on the edges, and a crosshair that reads the pixel under the pointer */
-.ms{border:1px solid rgba(226,35,26,.8)}
-.ms .wd{position:absolute;left:50%;top:8px;transform:translateX(-50%);white-space:nowrap}
-.ms .ht{position:absolute;right:8px;top:50%;transform:translateY(-50%);writing-mode:vertical-rl;white-space:nowrap}
-.ms .wd::before,.ms .wd::after{content:"";display:inline-block;width:24px;height:1px;background:rgba(226,35,26,.8);vertical-align:3px;margin:0 8px}
-.hair{position:absolute;inset:0;pointer-events:none;z-index:4;display:none}
-.hair .h{position:absolute;left:0;right:0;height:1px;background:rgba(237,237,235,.45)}
-.hair .v{position:absolute;top:0;bottom:0;width:1px;background:rgba(237,237,235,.45)}
-.hair .c{position:absolute;white-space:nowrap;color:#ededeb;text-shadow:0 0 8px rgba(0,0,0,.7);transform:translate(10px,10px)}
+/* S2 index column: the list beside the frame, one line per file, the current line held in the middle */
+[data-v="2"] .box{grid-template-columns:minmax(0,1fr) minmax(230px,22%);align-items:stretch}
+.s2{position:relative;overflow:hidden;border-left:1px solid var(--rule);-webkit-mask:linear-gradient(transparent,#000 22%,#000 78%,transparent);mask:linear-gradient(transparent,#000 22%,#000 78%,transparent)}
+.s2 ol{list-style:none;margin:0;padding:0 0 0 16px;position:absolute;left:0;right:0;top:50%;transition:transform .25s cubic-bezier(.2,.7,.2,1)}
+.s2 li{display:grid;grid-template-columns:5ch 1fr auto;gap:12px;height:22px;align-items:center;cursor:pointer;font-size:11px}
+.s2 li b{font-weight:400}
+.s2 li.on b::before{content:"▸ ";}
+@media (max-width:760px){[data-v="2"] .box{grid-template-columns:1fr}.s2{height:150px;border-left:0;border-top:1px solid var(--rule)}}
 
-[data-v="2"] .log{display:block}
-[data-v="3"] .scrub{display:block}
-@media (hover:hover) and (pointer:fine){[data-v="4"] .stage{cursor:crosshair}[data-v="4"] .stage.in .hair{display:block}}
+/* S3 odometer: the current file name large, its neighbours either side getting quieter; slide along the line to scrub */
+.s3{position:relative;height:76px;overflow:hidden;cursor:ew-resize;-webkit-mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);mask:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent)}
+.s3 .row{position:absolute;left:50%;top:0;display:flex;align-items:baseline;gap:clamp(18px,2vw,32px);white-space:nowrap;transition:transform .22s cubic-bezier(.2,.7,.2,1)}
+.s3 .row span{font-size:var(--small);letter-spacing:-.01em;line-height:56px;transition:font-size .22s,color .12s}
+.s3 .row span.on{font-size:clamp(30px,3.4vw,52px);letter-spacing:-.04em}
+.s3 .meta{position:absolute;left:0;right:0;bottom:0;display:flex;justify-content:space-between;color:var(--sub)}
+.s3 .meta .w{color:var(--fg)}
+
+/* S4 timeline: a hairline ruler like an edit timeline, a numbered mark every ten frames, the file name riding on a red playhead */
+.s4{position:relative;height:64px;cursor:ew-resize}
+.s4 .rl{position:absolute;left:0;right:0;bottom:22px;height:14px;border-bottom:1px solid var(--sub)}
+.s4 .rl i{position:absolute;bottom:0;width:1px;height:5px;background:var(--dim)}
+.s4 .rl i.seen{background:var(--mid)}
+.s4 .rl i.ten{height:14px}
+.s4 .nums span{position:absolute;bottom:0;transform:translateX(-1px);color:var(--sub)}
+.s4 .ph{position:absolute;top:0;bottom:22px;width:1px;background:var(--red);transition:left .12s linear}
+.s4 .ph b{position:absolute;left:8px;top:-2px;font-weight:400;white-space:nowrap;color:var(--fg)}
+.s4 .ph b em{font-style:normal;color:var(--red)}
+.s4 .ph.flip b{left:auto;right:8px}
+
 @media (max-width:760px){
+  .stage{height:min(calc((100vw - 2 * var(--m)) * 1.25),calc(100svh - 300px))}
   .hl-b{top:auto;bottom:10px;left:10px;transform:none}
   .hl-term{width:auto;max-width:66vw;padding:0 10px 9px}
   .hl-bar{margin:0 -10px 7px;padding:5px 10px;gap:4px;font-size:9px}.hl-bar i{width:5px;height:5px}
-  .hl-t{margin:0 0 .15em;font-size:15px}.hl-code,.log p{font-size:11px}
-  .hl-code.cmd{display:none}
-  .vf .tr,.vf .br{display:none}
+  .hl-t{margin:0 0 .15em;font-size:15px}.hl-code{font-size:11px}.hl-code.cmd{display:none}
   .code{font-size:10px}
+  .s1 p{font-size:11px}
 }
-@media (prefers-reduced-motion:reduce){.stage img{transition:none}.cur,.dot{animation:none}}
+@media (prefers-reduced-motion:reduce){.stage img,.s2 ol,.s3 .row,.s4 .ph{transition:none}.cur{animation:none}}
 footer{padding:60px var(--m) 60px;color:var(--sub);font-size:13px;line-height:1.5;max-width:80ch}
 </style>
 </head>
-<body data-v="0">
+<body data-v="1">
 <header>
-<div><h1>Human in the loop — round 3</h1>
-<p>The slideshow as it is now, with a few interface code details added. Same photos, same speed, same terminal window; pick a version to compare.</p></div>
+<div><h1>Human in the loop — scrubber</h1>
+<p>The current slideshow with a scrubber made of type: the file names themselves instead of grey ticks. Four layouts; every one scrubs when you point at it or drag along it, and plays on when you let go.</p></div>
 <nav aria-label="Versions">
 <button data-k="0"><b>00</b>Current</button>
-<button data-k="1"><b>01</b>Viewfinder</button>
-<button data-k="2"><b>02</b>Load log</button>
-<button data-k="3"><b>03</b>Scrubber</button>
-<button data-k="4"><b>04</b>Measure</button>
+<button data-k="1"><b>S1</b>Running names</button>
+<button data-k="2"><b>S2</b>Index column</button>
+<button data-k="3"><b>S3</b>Odometer</button>
+<button data-k="4"><b>S4</b>Timeline</button>
 </nav>
 </header>
 <p class="note" id="note"></p>
 
 <div class="wrap">
+<div class="box">
 <div class="stage" id="st">
   <div class="hl-b"><div class="hl-term">
-    <div class="hl-bar"><i></i><i></i><i></i><span>field-notes</span><em class="code" id="bar"></em></div>
-    <div class="log" id="log"></div>
+    <div class="hl-bar"><i></i><i></i><i></i><span>field-notes</span></div>
     <p class="hl-code cmd"><span>$</span> panorama --show crew</p>
     <h2 class="hl-t">Human in the loop</h2>
     <p class="hl-code" id="ln"></p>
   </div></div>
-  <div class="ov vf" id="vf" hidden><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="x"></i>
-    <span class="tl code"><i class="dot"></i><span class="w">REC</span> <span id="tc">00:00:00:00</span></span><span class="tr code w" id="fname"></span>
-    <span class="bl code" id="fno"></span><span class="br code" id="fsize"></span></div>
-  <div class="ov ms" id="ms" hidden><span class="wd code r" id="mw"></span><span class="ht code r" id="mh"></span></div>
-  <div class="hair" id="hair"><i class="h"></i><i class="v"></i><span class="c code" id="hc"></span></div>
 </div>
-<div class="scrub" id="scrub"><div class="ticks" id="ticks"></div><div class="lb code"><span id="sl">FRAME 01</span><span>DRAG OR POINT TO SCRUB</span><span id="sr"></span></div></div>
+<div class="sc s2" id="s2"><ol id="s2l"></ol></div>
+<div class="sc s1" id="s1"><p id="s1p"></p></div>
+<div class="sc s3" id="s3"><div class="row" id="s3r"></div><div class="meta code"><span id="s3a"></span><span>SLIDE TO SCRUB</span><span id="s3b"></span></div></div>
+<div class="sc s4" id="s4"><div class="rl" id="s4r"></div><div class="nums code" id="s4n"></div><div class="ph" id="s4p"><b class="code" id="s4b"></b></div></div>
+</div>
 </div>
 
-<footer>Unlinked page, for comparing only. Everything the code lines say comes from the photo files themselves (their number, file name, pixel size and shape). The page keeps only a handful of photos loaded at a time.</footer>
+<footer>Unlinked page, for comparing only. The names and sizes are the photo files' own. The page keeps only a handful of photos loaded at a time and runs only while the frame is on screen.</footer>
 
 <script>
 (async()=>{
-const R = matchMedia('(prefers-reduced-motion:reduce)').matches, FINE = matchMedia('(hover:hover) and (pointer:fine)').matches;
-const NOTES = ['The slideshow as it is on the site today.',
-  'Viewfinder: corner marks sit on the photo itself (so they change shape with every frame), a centre cross, Rec with a running timecode, the file name and its pixel size.',
-  'Load log: the terminal prints a line for every frame it reads, the last few stay on screen. Hover the photos to pause; the loop line says so.',
-  'Scrubber: one tick per photo under the frame, the current one red, the ones already shown a step lighter. Point at or drag along the ticks to scrub; let go and it plays on.',
-  'Measure: a red outline around the photo with its real width and height on the edges. With a mouse, a crosshair reads the pixel under the pointer; it pauses while you measure.'];
+const R = matchMedia('(prefers-reduced-motion:reduce)').matches;
+const NOTES = ['The slideshow as it is on the site today, no scrubber.',
+  'Running names: every file name, set as one justified paragraph under the frame, in the page’s own type. Not shown yet is dark, already shown is grey, the one on screen is red. Point at a name to jump to it.',
+  'Index column: the list sits beside the frame, one line per file with its size and shape; the current line stays in the middle and the list rolls past it. Point at a line to jump. On phones it moves under the frame.',
+  'Odometer: the current file name large under the frame, its neighbours either side, rolling along as the photos change. Slide along the line to scrub through all of them.',
+  'Timeline: a hairline ruler like an edit timeline, a numbered mark every ten frames, a red playhead carrying the file name and size. Point anywhere on it or drag to scrub.'];
 const $ = id => document.getElementById(id), st = $('st'), pad = (n, k = 2) => String(n).padStart(k, '0');
 let L = [];
 try { L = (await (await fetch('/media/bts/photos.json', {cache:'no-cache'})).json()).photos.filter(p=>!p.hidden); } catch(e){}
 if (!L.length) return;
 for (let i = L.length - 1; i > 0; i--){ const j = Math.random() * (i + 1) | 0; [L[i], L[j]] = [L[j], L[i]]; }
-const N = L.length, num = p => p.f.replace(/\.\w+$/, ''), g = (a, b) => b ? g(b, a % b) : a;
-const ratio = p => { const r = p.w / p.h, known = [[16,9],[3,2],[4,3],[1,1],[2,3],[3,4],[9,16]]; for (const [a, b] of known) if (Math.abs(r - a / b) < .02) return a + ':' + b; return r.toFixed(2) + ':1'; };
+const N = L.length;
+const ratio = p => { const r = p.w / p.h; for (const [a, b] of [[16,9],[3,2],[4,3],[1,1],[2,3],[3,4],[9,16]]) if (Math.abs(r - a / b) < .02) return a + ':' + b; return r.toFixed(2) + ':1'; };
 st.style.setProperty('--hr', Math.max(...L.map(p=>p.h / p.w)).toFixed(4));
+/* the live frame's scale: full size up to tablets, 20% smaller on a laptop, up to 40% smaller on large screens */
+const box = document.querySelector('.box');
+const hScale = () => { const w = innerWidth, s = w <= 1024 ? 1 : w <= 1512 ? 1 - .2 * (w - 1024) / 488 : Math.max(.6, .8 - .2 * (w - 1512) / 1048); box.style.setProperty('--hs', s.toFixed(3)); };
+hScale(); addEventListener('resize', hScale);
+
+/* the scrubbers, built once */
+$('s1p').innerHTML = L.map((p, k)=>`<span data-k="${k}">${p.f}</span>`).join(' ');
+$('s2l').innerHTML = L.map((p, k)=>`<li data-k="${k}"><b>${pad(k + 1, 3)}</b><span>${p.f}</span><span>${p.w}×${p.h}</span></li>`).join('');
+$('s3r').innerHTML = L.map((p, k)=>`<span data-k="${k}">${p.f}</span>`).join('');
+$('s4r').innerHTML = L.map((p, k)=>`<i data-k="${k}" class="${(k + 1) % 10 === 0 || k === 0 ? 'ten' : ''}" style="left:${(k + .5) / N * 100}%"></i>`).join('');
+$('s4n').innerHTML = L.map((p, k)=>(k + 1) % 10 === 0 || k === 0 ? `<span style="left:${(k + .5) / N * 100}%">${pad(k + 1, 3)}</span>` : '').join('');
+const groups = ['s1', 's2', 's3', 's4'].map(id=>[...$(id).querySelectorAll('[data-k]')]);
 
 /* a rolling window of photos: the current one and the next few are loaded, older ones are dropped */
 const pool = new Map(), ok = new Set();
+let V = 1, pos = 0, pend = -1, scrubbing = false, seen = new Set([0]);
 const want = k => { k = (k % N + N) % N; if (pool.has(k)) return; const im = new Image(); im.alt = ''; im.decoding = 'async'; im.src = `/media/bts/${L[k].f}?v=${L[k].v || 1}`; st.prepend(im); pool.set(k, im);
   (im.decode ? im.decode() : new Promise(r=>im.onload = r)).then(()=>{ ok.add(k); if (k === pend) show(k); }).catch(()=>{}); };
 const trim = () => { for (const [k, im] of pool){ const d = (k - pos + N) % N; if (d > 6 && d < N - 2){ im.remove(); pool.delete(k); ok.delete(k); } } };
-let V = 0, pos = 0, pend = -1, paused = false, scrubbing = false, seen = new Set([0]), logLines = [];
 
-/* overlays that follow the photo's own rectangle inside the frame */
-const rect = () => { const p = L[pos], W = st.clientWidth, H = st.clientHeight, s = Math.min(W / p.w, H / p.h), w = p.w * s, h = p.h * s; return {x: (W - w) / 2, y: (H - h) / 2, w, h, s}; };
-const place = () => { const r = rect(); for (const el of [$('vf'), $('ms')]) Object.assign(el.style, {left: r.x + 'px', top: r.y + 'px', width: r.w + 'px', height: r.h + 'px'}); };
-const ticks = $('ticks'); ticks.innerHTML = '<i></i>'.repeat(N); const T = [...ticks.children];
-
-const text = () => { const p = L[pos], fr = `${pad(pos + 1)} / ${N}`;
-  $('ln').innerHTML = V === 3 ? `<span>frame</span>[<span class="v">${pad(pos + 1)}</span>] <span>of ${N} · loop =</span> <span class="v">${scrubbing ? 'scrub' : 'true'}</span><span class="cur"></span>`
-    : `<span>frame</span> <span class="v">${fr}</span> <span>· loop =</span> <span class="v">${paused ? 'paused' : 'true'}</span><span class="cur"></span>`;
-  $('bar').textContent = V === 4 ? `${p.w}×${p.h}` : '';
-  $('fname').textContent = p.f.toUpperCase(); $('fno').innerHTML = `FRAME <span class="w">${pad(pos + 1, 3)}</span> / ${pad(N, 3)}`; $('fsize').textContent = `${p.w} × ${p.h} PX · ${ratio(p)}`;
-  $('mw').textContent = `W ${p.w}`; $('mh').textContent = `H ${p.h}`;
-  T.forEach((t, k)=>{ t.classList.toggle('on', k === pos); t.classList.toggle('seen', seen.has(k)); });
-  $('sl').textContent = `FRAME ${pad(pos + 1)}`; $('sr').textContent = num(p) + '.WEBP'; };
-
-const addLog = p => { logLines.push(`<span>&gt; read</span> <span class="ok">${p.f}</span> ${p.w}×${p.h} <span class="ok">ok</span>`); if (logLines.length > 3) logLines.shift();
-  $('log').innerHTML = logLines.map(l=>`<p>${l}</p>`).join(''); };
+let last = -1;
+const paint = () => { const p = L[pos];
+  $('ln').innerHTML = `<span>frame</span> <span class="v">${pad(pos + 1)} / ${N}</span> <span>· loop =</span> <span class="v">${scrubbing ? 'scrub' : 'true'}</span><span class="cur"></span>`;
+  for (const g of groups){ if (last >= 0 && g[last]) g[last].classList.remove('on'); g[pos].classList.add('on', 'seen'); }
+  last = pos;
+  if (V === 2){ $('s2l').style.transform = `translateY(${-(pos + .5) * 22}px)`; }
+  if (V === 3){ const s = $('s3r').children[pos]; $('s3r').style.transform = `translateX(${-(s.offsetLeft + s.offsetWidth / 2)}px)`;
+    $('s3a').innerHTML = `FRAME <span class="w">${pad(pos + 1, 3)}</span> / ${pad(N, 3)}`; $('s3b').innerHTML = `<span class="w">${p.w} × ${p.h}</span> · ${ratio(p)}`; }
+  if (V === 4){ const x = (pos + .5) / N; $('s4p').style.left = x * 100 + '%'; $('s4p').classList.toggle('flip', x > .8);
+    $('s4b').innerHTML = `<em>${pad(pos + 1, 3)}</em> ${p.f.toUpperCase()} · ${p.w}×${p.h}`; } };
 
 function show(k){ k = (k % N + N) % N; pend = k; want(k); if (!ok.has(k)) return;
   pool.get(pos)?.classList.remove('on'); pool.get(k).classList.add('on'); pos = k; pend = -1; seen.add(k);
-  addLog(L[k]); place(); text(); for (let j = 1; j <= 5; j++) want(k + j); trim(); }
+  paint(); for (let j = 1; j <= 5; j++) want(k + j); trim(); }
 
 /* versions */
 const setV = k => { V = k; document.body.dataset.v = k; $('note').textContent = NOTES[k];
   document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('on', +b.dataset.k === k));
-  $('vf').hidden = k !== 1; $('ms').hidden = k !== 4; paused = false; text();
-  try { history.replaceState(null, '', '?v=' + k); } catch(e){} };
+  requestAnimationFrame(paint); try { history.replaceState(null, '', '?v=' + k); } catch(e){} };
 document.querySelectorAll('nav button').forEach(b=>b.addEventListener('click', ()=>setV(+b.dataset.k)));
-const q = +(new URLSearchParams(location.search).get('v') || 0); setV(q >= 0 && q <= 4 ? q : 0);
+const q = new URLSearchParams(location.search).get('v'); setV(q !== null && +q >= 0 && +q <= 4 ? +q : 1);
 
 /* the loop: a new photo every 0.3 s, only while the frame is on screen and the tab is open */
-let on = true, t = null; const run = () => { clearInterval(t); if (on && !R && !document.hidden) t = setInterval(()=>{ if (!paused && !scrubbing) show(pos + 1); }, 300); };
+let on = true, t = null; const run = () => { clearInterval(t); if (on && !R && !document.hidden) t = setInterval(()=>{ if (!scrubbing) show(pos + 1); }, 300); };
 new IntersectionObserver(([e])=>{ on = e.isIntersecting; run(); }).observe(st); document.addEventListener('visibilitychange', run);
-show(0); addEventListener('resize', place);
+show(0); addEventListener('resize', paint);
 
-/* hover pauses in Load log and Measure */
-st.addEventListener('pointerenter', e=>{ if (e.pointerType === 'mouse' && (V === 2 || V === 4)){ paused = true; text(); } st.classList.add('in'); });
-st.addEventListener('pointerleave', ()=>{ if (paused){ paused = false; text(); } st.classList.remove('in'); });
-/* Measure: the pixel under the pointer, in the photo's own pixels */
-st.addEventListener('pointermove', e=>{ if (V !== 4) return; const b = st.getBoundingClientRect(), x = e.clientX - b.left, y = e.clientY - b.top, r = rect();
-  $('hair').querySelector('.h').style.top = y + 'px'; $('hair').querySelector('.v').style.left = x + 'px'; const c = $('hc'); c.style.left = x + 'px'; c.style.top = y + 'px';
-  const px = Math.round((x - r.x) / r.s), py = Math.round((y - r.y) / r.s), inside = px >= 0 && py >= 0 && px <= L[pos].w && py <= L[pos].h;
-  c.innerHTML = inside ? `X <span class="w">${pad(px, 4)}</span> Y <span class="w">${pad(py, 4)}</span>` : '<span class="r">OUT OF FRAME</span>'; });
-/* Scrubber */
-const sc = $('scrub'); let down = false;
-const at = e => { const b = ticks.getBoundingClientRect(); return Math.max(0, Math.min(N - 1, Math.floor((e.clientX - b.left) / b.width * N))); };
-sc.addEventListener('pointerdown', e=>{ down = true; sc.setPointerCapture(e.pointerId); scrubbing = true; show(at(e)); });
-sc.addEventListener('pointermove', e=>{ if (down || e.pointerType === 'mouse'){ scrubbing = true; const k = at(e); if (k !== pos && k !== pend) show(k); } });
-const end = () => { down = false; scrubbing = false; text(); };
-sc.addEventListener('pointerup', ()=>{ down = false; }); sc.addEventListener('pointerleave', end); sc.addEventListener('pointercancel', end);
-sc.addEventListener('pointerup', e=>{ if (e.pointerType !== 'mouse') end(); });
-
-/* Viewfinder: Rec timecode, hours:minutes:seconds:frames since the page opened (as the header's Rec) */
-const t0 = performance.now(); setInterval(()=>{ if (V !== 1) return; const s = (performance.now() - t0) / 1000;
-  $('tc').textContent = [Math.floor(s / 3600), Math.floor(s / 60) % 60, Math.floor(s) % 60, Math.floor(s % 1 * 25)].map(n=>pad(n)).join(':'); }, 40);
+/* scrubbing: S1 and S2 by the name under the pointer, S3 and S4 by the pointer's place along the line */
+const along = (el, e) => { const b = el.getBoundingClientRect(); return Math.max(0, Math.min(N - 1, Math.floor((e.clientX - b.left) / b.width * N))); };
+const pick = (id, e) => { if (id === 's3' || id === 's4') return along($(id), e);
+  const t = document.elementFromPoint(e.clientX, e.clientY)?.closest('[data-k]'); return t && $(id).contains(t) ? +t.dataset.k : -1; };
+['s1', 's2', 's3', 's4'].forEach(id=>{ const el = $(id); let down = false;
+  const go = e => { const k = pick(id, e); if (k >= 0 && k !== pos && k !== pend){ scrubbing = true; show(k); } else if (k >= 0) scrubbing = true; paint(); };
+  el.addEventListener('pointerdown', e=>{ down = true; el.setPointerCapture(e.pointerId); go(e); });
+  el.addEventListener('pointermove', e=>{ if (down || e.pointerType === 'mouse') go(e); });
+  const end = () => { down = false; scrubbing = false; paint(); };
+  el.addEventListener('pointerup', e=>{ down = false; if (e.pointerType !== 'mouse') end(); });
+  el.addEventListener('pointerleave', end); el.addEventListener('pointercancel', end); });
 })();
 </script>
 </body>
