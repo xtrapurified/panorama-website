@@ -14,145 +14,149 @@
 body{margin:0;background:var(--bg);color:var(--fg);font-family:"Untitled Sans",Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased}
 header{padding:28px var(--m) 8px}
 header h1{margin:0;font-weight:500;font-size:clamp(28px,3.4vw,52px);letter-spacing:-.045em}
-header p{margin:.5em 0 0;color:var(--mid);max-width:60ch;font-size:15px;line-height:1.45}
+header p{margin:.5em 0 0;color:var(--mid);max-width:62ch;font-size:15px;line-height:1.45}
 section{padding:clamp(48px,6vw,96px) var(--m) 0}
-.lab{display:flex;gap:1em;align-items:baseline;margin-bottom:14px}
+.lab{display:flex;gap:1em;align-items:baseline;margin-bottom:14px;flex-wrap:wrap}
 .lab b{font-family:"Data Error Horiz",monospace;font-weight:400;letter-spacing:.18em;color:var(--red);font-size:14px}
 .lab span{font-size:clamp(20px,1.8vw,28px);letter-spacing:-.037em}
 .lab em{font-style:normal;color:var(--mid);font-size:14px}
-.code{font-family:"Data Error Horiz",monospace;letter-spacing:.14em;font-size:12px;color:var(--sub)}
-.code .r{color:var(--red)}
-.stage{position:relative;width:100%;height:min(72vh,calc((100vw - 2 * var(--m)) * .6));background:#000;overflow:hidden;user-select:none;-webkit-user-select:none;touch-action:pan-y}
-.stage img{position:absolute;max-width:none;pointer-events:none}
+.code{font-family:"Data Error Horiz",ui-monospace,monospace;letter-spacing:.14em;font-size:12px;color:var(--sub);text-transform:uppercase}
+.code .r{color:var(--red)}.code .w{color:var(--fg)}
+.stage{position:relative;width:100%;height:min(74vh,calc((100vw - 2 * var(--m)) * .58));background:#000;overflow:hidden;user-select:none;-webkit-user-select:none}
+.stage canvas{position:absolute;inset:0;width:100%;height:100%;display:block}
 .hud{position:absolute;left:14px;right:14px;bottom:12px;display:flex;justify-content:space-between;pointer-events:none;z-index:5}
-.fit{inset:0;width:100%;height:100%;object-fit:contain}
-/* 01 scrub */
-#s1{cursor:ew-resize}
-#s1 .bar{position:absolute;left:0;bottom:0;height:2px;background:var(--red);z-index:5}
-/* 02 contact sheet */
-#s2{display:grid;grid-template-columns:repeat(auto-fill,minmax(88px,1fr));gap:4px;padding:4px;height:auto;max-height:none}
-#s2 i{display:block;aspect-ratio:3/2;background-size:cover;background-position:center;filter:grayscale(1) brightness(.45);transition:filter .35s,transform .35s;cursor:zoom-in}
-#s2 i.on{filter:none}
-#s2 i:hover{filter:none;transform:scale(1.06);z-index:2;position:relative}
-#loupe{position:fixed;width:min(46vw,620px);aspect-ratio:3/2;pointer-events:none;z-index:50;background:#000 center/contain no-repeat;box-shadow:0 0 0 1px #2a2a28;opacity:0;transition:opacity .2s}
-/* 03 strip */
-#s3{cursor:grab}
-#s3.drag{cursor:grabbing}
-#s3 .track{position:absolute;top:8%;bottom:14%;left:0;display:flex;gap:10px;will-change:transform}
-#s3 .track img{position:relative;height:100%;width:auto;filter:grayscale(.2) brightness(.55);transition:filter .4s}
-#s3 .track img.c{filter:none}
-#s3 .mark{position:absolute;left:50%;top:4%;bottom:10%;width:1px;background:var(--red);z-index:4;opacity:.8}
-/* 04 deck */
-#s4{cursor:grab;perspective:1200px}
-#s4 .card{position:absolute;left:50%;top:50%;width:auto;height:72%;pointer-events:auto;box-shadow:0 10px 40px rgba(0,0,0,.6);border:6px solid #f2f2f0;border-bottom-width:22px;will-change:transform}
-/* 05 shutter */
-#s5{cursor:pointer}
-#s5 .flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:4}
-#s5 .rec{position:absolute;top:14px;left:14px;z-index:5;display:flex;align-items:center;gap:8px}
-#s5 .rec i{width:9px;height:9px;border-radius:50%;background:var(--red)}
-#s5.hold .rec i{animation:bl .5s steps(1) infinite}
+.top{position:absolute;left:14px;right:14px;top:12px;display:flex;justify-content:space-between;pointer-events:none;z-index:5}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--red);margin-right:7px;vertical-align:1px;animation:bl 1s steps(1) infinite}
 @keyframes bl{50%{opacity:.15}}
-footer{padding:80px var(--m) 60px;color:var(--sub);font-size:13px}
+/* 07 machine eye */
+#s7 img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#s7 .box{position:absolute;border:1px solid rgba(237,237,235,.75);pointer-events:none;transition:opacity .25s}
+#s7 .box i{position:absolute;left:-1px;top:-17px;font-style:normal;white-space:nowrap;background:rgba(0,0,0,.6);padding:1px 4px}
+#s7 .box.h{border-color:var(--red)}#s7 .box.h i{color:var(--red)}
+#s7.lock .box{border-width:1.5px}
+/* 08 rack focus */
+#s8 img{position:absolute;object-fit:cover;transition:filter .7s cubic-bezier(.16,1,.3,1),opacity .7s,transform .7s cubic-bezier(.16,1,.3,1);box-shadow:0 20px 60px rgba(0,0,0,.7)}
+#s8 .scale{position:absolute;right:16px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;gap:12px;z-index:6;pointer-events:none}
+#s8 .scale i{display:block;width:10px;height:1px;background:var(--sub)}
+#s8 .scale i.on{width:22px;background:var(--red)}
+/* 09 field log */
+#s9{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,34%)}
+#s9 .ph{position:relative;background:#000}
+#s9 .ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
+#s9 .log{overflow:hidden;border-left:1px solid var(--rule);padding:14px 14px 0;font-size:11.5px;line-height:1.85;position:relative}
+#s9 .log div{white-space:nowrap;cursor:pointer;color:#3d3d3b;transition:color .15s}
+#s9 .log div.cur{color:var(--fg)}#s9 .log div.cur::before{content:"> ";color:var(--red)}
+#s9 .log div:hover{color:var(--mid)}
+#s9.hold .log div.cur{color:var(--red)}
+@media (max-width:760px){#s9{grid-template-columns:1fr;grid-template-rows:1fr 34%}#s9 .log{border-left:0;border-top:1px solid var(--rule)}}
+footer{padding:80px var(--m) 60px;color:var(--sub);font-size:13px;line-height:1.5}
 </style>
 </head>
 <body>
 <header>
-<h1>Human in the loop — studies</h1>
-<p>Five ways to show the behind-the-scenes photos with a little more to do. Each runs on its own like today's slideshow; the pointer (or a finger) takes over. Unlinked page, for comparing only.</p>
+<h1>Human in the loop — studies, round 2</h1>
+<p>Four computer-minded ways to show the behind-the-scenes photos. Each runs on its own; the pointer (or a finger) takes over. Unlinked page, for comparing only.</p>
 </header>
 
 <section>
-<div class="lab"><b>HL-01</b><span>Scrub</span><em>it plays on its own; move across it and the pointer becomes the playhead, like scrubbing film</em></div>
-<div class="stage" id="s1"><img class="fit" alt=""><div class="hud code"><span>FIELD NOTES · <span class="r">SCRUB</span></span><span class="n"></span></div><i class="bar"></i></div>
+<div class="lab"><b>HL-06</b><span>Dot-matrix print</span><em>each photo is built from dots, like the t-shirt font; under the pointer the dots resolve into the photo</em></div>
+<div class="stage" id="s6"><canvas></canvas><div class="top code"><span><i class="dot"></i>FIELD NOTES</span><span class="n"></span></div><div class="hud code"><span>RES <span class="r res">LOW</span></span><span>POINT TO RESOLVE</span></div></div>
 </section>
 
 <section>
-<div class="lab"><b>HL-02</b><span>Contact sheet</span><em>every photo at once, dark; a light runs through them; hover one and a loupe shows it large</em></div>
-<div class="stage" id="s2"></div>
-<div id="loupe"></div>
+<div class="lab"><b>HL-07</b><span>Machine eye</span><em>a real object-detection model looks at every frame and boxes what it finds; hover locks on the frame</em></div>
+<div class="stage" id="s7"><img alt=""><div class="top code"><span><i class="dot"></i>DETECT · <span class="r st">LOADING MODEL</span></span><span class="n"></span></div><div class="hud code"><span class="sum"></span><span class="lk">HOVER TO LOCK</span></div></div>
 </section>
 
 <section>
-<div class="lab"><b>HL-03</b><span>Film strip</span><em>a strip drifting past a red gate; drag and throw it, the frame in the gate is in colour</em></div>
-<div class="stage" id="s3"><div class="track"></div><i class="mark"></i><div class="hud code"><span>FRAME <span class="r n">01</span></span><span>DRAG ← →</span></div></div>
+<div class="lab"><b>HL-08</b><span>Rack focus</span><em>three photos at three depths, one sharp; move up and down to pull focus, like Formats; it pulls on its own when left alone</em></div>
+<div class="stage" id="s8"><div class="scale"><i></i><i></i><i></i></div><div class="top code"><span>FOCUS <span class="r f">NEAR</span></span><span class="n"></span></div><div class="hud code"><span>PULL ↑ ↓</span><span class="d"></span></div></div>
 </section>
 
 <section>
-<div class="lab"><b>HL-04</b><span>Deck of prints</span><em>a pile of prints; drag the top one and throw it off the table, the next is underneath</em></div>
-<div class="stage" id="s4"><div class="hud code"><span>PRINT <span class="r n">01</span></span><span>THROW TO NEXT</span></div></div>
+<div class="lab"><b>HL-09</b><span>Field log</span><em>the photos flicker; a terminal prints one line per frame; point at a line to jump there, hold on the photo to pause</em></div>
+<div class="stage" id="s9"><div class="ph"><img alt=""></div><div class="log code"></div></div>
 </section>
 
-<section>
-<div class="lab"><b>HL-05</b><span>Shutter</span><em>a slow frame every two seconds; press and hold to fire a burst, with a flash on each frame</em></div>
-<div class="stage" id="s5"><img class="fit" alt=""><i class="flash"></i><div class="rec code"><i></i><span>REC</span></div><div class="hud code"><span>FPS <span class="r f">0.5</span></span><span class="n"></span></div></div>
-</section>
-
-<footer>Photos: media/bts (the same list as the site, shuffled on every visit).</footer>
+<footer>Photos: media/bts, the same list as the site, shuffled on every visit. The log in HL-09 only uses what each file really tells us (its number, size and shape); dates, places and crew could be added per photo later.</footer>
 
 <script>
 (async()=>{
-const R = matchMedia('(prefers-reduced-motion:reduce)').matches;
+const R = matchMedia('(prefers-reduced-motion:reduce)').matches, FINE = matchMedia('(hover:hover) and (pointer:fine)').matches;
 let L = [];
 try { L = (await (await fetch('/media/bts/photos.json', {cache:'no-cache'})).json()).photos.filter(p=>!p.hidden); } catch(e){}
 for (let i = L.length - 1; i > 0; i--){ const j = Math.random() * (i + 1) | 0; [L[i], L[j]] = [L[j], L[i]]; }
-const src = p => '/media/bts/' + p.f, th = p => '/media/bts/thumbs/' + p.f, N = L.length, pad = n => String(n).padStart(2, '0');
-const pre = new Map(); const load = i => { const p = L[(i % N + N) % N]; if (!pre.has(p.f)){ const im = new Image(); im.decoding = 'async'; im.src = src(p); pre.set(p.f, im); } return src(p); };
-L.forEach((p, i)=>{ if (i < 24) load(i); });
+const N = L.length, src = p => '/media/bts/' + p.f, pad = (n, k = 3) => String(n).padStart(k, '0');
+const cache = new Map(), img = i => { const p = L[(i % N + N) % N]; if (!cache.has(p.f)){ const im = new Image(); im.crossOrigin = 'anonymous'; im.decoding = 'async'; im.src = src(p); cache.set(p.f, im); } return cache.get(p.f); };
+const ready = im => im.complete && im.naturalWidth ? Promise.resolve(im) : new Promise(r=>{ im.onload = ()=>r(im); im.onerror = ()=>r(im); });
+const fitRect = (iw, ih, W, H) => { const s = Math.min(W / iw, H / ih), w = iw * s, h = ih * s; return [(W - w) / 2, (H - h) / 2, w, h]; };
 
-/* 01 scrub */
-{ const st = document.getElementById('s1'), im = st.querySelector('img'), n = st.querySelector('.n'), bar = st.querySelector('.bar'); let i = 0, over = false;
-  const show = k => { i = (k + N) % N; im.src = load(i); n.textContent = pad(i + 1) + ' / ' + N; bar.style.width = ((i + 1) / N * 100) + '%'; load(i + 1); load(i - 1); };
-  show(0); if (!R) setInterval(()=>{ if (!over) show(i + 1); }, 300);
-  const at = e => { const r = st.getBoundingClientRect(), x = (e.touches ? e.touches[0].clientX : e.clientX) - r.left; show(Math.floor(Math.max(0, Math.min(.999, x / r.width)) * N)); };
-  st.addEventListener('pointerenter', ()=>over = true); st.addEventListener('pointerleave', ()=>over = false); st.addEventListener('pointermove', at); }
+/* HL-06 dot-matrix print */
+{ const st = document.getElementById('s6'), cv = st.querySelector('canvas'), ctx = cv.getContext('2d'), n = st.querySelector('.n'), res = st.querySelector('.res');
+  const off = document.createElement('canvas'), oc = off.getContext('2d', {willReadFrequently: true}); let W, H, dpr = Math.min(devicePixelRatio || 1, 2), i = 0, cur = null, lum = null, cols = 0, rows = 0, G = 9, mx = -1, my = -1, rad = 0, t0 = 0, fade = 1;
+  const size = () => { W = st.clientWidth; H = st.clientHeight; cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0); G = W < 600 ? 7 : 9; sample(); };
+  const sample = () => { if (!cur) return; cols = Math.ceil(W / G); rows = Math.ceil(H / G); off.width = cols; off.height = rows; oc.fillStyle = '#000'; oc.fillRect(0, 0, cols, rows);
+    const [x, y, w, h] = fitRect(cur.naturalWidth, cur.naturalHeight, cols, rows); oc.drawImage(cur, x, y, w, h); const d = oc.getImageData(0, 0, cols, rows).data; lum = new Float32Array(cols * rows);
+    for (let k = 0; k < cols * rows; k++) lum[k] = (d[k*4] * .3 + d[k*4+1] * .59 + d[k*4+2] * .11) / 255; };
+  const go = async k => { i = (k + N) % N; const im = await ready(img(i)); img(i + 1); cur = im; sample(); fade = 0; t0 = performance.now(); n.textContent = pad(i + 1) + ' / ' + N; };
+  st.addEventListener('pointermove', e=>{ const r = st.getBoundingClientRect(); mx = e.clientX - r.left; my = e.clientY - r.top; });
+  st.addEventListener('pointerleave', ()=>{ mx = my = -1; });
+  addEventListener('resize', size); size(); await go(0);
+  setInterval(()=>{ if (mx < 0 && !R) go(i + 1); }, 2600);
+  (function draw(now){ ctx.fillStyle = '#000'; ctx.fillRect(0, 0, W, H); fade = Math.max(0, Math.min(1, (now - t0) / 500));
+    const want = mx >= 0 ? Math.max(W, H) * .28 : 0; rad += (want - rad) * .12; res.textContent = rad > 40 ? 'HIGH' : 'LOW';
+    if (lum){ ctx.fillStyle = '#ededeb'; for (let y = 0; y < rows; y++) for (let x = 0; x < cols; x++){ const v = lum[y * cols + x]; if (v < .06) continue; const cx = x * G + G / 2, cy = y * G + G / 2;
+        if (rad > 2 && Math.hypot(cx - mx, cy - my) < rad) continue; const r = Math.sqrt(v) * G * .48 * fade; ctx.globalAlpha = .35 + v * .65; ctx.beginPath(); ctx.arc(cx, cy, r, 0, 7); ctx.fill(); } ctx.globalAlpha = 1; }
+    if (rad > 2 && cur){ ctx.save(); ctx.beginPath(); ctx.arc(mx, my, rad, 0, 7); ctx.clip(); const [x, y, w, h] = fitRect(cur.naturalWidth, cur.naturalHeight, W, H); ctx.drawImage(cur, x, y, w, h); ctx.restore();
+      ctx.strokeStyle = 'rgba(226,35,26,.7)'; ctx.lineWidth = 1; ctx.beginPath(); ctx.arc(mx, my, rad, 0, 7); ctx.stroke(); }
+    requestAnimationFrame(draw); })(performance.now()); }
 
-/* 02 contact sheet */
-{ const st = document.getElementById('s2'), lp = document.getElementById('loupe');
-  st.innerHTML = L.map((p, k)=>`<i data-k="${k}" style="background-image:url(${th(p)})"></i>`).join('');
-  const cells = [...st.children]; let k = 0; if (!R) setInterval(()=>{ cells[k].classList.remove('on'); k = (k + 1) % N; cells[k].classList.add('on'); }, 300);
-  st.addEventListener('pointermove', e=>{ const c = e.target.closest('i'); if (!c){ lp.style.opacity = 0; return; }
-    lp.style.backgroundImage = `url(${load(+c.dataset.k)})`; lp.style.opacity = 1;
-    const w = lp.offsetWidth, h = lp.offsetHeight; let x = e.clientX + 24, y = e.clientY - h / 2; if (x + w > innerWidth - 10) x = e.clientX - w - 24; y = Math.max(10, Math.min(innerHeight - h - 10, y)); lp.style.left = x + 'px'; lp.style.top = y + 'px'; });
-  st.addEventListener('pointerleave', ()=>lp.style.opacity = 0); }
+/* HL-07 machine eye: COCO-SSD (TensorFlow.js) finds people and things in each frame */
+{ const st = document.getElementById('s7'), im = st.querySelector('img'), n = st.querySelector('.n'), sum = st.querySelector('.sum'), stt = st.querySelector('.st'), lk = st.querySelector('.lk');
+  let i = 0, model = null, lock = false, boxes = [];
+  const NAME = c => c === 'person' ? 'HUMAN' : c.toUpperCase();
+  const clear = () => { boxes.forEach(b=>b.remove()); boxes = []; };
+  const show = async k => { i = (k + N) % N; const p = img(i); await ready(p); im.src = p.src; img(i + 1); n.textContent = pad(i + 1) + ' / ' + N; clear(); sum.textContent = '';
+    if (!model) return; let det = []; try { det = await model.detect(p, 12, .45); } catch(e){}
+    if (im.src !== p.src) return; const W = st.clientWidth, H = st.clientHeight, [ox, oy, w, h] = fitRect(p.naturalWidth, p.naturalHeight, W, H), s = w / p.naturalWidth;
+    det.forEach(d=>{ const b = document.createElement('div'); b.className = 'box code'; const [x, y, bw, bh] = d.bbox; Object.assign(b.style, {left: ox + x * s + 'px', top: oy + y * s + 'px', width: bw * s + 'px', height: bh * s + 'px'});
+      b.innerHTML = `<i class="w">${NAME(d.class)} ${d.score.toFixed(2)}</i>`; st.appendChild(b); boxes.push(b); });
+    const hum = det.filter(d=>d.class === 'person').length; sum.innerHTML = `HUMANS <span class="r">${pad(hum, 2)}</span> · OBJECTS <span class="w">${pad(det.length - hum, 2)}</span>`; };
+  st.addEventListener('pointerenter', ()=>{ lock = true; st.classList.add('lock'); lk.innerHTML = '<span class="r">LOCKED</span>'; });
+  st.addEventListener('pointerleave', ()=>{ lock = false; st.classList.remove('lock'); lk.textContent = 'HOVER TO LOCK'; boxes.forEach(b=>b.classList.remove('h')); });
+  st.addEventListener('pointermove', e=>{ boxes.forEach(b=>{ const r = b.getBoundingClientRect(); b.classList.toggle('h', e.clientX > r.left && e.clientX < r.right && e.clientY > r.top && e.clientY < r.bottom); }); });
+  if (!FINE) st.addEventListener('click', ()=>{ lock = !lock; st.classList.toggle('lock', lock); lk.innerHTML = lock ? '<span class="r">LOCKED</span>' : 'TAP TO LOCK'; });
+  show(0);
+  const load = s => new Promise((r, j)=>{ const e = document.createElement('script'); e.src = s; e.onload = r; e.onerror = j; document.head.appendChild(e); });
+  try { await load('https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@4.22.0/dist/tf.min.js'); await load('https://cdn.jsdelivr.net/npm/@tensorflow-models/coco-ssd@2.2.3/dist/coco-ssd.min.js');
+    model = await cocoSsd.load({base: 'lite_mobilenet_v2'}); stt.textContent = 'ON'; show(i); } catch(e){ stt.textContent = 'MODEL OFFLINE'; }
+  (function loop(){ setTimeout(async ()=>{ if (!lock && !R) await show(i + 1); loop(); }, model ? 1400 : 600); })(); }
 
-/* 03 film strip */
-{ const st = document.getElementById('s3'), tr = st.querySelector('.track'), n = st.querySelector('.n');
-  const set = [...L, ...L.slice(0, 12)]; tr.innerHTML = set.map(p=>`<img src="${th(p)}" data-full="${src(p)}" alt="">`).join('');
-  let x = 0, v = R ? 0 : -.6, drag = false, lx = 0, lt = 0, imgs = [...tr.children], half = 0;
-  const measure = () => { half = imgs.slice(0, N).reduce((s, im)=>s + im.offsetWidth + 10, 0); }; imgs.forEach(im=>im.addEventListener('load', measure)); setTimeout(measure, 500);
-  st.addEventListener('pointerdown', e=>{ drag = true; lx = e.clientX; lt = performance.now(); v = 0; st.classList.add('drag'); st.setPointerCapture(e.pointerId); });
-  st.addEventListener('pointermove', e=>{ if (!drag) return; const now = performance.now(), dx = e.clientX - lx; x += dx; v = dx / Math.max(1, now - lt) * 16; lx = e.clientX; lt = now; });
-  const up = ()=>{ drag = false; st.classList.remove('drag'); }; st.addEventListener('pointerup', up); st.addEventListener('pointercancel', up);
-  (function f(){ if (!drag){ v += ((R ? 0 : -.6) - v) * .02; x += v; } if (half){ while (x < -half) x += half; while (x > 0) x -= half; }
-    tr.style.transform = `translateX(${x}px)`; const g = st.getBoundingClientRect().left + st.offsetWidth / 2; let best = null;
-    for (const im of imgs){ const r = im.getBoundingClientRect(); if (r.left <= g && r.right >= g){ best = im; break; } }
-    imgs.forEach(im=>im.classList.toggle('c', im === best)); if (best){ const k = imgs.indexOf(best) % N; n.textContent = pad(k + 1); if (!best.dataset.up){ best.dataset.up = 1; best.src = best.dataset.full; } }
-    requestAnimationFrame(f); })(); }
+/* HL-08 rack focus */
+{ const st = document.getElementById('s8'), n = st.querySelector('.n'), f = st.querySelector('.f'), d = st.querySelector('.d'), ticks = [...st.querySelectorAll('.scale i')];
+  const DEP = [{w: .5, x: .06, y: .12, z: 3}, {w: .42, x: .5, y: .08, z: 2}, {w: .36, x: .32, y: .42, z: 1}], NAMES = ['NEAR', 'MID', 'FAR'];
+  let base = 0, focus = 0, auto = true, el = [];
+  const build = () => { el.forEach(e=>e.remove()); el = DEP.map((g, k)=>{ const p = L[(base + k) % N], e = document.createElement('img'); e.src = src(p); e.alt = ''; img(base + k + 3);
+      const W = st.clientWidth, H = st.clientHeight, w = W * g.w, h = Math.min(H * .78, w * p.h / p.w); Object.assign(e.style, {left: W * g.x + 'px', top: H * g.y + 'px', width: w + 'px', height: h + 'px', zIndex: g.z}); st.appendChild(e); return e; }); set(focus); };
+  const set = k => { focus = k; el.forEach((e, j)=>{ const dd = Math.abs(j - k); e.style.filter = dd ? `blur(${dd * 6}px) brightness(${1 - dd * .3})` : 'none'; e.style.transform = `scale(${dd ? 1 - dd * .02 : 1.02})`; });
+    ticks.forEach((t, j)=>t.classList.toggle('on', j === k)); f.textContent = NAMES[k]; d.textContent = `${pad((base + k) % N + 1)} / ${N}`; n.textContent = 'DEPTH 0' + (k + 1); };
+  st.addEventListener('pointermove', e=>{ auto = false; const r = st.getBoundingClientRect(), k = Math.min(2, Math.floor((e.clientY - r.top) / r.height * 3)); if (k !== focus) set(k); });
+  st.addEventListener('pointerleave', ()=>{ auto = true; });
+  addEventListener('resize', build); build();
+  if (!R) setInterval(()=>{ if (!auto) return; if (focus < 2) set(focus + 1); else { base = (base + 3) % N; focus = 0; build(); } }, 1600); }
 
-/* 04 deck of prints */
-{ const st = document.getElementById('s4'), n = st.querySelector('.n'); let top = 0; const D = 5, cards = [];
-  const make = k => { const im = document.createElement('img'); im.className = 'card'; im.src = load(k); im.alt = ''; im._k = k; im._r = (Math.random() - .5) * 10; im._x = (Math.random() - .5) * 30; im._y = (Math.random() - .5) * 20;
-    im.style.transform = `translate(-50%,-50%) translate(${im._x}px,${im._y}px) rotate(${im._r}deg)`; st.insertBefore(im, st.firstChild); cards.push(im); return im; };
-  for (let k = 0; k < D; k++) make(k);
-  const topCard = () => cards[0]; let dx = 0, dy = 0, sx = 0, sy = 0, drag = false, vx = 0, vy = 0, lt = 0;
-  const pos = c => { c.style.transform = `translate(-50%,-50%) translate(${c._x + dx}px,${c._y + dy}px) rotate(${c._r + dx * .05}deg)`; };
-  const throwOff = (c, tx, ty) => { c.style.transition = 'transform .6s cubic-bezier(.2,.7,.2,1), opacity .6s'; c.style.transform = `translate(-50%,-50%) translate(${tx}px,${ty}px) rotate(${c._r + tx * .06}deg)`; c.style.opacity = 0;
-    setTimeout(()=>c.remove(), 650); cards.shift(); top++; n.textContent = pad(top % N + 1); make(top + D - 1); };
-  st.addEventListener('pointerdown', e=>{ if (e.target !== topCard()) return; drag = true; sx = e.clientX; sy = e.clientY; lt = performance.now(); st.setPointerCapture(e.pointerId); topCard().style.transition = 'none'; });
-  st.addEventListener('pointermove', e=>{ if (!drag) return; const now = performance.now(); vx = (e.clientX - sx - dx) / Math.max(1, now - lt) * 16; vy = (e.clientY - sy - dy) / Math.max(1, now - lt) * 16; dx = e.clientX - sx; dy = e.clientY - sy; lt = now; pos(topCard()); });
-  st.addEventListener('pointerup', ()=>{ if (!drag) return; drag = false; const c = topCard();
-    if (Math.hypot(dx, dy) > 120 || Math.hypot(vx, vy) > 12){ const a = Math.atan2(dy || vy, dx || vx); throwOff(c, Math.cos(a) * 1400, Math.sin(a) * 1400); }
-    else { c.style.transition = 'transform .45s cubic-bezier(.2,.8,.2,1)'; dx = dy = 0; pos(c); } dx = dy = 0; });
-  n.textContent = '01'; if (!R) setInterval(()=>{ if (!drag && !st.matches(':hover')) throwOff(topCard(), 1400, -200); }, 3200); }
-
-/* 05 shutter */
-{ const st = document.getElementById('s5'), im = st.querySelector('img'), fl = st.querySelector('.flash'), n = st.querySelector('.n'), f = st.querySelector('.f'); let i = 0, hold = false, t = 0;
-  const show = () => { i = (i + 1) % N; im.src = load(i); load(i + 1); load(i + 2); n.textContent = pad(i + 1) + ' / ' + N;
-    if (!R){ fl.style.transition = 'none'; fl.style.opacity = hold ? .35 : .12; requestAnimationFrame(()=>{ fl.style.transition = 'opacity .25s'; fl.style.opacity = 0; }); } };
-  const tick = () => { clearTimeout(t); show(); f.textContent = hold ? '12' : '0.5'; t = setTimeout(tick, hold ? 83 : 2000); };
-  show(); t = setTimeout(tick, 2000);
-  const on = e => { e.preventDefault(); hold = true; st.classList.add('hold'); tick(); }, off = () => { if (!hold) return; hold = false; st.classList.remove('hold'); f.textContent = '0.5'; clearTimeout(t); t = setTimeout(tick, 2000); };
-  st.addEventListener('pointerdown', on); addEventListener('pointerup', off); st.addEventListener('pointerleave', off); st.addEventListener('pointercancel', off); }
+/* HL-09 field log */
+{ const st = document.getElementById('s9'), im = st.querySelector('img'), log = st.querySelector('.log'); let i = 0, hold = false, lines = [];
+  const shape = p => p.w > p.h * 1.05 ? 'LANDSCAPE' : p.h > p.w * 1.05 ? 'PORTRAIT' : 'SQUARE';
+  const tc = k => { const fr = k * 8, s = Math.floor(fr / 25); return `00:${pad(Math.floor(s / 60), 2)}:${pad(s % 60, 2)}:${pad(fr % 25, 2)}`; };
+  log.innerHTML = L.map((p, k)=>`<div data-k="${k}">${tc(k)}  FRAME ${pad(k + 1)}  ${p.w}×${p.h}  ${shape(p)}</div>`).join(''); lines = [...log.children];
+  const show = k => { i = (k + N) % N; im.src = img(i).src; img(i + 1); img(i + 2); lines.forEach(l=>l.classList.remove('cur')); const c = lines[i]; c.classList.add('cur');
+    log.scrollTop = c.offsetTop - log.clientHeight / 2; };
+  log.addEventListener('pointerover', e=>{ const l = e.target.closest('[data-k]'); if (l){ hold = true; show(+l.dataset.k); } });
+  log.addEventListener('pointerleave', ()=>{ hold = false; });
+  st.querySelector('.ph').addEventListener('pointerenter', ()=>{ hold = true; st.classList.add('hold'); });
+  st.querySelector('.ph').addEventListener('pointerleave', ()=>{ hold = false; st.classList.remove('hold'); });
+  show(0); if (!R) setInterval(()=>{ if (!hold) show(i + 1); }, 320); }
 })();
 </script>
 </body>
