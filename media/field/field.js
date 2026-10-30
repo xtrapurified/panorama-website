@@ -1,7 +1,7 @@
 /* experimental2 (2026-10-30): the films as one field of moving tiles, after wanda.net.
  *
- * Every project (the showreel first, the featured films larger) is a tile playing its own clip, laid out anew on
- * each visit on a 24-column grid: different sizes, overlapping like a collage, on near-black. Tiles rest at 75% and
+ * Every project is a tile playing its own clip, shuffled and laid out anew on each visit (order, sizes, shapes,
+ * positions; the showreel among the first three) on a 24-column grid: different sizes, overlapping like a collage, on near-black. Tiles rest at 75% and
  * come up under the pointer, which also shows the client (monospace) and title on the tile. The whole field drifts
  * against the mouse, each tile by its own depth, and scrolls smoothly, tiles at slightly different speeds.
  * A click fades the field out and the project fades in; closing brings the field back.
@@ -23,10 +23,9 @@
   const T = (window.PF_FIELD = { pan: 0.165, depth: [0.82, 1.16], ease: 0.055, scrollDepth: 0.6, fadeOut: 0.45, fadeIn: 0.7,
     step: [0.74, 0.98], stepPhone: [0.95, 1.04] });   /* less overlap again (Andrija, 2026-10-30) */   /* step: how far down the next tile starts, as a share of the tile's height (less overlap = higher) */
 
-  /* ---------- what goes in: the showreel, the featured films, then everything else, as on the site ---------- */
+  /* ---------- what goes in: every project on the site and the showreel ---------- */
   const visible = k => F[k] && !(typeof HIDDEN !== 'undefined' && HIDDEN.includes(k));
   const keys = ['reel', ...ORDER].filter((k, i, a) => visible(k) && a.indexOf(k) === i);
-  const featured = new Set(['reel', ...(typeof LIST !== 'undefined' ? LIST.slice(0, 7) : [])]);
   const clipOf = k => { const f = F[k]; return f.clip ? `${M}clips/${f.clip}.${VEXT}` : f.hover ? `${M}hover/${f.hover}.${VEXT}` : null; };
   const clientOf = k => { const f = F[k]; return k === 'reel' ? 'Panorama Films' : f.client || ''; };
   const titleOf = k => { const f = F[k]; return k === 'reel' ? `Showreel${f.dur ? ' ' + f.dur : ''}` : f.title; };
@@ -38,37 +37,49 @@
     <p class="fx-lab" aria-hidden="true"><span class="fx-c">${e(clientOf(k))}</span><span class="fx-ti">${e(titleOf(k))}</span></p></a></div>`).join('');
   const items = $$('.fx-i', wrap).map(el => ({ el, t: $('.fx-t', el), k: el.dataset.k, d: 1, x: 0, y: 0, w: 0, h: 0, seen: false }));
 
-  /* ---------- the layout: generative, the same for one visit (or one ?seed) ---------- */
+  /* ---------- the layout: new on every visit (order, sizes, shapes and positions), the same for one visit or one ?seed ---------- */
   const qs = new URLSearchParams(location.search);
-  const seed = Number(qs.get('seed')) || Math.floor(Math.random() * 1e9);
+  let seed = Number(qs.get('seed')) || Math.floor(Math.random() * 1e9);
   function rng(a) { return () => { a |= 0; a = (a + 0x6D2B79F5) | 0; let t = Math.imul(a ^ (a >>> 15), 1 | a); t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t; return ((t ^ (t >>> 14)) >>> 0) / 4294967296; }; }
+  /* the order is shuffled too, the showreel somewhere among the first three; later tiles lie on top (Andrija, 2026-10-30: "randomized each time") */
+  function shuffle() {
+    const R = rng(seed ^ 0x5bd1e995);
+    const rest = items.filter(it => it.k !== 'reel'), reel = items.find(it => it.k === 'reel');
+    for (let i = rest.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [rest[i], rest[j]] = [rest[j], rest[i]]; }
+    if (reel) rest.splice(Math.floor(R() * 3), 0, reel);
+    items.splice(0, items.length, ...rest);
+    items.forEach(it => wrap.appendChild(it.el));
+  }
   function layout() {
     const R = rng(seed), r = (a, b) => a + (b - a) * R(), pick = a => a[Math.floor(R() * a.length)];
     const W = wrap.clientWidth, phone = W <= 760, u = W / 24;
-    let y = phone ? 96 : Math.max(110, innerHeight * 0.16), bottom = 0;
-    const zones = [0.05, 0.92, 0.5, 0.22, 0.78, 0.4, 0.65];
-    items.forEach((it, i) => {
-      const big = featured.has(it.k);
-      const ar = pick([16 / 9, 16 / 9, 16 / 9, 3 / 2, 4 / 3]);
+    let y = phone ? 96 : Math.max(110, innerHeight * 0.16), bottom = 0, lastX = null;
+    items.forEach(it => {
+      const ar = pick([16 / 9, 16 / 9, 16 / 9, 3 / 2, 4 / 3, 1, 4 / 5]);
       let w, x;
       if (phone) {
-        w = W * (big ? r(0.8, 0.92) : r(0.58, 0.8));
-        x = (i % 2 ? W - w : 0) + r(-0.04, 0.04) * W;
+        w = W * r(0.52, 0.94);
+        x = r(-0.05 * W, W - w + 0.05 * W);
       } else {
-        const cols = i === 0 ? 14 : big ? pick([11, 12, 13]) : pick([7, 8, 8, 9, 10]);
+        /* any film can be any size; tall shapes a little narrower so they don't run too long */
+        const cols = Math.round(r(6, ar < 1.2 ? 10 : 15));
         w = cols * u;
-        const z = zones[i % zones.length] + r(-0.06, 0.06);
-        x = Math.round(Math.min(24 - cols + 1, Math.max(-1, z * (24 - cols)))) * u;
+        let c = Math.round(r(-1, 24 - cols + 1));
+        if (lastX !== null && Math.abs(c - lastX) < 3) c = c + (c < 12 - cols / 2 ? 6 : -6);   /* not straight under the last one */
+        c = Math.min(24 - cols + 1, Math.max(-1, c)); lastX = c;
+        x = c * u;
       }
       const h = w / ar;
       Object.assign(it, { x, y, w, h, d: r(T.depth[0], T.depth[1]) });
       Object.assign(it.el.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
       bottom = Math.max(bottom, y + h);
-      y += h * (phone ? r(...T.stepPhone) : r(...T.step));   /* less overlap than at first (Andrija, 2026-10-30) */
+      y += h * (phone ? r(...T.stepPhone) : r(...T.step));   /* little overlap (Andrija, 2026-10-30) */
     });
     wrap.style.height = Math.ceil(bottom + (phone ? 80 : 160)) + 'px';
   }
-  layout();
+  shuffle(); layout();
+  /* coming back with the Back button shows the page from the browser's memory: lay it out anew then too */
+  addEventListener('pageshow', ev => { if (ev.persisted && !qs.get('seed')) { seed = Math.floor(Math.random() * 1e9); shuffle(); layout(); tick(true); } });
   let rw = 0; addEventListener('resize', () => { clearTimeout(rw); rw = setTimeout(() => { layout(); tick(true); }, 120); });
 
   /* ---------- clips: load and play only what is on screen ---------- */
