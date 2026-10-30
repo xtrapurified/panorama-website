@@ -133,7 +133,10 @@
   function moveStrip(slot, scope) {
     const c = document.querySelector('.collab'); if (!c || !slot) return;
     slot.appendChild(c); scope.classList.add('has-strip');
-    dispatchEvent(new Event('resize'));   /* the strip measures itself again in its new place */
+    dispatchEvent(new Event('resize'));
+    /* the strip measured itself while hidden (no width), which left its drift stuck; one scroll of its own resets it, and it
+       drifts again a moment later, draggable and throwable as on the site (Andrija, 2026-10-31) */
+    const mq = $('.marq', c); if (mq) requestAnimationFrame(() => { mq.scrollLeft = 2; mq.dispatchEvent(new Event('scroll')); });
   }
 
   /* ---------- the easter egg at the bottom: the old site's Golden hour fold (a live map of where the golden hour is now) ---------- */
@@ -318,6 +321,7 @@
     field.addEventListener('scroll', () => { if (field.scrollTop || field.scrollLeft) field.scrollTop = field.scrollLeft = 0; });
     addEventListener('wheel', ev => {
       if (blocked(ev.target) || overlayOpen()) return;
+      if (ev.target.closest && ev.target.closest('.marq') && Math.abs(ev.deltaX) > Math.abs(ev.deltaY)) return;   /* a sideways swipe scrolls the client strip */
       ev.preventDefault();
       if (pvK && pvK.startsWith('bts')) hidePv();   /* a photo shown from the strip goes when the page moves */
       const d = ev.deltaMode === 1 ? ev.deltaY * 16 : ev.deltaMode === 2 ? ev.deltaY * innerHeight : ev.deltaY;

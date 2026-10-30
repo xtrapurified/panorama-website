@@ -93,6 +93,7 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
   - **B1:** Creative Director / Producer / Editorial Director in the Data Error type of the label column; Београд دبي Worldwide in red at the statement's size; the flat Panorama globe inline in the statement after "Panorama Films", as on the site (also in B and A).
   - **Header:** the globe gives way to the wordmark later (after about a third of a screen); the nav keeps one place, where it sits beside the wordmark (the large globe hangs from the bar instead of making it taller).
   - **Client logos: the site's own horizontal strip** (logos with its throw physics), moved in from the hidden About section, full width, in B1, B and A; the logo grid stays only as a fallback.
+  - **Fixes (00:12):** the Collective's profile sits on solid black (the graph used to show through it) and further right, into the page margin, with the names a size smaller so each stays on one line; in windows narrower than 1200 px it opens below the names or the graph instead. The client strip drifts and can be dragged and thrown again (it had measured itself while hidden and stopped); a sideways trackpad swipe over it scrolls it.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.
   - **Collective, B1:** the List / Graph switch without its pictograms; the profile opens on the right beside the names (36 % of the column, at most 360 px) instead of over them.
