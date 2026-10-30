@@ -1819,6 +1819,28 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .tag .arr,.more .mt .arr{order:-1;margin:0 .18em 0 0}
 .tag,.more .mt{display:inline-flex;align-items:baseline}
 #chapters .lede .tag.sub,.lede.cat .tag{display:flex!important;width:max-content}   /* Featured and Catalogue sit on their own line: flex keeps the arrow first there too */
+/* computers too (Andrija, 2026-10-30): one label only, "↓ Films" under the reel. No Featured / Catalogue labels and no big
+   "Campaigns & Commissioned Films" / "Archive" headings: Featured runs straight into the catalogue thumbnails, as on phones */
+@media (min-width:761px){
+  #chapters > .lede,#chapters .lede,.lede.cat{display:none}
+  #films.sec,section.sec:has(#cards){padding-top:0}
+  #chapters,#chapters .works,section.sec#films{margin-bottom:0!important;padding-bottom:0!important}
+  #cards{margin-top:0}
+}
+/* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in, ?hov=a|b|c, remembered per browser.
+   A Focus: the words come into focus from a soft blur. B Wipe: they are uncovered left to right. C Rise: each line rises from behind its own edge.
+   Touch screens: the card crossing the middle of the window; the keyboard: the focused card. */
+@media (min-width:761px){
+  #cards .card .meta > *{opacity:0;transition:opacity .45s var(--ease),filter .6s var(--ease),transform .6s var(--ease),clip-path .6s var(--ease)}
+  #cards .card .meta .cl{transition-delay:0s}
+  :root[data-hov="a"] #cards .card .meta > *{filter:blur(8px);transform:scale(1.02);transform-origin:0 50%}
+  :root[data-hov="b"] #cards .card .meta > *{opacity:1;clip-path:inset(0 100% 0 0);transition-duration:.2s,.6s,.6s,.7s}
+  :root[data-hov="c"] #cards .card .meta > *{opacity:1;transform:translateY(100%);clip-path:inset(0 0 100% 0);transition-duration:.2s,.6s,.65s,.65s}
+  /* revealed (after the three starting states, so it wins over them) */
+  :is(#cards .card:hover,#cards .card:focus-within,#cards .card:has(.media.lit)) .meta > *{opacity:1;filter:none;transform:none;clip-path:inset(0 0 0 0)}
+  :is(#cards .card:hover,#cards .card:focus-within,#cards .card:has(.media.lit)) .meta .cl{transition-delay:.09s}
+}
+@media (min-width:761px) and (prefers-reduced-motion:reduce){#cards .card .meta > *{transition:opacity .2s!important;filter:none!important;transform:none!important;clip-path:none!important}}
 /* the outline globe as a pictogram inside the About us statement, after Panorama Films; the bottom of its circle sits on the baseline (Andrija, 2026-10-29: the solid, negative globe, 15% bigger) */
 /* computers (Andrija, 2026-10-30): Featured films follow one another with no space between; the client sits over the film at the far right,
    on the title's line, and travels with the title. The line under each film stays in the page for search only. */
@@ -2087,7 +2109,7 @@ const F = {
   p08:{n:"08", title:"Miracles Don’t Happen", client:"Dubai Future Forum", year:"2024", roles:"Creative direction, cinematography, editing", img:"thumbs/p08", page:"Miracles-Don-t-Happen", hover:"p08", v:"1103734783"},
   p09:{n:"09", title:"Slavko Štimac", sub:"71st Pula Film Festival Award Film", line:"71st Pula Film Festival Award Film", client:"71st Pula Film Festival", year:"2024", roles:"Cinematography", img:"thumbs/p09", page:"Pula-Film-Festival", hover:"p09", s:0, loop:8, v:"988793491"},   /* moving cover: the film's first 8 seconds, 0:00–0:08 (Andrija, 2026-10-22) */
   p10:{n:"10", title:"Valamar Loves Bike", mainT:"Happiness is a bike ride away", client:"Valamar Hotels", year:"2018–2025", roles:"Creative direction, direction, cinematography, editing", img:"thumbs/p10", page:"Valamar-Biking", hover:"p10", s:50, loop:17, v:"1103738334"},   /* moving cover: the film 0:50–1:07 (Andrija, 2026-10-28) */
-  p12:{n:"12", title:"Air to the People: Serbia", client:"Air to the People 2.0", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p12", page:"Air-to-the-People-Serbia", hover:"p12", s:77, loop:13, yt:"LdLfDc-AlAc"},   /* moving cover: the film 1:17–1:30 (Andrija, 2026-10-23) */
+  p12:{n:"12", title:"Air to the People: Serbia", client:"Air to the People 2.0", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p12", page:"Air-to-the-People-Serbia", hover:"p12", s:77, loop:13, yt:"LdLfDc-AlAc", card:{zoom:[1.3,"50% 100%"]}},   /* card zoomed from the bottom so YouTube's information panel (top left, can't be switched off) falls outside the frame (2026-10-30) */   /* moving cover: the film 1:17–1:30 (Andrija, 2026-10-23) */
   p13:{n:"13", title:"Dubai Future Forum", mainT:"Dubai Future Forum 2025 Highlights", line:"The World’s Largest Gathering of Futurists", s:45, loop:40, client:"Dubai Future Foundation", year:"2022–2025", roles:"Script, creative direction, production, cinematography, editing", img:"stills/dff", page:"Dubai-Future-Forum-Chronicles-1", hover:"p13", card:{yt:null}, yt:"PkLvj-vQygs"},   /* moving cover: hosted loop media/hover/p13, film 1:39–1:43.75, ending before Maggie Jackson's name caption; still: the woman at 1:12 (Andrija, 2026-10-22) */
   p14:{n:"14", title:"We Will Walk", client:"Civil Rights Defenders", year:"2022", roles:"Creative direction, cinematography, editing", img:"thumbs/p14", page:"We-Will-Walk", hover:"p14", s:85, loop:20, v:"886851613", h:"25a02b2640"},   /* moving cover: the film 1:25–1:45 (Andrija, 2026-10-23) */
   p15:{n:"15", title:"Imagine Our Future", client:"Dubai Future Forum", year:"2023", roles:"Creative direction, cinematography, editing", img:"thumbs/p15", page:"Imagine-Our-Future", hover:"p15", yt:"tkh-cNGWigw"},
@@ -2311,6 +2333,10 @@ function fitStream(m, box, f){
 /* phones play the hosted loops (one light video each) instead of a Vimeo or YouTube player per film, which made scrolling lag
    (Andrija, 2026-10-29); films with no hosted loop still stream */
 const PHONE_LOOPS = () => matchMedia('(max-width:760px)').matches;
+/* catalogue hover text studies, ?hov=a|b|c (2026-10-30), remembered per browser */
+(()=>{ let v = (new URLSearchParams(location.search).get('hov') || '').toLowerCase();
+  try { if (/^[abc]$/.test(v)) localStorage.setItem('pf-hov', v); else v = localStorage.getItem('pf-hov') || 'a'; } catch(_) { if (!/^[abc]$/.test(v)) v = 'a'; }
+  document.documentElement.dataset.hov = v; })();
 /* header reel: the 2019 reel on 30% of visits, V4 on the other 70% (Andrija, 2026-10-30); ?reel=2019 or ?reel=v4 forces one, to check */
 (()=>{ const q = new URLSearchParams(location.search).get('reel'), hm = document.getElementById('heroMedia');
   if (hm) hm.dataset.k = q === '2019' ? 'reel19' : q === 'v4' ? 'reel' : Math.random() < .3 ? 'reel19' : 'reel'; })();
