@@ -1620,9 +1620,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .ov-in{gap:0}
 .ov-t,.ov-l{font-size:var(--d1);font-weight:400;line-height:1.06;letter-spacing:-.05em;max-width:24ch}
 .ov-l{opacity:.5}
-/* trying plain white instead of inverted (Andrija, 2026-10-14): white type with a soft shadow so it holds on bright frames; the logline at 70% */
-.ov{mix-blend-mode:normal;color:#fff;text-shadow:0 1px 24px rgba(0,0,0,.28),0 0 2px rgba(0,0,0,.18)}
-.ov-l{opacity:.7}
+/* inverted type again (Andrija, 2026-10-30; plain white with a shadow was tried from 2026-10-14): the words invert what is under them; logline and client at 50% */
 .works .cap .cl{grid-column:1/-1}
 .works .cap .yr{grid-column:10/span 3;text-align:right}
 @media (max-width:760px){.works .ov{display:none}.works .cap h3.sr-only{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;grid-column:1/-1;font-size:var(--small);font-weight:400;letter-spacing:-.01em;line-height:1.35;margin:0}.works .cap{row-gap:0}}
@@ -1819,6 +1817,8 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .tag .arr,.more .mt .arr{order:-1;margin:0 .18em 0 0}
 .tag,.more .mt{display:inline-flex;align-items:baseline}
 #chapters .lede .tag.sub,.lede.cat .tag{display:flex!important;width:max-content}   /* Featured and Catalogue sit on their own line: flex keeps the arrow first there too */
+/* no red arrows on the labels any more (Andrija, 2026-10-30) */
+.tag .arr,.more .mt .arr,summary .arr,.peekbar .arr{display:none!important}
 /* the red arrow as a superscript before the word: smaller, its top level with the capitals (Andrija, 2026-10-30) */
 .tag .arr,.more .mt .arr,#studio > details.more > summary .arr,#approach > details.more > summary .arr{align-self:flex-start;line-height:1;margin:.13em .1em 0 0}
 .tag .arr .dn,.more .mt .arr .dn{display:block;width:.34em;height:.42em;stroke-width:2.3}
@@ -1834,7 +1834,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 @media (min-width:761px){
   .works .ov-l,.works .ov-c{transition:opacity .35s var(--ease)}
   .works .ov-tl,.works .ov-c{pointer-events:auto}   /* only the words react, not the whole film (Andrija, 2026-10-30); a click still opens the film */
-  .works .ov-in:has(.ov-tl:hover,.ov-c:hover) :is(.ov-l,.ov-c),.works .frame:focus-visible :is(.ov-l,.ov-c){opacity:.95}
+  .works .ov-in:has(.ov-tl:hover,.ov-c:hover) :is(.ov-l,.ov-c),.works .frame:focus-visible :is(.ov-l,.ov-c){opacity:.8}
 }
 /* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in were tried, C (Rise) chosen; ?hov=a|b still shows the others.
    A Focus: the words come into focus from a soft blur. B Wipe: they are uncovered left to right. C Rise: each line rises from behind its own edge.
@@ -1844,7 +1844,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   #cards .card .meta .cl{transition-delay:0s}
   :root[data-hov="a"] #cards .card .meta > *{filter:blur(8px);transform:scale(1.02);transform-origin:0 50%}
   :root[data-hov="b"] #cards .card .meta > *{opacity:1;clip-path:inset(0 100% 0 0);transition-duration:.2s,.6s,.6s,.7s}
-  :root[data-hov="c"] #cards .card .meta > *{transform:translateY(35%);clip-path:inset(0 0 35% 0);transition:opacity .7s var(--ease),transform .8s var(--ease),clip-path .8s var(--ease)}   /* subtler (Andrija, 2026-10-30): a short rise with a fade */
+  :root[data-hov="c"] #cards .card .meta > *{transform:translateY(.25em);transition:opacity .8s var(--ease),transform .9s var(--ease)}   /* subtler still (2026-10-30): a quarter-line lift with the fade, no mask */
+  #cards .card .meta{row-gap:0}
+  #cards .card .meta h3,#cards .card .meta .cl{line-height:1.18}   /* subtler (Andrija, 2026-10-30): a short rise with a fade */
   /* revealed (after the three starting states, so it wins over them) */
   :is(#cards .card:hover,#cards .card:focus-within,#cards .card:has(.media.lit)) .meta > *{opacity:1;filter:none;transform:none;clip-path:inset(0 0 0 0)}
   :is(#cards .card:hover,#cards .card:focus-within,#cards .card:has(.media.lit)) .meta .cl{transition-delay:.09s}
@@ -1855,7 +1857,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
    on the title's line, and travels with the title. The line under each film stays in the page for search only. */
 .ov-in{display:flex;justify-content:space-between;align-items:first baseline;gap:var(--g)}
 .ov-tl{display:grid;min-width:0}
-.ov-c{flex:none;font-size:var(--t1);letter-spacing:-.02em;line-height:1.1;text-align:right;opacity:.7}
+.ov-c{flex:none;font-size:var(--t1);letter-spacing:-.02em;line-height:1.1;text-align:right;opacity:.5}
 @media (min-width:761px){
   .works{gap:0}
   .works .work .cap{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
@@ -3567,8 +3569,8 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       if (!small && n._lb){ const left = n._lb[0] > n.x; ctx.font = `${Math.round(Math.max(10, 11.5 * S * GS))}px "Data Error Horiz",ui-monospace,monospace`; ctx.textAlign = left ? 'left' : 'right'; ctx.textBaseline = 'alphabetic';
         ctx.fillStyle = n === act ? '#e2231a' : (LIGHT() ? '#9a9994' : '#646461'); ctx.fillText(`${CREW(n.id)} · ${String(n.projects.length).padStart(2,'0')} PROJ`.replace(/ /g, '\u2009'), left ? n._lb[0] + 4 : n._lb[2] - 4, n.y - fs * .78); }
       ctx.globalAlpha = 1; });
-    /* the log: the person under the pointer (or open) and every project made with them, newest first, in the corner */
-    if (!small && act && act.person){ const ls = act.projects.map(id=>[year(id) || '', F[id].title]).sort((a,b)=>(b[0]||0)-(a[0]||0)), fz = Math.round(Math.max(12, 14 * S * GS)), lh = Math.round(fz * 1.6);
+    /* the log (person and every project with them) is off: it ran under the open profile's bio (Andrija, 2026-10-30) */
+    if (false && !small && act && act.person){ const ls = act.projects.map(id=>[year(id) || '', F[id].title]).sort((a,b)=>(b[0]||0)-(a[0]||0)), fz = Math.round(Math.max(12, 14 * S * GS)), lh = Math.round(fz * 1.6);
       ctx.font = `${fz}px "Data Error Horiz",ui-monospace,monospace`; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
       const x0 = Math.max(14, (cv.getBoundingClientRect().left < 8 ? parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--m')) || 48 : 14)), tot = lh * (ls.length + 2.6); let y = Math.max(14, H / 2 - tot / 2);   /* in the free left column, centred on the graph */
       ctx.fillStyle = '#e2231a'; ctx.fillText(`> ${CREW(act.id)} ${act.name.toUpperCase()}`, x0, y); y += lh * 1.3;
