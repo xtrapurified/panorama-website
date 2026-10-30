@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-30 (experimental2 branch: the wanda.net approach). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-30 (experimental2 round 3: wanda.net scrolling, scope crops, three approaches for the rest of the site). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -64,6 +64,15 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
 - **Index** (after wanda.net's Directors): over the dimmed, blurred field, every project in three or four columns in Untitled Sans Light (60%, full and underlined under the pointer), or every client (Projects / Clients tabs); the clip of the name under the pointer floats beside it, darkened. A click opens the project; Esc or "(×) Close" closes.
 - **Type (Andrija, 2026-10-30):** the monospace tried first was not liked; everything that used it (tile clients, Index, the project bar and controls) is now Untitled Sans Light.
 - **Project pages:** the bar, player controls and side labels in Untitled Sans Light; the page background matches the field.
+- **Round 3 (2026-10-30, Andrija: "be smart and creative" about the rest of the site; wanda.net's scroll and physics; scope crops; the cursor):**
+  - **Scrolling like wanda.net** (measured there: the page itself never scrolls; every tile chases the wheel on its own spring, one notch ≈ 120 px, 60 % there in 0.2 s, settled in ~1.5 s): on computers the field is a fixed window and every tile, and every line further down, moves on its own spring (`PF_FIELD.spring` 3.4–5.8/s, text 4.6–6.4/s; one notch ×1.2), so the field stretches and settles. Arrow keys, Page Up/Down, Space, Home/End work; tabbing brings a tile into view. Phones, touch screens and reduced motion scroll normally. Because the long page underneath no longer scrolls, this does not lag like the smooth-scroll library did.
+  - **Wide crops** as on wanda.net (there: 38 % 16:9, ~15 % 2.4:1 scope, the rest 4:3, 3:2, 2:1; tiles 8–16 of 24 columns): film tiles are now 16:9, 2.39:1, 2:1, 1.85:1, 3:2 or 4:3 (no more square or 4:5), 8 to 16 columns.
+  - **Cursor** over a film tile: a small red dot (default); `?cursor=play` gives the white play triangle without the circle (remembered).
+  - **The rest of the site, three approaches to try** (`?rest=a|b|c`, remembered; a small "Rest of site" switch at the bottom left, an experiment control). The old sections below the field are hidden on this branch (still in the source). All copy is from the site or Andrija: the studio statement, the three of us with roles and portraits, the Collective with roles in their own words from their bios (Ana Ćurčin and Nevena Krivokapić-Martinović as production assistants), We make (Documentaries, Campaigns, Legacy Films, BTS & Process Films, Experiences), the clients, Београд دبي Worldwide, and Let’s make a film together. with Email (by script), Instagram, Vimeo.
+    - **A, Panels:** the field is the whole site. The breadcrumb reads Work · Index · Studio · Contact; Studio and Contact open as panels over the dimmed, blurred field, like Index: the statement, three portraits on black-strip captions, then three quiet columns (The Collective, We make, Made for, a name brings up the person's portrait or the client's film); Contact is the ask, three links and the cities.
+    - **B, Credits (the default):** after the last film the studio rolls like a film's end credits, centred: the wordmark, the statement, Creative Director / Producer / Editorial Director, The Collective (role | name), We make, Made for (the first 18 clients, two to a line; those with a film open it), the cities, then the ask large with Email · Instagram · Vimeo. Every line rides its own spring like the tiles. Pointing at a person brings up their portrait; at a client, the film.
+    - **C, One field:** the field goes on into a Studio chapter in the same language: the word Studio, the statement as a tile, portraits of the three of us and the Collective (black and white, name and role on the black strip), 14 behind-the-scenes photos from Human in the loop (a new pick each visit), We make and Made for as small text tiles, and the ask as the last tile.
+  - Breadcrumb: Work · Index · Studio (· Contact in A); it shows where you are.
 - Not taken over from wanda.net: Likes (a shortlist with a counter), the language switch, the cookie bar.
 - Reduced motion: no drift, no fades, stills instead of clips.
 
