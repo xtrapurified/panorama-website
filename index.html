@@ -1834,8 +1834,13 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 @media (min-width:761px){
   .works .ov-l,.works .ov-c{transition:opacity .35s var(--ease)}
   .works .ov-tl,.works .ov-c{pointer-events:auto}   /* only the words react, not the whole film (Andrija, 2026-10-30); a click still opens the film */
-  .works .ov-in:has(.ov-tl:hover,.ov-c:hover) :is(.ov-l,.ov-c),.works .frame:focus-visible :is(.ov-l,.ov-c){opacity:.8}
+  .works .frame:has(.ov-tl:hover,.ov-c:hover) .ov-l,.works .frame:focus-visible .ov-l{opacity:.8}
 }
+/* featured client: plain white in its own layer (.ov-w), the inverted layer keeps title and logline */
+.ov:not(.ov-w) .ov-c{visibility:hidden}
+.ov-w{mix-blend-mode:normal}
+.ov-w .ov-tl{visibility:hidden}
+.ov-w .ov-c{opacity:1;color:#fff;text-shadow:0 1px 18px rgba(0,0,0,.3),0 0 2px rgba(0,0,0,.2)}
 /* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in were tried, C (Rise) chosen; ?hov=a|b still shows the others.
    A Focus: the words come into focus from a soft blur. B Wipe: they are uncovered left to right. C Rise: each line rises from behind its own edge.
    Touch screens: the card crossing the middle of the window; the keyboard: the focused card. */
@@ -2217,7 +2222,9 @@ function frame(k, small){
     ${f.v||f.yt||f.file ? '<span class="play" aria-hidden="true"><span class="play-t">Play</span></span>' : ''}
     ${small ? `<span class="hud"><span class="top"><span></span>${more}</span></span>`
       : `<span class="hud"></span>
-      <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-tl"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span>${f.client ? `<span class="ov-c">${esc(f.client)}</span>` : ''}</span></span>`}</a>`;
+      ${(()=>{ const inner = `<span class="ov-in"><span class="ov-tl"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span>${f.client ? `<span class="ov-c">${esc(f.client)}</span>` : ''}</span>`;
+        /* two layers with the same layout, so both move together: the title and logline invert what is under them, the client is plain white (Andrija, 2026-10-30) */
+        return `<span class="ov" aria-hidden="true">${inner}</span><span class="ov ov-w" aria-hidden="true">${inner}</span>`; })()}`}</a>`;
 }
 function work(k){
   const f = F[k];
