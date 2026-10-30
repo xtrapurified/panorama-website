@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-30 (experimental: the only redesign branch now (experimental2 renamed; the EDDY experiment archived); B2 and C removed; progress bar, logo wall, B1 List/Graph Collective, globe in the header, clip edges fixed). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-30 (experimental: the header as on the traditional site, globe to wordmark, nav on the right with Index). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -84,7 +84,7 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
   - **Client logos:** "Made for" is now a wall of the clients' own logos (the site's files in `media/logos`, drawn as masks with the site's equal-visual-weight sizing and corrections), the selected clients first, 24 in all: grey, white under the pointer, red when the client has a film, which then floats by the pointer and opens on click. B1: six to a row; B: centred rows; A: three to a row in the Studio panel. Clients without a logo file are set in capitals.
   - **B1's Collective is the site's own List / Graph** (the switch, the names list, the network graph with its timeline and profile drawer), moved in from the hidden About section; the plain three-column list stays only as a fallback.
   - **Edge lines:** nine clips (docu, imagine, metaplasm, miracles, orchard, pula, sport (Dubai, the City of Sport), valamar, wewalk) had a light line in their last pixel column (an encoding artefact of the 854-px width); re-encoded at their own bitrates without that column (852×480), sizes about the same. This fixes them on every version and on dev once merged.
-  - **The Panorama globe is back in the header**, small (46 px element, 38 on phones), before the Panorama Films wordmark, which loses its red bullet; it still turns its meridian toward the pointer.
+  - **Header, as on the traditional site** (Andrija, 2026-10-30; replaces the small globe beside the wordmark tried just before, and the wanda.net breadcrumb and ⊕): at the top the large Panorama globe (LE-011 Follow the cursor, 179 px / 112 px on phones), which gives way to the Panorama Films wordmark with its blinking red bullet as soon as the field moves (more than 40 px; field.js sets the header's compact state from the field's own scroll); the nav on the right as on the site, Work · Index · About · Contact (Index added; About leads to the studio, Contact to the ask, or to the panels in A), the current one lit. No Rec counter. The first films start below the globe.
 
 - Not taken over from wanda.net: Likes (a shortlist with a counter), the language switch, the cookie bar.
 - Reduced motion: no drift, no fades, stills instead of clips.

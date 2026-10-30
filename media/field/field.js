@@ -132,7 +132,7 @@
   function layout() {
     const R = rng(seed), r = (a, b) => a + (b - a) * R(), pick = a => a[Math.floor(R() * a.length)];
     const W = wrap.clientWidth, phone = W <= 760, u = W / 24;
-    let y = phone ? 96 : Math.max(110, innerHeight * 0.16), bottom = 0, lastX = null, group = null;
+    let y = phone ? 150 : Math.max(230, innerHeight * 0.27), bottom = 0, lastX = null, group = null;   /* the first films start below the large globe */
     items.forEach(it => {
       if (group && it.g !== group) y = bottom + (phone ? 120 : innerHeight * 0.32);   /* a breath between Work and Studio */
       group = it.g;
@@ -336,12 +336,9 @@
 
   /* ---------- the header: wordmark, breadcrumb, ⊕ ---------- */
   const slot = $('#slot'), bar = $('.hdr .bar');
-  const crumbs = REST === 'a' ? [['work', 'Work'], ['index', 'Index'], ['studio', 'Studio'], ['contact', 'Contact']]
-    : [['work', 'Work'], ['index', 'Index'], ['studio', 'Studio']];
-  if (slot) slot.insertAdjacentHTML('beforeend', `<span class="x2-bc">${crumbs.map(([id, t]) => `<button type="button" data-bc="${id}"${id === 'work' ? ' class="on"' : ''}>${t}</button>`).join('')}</span>`);
-  if (bar) bar.insertAdjacentHTML('beforeend', '<button type="button" class="x2-plus" aria-label="More links" aria-expanded="false" aria-controls="menu"></button>');
-  const plus = $('.x2-plus');
-  plus && plus.addEventListener('click', () => { const o = hdr.classList.toggle('x2-open'); plus.setAttribute('aria-expanded', String(o)); });
+  /* the site's own nav on the right (Work · About · Contact), with Index added after Work */
+  const menu = $('#menu'), workA = menu && $('a[href="#field"]', menu);
+  if (workA) workA.insertAdjacentHTML('afterend', '<a href="#index" data-nav="index" class="x2-ixl">Index</a>');
   /* where a section starts, in the field's own coordinates */
   const secY = id => (id === 'work' ? 0 : SEC[id] == null ? null : SEC[id]);
   function goSection(id, from) {
@@ -351,25 +348,27 @@
     const y = secY(id); if (y != null) scrollToY(y);
   }
   document.addEventListener('click', ev => {
-    const b = ev.target.closest('.x2-bc button'); if (b) { goSection(b.dataset.bc, b); return; }
     /* the menu's links (and the phone menu) lead to the new places */
-    const a = ev.target.closest('a[href="#field"], a[href="#studio"], a[href="#contact"]:not([data-mail]), a[href="#top"], a[href="#hero"]');
+    const a = ev.target.closest('a[href="#field"], a.x2-ixl, a[href="#studio"], a[href="#contact"]:not([data-mail]), a[href="#top"], a[href="#hero"]');
     if (!a || a.closest('#lb')) return;
     ev.preventDefault(); ev.stopPropagation();
-    const h = a.getAttribute('href').slice(1), id = h === 'studio' ? 'studio' : h === 'contact' ? 'contact' : 'work';
+    const h = a.getAttribute('href').slice(1), id = h === 'index' ? 'index' : h === 'studio' ? 'studio' : h === 'contact' ? 'contact' : 'work';
     if (hdr.classList.contains('navopen')) { const bu = $('#burger'); bu && bu.click(); }
     goSection(id, a);
   }, true);
   let bcN = 0;
   function breadcrumb() {
+    /* the globe at the top, the wordmark once the field has moved (as on the site, where it happens when the reel's heading reaches the globe) */
+    const c = (VIRTUAL ? target : scrollY) > 40;
+    if (hdr.classList.contains('compact') !== c) hdr.classList.toggle('compact', c);   /* the page's own scroll handler would set it from the hidden hero */
     if (++bcN % 6) return;
     const y = scrollY2() + innerHeight * 0.4;
     const sY = secY('studio'), inStudio = REST !== 'a' && sY != null && sY > 0 && y >= sY + 80;
     const panel = $('.x2-pnl.on'), ixOn = $('.x2-ix.on');
-    $$('.x2-bc button').forEach(b => {
-      const id = b.dataset.bc;
-      b.classList.toggle('on', ixOn ? id === 'index' : panel ? panel.dataset.p === id : id === (inStudio ? 'studio' : 'work'));
-    });
+    const cY = secY('contact'), inContact = REST !== 'a' && cY != null && y >= cY + innerHeight * 0.2;
+    const here = ixOn ? 'index' : panel ? panel.dataset.p : inContact ? 'contact' : inStudio ? 'studio' : 'work';
+    const ids = { field: 'work', index: 'index', studio: 'studio', contact: 'contact' };
+    if (menu) $$('a', menu).forEach(a => { const id = ids[(a.getAttribute('href') || '').slice(1)]; if (id) a.classList.toggle('on', id === here); });
     /* bare over the films (as on wanda.net); over the credits the header keeps its shade so text never runs under it */
     hdr.classList.toggle('x2-over', !(CREDITS && inStudio) && (VIRTUAL || wrap.getBoundingClientRect().bottom > 90));
   }
