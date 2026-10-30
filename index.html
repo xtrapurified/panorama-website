@@ -2420,8 +2420,8 @@ function preStream(m, f){
   p.on('loaded', best);
   p.on('timeupdate', d=>{ t = d.seconds; if (shown || !go || d.seconds < target + .05) return;
     /* the stream is moving: fade it in only if it runs with the cut; if it started late (buffering), park again further ahead */
-    const off = v.currentTime - d.seconds;
-    if (Math.abs(off) > .3 && tries < 6){ lead = Math.min(8, lead + Math.max(0, off) + .5); return park(); }
+    /* if the stream started late (buffering), the hosted cut jumps to the stream's moment under it instead of waiting for another try, so the switch never stalls (2026-10-30) */
+    if (Math.abs(v.currentTime - d.seconds) > .3){ try { v.currentTime = d.seconds + .15; } catch(_) {} }
     shown = true; box.style.transition = 'opacity .8s'; box.style.opacity = 1;
     setTimeout(()=>{ v.pause(); v.style.visibility = 'hidden'; }, 900);
     live.set(m, {destroy:ctl.destroy, play:()=>p.play().catch(()=>{}), pause:()=>p.pause().catch(()=>{}), time:()=>t, clip:false,
