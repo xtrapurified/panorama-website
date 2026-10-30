@@ -1819,6 +1819,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .tag .arr,.more .mt .arr{order:-1;margin:0 .18em 0 0}
 .tag,.more .mt{display:inline-flex;align-items:baseline}
 #chapters .lede .tag.sub,.lede.cat .tag{display:flex!important;width:max-content}   /* Featured and Catalogue sit on their own line: flex keeps the arrow first there too */
+/* the red arrow as a superscript before the word: smaller, its top level with the capitals (Andrija, 2026-10-30) */
+.tag .arr,.more .mt .arr,#studio > details.more > summary .arr,#approach > details.more > summary .arr{align-self:flex-start;line-height:1;margin:.13em .1em 0 0}
+.tag .arr .dn,.more .mt .arr .dn{display:block;width:.34em;height:.42em;stroke-width:2.3}
 /* computers too (Andrija, 2026-10-30): one label only, "↓ Films" under the reel. No Featured / Catalogue labels and no big
    "Campaigns & Commissioned Films" / "Archive" headings: Featured runs straight into the catalogue thumbnails, as on phones */
 @media (min-width:761px){
