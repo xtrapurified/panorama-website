@@ -35,7 +35,8 @@
 
   /* the cursor over film tiles: a small red dot (default) or the white play triangle alone (Andrija, 2026-10-30: no circle) */
   root.dataset.cur = pref('cursor', 'pf-cur', /^(dot|play)$/, 'dot');
-  const REST = (root.dataset.rest = pref('rest', 'pf-rest', /^[abc]$/, 'b'));
+  const REST = (root.dataset.rest = pref('rest', 'pf-rest', /^(a|b|b1|b2|c)$/, 'b1'));
+  const CREDITS = REST[0] === 'b';   /* b, b1, b2: the studio after the last film */
   const VIRTUAL = FINE && !RM && !!G;   /* the wanda.net scrolling, on computers */
   root.classList.toggle('x2-vs', VIRTUAL);
 
@@ -78,6 +79,43 @@
   const MAIL = 'Film enquiry';
   const LINKS = `<a href="#contact" data-mail="${MAIL}">Email</a><a href="https://www.instagram.com/panoramafilms.tv/" target="_blank" rel="noopener">Instagram</a><a href="https://vimeo.com/panoramafilmstv" target="_blank" rel="noopener">Vimeo</a>`;
 
+  /* ---------- b1 / b2: the credits in columns, in the old site's type: Data Error codes, code lines, Rec ---------- */
+  function buildCredits(v) {
+    const sec = document.createElement('section');
+    sec.className = `x2-rest x2-cr2 x2-${v}`; sec.setAttribute('aria-label', 'Studio');
+    const code = (n, w) => `<span class="x2-code">PF-${w.slice(0, 2).toUpperCase()}/${String(n).padStart(3, '0')} ${e(w.toUpperCase())}</span>`;
+    const ln = (k, val) => `<p class="x2-ln"><span class="k">${k}</span> <span class="v">${val}</span></p>`;
+    const cl = (c, cls = '') => filmOfClient(c) ? `<a class="${cls}" href="${hrefOf(filmOfClient(c))}" data-x2film="${filmOfClient(c)}">${e(c)}</a>` : `<span class="${cls}">${e(c)}</span>`;
+    const rec = '<span class="x2-rec"><span class="x2-rd" aria-hidden="true"></span>Rec <span class="x2-tc">00:00:00:00</span></span>';
+    const clients = CLIENTS.slice(0, 18);
+    if (v === 'b1') {
+      /* B1: a label column on the left (Data Error codes), content in columns on the right, all left-aligned */
+      const grp = (n, w, body, extra = '') => `<div class="cr2-g" data-x2b${extra}><div class="cr2-l">${code(n, w)}</div><div class="cr2-b">${body}</div></div>`;
+      sec.innerHTML =
+        grp(1, 'Studio', `<p class="cr2-say">${e(STATEMENT)}</p><p class="cr2-meta">${rec}<span class="cr2-pl">${PLACES}</span></p>`) +
+        grp(2, 'Core', `<ul class="cr2-cols c3">${CORE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-r">${e(r)}</span><span class="cr2-n">${e(n)}</span></li>`).join('')}</ul>`) +
+        grp(3, 'Collective', `<ul class="cr2-cols c3">${COLLECTIVE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-n">${e(n)}</span><span class="cr2-r">${e(r)}</span></li>`).join('')}</ul>`) +
+        grp(4, 'We make', `<ol class="cr2-make">${WE_MAKE.map((w, i) => `<li><span class="cr2-no">${String(i + 1).padStart(2, '0')}</span>${e(w)}</li>`).join('')}</ol>`) +
+        grp(5, 'Made for', `<ul class="cr2-cols c3 cr2-cl">${clients.map(c => `<li>${cl(c)}</li>`).join('')}</ul>`) +
+        grp(6, 'Contact', `<p class="x2-ln cr2-cmd"><span class="k">$</span> <span class="v">panorama --contact</span><span class="x2-cur" aria-hidden="true"></span></p>
+          <p class="cr2-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr2-links">${LINKS}</p>`, ' data-x2sec="contact"');
+    } else {
+      /* B2: the studio as a session in the site's code voice: commands in grey, answers in white, a red cursor at the end */
+      const cmd = c => `<p class="x2-ln x2-cmdl"><span class="k">$</span> <span class="v">${c}</span></p>`;
+      const dot = (r, n, id) => `<li${id ? ` data-pp="${id}"` : ''}><span class="cr2-r">${e(r)}</span><span class="cr2-lead" aria-hidden="true"></span><span class="cr2-n">${e(n)}</span></li>`;
+      const grp = (body, extra = '') => `<div class="cr2-g" data-x2b${extra}>${body}</div>`;
+      sec.innerHTML =
+        grp(`<div class="cr2-top"><span class="x2-code">PF-ST/001 STUDIO</span>${rec}</div>${cmd('panorama --about')}<p class="cr2-say">${e(STATEMENT)}</p>${ln('location =', `[<span lang="sr-Cyrl">Београд</span>, <bdi lang="ar">دبي</bdi>, worldwide]`)}`) +
+        grp(`${cmd('panorama --show crew')}<ul class="cr2-dots">${CORE.map(([id, n, r]) => dot(r, n, id)).join('')}</ul>`) +
+        grp(`${cmd('panorama --show collective')}<ul class="cr2-dots">${COLLECTIVE.map(([id, n, r]) => dot(r, n, id)).join('')}</ul>`) +
+        grp(`${ln('output =', `[${WE_MAKE.map(w => e(w.toLowerCase())).join(', ')}]`)}<ol class="cr2-make">${WE_MAKE.map((w, i) => `<li><span class="cr2-no">${String(i + 1).padStart(2, '0')}</span>${e(w)}</li>`).join('')}</ol>`) +
+        grp(`${cmd(`panorama --clients | head ${clients.length}`)}<ul class="cr2-cols c3 cr2-cl">${clients.map(c => `<li>${cl(c)}</li>`).join('')}</ul>`) +
+        grp(`${cmd('panorama --contact')}<p class="cr2-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a><span class="x2-cur" aria-hidden="true"></span></p><p class="cr2-links">${LINKS}</p>`, ' data-x2sec="contact"');
+    }
+    field.appendChild(sec);
+    return sec;
+  }
+
   /* ---------- tiles ---------- */
   const filmTile = k => `<div class="fx-i" data-k="${k}" data-g="work"><a class="fx-t" href="${hrefOf(k)}" data-fx="${k}" draggable="false" aria-label="${e(titleOf(k))}, ${e(clientOf(k))}">
     <span class="fx-m${streams(k) ? ' media cover' : ''}"${streams(k) ? ` data-c="${k}"${F[k].hover ? ` data-hv="${F[k].hover}"` : ''}` : ''}><img src="${still(k)}" alt="" loading="lazy" decoding="async" draggable="false"></span>
@@ -117,8 +155,8 @@
   function shuffle() {
     const R = rng(seed ^ 0x5bd1e995);
     const mix = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
-    const films = mix(items.filter(it => it.g === 'work' && it.k !== 'reel')), reel = items.find(it => it.k === 'reel');
-    if (reel) films.splice(Math.floor(R() * 3), 0, reel);
+    /* the films keep the website's order (showreel first, then as on the site); only where each one lands is random (Andrija, 2026-10-30) */
+    const films = keys.map(k => items.find(it => it.k === k)).filter(Boolean);
     /* the studio: the chapter word and the statement open it, the ask closes it, everything else shuffled between */
     const st = items.filter(it => it.g === 'studio'), first = st.filter(it => /chapter|say/.test(it.shape)), last = st.filter(it => it.shape === 'ask');
     const mid = mix(st.filter(it => !first.includes(it) && !last.includes(it)));
@@ -165,6 +203,7 @@
 
   /* ---------- b: the end credits after the last film ---------- */
   let rest = null;
+  if (REST === 'b1' || REST === 'b2') rest = buildCredits(REST);
   if (REST === 'b') {
     const row = (role, name, attrs = '') => `<div class="cr-r" data-x2b${attrs}><span class="cr-role">${e(role)}</span><span class="cr-n">${e(name)}</span></div>`;
     const head = t => `<h2 class="cr-h" data-x2b>${e(t)}</h2>`;
@@ -185,6 +224,15 @@
     field.appendChild(rest);
   }
 
+  /* the visit's own Rec timecode (hh:mm:ss:ff at 25 fps), as in the old header */
+  const t0 = performance.now();
+  function recTick() {
+    const els = $$('.x2-tc'); if (!els.length) return;
+    const f = Math.floor((performance.now() - t0) / 40), p2 = n => String(n).padStart(2, '0');
+    const t = `${p2(Math.floor(f / 90000))}:${p2(Math.floor(f / 1500) % 60)}:${p2(Math.floor(f / 25) % 60)}:${p2(f % 25)}`;
+    els.forEach(el => { if (el.textContent !== t) el.textContent = t; });
+  }
+
   /* ---------- clips: load and play only what is on screen ---------- */
   const io = new IntersectionObserver(es => es.forEach(en => {
     const it = items.find(x => x.t === en.target); if (!it) return;   /* the moving part of a tile is watched, not its resting frame */
@@ -203,19 +251,19 @@
   if (RM) items.forEach(it => it.el.classList.add('in'));
 
   /* ---------- scrolling ---------- */
+  let target = 0;   /* where the wheel wants the field to be (computers) */
   /* lines of the credits are bodies too: each has its own spring, so the text stretches a little like the tiles */
   let lines = [];
   const SEC = {};   /* where Studio and Contact start, in the field's own coordinates (measured, not read every frame) */
   function measure() {
     const wh = wrap.offsetHeight;
-    if (REST === 'b' && rest) { const c = $('[data-x2sec="contact"]', rest); SEC.studio = wh - 80; SEC.contact = c ? wh + c.offsetTop - innerHeight * 0.3 : null; }
+    if (CREDITS && rest) { const c = $('[data-x2sec="contact"]', rest); SEC.studio = wh - 80; SEC.contact = c ? wh + c.offsetTop - innerHeight * 0.3 : null; }
     if (REST === 'c') { const ch = items.find(x => x.shape === 'chapter'), ask = items.find(x => x.shape === 'ask'); SEC.studio = ch ? ch.y - 100 : null; SEC.contact = ask ? ask.y - 100 : null; }
     if (!rest) return;
-    lines = $$('[data-x2b]', rest).map((el, i) => { const o = lines.find(l => l.el === el); return { el, y: wrap.offsetHeight + el.offsetTop, h: el.offsetHeight, cur: o ? o.cur : 0, kk: T.springText[0] + ((i * 0.37) % 1) * (T.springText[1] - T.springText[0]) }; });
+    lines = $$('[data-x2b]', rest).map((el, i) => { const o = lines.find(l => l.el === el); return { el, y: wrap.offsetHeight + el.offsetTop, h: el.offsetHeight, cur: o ? o.cur : target, kk: T.springText[0] + ((i * 0.37) % 1) * (T.springText[1] - T.springText[0]) }; });
   }
   measure();
   const worldH = () => wrap.offsetHeight + (rest ? rest.offsetHeight : 0);
-  let target = 0;
   const maxY = () => Math.max(0, worldH() - innerHeight);
   const clampY = y => Math.max(0, Math.min(maxY(), y));
   const scrollY2 = () => (VIRTUAL ? target : scrollY);
@@ -267,8 +315,12 @@
         it.off = !on;
         it.t.style.transform = `translate3d(${(-cx * ax * it.d).toFixed(1)}px,${(-it.cur - cy * ay * it.d).toFixed(1)}px,0)`;
       }
+      let prev = null;
       for (const l of lines) {
         l.cur += (target - l.cur) * (1 - Math.exp(-l.kk * dt));
+        /* a line may lag, but never into the one above it: however hard the wheel, text never overlaps (Andrija, 2026-10-30) */
+        if (prev) { const room = l.y - (prev.y + prev.h) - 12; l.cur = Math.min(l.cur, prev.cur + Math.max(0, room)); l.cur = Math.max(l.cur, prev.cur - Math.max(0, room)); }
+        prev = l;
         const top = l.y - l.cur, on = top + l.h > -200 && top < H + 200;
         if (!on && !force && l.off) continue;
         l.off = !on;
@@ -283,7 +335,7 @@
         it.t.style.transform = `translate3d(${(-cx * ax * it.d).toFixed(1)}px,${(-cy * ay * it.d + par).toFixed(1)}px,0)`;
       }
     }
-    breadcrumb();
+    breadcrumb(); recTick();
   }
 
   addEventListener('pageshow', ev => { if (ev.persisted && !qs.get('seed')) { seed = Math.floor(Math.random() * 1e9); shuffle(); layout(); measure(); tick(true); } });
@@ -347,7 +399,8 @@
       const id = b.dataset.bc;
       b.classList.toggle('on', ixOn ? id === 'index' : panel ? panel.dataset.p === id : id === (inStudio ? 'studio' : 'work'));
     });
-    hdr.classList.toggle('x2-over', VIRTUAL || (REST === 'c' ? true : wrap.getBoundingClientRect().bottom > 90));
+    /* bare over the films (as on wanda.net); over the credits the header keeps its shade so text never runs under it */
+    hdr.classList.toggle('x2-over', !(CREDITS && inStudio) && (VIRTUAL || REST === 'c' || wrap.getBoundingClientRect().bottom > 90));
   }
 
   /* ---------- the floating picture: a clip by a film's name, a portrait by a person's name ---------- */
@@ -359,16 +412,20 @@
     if (!FINE || pvK === kind + id) return; pvK = kind + id;
     if (kind === 'film') { const src = clipOf(id); pv.className = 'x2-pv on'; pv.innerHTML = `<img src="${still(id)}" alt="">` + (src && !RM ? `<video src="${src}" muted loop playsinline autoplay></video>` : ''); }
     else { const p = person(id); if (!p) return; pv.className = 'x2-pv on x2-pv-p'; pv.innerHTML = `<img src="${p[3]}" alt="">`; }
+    placePv(true);   /* appear by the pointer, not in the corner */
   }
   const hidePv = () => { pv.classList.remove('on'); pvK = null; };
-  addEventListener('pointermove', ev => {
-    if (!pv.classList.contains('on')) return;
+  let px = 0, py = 0;
+  const placePv = instant => {
     const w = pv.offsetWidth, h = pv.offsetHeight;
-    const x = Math.min(innerWidth - w - 16, Math.max(16, ev.clientX + 40)), y = Math.min(innerHeight - h - 16, Math.max(16, ev.clientY - h / 2));
-    if (pxTo && !RM) { pxTo(x); pyTo(y); } else pv.style.transform = `translate(${x}px,${y}px)`;
-  }, { passive: true });
+    const x = Math.min(innerWidth - w - 16, Math.max(16, px + 40)), y = Math.min(innerHeight - h - 16, Math.max(16, py - h / 2));
+    if (instant || !pxTo || RM) { if (G) G.set(pv, { x, y }); else pv.style.transform = `translate(${x}px,${y}px)`; if (pxTo) { pxTo(x); pyTo(y); } }
+    else { pxTo(x); pyTo(y); }
+  };
+  addEventListener('pointermove', ev => { px = ev.clientX; py = ev.clientY; if (pv.classList.contains('on')) placePv(); }, { passive: true });
   document.addEventListener('pointerover', ev => {
     if (!FINE) return;
+    px = ev.clientX; py = ev.clientY;
     const f = ev.target.closest('[data-ix], [data-x2film]'), p = ev.target.closest('[data-pp]');
     if (f) showPv('film', f.dataset.ix || f.dataset.x2film); else if (p) showPv('person', p.dataset.pp);
   });
@@ -440,7 +497,7 @@
   /* ---------- the switch between the three approaches (for trying them; bottom left) ---------- */
   const sw = document.createElement('div');
   sw.className = 'x2-sw'; sw.setAttribute('role', 'group'); sw.setAttribute('aria-label', 'Try another approach for the rest of the site');
-  sw.innerHTML = '<span>Rest of site</span>' + [['a', 'A Panels'], ['b', 'B Credits'], ['c', 'C One field']].map(([v, t]) => `<a href="?rest=${v}"${v === REST ? ' aria-current="true"' : ''}>${t}</a>`).join('');
+  sw.innerHTML = '<span>Rest of site</span>' + [['a', 'A Panels'], ['b', 'B Credits'], ['b1', 'B1 Columns'], ['b2', 'B2 Code'], ['c', 'C One field']].map(([v, t]) => `<a href="?rest=${v}"${v === REST ? ' aria-current="true"' : ''}>${t}</a>`).join('');
   document.body.appendChild(sw);
   window.PF_X2 = { get target() { return target; }, scrollToY, items: () => items, REST, VIRTUAL };
   /* start moving only now that everything above exists */

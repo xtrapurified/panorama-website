@@ -170,3 +170,73 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 .x2-sw a[aria-current]{color:#fff}
 .x2-sw a[aria-current]::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red,#e2231a);margin-right:.4em;vertical-align:.1em}
 @media (max-width:760px){.x2-sw span{display:none}.x2-sw{font-size:11px}}
+
+/* ======================= B1 / B2: the credits in columns, in the old site's type (2026-10-30) ======================= */
+.x2-cr2{--cw:min(1240px,calc(100vw - 2 * var(--m)));position:relative;padding:26vh 0 32vh;color:#fff;font-family:"Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:300}
+.x2-cr2 .cr2-g{position:relative;width:var(--cw);margin:0 auto 20vh}
+.x2-cr2 .cr2-g:last-child{margin-bottom:0}
+/* the old site's details: Data Error codes, grey/white code lines, the red block cursor, Rec with the visit's timecode */
+.x2-code{font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(11px,.85vw,14px);letter-spacing:.2em;color:rgba(255,255,255,.58);white-space:nowrap}
+.x2-ln{margin:0;font-size:clamp(14px,1.05vw,17px);line-height:1.4;font-variant-numeric:tabular-nums}
+.x2-ln .k{color:rgba(255,255,255,.45)}
+.x2-ln .v{color:#fff}
+.x2-cur{display:inline-block;width:.55em;height:1.05em;margin-left:.3em;vertical-align:-.15em;background:var(--red,#e2231a);animation:hlBlink 1.1s steps(1) infinite}
+@keyframes hlBlink{50%{opacity:0}}
+.x2-rec{display:inline-flex;align-items:center;gap:.5em;font-size:clamp(11px,.8vw,13px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff}
+.x2-rd{width:8px;height:8px;border-radius:50%;background:var(--red,#e2231a);animation:blink 1s steps(1,end) infinite}
+.x2-tc{font-family:var(--mono,ui-monospace,monospace);font-weight:400;letter-spacing:.04em;color:rgba(255,255,255,.4);font-variant-numeric:tabular-nums}
+.cr2-say{margin:0;max-width:22ch;font-size:clamp(30px,3.4vw,62px);letter-spacing:-.045em;line-height:1.04;text-wrap:balance}
+.cr2-cols{list-style:none;margin:0;padding:0;display:grid;column-gap:clamp(20px,2.4vw,44px);row-gap:clamp(14px,1.4vw,22px)}
+.cr2-cols.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.cr2-cols li{display:flex;flex-direction:column;gap:.15em;min-width:0}
+.cr2-n{font-size:clamp(17px,1.4vw,24px);font-weight:400;letter-spacing:-.02em;color:#fff}
+.cr2-r{font-size:clamp(11px,.8vw,13px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+[data-pp]:hover .cr2-n{color:var(--red,#e2231a)}
+.cr2-make{list-style:none;margin:0;padding:0}
+.cr2-make li{display:flex;align-items:baseline;gap:clamp(14px,1.6vw,28px);padding:.18em 0;border-top:1px solid rgba(255,255,255,.12);font-size:clamp(26px,2.8vw,50px);letter-spacing:-.04em;line-height:1.1}
+.cr2-make li:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
+.cr2-no{flex:none;width:2.2em;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(11px,.85vw,14px);letter-spacing:.2em;color:rgba(255,255,255,.42)}
+.cr2-make li:hover .cr2-no{color:var(--red,#e2231a)}
+.cr2-cl li{font-size:clamp(15px,1.15vw,19px);color:rgba(255,255,255,.75)}
+.cr2-cl a,.cr2-cl span{color:inherit;text-decoration:none}
+.cr2-cl a:hover{color:#fff;text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
+.cr2-ask{margin:.25em 0 0;font-size:clamp(44px,6.4vw,124px);letter-spacing:-.055em;line-height:.98}
+.cr2-ask a{color:#fff;text-decoration:none}
+.cr2-ask a:hover{color:var(--red,#e2231a)}
+.cr2-ask .x2-cur{height:.8em;width:.35em;vertical-align:-.05em}
+.cr2-links{display:flex;gap:1.6em;flex-wrap:wrap;margin:1.2em 0 0;font-size:clamp(16px,1.25vw,21px)}
+.cr2-links a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35);text-underline-offset:.22em;text-decoration-thickness:1px}
+.cr2-links a:hover{color:var(--red,#e2231a);text-decoration-color:currentColor}
+
+/* B1: a label column (codes) and the content beside it, on the 12-column grid */
+.x2-b1 .cr2-g{display:grid;grid-template-columns:repeat(12,minmax(0,1fr));column-gap:var(--g,24px)}
+.x2-b1 .cr2-l{grid-column:1/span 3;padding-top:.45em}
+.x2-b1 .cr2-b{grid-column:4/-1;min-width:0}
+.x2-b1 .cr2-meta{display:flex;gap:2.2em;align-items:center;flex-wrap:wrap;margin:1.6em 0 0}
+.x2-b1 .cr2-pl{color:var(--red,#e2231a);font-size:clamp(14px,1.05vw,17px)}
+.x2-b1 .cr2-cmd{margin-bottom:.6em}
+
+/* B2: commands above, answers below; crew with dotted leaders */
+.x2-b2 .cr2-g{max-width:980px}
+.x2-b2 .x2-cmdl{margin-bottom:1.1em}
+.x2-b2 .cr2-top{display:flex;justify-content:space-between;align-items:center;gap:1em;margin-bottom:3.2em;padding-bottom:.9em;border-bottom:1px solid rgba(255,255,255,.12)}
+.x2-b2 .cr2-say{margin:0 0 .9em}
+.cr2-dots{list-style:none;margin:0;padding:0;display:grid;column-gap:clamp(28px,3vw,56px)}
+.cr2-dots.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.cr2-dots li{display:flex;align-items:baseline;gap:.6em;padding:.38em 0;min-width:0}
+.cr2-dots .cr2-r{flex:none}
+.cr2-lead{flex:1;min-width:1.5em;border-bottom:1px dotted rgba(255,255,255,.28);transform:translateY(-.3em)}
+.cr2-dots .cr2-n{flex:none;font-size:clamp(16px,1.3vw,22px);text-align:right;white-space:nowrap}
+.x2-b2 .cr2-make{margin-top:1.4em}
+
+@media (max-width:760px){
+  .x2-cr2 .cr2-g{margin-bottom:14vh}
+  .x2-b1 .cr2-l,.x2-b1 .cr2-b{grid-column:1/-1}
+  .x2-b1 .cr2-l{margin-bottom:1.2em;padding-top:0}
+  .cr2-cols.c3,.cr2-dots.c2{grid-template-columns:1fr 1fr}
+  .cr2-dots .cr2-r{flex:1 1 auto;white-space:normal}
+  .cr2-dots .cr2-lead{display:none}
+  .cr2-dots li{flex-direction:column;gap:.1em}
+  .cr2-dots .cr2-n{text-align:left}
+}
+@media (prefers-reduced-motion:reduce){.x2-cur,.x2-rd{animation:none}}
