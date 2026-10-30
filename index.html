@@ -3379,7 +3379,7 @@ document.addEventListener('keydown', e=>{
     b.setAttribute('aria-expanded', String(step === last));
     /* the line says how many films are still waiting (Andrija, 2026-10-29): '19 more films', then '6 from the archive', then 'Show fewer' */
     const left = PH.matches ? c.querySelectorAll('.card.m-tail').length : step === 0 ? extra : arch, pl = n => n === 1 ? 'film' : 'films';
-    t.textContent = step === last ? 'Show fewer' : (!PH.matches && step === 1) ? `${left} more from the archive` : `${left} more ${pl(left)}`; };
+    t.textContent = step === last ? 'Show fewer' : (!PH.matches && step === 1) ? 'More from the archive' : 'More films'; };   /* no counts (Andrija, 2026-10-30) */
   PH.addEventListener('change', ()=>set(0));
   set(0);
   b.addEventListener('click', e=>{
