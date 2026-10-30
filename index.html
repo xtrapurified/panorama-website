@@ -290,6 +290,11 @@ footer .ft-c{display:inline-flex;align-items:center;gap:14px}
 <link rel="apple-touch-icon" href="/media/icons/apple-touch-icon.png">
 <link rel="manifest" href="/site.webmanifest">
 <script src="media/globe-follow.js" defer></script>
+<!-- experimental2 (2026-10-30): the films as one field of moving tiles, after wanda.net; remove these lines and media/field/ to take it out -->
+<link rel="stylesheet" href="media/field/field.css">
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script src="media/field/field.js" defer></script>
 <title>Panorama Films - Documentaries, campaigns and brand films</title>
 <style>
 /* Layout: Swiss 12-column grid on black, film-first. Footage carries colour; type is Untitled Sans, flush left.
@@ -1887,11 +1892,11 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   <symbol id="i-x" viewBox="0 0 12 12"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
   <filter id="heat" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".33 .5 .17 0 0 .33 .5 .17 0 0 .33 .5 .17 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues="0 .32 .89 1 1"/><feFuncG type="table" tableValues="0 .02 .14 .62 1"/><feFuncB type="table" tableValues="0 .03 .1 .55 1"/></feComponentTransfer></filter>
 </svg>
-<a class="skip" href="#films">Skip to films</a><a class="skip" href="#contact">Skip to contact</a>
+<a class="skip" href="#field">Skip to films</a><a class="skip" href="#contact">Skip to contact</a>
 <header class="hdr" id="hdr">
   <div class="page bar">
     <div class="logo-slot" id="slot"><span class="logo" id="logo" role="img" aria-label="Panorama Films"><panorama-globe-follow split="0" aria-hidden="true"></panorama-globe-follow></span><a class="wm" href="#hero" aria-label="Panorama Films, back to the top"><span class="wm-p" aria-hidden="true">Panorama</span> <span class="wm-f" aria-hidden="true">Films</span><sup aria-hidden="true">®</sup></a><span class="lab rec live hdr-rec" aria-hidden="true">Rec <span class="tc" id="heroTc">00:00:00:00</span></span></div>
-    <nav class="menu" id="menu" aria-label="Main"><a href="#films" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a><span class="nav-ft"><a href="#search" data-search class="nav-sx" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a><a href="#index" class="nav-ix" data-index>Index</a><button type="button" class="ft-th" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span></nav>
+    <nav class="menu" id="menu" aria-label="Main"><a href="#field" data-nav="films">Work</a><a href="#studio" data-nav="studio">About</a><a href="#contact" data-nav="contact" class="go">Contact</a><span class="nav-ft"><a href="#search" data-search class="nav-sx" aria-label="Search" title="Search (/)"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="M15.4 15.4 21 21"/></svg></a><a href="#index" class="nav-ix" data-index>Index</a><button type="button" class="ft-th" role="switch" aria-checked="false" aria-label="Light mode"><span data-t="dark">Dark</span><span class="sw" aria-hidden="true"><i></i></span><span data-t="light">Light</span></button></span></nav>
     <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false" aria-controls="menu"><i></i></button>
   </div>
 </header>
@@ -1901,6 +1906,11 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 
 <noscript><p class="page lab" style="padding:120px 0 24px">The films on this page need JavaScript to load. Every film is also on <a href="https://vimeo.com/panoramafilmstv">Vimeo</a>, and you can write to hello [at] panoramafilms.tv.</p></noscript>
 <main id="top">
+  <section class="fx" id="field" data-sec="films" aria-label="Films">
+    <h1 class="sr-only">Panorama Films</h1>
+    <p class="sr-only">Stories about people, ideas and the future. Creative storytelling studio. <span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide.</p>
+    <div class="fx-tiles" id="fxTiles"></div>
+  </section>
   <section class="hero" id="hero">
     <div class="media cover" id="heroMedia" data-k="reel" data-loop="full"></div><!-- black until the reel loads (Andrija, 2026-10-20); the reel starts at a random point, so no still would match -->
     <div class="over page">
@@ -1908,7 +1918,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
         <span></span>
         <span class="lab" id="heroNow"></span>
       </div>
-      <div class="grid hl"><div class="hd"><div class="h1l"><span class="hdot" aria-hidden="true"></span><h1><span class="h1p">Panorama</span> Films</h1></div><p class="sub">Stories about people, ideas and the future.</p><p class="sub2 sr-only">Creative storytelling studio.</p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
+      <div class="grid hl"><div class="hd"><div class="h1l"><span class="hdot" aria-hidden="true"></span><p class="h1"><span class="h1p">Panorama</span> Films</p></div><p class="sub">Stories about people, ideas and the future.</p><p class="sub2 sr-only">Creative storytelling studio.</p><p class="locs"><span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide</p></div></div>
       <div class="grid facts">
         <a class="play-reel" data-play="reel" href="https://vimeo.com/1241383768/79fb0efac2" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:32</span></a>
       </div>

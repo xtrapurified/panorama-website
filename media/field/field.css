@@ -1,0 +1,78 @@
+/* experimental2 (2026-10-30): the films as one field of moving tiles, after wanda.net.
+   The hero and the two film sections stay in the page (their code and search text keep working) but are not shown;
+   the field takes their place at the top. Everything for this lives in media/field/. */
+
+:root{--fxbg:#080808;--fxmono:var(--mono,ui-monospace,"SF Mono",Menlo,Consolas,monospace)}
+#hero,.peekbar,main > .page > section.sec[data-sec="films"]{display:none!important}
+body{background:var(--fxbg)}
+
+/* ---------- the field ---------- */
+.fx{position:relative;background:var(--fxbg)}
+.fx-tiles{position:relative;width:100%;overflow:hidden}
+.fx-i{position:absolute;display:block;opacity:0;transition:opacity 1.1s cubic-bezier(.16,1,.3,1)}
+.fx-i.in{opacity:1}
+.fx-t{position:absolute;inset:0;display:block;color:#fff;text-decoration:none;will-change:transform;-webkit-tap-highlight-color:transparent;
+  cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='72' height='72' viewBox='0 0 72 72'%3E%3Ccircle cx='36' cy='36' r='29.5' fill='rgba(0,0,0,.25)' stroke='%23fff' stroke-width='1'/%3E%3Cpath d='M30 26.5v19l15.5-9.5z' fill='%23fff'/%3E%3C/svg%3E") 36 36,pointer}
+.fx-m{position:absolute;inset:0;overflow:hidden;background:#000;opacity:.75;transition:opacity .4s ease-out}
+.fx-m img,.fx-m video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.fx-m video{opacity:0;transition:opacity .5s}
+.fx-m video.on{opacity:1}
+.fx-t:hover .fx-m,.fx-t:focus-visible .fx-m,.fx-t.near .fx-m{opacity:1}
+.fx-t:focus-visible{outline:1px solid #fff;outline-offset:4px}
+/* the label: the client in monospace, the title in the display face, centred on the tile */
+.fx-lab{position:absolute;left:50%;top:50%;z-index:3;margin:0;transform:translate3d(-50%,-50%,0);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .2s ease-out,visibility 0s linear .2s;text-shadow:0 0 18px rgba(0,0,0,.35)}
+.fx-t:hover .fx-lab,.fx-t:focus-visible .fx-lab,.fx-t.near .fx-lab{opacity:1;visibility:visible;transition:opacity .2s ease-out,visibility 0s}
+.fx-c{font-family:var(--fxmono);font-weight:300;font-size:clamp(15px,1.55vw,26px);letter-spacing:-.02em;color:rgba(255,255,255,.72);margin-right:.45em}
+.fx-ti{font-weight:500;font-size:clamp(17px,1.8vw,28px);letter-spacing:-.03em;line-height:.9}
+@media (max-width:760px){.fx-lab{display:none}}
+@media (prefers-reduced-motion:reduce){.fx-i{transition:none;opacity:1}}
+
+/* ---------- header, after wanda.net: the wordmark, a breadcrumb, and a ⊕ that unfolds the links ---------- */
+.hdr .logo-slot .logo,.hdr .hdr-rec{display:none!important}
+.hdr.x2-over::before{display:none!important}                    /* over the field the header is bare, as on wanda.net; further down it keeps its shade */
+.hdr.x2-over .wm,.hdr.x2-over .x2-bc button,.hdr.x2-over .x2-plus{color:#fff}
+.hdr .bar{position:relative}
+.x2-bc{display:flex;gap:14px;align-items:baseline;margin-left:clamp(14px,1.4vw,22px)}
+.x2-bc button{font:inherit;font-size:clamp(15px,1.15vw,18px);letter-spacing:-.005em;color:#fff;background:none;border:0;padding:0;cursor:pointer;opacity:.6;transition:opacity .2s linear}
+.x2-bc button.on,.x2-bc button:hover{opacity:1}
+.logo-slot{display:flex;align-items:baseline}
+@media (min-width:761px){
+  .hdr .bar .menu,.hdr.compact:not(.navopen) .bar .menu{opacity:0;visibility:hidden;transform:translateX(12px);transition:opacity .3s,visibility .3s,transform .5s cubic-bezier(.16,1,.3,1);margin-right:34px}
+  .hdr.x2-open .bar .menu,.hdr.compact.x2-open:not(.navopen) .bar .menu{opacity:1;visibility:visible;transform:none}
+  .hdr .menu > a{font-size:clamp(15px,1.15vw,18px);text-decoration:none;color:rgba(255,255,255,.6)}
+  .hdr .menu > a:hover,.hdr .menu > a.on{color:#fff}
+}
+.x2-plus{position:absolute;right:var(--m);top:50%;margin-top:-10px;width:20px;height:20px;padding:0;border:1px solid currentColor;border-radius:50%;background:none;color:#fff;cursor:pointer;justify-self:end;align-self:center}
+.x2-plus::before,.x2-plus::after{content:"";position:absolute;left:50%;top:50%;background:currentColor;transform:translate(-50%,-50%);transition:transform .25s cubic-bezier(.215,.61,.355,1)}
+.x2-plus::before{width:8px;height:1px}.x2-plus::after{width:1px;height:8px}
+.hdr.x2-open .x2-plus::after{transform:translate(-50%,-50%) rotate(-90deg)}
+@media (max-width:760px){.x2-plus,.x2-bc button[data-bc="index"]{display:none}}
+
+/* ---------- the index, after wanda.net's Directors: every project in four columns over the dimmed field ---------- */
+.x2-ix{position:fixed;inset:0;z-index:58;background:rgba(8,8,8,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:#fff;overflow-y:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .45s ease-out,visibility 0s linear .45s}
+.x2-ix.on{opacity:1;visibility:visible;transition:opacity .45s ease-out,visibility 0s}
+.x2-ix-x{position:fixed;top:clamp(18px,2vw,30px);right:var(--m);z-index:3;font-family:var(--fxmono);font-size:clamp(14px,1.1vw,17px);color:#fff;background:none;border:0;cursor:pointer;opacity:.8}
+.x2-ix-x:hover{opacity:1}
+.x2-ix-in{position:relative;z-index:2;padding:clamp(110px,15vh,170px) clamp(24px,8vw,125px) 80px clamp(24px,10.5vw,160px)}
+.x2-tabs{display:flex;gap:40px}
+.x2-tabs button,.x2-g a{font-family:var(--fxmono);font-weight:300;font-size:clamp(15px,1.2vw,18px);line-height:1.17;letter-spacing:-.01em;color:#fff;background:none;border:0;padding:0;opacity:.6;transition:opacity .2s linear;text-decoration:none;cursor:pointer}
+.x2-tabs button[aria-selected="true"],.x2-tabs button:hover{opacity:1}
+.x2-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(24px,4vw,80px);margin:30px 0 0;padding:0;list-style:none}
+.x2-g li{margin-bottom:10px;min-width:0}
+.x2-g a{position:relative;display:inline;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.2em;text-decoration-color:transparent;transition:opacity .2s linear,text-decoration-color .2s linear}
+.x2-g a:hover,.x2-g a:focus-visible,.x2-g a.on{opacity:1}
+.x2-g a:hover,.x2-g a:focus-visible{text-decoration-color:currentColor}
+.x2-g[hidden]{display:none}
+@media (max-width:1600px){.x2-g{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:900px){.x2-g{grid-template-columns:1fr 1fr}}
+@media (max-width:560px){.x2-g{grid-template-columns:1fr}.x2-ix-in{padding-top:96px}}
+/* the clip that floats by the name under the pointer */
+.x2-pv{position:fixed;left:0;top:0;z-index:1;width:35vw;aspect-ratio:16/9;pointer-events:none;opacity:0;visibility:hidden;background:#000;transition:opacity .25s,visibility 0s linear .25s}
+.x2-pv.on{opacity:1;visibility:visible;transition:opacity .25s,visibility 0s}
+.x2-pv::before{content:"";position:absolute;inset:0;z-index:2;background:#000;opacity:.3}
+.x2-pv img,.x2-pv video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+@media (hover:none),(pointer:coarse){.x2-pv{display:none}}
+
+/* ---------- the project page in the same voice: monospace controls, a fade in after the field fades out ---------- */
+.lb{background:var(--fxbg)}
+.lb-bar .lab,.lb-ctl,.lb-ctl .lab,#c-tc,.lb-side-t{font-family:var(--fxmono)!important;letter-spacing:-.01em!important;text-transform:none!important}
