@@ -5,13 +5,14 @@
 /* the curtain covers the page from the first paint; the head script sets html.pf-intro */
 .pf-curtain{display:none}
 html.pf-intro .pf-curtain{display:block;position:fixed;inset:0;z-index:90;background:#000;will-change:transform}
+:root[data-pf="light"] .pf-curtain{background:#e4e3de}   /* the paper look: a shade darker paper, as in the reference */
 html.pf-intro,html.pf-intro body{overflow:hidden}
 /* the real heading waits under the curtain while its stand-in plays the opening; they swap on the same frame */
 html.pf-intro .hero .h1l{visibility:hidden}
 
 /* the stand-in: one layer of letters (blends like the real heading), one for the red bullet (stays red) */
 .pf-word,.pf-dot{position:fixed;z-index:91;pointer-events:none;margin:0}
-.pf-word{mix-blend-mode:difference;white-space:pre}
+.pf-word{white-space:pre}   /* the name no longer sits over the reel, so no blending */
 .pf-word .pf-m{position:absolute;clip-path:inset(-.08em -.3em -.08em -.3em)}
 .pf-word .pf-c{position:absolute;left:0;top:0;display:block}
 .pf-dot{z-index:92;border-radius:50%;background:var(--red,#ff3b30)}
@@ -19,3 +20,16 @@ html.pf-intro .hero .h1l{visibility:hidden}
 
 /* line masks made by SplitText: let ascents and accents breathe sideways */
 .pf-line-mask{padding-inline:.06em;margin-inline:-.06em}
+
+/* the flight into a project (flight.js): the picture travels above everything */
+.x-fly{position:fixed;z-index:75;overflow:hidden;pointer-events:none;background:#000;will-change:left,top,width,height}
+.x-fly img,.x-fly canvas{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+
+/* the project page's "Get in touch", after EDDY's Book button: a red pill, its label rolls on hover */
+.x-ask{position:fixed;right:var(--m);bottom:calc(var(--m) + env(safe-area-inset-bottom,0px));z-index:62;display:inline-flex;align-items:center;height:48px;padding:0 22px;border-radius:999px;background:var(--red);color:#fff;font-size:calc(17*var(--fz,1px));letter-spacing:-.01em;text-decoration:none;overflow:hidden}
+.x-roll{position:relative;display:block;overflow:hidden;line-height:1.25}
+.x-r{position:relative;display:block;transition:transform .6s cubic-bezier(.16,1,.3,1)}
+.x-r::after{content:attr(data-label);position:absolute;left:0;top:100%}
+.x-ask:hover .x-r,.x-ask:focus-visible .x-r{transform:translateY(-100%)}
+@media (prefers-reduced-motion:reduce){.x-r{transition:none}}
+@media (max-width:760px){.x-ask{height:44px;padding:0 18px}}

@@ -293,11 +293,12 @@ footer .ft-c{display:inline-flex;align-items:center;gap:14px}
 <!-- experimental motion (branch experimental, 2026-10-29): the opening and scroll reveals; remove these lines and media/motion/ to take it out -->
 <link rel="stylesheet" href="media/motion/motion.css">
 <link rel="stylesheet" href="media/motion/layout.css">
-<script>(()=>{const d=document.documentElement,q=new URLSearchParams(location.search);if(q.has('nointro')||matchMedia('(prefers-reduced-motion: reduce)').matches||/^\/work\//.test(location.pathname)||location.hash)return;d.classList.add('pf-intro');setTimeout(()=>d.classList.remove('pf-intro'),12000);})();</script>
+<script>(()=>{const d=document.documentElement,q=new URLSearchParams(location.search);if(!q.has('dark')){d.dataset.pf='light';const m=document.querySelector('meta[name="theme-color"]');if(m)m.content='#f1f0ec';}if(q.has('nointro')||matchMedia('(prefers-reduced-motion: reduce)').matches||/^\/work\//.test(location.pathname)||location.hash)return;d.classList.add('pf-intro');setTimeout(()=>d.classList.remove('pf-intro'),12000);})();</script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" defer></script>
 <script src="https://cdn.jsdelivr.net/npm/smooothy@0.0.35/dist/smooothy.min.js" defer></script>
 <script src="media/motion/motion.js" defer></script>
+<script src="media/motion/flight.js" defer></script>
 <title>Panorama Films - Documentaries, campaigns and brand films</title>
 <style>
 /* Layout: Swiss 12-column grid on black, film-first. Footage carries colour; type is Untitled Sans, flush left.
@@ -1932,6 +1933,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       </div>
     </div>
   </section>
+  <section class="x-stats page" aria-label="In numbers"><ul class="grid x-sl" id="xStats"></ul></section><!-- experimental: counted from the site's own data -->
 
   <div class="page">
   <a class="peekbar" href="#films" aria-label="Scroll to films"><span class="tag">Films<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span></a>
@@ -1941,6 +1943,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 
   <section class="sec" data-sec="films">
     <div class="lede cat"><span class="tag sub">Catalogue<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Archive</h2></div>
+    <div class="x-list" id="xList"><div class="x-tbl" id="xTbl"></div><div class="x-hv" id="xHv" aria-hidden="true"></div></div><!-- experimental: every project by year, after the EDDY genre table -->
     <div class="cards" id="cards"></div>
     <div class="reveal" id="showWrap"><button type="button" id="showAll" class="tgl" aria-controls="cards" aria-expanded="false"><span class="pm" aria-hidden="true"></span><span id="showT">Load more</span></button></div>
   </section>
@@ -2261,6 +2264,14 @@ const STACK = ["ask","sport","docu","astro","orchard","ten"];
 const STAGE = ["hotf","ask","orchard","astro"];
 { const st = document.getElementById('xStage');
   if (st) st.insertAdjacentHTML('afterbegin', STAGE.filter(k=>F[k]).map((k,i)=>`<a class="x-im x-im${i+1}" href="${ext(F[k])}" target="_blank" rel="noopener" data-play="${k}" aria-label="${F[k].v||F[k].yt||F[k].file ? 'Play' : 'View'} ${esc(F[k].title)}"><img src="${still(k)}" alt="${esc(F[k].title)}" loading="eager" decoding="async" draggable="false"></a>`).join('')); }
+/* key figures, counted from the site's own data so they stay true as projects are added (experimental, after the EDDY stats) */
+{ const el = document.getElementById('xStats');
+  if (el){ const ks = ORDER.filter(k=>F[k] && !HIDDEN.includes(k));
+    const films = ks.reduce((n,k)=>n + Math.max(1, nFilms(k)), 0);
+    const clients = new Set(ks.map(k=>F[k].client).filter(c=>c && c !== 'Panorama Films')).size;
+    const ys = ks.flatMap(k=>(String(F[k].year||'').match(/\d{4}/g)||[]).map(Number));
+    el.innerHTML = [[`${ks.length} Projects`, 'On this site'], [`${films} Films`, 'Across them'], [`${clients} Clients`, 'Behind these films'], [`${Math.min(...ys)}–${Math.max(...ys)}`, 'Years of work shown']]
+      .map(([a,b])=>`<li class="x-si">${a}<br><span class="mid">${b}</span></li>`).join(''); } }
 if (FEATURED_VIEW === 'strip'){
   const [c, t, , items] = CHAPTERS[0], ks = items.flat().filter(k=>F[k]);
   document.getElementById('chapters').innerHTML = `<div class="lede"><span class="tag sub">${c}<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>${esc(t)}</h2></div>
@@ -2294,6 +2305,20 @@ document.getElementById('chapters').innerHTML = CHAPTERS.map(([c,t,r,items],ci)=
 /* one system for every card: the title, then the client and the year, all at one size; the client line is left out when the title already names it */
 const same = (a, b) => { const n = x => String(x||'').toLowerCase().normalize('NFD').replace(/[^a-z0-9]+/g,''); const x = n(a), y = n(b); return !!x && !!y && x.includes(y); };   /* the title already names the client */
 document.getElementById('cards').innerHTML = CARDS.concat(INDEX).map((k,i)=>{const f=F[k], cl = f.nocl ? '' : f.sub || (same(f.title, f.client) ? '' : f.client);   /* nocl: no client line on the card (ImagineBoka.ai, Andrija 2026-10-22) */return `<article class="card${i >= CARDS.length ? ' arch' : i >= CARDS_SHOWN ? ' later' : ''}">${frame(k, true)}<div class="meta s" data-play="${k}"><h3>${esc(f.title)}</h3><span class="cl">${esc(cl)}</span></div></article>`;}).join('');
+/* experimental (2026-10-30): the catalogue as one list of every project, grouped by year (the latest year of a project
+   that ran over several), after the EDDY genre table; 'cards' to go back */
+const CATALOGUE_VIEW = 'list';
+if (CATALOGUE_VIEW === 'list'){
+  document.documentElement.classList.add('x-list-on');
+  const lastYear = y => Math.max(...(String(y||'').match(/\d{4}/g) || [0]).map(Number));
+  const groups = new Map();
+  ORDER.filter(k=>F[k] && !HIDDEN.includes(k)).forEach(k=>{ const y = lastYear(F[k].year); if (!groups.has(y)) groups.set(y, []); groups.get(y).push(k); });
+  const years = [...groups.keys()].sort((a,b)=>b-a);
+  document.getElementById('xTbl').innerHTML = years.map((y,i)=>`<div class="x-row"><div class="x-dash" aria-hidden="true"></div>
+    <div class="x-rh"><span class="x-rn">(${String(i+1).padStart(2,'0')})</span><h3 class="x-ry">${y || 'Other'}</h3></div>
+    <p class="x-rnames">${groups.get(y).map((k,j,a)=>`<a class="x-nm" href="${workUrl(k) || ext(F[k])}" data-play="${k}" data-hv-k="${k}">${esc(F[k].title)}</a>${j < a.length - 1 ? '<span class="x-sep">, </span>' : ''}`).join('')}</p></div>`).join('');
+  document.getElementById('xHv').innerHTML = [...new Set(years.flatMap(y=>groups.get(y)))].map(k=>`<div class="x-hl" data-hl="${k}"${F[k].hover ? ` data-clip="${M}hover/${F[k].hover}.${VEXT}"` : ''}><div class="x-hli"><img src="${still(k)}" alt="" loading="lazy" decoding="async" draggable="false"></div></div>`).join('');
+}
 const idxEl = document.getElementById('index'); if (idxEl) idxEl.innerHTML = INDEX.map(k=>{const f=F[k];return `<div class="idx" data-play="${k}" role="button" tabindex="0" aria-label="${f.v||f.yt ? 'Play' : 'View'} ${esc(f.title)}"${f.hover?` data-hv="${f.hover}"`:''}><span class="th"><img src="${still(k)}" alt="${esc(F[k].title)}" loading="lazy">${f.v||f.yt?'<span class="play" aria-hidden="true"></span>':''}</span><span class="t">${esc(f.title)}</span><span class="c s mid">${esc(f.client)}</span><span class="w s mid">${esc(f.year)}</span></div>`;}).join('');
 /* each discipline points to films where Panorama was credited for it (services and credits on the project), never more than three */
 const CAP_MATCH = {Research: k => (PJ[k] && JSON.stringify(PJ[k]).match(/"Interviewer/)), Writing: k => /script|concept/i.test(F[k].roles || ''),

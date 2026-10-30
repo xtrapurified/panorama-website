@@ -126,11 +126,13 @@
       for (let i = 0; i < n.length; i++) {
         const ch = n.data[i]; if (!ch.trim()) continue;
         range.setStart(n, i); range.setEnd(n, i + 1);
-        const r = range.getClientRects()[0]; if (!r) continue;
+        const r0 = range.getClientRects()[0]; if (!r0) continue;
+        const ps = getComputedStyle(n.parentElement), fs = parseFloat(ps.fontSize);
+        /* a glyph with no line box of its own (the ® is set with line-height 0) gets one, centred on it */
+        const r = r0.height >= fs * 0.6 ? r0 : { left: r0.left, width: r0.width, height: fs * 1.15, top: r0.top + r0.height / 2 - fs * 0.575 };
         const m = document.createElement('span'); m.className = 'pf-m';
-        Object.assign(m.style, { left: r.left - hr.left + 'px', top: r.top - hr.top + 'px', width: r.width + 'px', height: r.height + 'px' });
-        const c = document.createElement('span'); c.className = 'pf-c'; c.textContent = ch; c.style.lineHeight = r.height + 'px';
-        const ps = getComputedStyle(n.parentElement);   /* "Panorama" is a weight heavier than "Films" */
+        Object.assign(m.style, { left: r.left - hr.left + 'px', top: r.top - hr.top + 'px', width: r.width + 'px', height: r.height + 'px', fontSize: ps.fontSize });   /* the mask's breathing room in the glyph's own size */
+        const c = document.createElement('span'); c.className = 'pf-c'; c.textContent = ch; c.style.lineHeight = r.height + 'px';   /* "Panorama" is a weight heavier than "Films" */
         c.style.fontWeight = ps.fontWeight; c.style.fontStyle = ps.fontStyle; c.style.letterSpacing = ps.letterSpacing; c.style.fontSize = ps.fontSize;
         m.appendChild(c); word.appendChild(m); (lead.contains(n) ? chars : rest).push(c);
       }
@@ -210,6 +212,67 @@
   }
 
 
+
+  /* ---------- the year list: a tilted still follows the pointer (after the EDDY genre table) ----------
+     Pointing at a title brings its still up over the year headings; moving to another title wipes the new one up
+     over the old (the newest always on top) and, after a moment, its clip starts. The still follows the pointer's
+     height and a little of its sideways travel; leaving the names sideways sends it away. Other titles dim.
+     Touch screens: no still; a tap opens the project. */
+  M.hover = { follow: 0.12, followDur: 0.9, followYDur: 0.6, swap: 0.9, out: 0.6, rotation: -6, clipAfter: 0.35 };
+  function initList() {
+    const tbl = $('#xTbl'), box = $('#xHv');
+    if (!tbl || !box || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+    const H = M.hover, OPEN = 'inset(0% 0% 0% 0%)';
+    const layers = Object.fromEntries($$('.x-hl', box).map(l => [l.dataset.hl, l]));
+    const top = l => { const m = (l.style.clipPath || '').match(/inset\(\s*([\d.]+)%/); return m ? parseFloat(m[1]) : 100; };
+    Object.values(layers).forEach(l => gsap.set(l, { clipPath: 'inset(100% 0% 0% 0%)' }));
+    gsap.set(box, { rotation: RM ? 0 : H.rotation });
+    const xTo = gsap.quickTo(box, 'x', { duration: H.followDur, ease: 'power3.out' });
+    const yTo = gsap.quickTo(box, 'y', { duration: H.followYDur, ease: 'power3.out' });
+    const sec = box.parentElement;
+    let on = false, active = null, z = 1, startX = 0, ptr = { x: 0, y: 0 }, clipT = null;
+    const band = () => { const ns = $$('.x-rnames', tbl).map(n => n.getBoundingClientRect()); return { left: Math.min(...ns.map(r => r.left)) - 24, right: Math.max(...ns.map(r => r.right)) + 24 }; };
+    const follow = (instant) => {
+      const sr = sec.getBoundingClientRect(), h = box.offsetHeight;
+      const y = ptr.y - sr.top - h / 2, x = (ptr.x - startX) * H.follow;
+      if (instant) { gsap.set(box, { x, y }); } xTo(x); yTo(y);
+    };
+    function stopClip(l) { const v = l && l.querySelector('video'); if (v) { v.pause(); } }
+    function startClip(l) {
+      if (RM || !l.dataset.clip) return;
+      let v = l.querySelector('video');
+      if (!v) { v = document.createElement('video'); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' }); v.setAttribute('muted', ''); v.src = l.dataset.clip; v.addEventListener('playing', () => v.classList.add('on'), { once: true }); $('.x-hli', l).appendChild(v); }
+      v.play().catch(() => {});
+    }
+    function activate(name) {
+      const k = name.dataset.hvK, l = layers[k]; if (!l || active === k) return;
+      $$('.x-nm.on', tbl).forEach(n => n.classList.remove('on')); name.classList.add('on'); tbl.classList.add('dim');
+      const prev = active && layers[active]; active = k;
+      if (!on) { on = true; box.classList.add('on'); startX = ptr.x; follow(true); }
+      l.style.zIndex = ++z; box.dataset.top = k;
+      gsap.killTweensOf([l, $('.x-hli', l)]);
+      gsap.fromTo(l, { clipPath: 'inset(100% 0% 0% 0%)' }, { clipPath: OPEN, duration: RM ? 0 : H.swap, ease: 'expo.out' });
+      gsap.fromTo($('.x-hli', l), { yPercent: 18 }, { yPercent: 0, duration: RM ? 0 : H.swap, ease: 'expo.out' });
+      if (prev) { stopClip(prev); gsap.to($('.x-hli', prev), { yPercent: -10, duration: H.swap, ease: 'expo.out' }); gsap.delayedCall(H.swap, () => { if (active !== prev.dataset.hl) gsap.set(prev, { clipPath: 'inset(100% 0% 0% 0%)' }); }); }
+      clipT && clipT.kill(); clipT = gsap.delayedCall(H.clipAfter, () => { if (active === k) startClip(l); });
+    }
+    function deactivate() {
+      if (!on) return; on = false;
+      const l = active && layers[active]; active = null; tbl.classList.remove('dim'); $$('.x-nm.on', tbl).forEach(n => n.classList.remove('on'));
+      clipT && clipT.kill();
+      if (l) { stopClip(l); gsap.to(l, { clipPath: 'inset(0% 0% 100% 0%)', duration: H.out, ease: 'expo.in', onComplete: () => { if (!on) box.classList.remove('on'); gsap.set(l, { clipPath: 'inset(100% 0% 0% 0%)' }); } }); }
+    }
+    tbl.addEventListener('pointerover', e => { const n = e.target.closest('.x-nm'); if (!n) return; ptr = { x: e.clientX, y: e.clientY }; activate(n); });
+    tbl.addEventListener('pointermove', e => {
+      ptr = { x: e.clientX, y: e.clientY }; if (!on) return;
+      const b = band(); if (e.clientX < b.left || e.clientX > b.right) { deactivate(); return; }
+      follow();
+    });
+    tbl.addEventListener('pointerleave', deactivate);
+    addEventListener('scroll', () => { if (on) follow(); }, { passive: true });
+    window.PF_LIST = { box, get active() { return active; }, layer: k => layers[k], reset: deactivate };
+  }
+
   /* ---------- Featured strip: endless, drifting, draggable (after the EDDY roster) ----------
      It drifts slowly on its own, stops under the pointer, follows a drag or a sideways swipe and settles on a
      film when let go, then drifts again. Each picture slides inside its frame by its distance from the middle,
@@ -247,6 +310,7 @@
         });
       };
       tick() {
+        if (this.frozen) return;
         const moved = Math.abs(this.target - this.dragStartTarget) > 0.02;
         if (this.isDragging && moved && !this.interacting) this.start();
         else if (!this.isDragging && this.interacting && !this.wheel) this.end();
@@ -260,6 +324,9 @@
       later(d = S.resume) { this.resumeCall && this.resumeCall.kill(); this.resumeCall = gsap.delayedCall(d, () => this.play()); }
       start() { this.interacting = true; this.resumeCall && this.resumeCall.kill(); this.velTween && this.velTween.kill(); this.autoVel = 0; this.snap = true; }
       end() { this.interacting = false; if (!this.hovered) this.later(); }
+      /* the project page: stop exactly on the frame on screen, so the flight back lands where it left */
+      freeze() { this.frozen = true; this.paused = true; this.resumeCall && this.resumeCall.kill(); this.velTween && this.velTween.kill(); this.autoVel = 0; this.target = this.current; this.isDragging = false; this.interacting = false; }
+      unfreeze() { if (!this.frozen) return; this.frozen = false; this.paused = false; this.hovered = fine && this.wrapper.matches(':hover'); this.play(); }
     }
     const strip = new Strip(track);
     /* a press that turned into a drag must not open the film under it */
@@ -275,9 +342,9 @@
   /* ---------- scroll reveals ---------- */
   const TEXT = [
     '.lede .tag', '.lede h2', '.works .cap .cl', '#cards .meta h3', '#cards .meta .cl',
-    '.team .lab', '.team h3', '.team p', '.collab > .tag', '.hl-c .hl-t', '.x-lab', '.x-txt',
+    '.team .lab', '.team h3', '.team p', '.collab > .tag', '.hl-c .hl-t', '.x-lab', '.x-txt', '.x-si',
   ];
-  const BLOCK = ['.end .ask', '.end .links', '#showWrap', '.net-view', '.peers .coll .tag'];
+  const BLOCK = ['.end .ask', '.end .links', '#showWrap', '.net-view', '.peers .coll .tag', '.x-rh', '.x-rnames'];
   const IMAGE = ['.works .frame', '#cards .frame', '.team .face', '.x-im'];
 
   function startScrollReveals() {
@@ -288,6 +355,8 @@
     $$(TEXT.join(',')).filter(below).forEach(el => { split(el); kind.set(el, 'text'); });
     $$(BLOCK.join(',')).filter(below).forEach(el => { prepBlock(el); kind.set(el, 'block'); });
     $$(IMAGE.join(',')).filter(below).forEach(el => { prepImage(el); kind.set(el, 'image'); });
+    /* the year list's red rules draw in from the left */
+    $$('.x-dash').filter(below).forEach(el => { gsap.set(el, { scaleX: 0 }); kind.set(el, 'dash'); });
     /* the strip arrives as one group: films open left to right, then their titles */
     const sx = $('.x-strip');
     if (sx && below(sx)) { $$('.x-cm', sx).forEach(el => gsap.set(el, { clipPath: 'inset(100% 0% 0% 0%)' })); $$('.x-ct, .x-cc', sx).forEach(prepBlock); kind.set(sx, 'strip'); }
@@ -300,7 +369,8 @@
       let t = 0, im = 0;
       queue.forEach(el => {
         const k = kind.get(el);
-        if (k === 'strip') {
+        if (k === 'dash') gsap.to(el, { scaleX: 1, duration: 1.4, ease: 'expo.inOut' });
+        else if (k === 'strip') {
           $$('.x-cm', el).forEach((c, i) => gsap.to(c, { clipPath: 'inset(0% 0% 0% 0%)', duration: M.image.duration, ease: M.image.ease, delay: i * M.image.stagger, onComplete: () => gsap.set(c, { clearProps: 'clipPath' }) }));
           $$('.x-slide', el).forEach((sl, i) => $$('.x-ct, .x-cc', sl).forEach((b, j) => revealBlock(b, 0.35 + i * M.image.stagger + j * 0.06)));
         } else if (k === 'image') revealImage(el, im++ * M.image.stagger);
@@ -319,5 +389,5 @@
 
   /* fonts first: lines can only be found once the real font is in */
   const fontsIn = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(r => setTimeout(r, 2500))]);
-  fontsIn.then(() => { window.PF_STRIP = initStrip(); d.classList.contains('pf-intro') ? intro() : startScrollReveals(); });
+  fontsIn.then(() => { window.PF_STRIP = initStrip(); initList(); d.classList.contains('pf-intro') ? intro() : startScrollReveals(); });
 })();
