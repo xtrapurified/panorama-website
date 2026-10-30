@@ -1,4 +1,4 @@
-/* experimental2 (2026-10-30): the films as one field of moving tiles, after wanda.net.
+/* experimental (the redesign branch, started 2026-10-30): the films as one field of moving tiles, after wanda.net.
    The hero and the two film sections stay in the page (their code and search text keep working) but are not shown;
    the field takes their place at the top. Everything for this lives in media/field/. */
 

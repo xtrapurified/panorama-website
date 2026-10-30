@@ -1,4 +1,4 @@
-/* experimental2 (2026-10-30): the site as one field of moving tiles, after wanda.net.
+/* experimental (the redesign branch, started 2026-10-30): the site as one field of moving tiles, after wanda.net.
  *
  * WORK — every project is a tile playing its own clip, shuffled and laid out anew on each visit (order, sizes, shapes,
  * positions; the showreel among the first three) on a 24-column grid, mostly wide and scope crops (2.39:1) as on
