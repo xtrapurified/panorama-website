@@ -1503,7 +1503,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 @media (min-width:761px){
   /* the red underline is drawn as a background line, so the text's colour fringes never reach it */
   .menu a,.menu a.go,.menu a.on,.menu a:hover,.menu a.go:hover,.menu a:focus-visible{text-decoration:none}
-  .menu a{background:linear-gradient(var(--red),var(--red)) left 100% / 100% 0 no-repeat;padding-bottom:.12em}
+  .menu a{background:linear-gradient(var(--red),var(--red)) left calc(100% - .22em) / 100% 0 no-repeat;padding-bottom:.12em}   /* the line sits .22em higher, closer to the words (Andrija, 2026-10-30) */
   .menu a:hover,.menu a:focus-visible{background-size:100% max(1px,.035em)}   /* no colour fringe since 2026-10-20 (Andrija): only the red underline */
 }
 @media (prefers-reduced-motion:reduce){.menu a:hover,.menu a:focus-visible{animation:none}}
@@ -1827,12 +1827,11 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   #chapters,#chapters .works,section.sec#films{margin-bottom:0!important;padding-bottom:0!important}
   #cards{margin-top:0}
 }
-/* Featured titles on computers: pointing at a film draws a thin red underline under its title from the left, the menu's red line (Andrija, 2026-10-30) */
+/* Featured titles on computers: pointing at a film shows a thin red underline close under its title at once, the menu's red line (Andrija, 2026-10-30) */
 @media (min-width:761px){
-  .ov-u{background:linear-gradient(var(--red),var(--red)) left calc(100% - .02em) / 0 max(1px,.035em) no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding-bottom:.06em;transition:background-size .55s var(--ease)}
-  .works .frame:hover .ov-u,.works .frame:focus-visible .ov-u{background-size:100% max(1px,.035em)}
+  .ov-u{text-decoration:underline transparent;text-decoration-thickness:max(1px,.035em);text-underline-offset:.09em;text-decoration-skip-ink:none}
+  .works .frame:hover .ov-u,.works .frame:focus-visible .ov-u{text-decoration-color:var(--red)}
 }
-@media (prefers-reduced-motion:reduce){.ov-u{transition:none}}
 /* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in were tried, C (Rise) chosen; ?hov=a|b still shows the others.
    A Focus: the words come into focus from a soft blur. B Wipe: they are uncovered left to right. C Rise: each line rises from behind its own edge.
    Touch screens: the card crossing the middle of the window; the keyboard: the focused card. */
@@ -1841,7 +1840,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   #cards .card .meta .cl{transition-delay:0s}
   :root[data-hov="a"] #cards .card .meta > *{filter:blur(8px);transform:scale(1.02);transform-origin:0 50%}
   :root[data-hov="b"] #cards .card .meta > *{opacity:1;clip-path:inset(0 100% 0 0);transition-duration:.2s,.6s,.6s,.7s}
-  :root[data-hov="c"] #cards .card .meta > *{opacity:1;transform:translateY(100%);clip-path:inset(0 0 100% 0);transition-duration:.2s,.6s,.65s,.65s}
+  :root[data-hov="c"] #cards .card .meta > *{transform:translateY(35%);clip-path:inset(0 0 35% 0);transition:opacity .7s var(--ease),transform .8s var(--ease),clip-path .8s var(--ease)}   /* subtler (Andrija, 2026-10-30): a short rise with a fade */
   /* revealed (after the three starting states, so it wins over them) */
   :is(#cards .card:hover,#cards .card:focus-within,#cards .card:has(.media.lit)) .meta > *{opacity:1;filter:none;transform:none;clip-path:inset(0 0 0 0)}
   :is(#cards .card:hover,#cards .card:focus-within,#cards .card:has(.media.lit)) .meta .cl{transition-delay:.09s}
@@ -1859,7 +1858,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   /* catalogue, a trial "to see": thumbnails edge to edge with no gaps, title and client over the picture, left, in the middle of its height */
   .cards{gap:0;margin-inline:calc(var(--m) * -1)}
   .cards .card{position:relative}
-  #cards .card .meta{position:absolute;inset:0;z-index:3;margin:0;padding:0 clamp(12px,1.6vw,20px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;row-gap:2px;pointer-events:none;color:#fff;text-shadow:0 0 14px rgba(0,0,0,.45)}
+  #cards .card .meta{position:absolute;inset:0;z-index:3;margin:0;padding:0 clamp(12px,1.6vw,20px) 0 var(--m);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;row-gap:2px;pointer-events:none;color:#fff;text-shadow:0 0 14px rgba(0,0,0,.45)}
   #cards .card .meta .cl{color:rgba(255,255,255,.62)}
 }
 .pf-globe{display:inline-block;width:.85em;height:.85em;vertical-align:calc(-.022em - 5px);fill:currentColor;overflow:visible}   /* an inline vector (media/globe-flat.svg, one flat path), not a CSS mask: masks are drawn as a bitmap and went soft (Andrija, 2026-10-30) */
