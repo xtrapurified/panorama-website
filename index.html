@@ -1841,6 +1841,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .ov-w{mix-blend-mode:normal}
 .ov-w .ov-tl{visibility:hidden}
 .ov-w .ov-c{opacity:1;color:#fff;text-shadow:0 1px 18px rgba(0,0,0,.3),0 0 2px rgba(0,0,0,.2)}
+/* the nav keeps the place it has once the header turns compact, also over the reel at the top (Andrija, 2026-10-30): it sits at the top of the bar in a
+   44 px row (the menu button's size, which sets the compact bar's height), centred in it, instead of being centred on the tall globe */
+@media (min-width:761px){ .hdr .bar .menu{align-self:start;min-height:44px;display:flex;align-items:center} }
 /* reading progress (Andrija, 2026-10-30): a 2 px red line across the very top that grows with the scroll, over everything (after felixrieseberg.com) */
 .pf-prog{position:fixed;top:0;left:0;right:0;height:2px;background:var(--red);transform-origin:0 50%;transform:scaleX(0);z-index:2147483000;pointer-events:none;will-change:transform}
 /* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in were tried, C (Rise) chosen; ?hov=a|b still shows the others.
