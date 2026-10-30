@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-30 (experimental: less overlap, discreet Human in the loop strip, Golden hour easter egg, Collective profile beside the names). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (experimental: pitch black and the Dark / Light switch everywhere, footer at the bottom, the site's client strip, Field notes, header and Collective fixes). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -85,6 +85,14 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
   - **B1's Collective is the site's own List / Graph** (the switch, the names list, the network graph with its timeline and profile drawer), moved in from the hidden About section; the plain three-column list stays only as a fallback.
   - **Edge lines:** nine clips (docu, imagine, metaplasm, miracles, orchard, pula, sport (Dubai, the City of Sport), valamar, wewalk) had a light line in their last pixel column (an encoding artefact of the 854-px width); re-encoded at their own bitrates without that column (852×480), sizes about the same. This fixes them on every version and on dev once merged.
   - **Header, as on the traditional site** (Andrija, 2026-10-30; replaces the small globe beside the wordmark tried just before, and the wanda.net breadcrumb and ⊕): at the top the large Panorama globe (LE-011 Follow the cursor, 179 px / 112 px on phones), which gives way to the Panorama Films wordmark with its blinking red bullet as soon as the field moves (more than 40 px; field.js sets the header's compact state from the field's own scroll); the nav on the right as on the site, Work · Index · About · Contact (Index added; About leads to the studio, Contact to the ask, or to the panels in A), the current one lit. No Rec counter. The first films start below the globe.
+- **Just after midnight, 2026-10-31 (Andrija):**
+  - **One background everywhere: pitch black (#000)**, the field, the credits, panels, project pages and the site's own sections; every colour on this branch follows the **Dark / Light switch** (the light look is the site's paper, #f1f0ec, with dark type, the globe drawn dark).
+  - **The site's footer at the bottom** (©, Dark / Light, Index, Back to top, Studio Panorama Films), under the Golden hour egg; Back to top returns to the first films, Index opens the Index.
+  - **Collective:** clicking a name (list or graph) no longer throws the page to the top of the block; the page now follows focus only for the keyboard, and only by as much as the focused thing is out of view. Space on a focused button presses it.
+  - **Human in the loop:** the site's Field notes heading (red Rec dot, FIELD NOTES, Human in the loop) and its line `frame 62 / 102 · loop = true`; the photos larger (about a third of the window, at most 70 % of its height) and never cropped, each at its own aspect ratio.
+  - **B1:** Creative Director / Producer / Editorial Director in the Data Error type of the label column; Београд دبي Worldwide in red at the statement's size; the flat Panorama globe inline in the statement after "Panorama Films", as on the site (also in B and A).
+  - **Header:** the globe gives way to the wordmark later (after about a third of a screen); the nav keeps one place, where it sits beside the wordmark (the large globe hangs from the bar instead of making it taller).
+  - **Client logos: the site's own horizontal strip** (logos with its throw physics), moved in from the hidden About section, full width, in B1, B and A; the logo grid stays only as a fallback.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.
   - **Collective, B1:** the List / Graph switch without its pictograms; the profile opens on the right beside the names (36 % of the column, at most 360 px) instead of over them.
