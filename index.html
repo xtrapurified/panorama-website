@@ -672,7 +672,7 @@ footer a:hover{color:var(--red)}
 .lb-hit{position:absolute;inset:0;z-index:2;cursor:pointer}
 .lb-hit:focus-visible{outline-offset:-4px}
 /* Our own transport: the players' own interface stays hidden */
-.lb-ctl{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto;grid-template-areas:"play tc seek snd fs";align-items:center;column-gap:20px;border-bottom:1px solid var(--rule)}
+.lb-ctl{display:grid;grid-template-columns:auto auto minmax(0,1fr) auto auto auto;grid-template-areas:"play tc seek snd vol fs";align-items:center;column-gap:20px;border-bottom:1px solid var(--rule)}
 .lb-ctl[hidden]{display:none}
 .lb-ctl button{min-height:44px;padding-inline:2px}
 .lb-ctl button:hover{color:var(--red)}
@@ -688,6 +688,9 @@ footer a:hover{color:var(--red)}
 .seek::-moz-range-thumb{width:12px;height:12px;border-radius:50%;background:#fff;border:0}
 .seek:hover::-webkit-slider-thumb,.seek:focus-visible::-webkit-slider-thumb{transform:scale(1.35)}
 .seek:focus-visible{outline:none}
+/* volume (Andrija, 2026-10-30): a short slider beside the sound button, styled like the seek bar; hidden where the browser can't set volume (iPhone, iPad) */
+.seek.vol{grid-area:vol;width:clamp(64px,6vw,96px);margin-left:-8px}
+.seek.vol[hidden]{display:none}
 .seek:focus-visible::-webkit-slider-runnable-track{background:linear-gradient(var(--red),var(--red)) 0/var(--p) 100% no-repeat,var(--mid)}
 .lb-player:fullscreen{width:100%;height:100%;background:#000;display:grid;grid-template-rows:minmax(0,1fr) auto;place-items:center;padding:16px 24px}
 .lb-player:fullscreen .lb-box{width:min(100%,calc((100vh - 80px) * 16 / 9))}
@@ -696,7 +699,7 @@ footer a:hover{color:var(--red)}
 .watch{display:inline-flex;align-items:center;gap:10px;background:var(--red);color:#fff;padding:12px 18px}
 .watch:hover{background:#fff;color:#000}
 @media (max-width:600px){.lb-bar{grid-template-columns:1fr auto}.lb-bar .ttl{grid-column:1/-1;grid-row:2}
-  .lb-ctl{grid-template-columns:auto minmax(0,1fr) auto auto;grid-template-areas:"seek seek seek seek" "play tc snd fs";column-gap:16px}
+  .lb-ctl{grid-template-columns:auto minmax(0,1fr) auto auto auto;grid-template-areas:"seek seek seek seek seek" "play tc snd vol fs";column-gap:16px}
   .seek{height:32px}.lb-player{width:100%}}
 @media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}html{scroll-behavior:auto}}
 /* ===== Interactions ===== */
@@ -1569,7 +1572,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .lb-bar #lb-close:hover{color:var(--fg)}   /* Close is always red */
 .lb-stage{display:block;place-items:initial;padding-block:4px 0;cursor:auto}
 .lb-player{width:min(100%,calc((100svh - 140px) * 16 / 9));margin:0}
-.lb-ctl{grid-template-columns:auto auto minmax(0,1fr) auto auto;column-gap:clamp(14px,1.6vw,24px);padding-top:6px}
+.lb-ctl{grid-template-columns:auto auto minmax(0,1fr) auto auto auto;column-gap:clamp(14px,1.6vw,24px);padding-top:6px}
 .lb-ctl button{display:inline-grid;place-items:center;width:44px;height:44px;padding:0;color:var(--fg)}
 .lb-ctl button svg{width:calc(24*var(--fz));height:calc(24*var(--fz));fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
 .lb-ctl #c-play{margin-left:-10px;min-width:0}
@@ -1637,7 +1640,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   .lb-bar .lb-pn{display:none}
   .lb-bar .lb-l{grid-column:1;grid-row:1}
   .lb-player{width:100%}
-  .lb-ctl{grid-template-columns:auto minmax(0,1fr) auto auto;grid-template-areas:"seek seek seek seek" "play tc snd fs"}
+  .lb-ctl{grid-template-columns:auto minmax(0,1fr) auto auto auto;grid-template-areas:"seek seek seek seek seek" "play tc snd vol fs"}
   .lb-ctl #c-play{margin-left:-10px}
 }
 
@@ -2074,6 +2077,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <span id="c-tc" aria-live="off">0:00 / 0:00</span>
       <input class="seek" id="c-seek" type="range" min="0" max="1000" step="1" value="0" aria-label="Seek">
       <button id="c-snd" type="button" aria-label="Mute"></button>
+      <input class="seek vol" id="c-vol" type="range" min="0" max="100" step="1" value="100" aria-label="Volume">
       <button id="c-fs" type="button" aria-label="Full screen"></button>
     </div>
   </div></div>
@@ -2759,7 +2763,9 @@ document.querySelectorAll('[data-sec]').forEach(s=>nio.observe(s));
    Vimeo, YouTube and the hosted clips, and the players' own interface never shows. */
 const lb = document.getElementById('lb'), box = document.getElementById('lb-box'), lbp = document.getElementById('lb-player');
 const ctl = document.getElementById('lb-ctl'), cPlay = document.getElementById('c-play'), cTc = document.getElementById('c-tc'),
-      cSeek = document.getElementById('c-seek'), cSnd = document.getElementById('c-snd'), cFs = document.getElementById('c-fs');
+      cSeek = document.getElementById('c-seek'), cSnd = document.getElementById('c-snd'), cFs = document.getElementById('c-fs'), cVol = document.getElementById('c-vol');
+/* volume: one level for every film, kept for the visit; iOS ignores setting it (only the hardware buttons work), so the slider hides there */
+let VOL = 1; const VOL_OK = (()=>{ try { const t = document.createElement('video'); t.volume = .5; return t.volume === .5 && !/iP(hone|ad|od)/.test(navigator.userAgent) && !(navigator.maxTouchPoints > 1 && /Macintosh/.test(navigator.userAgent)); } catch(_) { return false; } })();
 setIco(cPlay, 'pause', 'Pause'); setIco(cSnd, 'snd', 'Mute'); setIco(cFs, 'fs', 'Full screen');
 let back = null, curK = null, P = null, scrubbing = false, watchdog = 0;
 const mmss = t => { t = Math.max(0, Math.floor(t||0)); return `${Math.floor(t/60)}:${String(t%60).padStart(2,'0')}`; };
@@ -2769,6 +2775,8 @@ function paint(){
   setIco(cPlay, P.paused ? 'play' : 'pause', P.paused ? 'Play' : 'Pause');
   cPlay.setAttribute('aria-label', (P.paused ? 'Play ' : 'Pause ') + (F[curK]?.title || 'film'));
   cSnd.hidden = !P.sound; setIco(cSnd, P.muted ? 'mute' : 'snd', P.muted ? 'Unmute' : 'Mute');
+  cVol.hidden = !P.sound || !P.vol || !VOL_OK;
+  if (!cVol.hidden && document.activeElement !== cVol){ const lv = P.muted ? 0 : Math.round((P.level ?? VOL) * 100); cVol.value = lv; cVol.style.setProperty('--p', lv + '%'); cVol.setAttribute('aria-valuetext', lv + '%'); }
   cFs.hidden = !(FS_OK || P.nativeFs); { const on = document.fullscreenElement || document.webkitFullscreenElement; setIco(cFs, on ? 'fsx' : 'fs', on ? 'Exit full screen' : 'Full screen'); }
   cTc.textContent = `${mmss(P.time)} / ${mmss(P.dur)}`;
   if (!scrubbing){ const r = P.dur ? P.time / P.dur : 0; cSeek.value = Math.round(r*1000); cSeek.style.setProperty('--p', (r*100).toFixed(2)+'%'); }
@@ -2786,7 +2794,9 @@ function playFile(k, fm){
   const v = box.querySelector('video'), quiet = f.mute && (!fm || fm.main);
   if (quiet){ v.loop = true; v.muted = true; box.querySelector('.lb-hit').remove(); }   /* a silent moving shot as the project's header: loops, no controls (Natural History Museum Abu Dhabi, 2026-10-27) */   /* a silent moving shot as the project's header: loops, no sound (Natural History Museum Abu Dhabi) */
   P = { sound:true, nativeFs:!!v.webkitEnterFullscreen, get paused(){ return v.paused; }, get muted(){ return v.muted; }, get time(){ return v.currentTime; }, get dur(){ return v.duration||0; },
-        play(){ v.play().catch(()=>{}); }, pause(){ v.pause(); }, seek(t){ v.currentTime = t; }, mute(m){ v.muted = m; }, fs(){ v.webkitEnterFullscreen && v.webkitEnterFullscreen(); } };
+        play(){ v.play().catch(()=>{}); }, pause(){ v.pause(); }, seek(t){ v.currentTime = t; }, mute(m){ v.muted = m; }, fs(){ v.webkitEnterFullscreen && v.webkitEnterFullscreen(); },
+        get level(){ return v.volume; }, vol(x){ v.volume = x; v.muted = x === 0; } };
+  if (VOL_OK) v.volume = VOL;
   ['play','pause','timeupdate','loadedmetadata','volumechange'].forEach(ev=>v.addEventListener(ev, paint));
   v.addEventListener('playing', ready); v.addEventListener('loadeddata', ready);
   const go = () => v.play().catch(()=>{ v.muted = true; v.play().catch(()=>{}); });   /* sound needs a tap on some browsers: start muted, Unmute is in the controls */
@@ -2828,10 +2838,11 @@ function playVimeo(k, fm){
   const lp = new Vimeo.Player(box.querySelector('iframe')), off = () => lp.disableTextTrack().catch(()=>{});
   const st = { sound:true, nativeFs:true, paused:true, muted:false, time:0, dur:0,
     play(){ lp.play().catch(()=>{ st.paused = true; paint(); }); }, pause(){ lp.pause().catch(()=>{}); },
-    seek(t){ lp.setCurrentTime(t).catch(()=>{}); }, mute(m){ lp.setMuted(m).then(()=>{ st.muted = m; paint(); }).catch(()=>{}); },
+    seek(t){ lp.setCurrentTime(t).catch(()=>{}); }, mute(m){ lp.setMuted(m).then(()=>{ st.muted = m; if (!m && st.level === 0) st.vol(VOL || 1); paint(); }).catch(()=>{}); },
+    level:VOL, vol(x){ st.level = x; lp.setVolume(x).catch(()=>{}); lp.setMuted(x === 0).then(()=>{ st.muted = x === 0; paint(); }).catch(()=>{}); },
     fs(){ lp.requestFullscreen().catch(()=>{}); }, destroy(){ lp.destroy().catch(()=>{}); } };
   P = st;
-  lp.ready().then(()=>{ off(); best(); lp.getDuration().then(d=>{ st.dur = d; paint(); }); lp.getMuted().then(m=>{ st.muted = m; paint(); }); setTimeout(()=>{ if (P === st && st.paused) unload(); }, 1500); }).catch(()=>playLocal(k, true));
+  lp.ready().then(()=>{ off(); best(); if (VOL_OK && VOL < 1) lp.setVolume(VOL).catch(()=>{}); lp.getDuration().then(d=>{ st.dur = d; paint(); }); lp.getMuted().then(m=>{ st.muted = m; paint(); }); setTimeout(()=>{ if (P === st && st.paused) unload(); }, 1500); }).catch(()=>playLocal(k, true));
   /* sharpest version the screen can show: the player's width in device pixels (the whole screen in full screen), never below 1080p;
      asked again once playback starts and on entering full screen, because Vimeo's automatic quality starts low and climbs.
      Vimeo only honours this when the account allows choosing quality; otherwise it stays on automatic (2026-10-22) */
@@ -2847,7 +2858,7 @@ function playVimeo(k, fm){
   lp.on('play', ()=>{ off(); if (!picked) best(); st.paused = false; ready(); lp.getMuted().then(m=>{ st.muted = m; paint(); }); paint(); });
   lp.on('pause', ()=>{ st.paused = true; paint(); });
   lp.on('timeupdate', d=>{ st.time = d.seconds; st.dur = d.duration; paint(); });
-  lp.on('volumechange', ()=>lp.getMuted().then(m=>{ st.muted = m; paint(); }));
+  lp.on('volumechange', d=>{ if (d && typeof d.volume === 'number') st.level = d.volume; lp.getMuted().then(m=>{ st.muted = m; paint(); }); });
   lp.on('error', ()=>{ if (!box.classList.contains('ready')) playLocal(k, true); });
   /* autoplay with sound can be refused: once loaded but not playing, show the still with a Play control instead of a black box */
   lp.on('bufferend', ready);
@@ -2864,6 +2875,7 @@ function playYouTube(k, fm){
   const st = { sound:true, nativeFs:false, paused:true, muted:false, time:0, dur:0,
     play(){ c('playVideo'); }, pause(){ c('pauseVideo'); }, seek(t){ c('seekTo',[t,true]); st.time = t; ytNoCC(c); paint(); },
     mute(m){ c(m?'mute':'unMute'); st.muted = m; paint(); },
+    level:VOL, vol(x){ st.level = x; c('setVolume',[Math.round(x * 100)]); c(x === 0 ? 'mute' : 'unMute'); st.muted = x === 0; paint(); },
     destroy(){ removeEventListener('message', onMsg); } };
   P = st;
   lif.addEventListener('load', ()=>{ lif.contentWindow.postMessage(JSON.stringify({event:'listening'}), '*'); [600,1500,3000,6000].forEach(ms=>setTimeout(()=>ytNoCC(c), ms)); });
@@ -2874,8 +2886,9 @@ function playYouTube(k, fm){
     if (info.duration) st.dur = info.duration;
     if (typeof info.currentTime === 'number') st.time = info.currentTime;
     if (typeof info.muted === 'boolean') st.muted = info.muted;
+    if (typeof info.volume === 'number' && document.activeElement !== cVol) st.level = info.volume / 100;
     if (typeof info.playerState === 'number'){
-      if (info.playerState !== st.ps){ st.ps = info.playerState; if (st.ps === 1){ ready(); ytNoCC(c); c('setPlaybackQuality',['hd1080']); } }
+      if (info.playerState !== st.ps){ st.ps = info.playerState; if (st.ps === 1){ ready(); ytNoCC(c); c('setPlaybackQuality',['hd1080']); if (VOL_OK && !st.volSet){ st.volSet = true; c('setVolume',[Math.round((st.level ?? VOL) * 100)]); } } }
       st.paused = info.playerState !== 1 && info.playerState !== 3;
       if ((info.playerState === -1 || info.playerState === 5) && st.dur) unload();   /* loaded, autoplay refused: Play is waiting */
       if (info.playerState === 0){ c('seekTo',[0,true]); c('playVideo'); }
@@ -3142,6 +3155,8 @@ function alignWm(){ const h = document.querySelector('.hdr .wm'), m = document.g
     const d = h.getBoundingClientRect().top - m.getBoundingClientRect().top; if (Math.abs(d) < 40) w.style.setProperty('--wm-dy', d.toFixed(1) + 'px'); else w.style.removeProperty('--wm-dy'); }); }
 addEventListener('resize', ()=>{ if (!lb.hidden) alignWm(); });
 cSnd.addEventListener('click', ()=>P && P.mute(!P.muted));
+cVol.addEventListener('input', ()=>{ if (!P || !P.vol) return; const x = cVol.value / 100; cVol.style.setProperty('--p', cVol.value + '%'); if (x > 0) VOL = x; P.vol(x); });
+cVol.addEventListener('change', ()=>cVol.blur());
 cFs.addEventListener('click', toggleFs);
 box.addEventListener('click', e=>{ if (e.target.classList.contains('lb-hit')) toggle(); });
 box.addEventListener('dblclick', e=>{ if (e.target.classList.contains('lb-hit')) toggleFs(); });
