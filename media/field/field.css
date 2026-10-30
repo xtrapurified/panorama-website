@@ -244,3 +244,37 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 .cr2-peers .net-hint{margin-left:0;width:100%;text-align:left}
 .cr2-peers .net-dr{right:0}
 .cr2-peers{position:relative;z-index:0;isolation:isolate}   /* the graph sits at z-index -1: keep it in front of the page's black, on phones too */
+
+/* ======================= 2026-10-30, late ======================= */
+/* the Collective's List / Graph switch without its pictograms; the profile opens on the right, beside the names, not over them */
+.cr2-peers .net-view svg,.cr2-peers .net-view .vi{display:none}
+@media (min-width:761px){
+  .cr2-peers .net-dr{left:auto!important;right:0!important;width:min(360px,36%)!important}
+  .cr2-peers .net-names{padding-right:calc(min(360px,36%) + 24px)}
+}
+
+/* Human in the loop, discreet: a strip of thin ticks, one per photo; a photo only while pointing at it */
+.x2-strip{display:flex;align-items:stretch;gap:2px;height:36px;margin:1.1em 0 .7em;cursor:crosshair;touch-action:none;outline-offset:6px}
+.x2-strip i{flex:1 1 0;min-width:1px;max-width:6px;background:rgba(255,255,255,.22);transition:background-color .15s,transform .15s;transform-origin:50% 100%}
+.x2-strip:hover i{background:rgba(255,255,255,.3)}
+.x2-strip i.on{background:var(--red,#e2231a);transform:scaleY(1.35)}
+.x2-hlc{position:relative}
+.x2-hn{font-variant-numeric:tabular-nums}
+.x2-pv.x2-pv-b{width:clamp(220px,24vw,380px);aspect-ratio:3/2}
+.x2-pv.x2-pv-b::before{opacity:0}
+.x2-pv.x2-pv-b img{object-fit:cover}
+.x2-hframe{display:none}
+@media (hover:none),(pointer:coarse){
+  .x2-hframe{position:absolute;left:0;bottom:calc(100% + 64px);width:min(78vw,340px);aspect-ratio:3/2;background:#000;overflow:hidden;pointer-events:none;z-index:2}
+  .x2-hframe.on{display:block}
+  .x2-hframe img{width:100%;height:100%;object-fit:cover}
+}
+.cr-hitl{max-width:720px;margin:0 auto;text-align:left}
+
+/* the easter egg at the bottom: the Golden hour fold of the old site, closed until someone opens it */
+.x2-egg{position:relative;width:min(1240px,calc(100vw - 2 * var(--m)));margin:22vh auto 0}
+.x2-egg #golden{margin:0}
+.x2-ix .x2-egg{width:auto;margin:10vh 0 0}
+.x2-egg .ft-gh{font-size:clamp(10px,.72vw,12px)}
+.x2-egg .ft-gh-t{display:inline!important}
+.x2-egg #golden{margin-top:clamp(14px,1.4vw,22px)}

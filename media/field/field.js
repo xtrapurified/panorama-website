@@ -41,7 +41,7 @@
   root.classList.toggle('x2-vs', VIRTUAL);
 
   const T = (window.PF_FIELD = { pan: 0.165, depth: [0.82, 1.16], ease: 0.055, scrollDepth: 0.6, fadeOut: 0.45, fadeIn: 0.7,
-    step: [0.74, 0.98], stepPhone: [0.95, 1.04],          /* how far down the next tile starts, as a share of its height */
+    step: [0.92, 1.12], stepPhone: [1.0, 1.08],   /* less overlap again: tiles now mostly stand apart (Andrija, 2026-10-30) */          /* how far down the next tile starts, as a share of its height */
     wheel: 1.2, spring: [3.4, 5.8], springText: [4.6, 6.4] });
 
   /* ---------- the films ---------- */
@@ -86,6 +86,55 @@
   const MAIL = 'Film enquiry';
   const LINKS = `<a href="#contact" data-mail="${MAIL}">Email</a><a href="https://www.instagram.com/panoramafilms.tv/" target="_blank" rel="noopener">Instagram</a><a href="https://vimeo.com/panoramafilmstv" target="_blank" rel="noopener">Vimeo</a>`;
 
+  /* ---------- Human in the loop, discreet (Andrija, 2026-10-30): no photos by default. One code line and a strip of thin ticks,
+     one per behind-the-scenes photo; pointing along the strip (or dragging on a phone, or the arrow keys) shows that frame
+     beside the pointer and counts it, frame 23 / 106. Photos load only when asked for. ---------- */
+  const hitlHTML = () => `<p class="x2-ln"><span class="k">(filming in progress) {</span> <span class="v">human</span><span class="k">.in(</span><span class="v">loop</span><span class="k">) }</span></p>
+    <div class="x2-strip" tabindex="0" role="slider" aria-label="Behind the scenes photos: point along the strip to see them" aria-valuemin="1" aria-valuemax="1" aria-valuenow="1"></div>
+    <p class="x2-ln x2-hlc"><span class="k">frame</span> <span class="v x2-hn">00 / 00</span><span class="x2-hframe" aria-hidden="true"></span></p>`;
+  let bts = [];
+  function initHitl(root) {
+    const strip = $('.x2-strip', root); if (!strip) return;
+    const num = $('.x2-hn', root), inl = $('.x2-hframe', root);
+    fetch('media/bts/photos.json').then(r => r.json()).then(d => {
+      bts = (d.photos || []).filter(p => !p.hidden);
+      strip.innerHTML = bts.map(() => '<i></i>').join('');
+      strip.setAttribute('aria-valuemax', bts.length);
+      num.textContent = `01 / ${String(bts.length).padStart(2, '0')}`;
+      measure();
+    }).catch(() => {});
+    let cur = -1;
+    const show = (i, near) => {
+      if (!bts.length) return;
+      i = Math.max(0, Math.min(bts.length - 1, i)); if (i === cur && pv.classList.contains('on')) return; cur = i;
+      $$('i', strip).forEach((t, j) => t.classList.toggle('on', j === i));
+      num.textContent = `${String(i + 1).padStart(2, '0')} / ${String(bts.length).padStart(2, '0')}`;
+      strip.setAttribute('aria-valuenow', i + 1);
+      const src = `media/bts/${bts[i].f}`;
+      if (FINE) { pvK = 'bts' + i; pv.className = 'x2-pv on x2-pv-b'; pv.innerHTML = `<img src="${src}" alt="">`; if (near) { const r = strip.getBoundingClientRect(); px = r.left + r.width * (i + 0.5) / bts.length; py = r.top - 120; } placePv(true); }
+      else { inl.innerHTML = `<img src="${src}" alt="">`; inl.classList.add('on'); }
+    };
+    const at = x => { const r = strip.getBoundingClientRect(); return Math.floor((x - r.left) / r.width * bts.length); };
+    strip.addEventListener('pointermove', ev => { if (ev.pointerType === 'mouse' || ev.buttons) show(at(ev.clientX)); });
+    strip.addEventListener('pointerdown', ev => { if (ev.pointerType !== 'mouse') { strip.setPointerCapture(ev.pointerId); show(at(ev.clientX)); } });
+    const off = () => { hidePv(); inl.classList.remove('on'); $$('i.on', strip).forEach(t => t.classList.remove('on')); cur = -1; };
+    strip.addEventListener('pointerleave', ev => { if (ev.pointerType === 'mouse') off(); });
+    strip.addEventListener('pointerup', ev => { if (ev.pointerType !== 'mouse') off(); });
+    strip.addEventListener('keydown', ev => { const d = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[ev.key]; if (!d) return; ev.preventDefault(); ev.stopPropagation(); show((cur < 0 ? 0 : cur + d), true); });
+    strip.addEventListener('blur', off);
+  }
+
+  /* ---------- the easter egg at the bottom: the old site's Golden hour fold (a live map of where the golden hour is now) ---------- */
+  function addEgg(root, wrapTag) {
+    const g = document.getElementById('golden'); if (!g || !root) return;
+    const box = document.createElement(wrapTag || 'div'); box.className = 'x2-egg lab'; box.setAttribute('data-x2b', '');
+    /* its way in is the footer's small red ping with the live line "golden hour now…" (the footer itself is hidden here) */
+    const btn = document.getElementById('ftGh'); if (btn) box.appendChild(btn);
+    box.appendChild(g); root.appendChild(box);
+    const fold = document.getElementById('ghFold');
+    if (fold && VIRTUAL) fold.addEventListener('toggle', () => { if (!fold.open) return; setTimeout(() => { measure(); const l = lines.find(x => x.el === box); if (l) scrollToY(l.y - 90); }, 80); });
+  }
+
   /* ---------- b1: the credits in columns, in the old site's type: Data Error codes, code lines, Rec ---------- */
   function buildCredits() {
     const sec = document.createElement('section');
@@ -99,12 +148,14 @@
       /* the Collective: the site's own List / Graph (moved here from the hidden About section); the plain columns stay if it is missing */
       grp(3, 'Collective', `<div class="cr2-peers"></div><ul class="cr2-cols c3 cr2-coll">${COLLECTIVE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-n">${e(n)}</span><span class="cr2-r">${e(r)}</span></li>`).join('')}</ul>`) +
       grp(4, 'We make', `<ol class="cr2-make">${WE_MAKE.map((w, i) => `<li><span class="cr2-no">${String(i + 1).padStart(2, '0')}</span>${e(w)}</li>`).join('')}</ol>`) +
-      grp(5, 'Made for', `<div class="x2-logos">${LOGO_CLIENTS.map(logoTag).join('')}</div>`) +
-      grp(6, 'Contact', `<p class="x2-ln cr2-cmd"><span class="k">$</span> <span class="v">panorama --contact</span><span class="x2-cur" aria-hidden="true"></span></p>
+      grp(5, 'Human in the loop', hitlHTML()) +
+      grp(6, 'Made for', `<div class="x2-logos">${LOGO_CLIENTS.map(logoTag).join('')}</div>`) +
+      grp(7, 'Contact', `<p class="x2-ln cr2-cmd"><span class="k">$</span> <span class="v">panorama --contact</span><span class="x2-cur" aria-hidden="true"></span></p>
         <p class="cr2-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr2-links">${LINKS}</p>`, ' data-x2sec="contact"');
     field.appendChild(sec);
     const peers = document.getElementById('peers'), slot = $('.cr2-peers', sec);
     if (peers && slot) { slot.appendChild(peers); sec.classList.add('has-peers'); }
+    addEgg(sec);
     return sec;
   }
 
@@ -176,11 +227,14 @@
       ${COLLECTIVE.map(([id, n, r]) => row(r, n, ` data-pp="${id}"`)).join('')}
       ${head('We make')}
       ${WE_MAKE.map(w => `<p class="cr-c" data-x2b>${e(w)}</p>`).join('')}
+      ${head('Human in the loop')}
+      <div class="cr-hitl" data-x2b>${hitlHTML()}</div>
       ${head('Made for')}
       <div class="x2-logos cr-logos" data-x2b>${LOGO_CLIENTS.map(logoTag).join('')}</div>
       <p class="cr-pl" data-x2b>${PLACES}</p>
       <div class="cr-end" data-x2b data-x2sec="contact"><p class="cr-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr-links">${LINKS}</p></div>`;
     field.appendChild(rest);
+    addEgg(rest);
   }
 
   /* a thin red bar along the top shows how far down the page you are (b, b1; Andrija, 2026-10-30) */
@@ -244,9 +298,12 @@
   const blocked = el => el && el.closest && el.closest('#lb, .x2-ix, .x2-pnl, #sx, .navov');
   const overlayOpen = () => !lb.hidden || $('.x2-ix.on, .x2-pnl.on, #sx:not([hidden])');
   if (VIRTUAL) {
+    /* nothing but the springs may move the field: a scrollIntoView elsewhere (the Golden hour button) would scroll the fixed window itself */
+    field.addEventListener('scroll', () => { if (field.scrollTop || field.scrollLeft) field.scrollTop = field.scrollLeft = 0; });
     addEventListener('wheel', ev => {
       if (blocked(ev.target) || overlayOpen()) return;
       ev.preventDefault();
+      if (pvK && pvK.startsWith('bts')) hidePv();   /* a photo shown from the strip goes when the page moves */
       const d = ev.deltaMode === 1 ? ev.deltaY * 16 : ev.deltaMode === 2 ? ev.deltaY * innerHeight : ev.deltaY;
       target = clampY(target + d * T.wheel);
     }, { passive: false });
@@ -376,6 +433,7 @@
   /* ---------- the floating picture: a clip by a film's name, a portrait by a person's name ---------- */
   const pv = document.createElement('div'); pv.className = 'x2-pv'; pv.setAttribute('aria-hidden', 'true'); document.body.appendChild(pv);
   let pvK = null;
+  if (!VIRTUAL) addEventListener('scroll', () => { if (pvK && pvK.startsWith('bts')) hidePv(); }, { passive: true });
   const pxTo = G && G.quickTo(pv, 'x', { duration: 0.6, ease: 'power3.out' }), pyTo = G && G.quickTo(pv, 'y', { duration: 0.6, ease: 'power3.out' });
   const person = id => PEOPLE.find(p => p[0] === id);
   function showPv(kind, id) {
@@ -470,6 +528,9 @@
   sw.innerHTML = '<span>Rest of site</span>' + [['a', 'A Panels'], ['b', 'B Credits'], ['b1', 'B1 Columns']].map(([v, t]) => `<a href="?rest=${v}"${v === REST ? ' aria-current="true"' : ''}>${t}</a>`).join('');
   document.body.appendChild(sw);
   window.PF_X2 = { get target() { return target; }, scrollToY, items: () => items, REST, VIRTUAL };
+  if (rest) initHitl(rest);
+  /* A: the easter egg sits at the foot of the Contact panel */
+  if (REST === 'a' && panels.contact) addEgg($('.x2-ix-in', panels.contact));
   /* start moving only now that everything above exists */
   tick(true);
   if (G) G.ticker.add(() => tick());

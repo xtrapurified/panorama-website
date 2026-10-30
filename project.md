@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-30 (experimental: the header as on the traditional site, globe to wordmark, nav on the right with Index). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-30 (experimental: less overlap, discreet Human in the loop strip, Golden hour easter egg, Collective profile beside the names). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -85,6 +85,11 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
   - **B1's Collective is the site's own List / Graph** (the switch, the names list, the network graph with its timeline and profile drawer), moved in from the hidden About section; the plain three-column list stays only as a fallback.
   - **Edge lines:** nine clips (docu, imagine, metaplasm, miracles, orchard, pula, sport (Dubai, the City of Sport), valamar, wewalk) had a light line in their last pixel column (an encoding artefact of the 854-px width); re-encoded at their own bitrates without that column (852×480), sizes about the same. This fixes them on every version and on dev once merged.
   - **Header, as on the traditional site** (Andrija, 2026-10-30; replaces the small globe beside the wordmark tried just before, and the wanda.net breadcrumb and ⊕): at the top the large Panorama globe (LE-011 Follow the cursor, 179 px / 112 px on phones), which gives way to the Panorama Films wordmark with its blinking red bullet as soon as the field moves (more than 40 px; field.js sets the header's compact state from the field's own scroll); the nav on the right as on the site, Work · Index · About · Contact (Index added; About leads to the studio, Contact to the ask, or to the panels in A), the current one lit. No Rec counter. The first films start below the globe.
+- **Late evening, 2026-10-30 (Andrija):**
+  - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.
+  - **Collective, B1:** the List / Graph switch without its pictograms; the profile opens on the right beside the names (36 % of the column, at most 360 px) instead of over them.
+  - **Human in the loop, discreet (B and B1):** no photos by default. A code line, `(filming in progress) { human.in(loop) }`, a strip of thin grey ticks (one per behind-the-scenes photo in `media/bts/photos.json`, 102 now) and a counter, frame 43 / 102. Pointing along the strip shows that photo beside the pointer and turns its tick red; it goes when the pointer leaves or the page moves. Phones: drag along the strip to see the photos above it. The arrow keys step through it. Photos load only when asked for. B1 numbers it PF-HU/005; Made for and Contact move to 006 and 007.
+  - **Easter egg at the bottom:** the old site's Golden hour fold (a live map of where the golden hour is now, in the T-shirt's projection) sits closed under the ask, reached by the footer's small red pinging dot and its live line, "output = [golden,hour], Singapore ↗ golden hour now, +5 more". In A it sits at the foot of the Contact panel. On computers the field cannot be moved by the browser's own scrolling, only by its springs (the button's scrollIntoView used to shift it).
 
 - Not taken over from wanda.net: Likes (a shortlist with a counter), the language switch, the cookie bar.
 - Reduced motion: no drift, no fades, stills instead of clips.
