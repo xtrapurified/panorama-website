@@ -35,8 +35,8 @@
 
   /* the cursor over film tiles: a small red dot (default) or the white play triangle alone (Andrija, 2026-10-30: no circle) */
   root.dataset.cur = pref('cursor', 'pf-cur', /^(dot|play)$/, 'dot');
-  const REST = (root.dataset.rest = pref('rest', 'pf-rest', /^(a|b|b1|b2|c)$/, 'b1'));
-  const CREDITS = REST[0] === 'b';   /* b, b1, b2: the studio after the last film */
+  const REST = (root.dataset.rest = pref('rest', 'pf-rest', /^(a|b|b1)$/, 'b1'));   /* B2 and C were tried and dropped (Andrija, 2026-10-30) */
+  const CREDITS = REST[0] === 'b';   /* b, b1: the studio after the last film */
   const VIRTUAL = FINE && !RM && !!G;   /* the wanda.net scrolling, on computers */
   root.classList.toggle('x2-vs', VIRTUAL);
 
@@ -74,45 +74,37 @@
   const PEOPLE = [...CORE, ...COLLECTIVE];
   const WE_MAKE = ['Documentaries', 'Campaigns', 'Legacy Films', 'BTS & Process Films', 'Experiences'];
   const CLIENTS = typeof LOGOS !== 'undefined' ? Object.keys(LOGOS) : [];   /* the selected clients come first */
+  const LOGO_CLIENTS = CLIENTS.slice(0, 24);   /* the logo wall: the selected clients first, 24 in all */
+  /* client logos as on the site: the authentic file as a mask, equal visual weight (wide wordmarks shorter, square marks taller) */
+  const logoOf = c => { const l = typeof LOGOS !== 'undefined' && LOGOS[c]; if (!l) return null; const k = (typeof LOGO_SCALE !== 'undefined' && LOGO_SCALE[c]) || 1, h = Math.min(1, 1.3 / Math.sqrt(l[1])) * k; return { src: new URL(`${M}logos/${l[0]}.png`, document.baseURI).href, w: h * l[1], h }; };   /* absolute: inside a CSS variable a relative url would resolve against the stylesheet's folder */
+  const logoTag = c => { const L = logoOf(c), f = typeof CLIENT_FILM !== 'undefined' && CLIENT_FILM[c] && F[CLIENT_FILM[c]] && !(typeof HIDDEN !== 'undefined' && HIDDEN.includes(CLIENT_FILM[c])) ? CLIENT_FILM[c] : null;
+    const tag = f ? 'a' : 'span', attrs = f ? ` href="${hrefOf(f)}" data-x2film="${f}"` : ' role="img"';
+    return L ? `<${tag} class="x2-lg${f ? ' ln' : ''}"${attrs} aria-label="${e(c)}" title="${e(c)}" style="--w:${L.w.toFixed(3)};--h:${L.h.toFixed(3)};--src:url(${L.src})"></${tag}>`
+             : `<${tag} class="x2-lg lt${f ? ' ln' : ''}"${attrs}>${e(c)}</${tag}>`; };
   const filmOfClient = c => (typeof CLIENT_FILM !== 'undefined' && CLIENT_FILM[c] && visible(CLIENT_FILM[c])) ? CLIENT_FILM[c] : null;
   const PLACES = '<span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide';
   const MAIL = 'Film enquiry';
   const LINKS = `<a href="#contact" data-mail="${MAIL}">Email</a><a href="https://www.instagram.com/panoramafilms.tv/" target="_blank" rel="noopener">Instagram</a><a href="https://vimeo.com/panoramafilmstv" target="_blank" rel="noopener">Vimeo</a>`;
 
-  /* ---------- b1 / b2: the credits in columns, in the old site's type: Data Error codes, code lines, Rec ---------- */
-  function buildCredits(v) {
+  /* ---------- b1: the credits in columns, in the old site's type: Data Error codes, code lines, Rec ---------- */
+  function buildCredits() {
     const sec = document.createElement('section');
-    sec.className = `x2-rest x2-cr2 x2-${v}`; sec.setAttribute('aria-label', 'Studio');
+    sec.className = 'x2-rest x2-cr2 x2-b1'; sec.setAttribute('aria-label', 'Studio');
     const code = (n, w) => `<span class="x2-code">PF-${w.slice(0, 2).toUpperCase()}/${String(n).padStart(3, '0')} ${e(w.toUpperCase())}</span>`;
-    const ln = (k, val) => `<p class="x2-ln"><span class="k">${k}</span> <span class="v">${val}</span></p>`;
-    const cl = (c, cls = '') => filmOfClient(c) ? `<a class="${cls}" href="${hrefOf(filmOfClient(c))}" data-x2film="${filmOfClient(c)}">${e(c)}</a>` : `<span class="${cls}">${e(c)}</span>`;
     const rec = '<span class="x2-rec"><span class="x2-rd" aria-hidden="true"></span>Rec <span class="x2-tc">00:00:00:00</span></span>';
-    const clients = CLIENTS.slice(0, 18);
-    if (v === 'b1') {
-      /* B1: a label column on the left (Data Error codes), content in columns on the right, all left-aligned */
-      const grp = (n, w, body, extra = '') => `<div class="cr2-g" data-x2b${extra}><div class="cr2-l">${code(n, w)}</div><div class="cr2-b">${body}</div></div>`;
-      sec.innerHTML =
-        grp(1, 'Studio', `<p class="cr2-say">${e(STATEMENT)}</p><p class="cr2-meta">${rec}<span class="cr2-pl">${PLACES}</span></p>`) +
-        grp(2, 'Core', `<ul class="cr2-cols c3">${CORE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-r">${e(r)}</span><span class="cr2-n">${e(n)}</span></li>`).join('')}</ul>`) +
-        grp(3, 'Collective', `<ul class="cr2-cols c3">${COLLECTIVE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-n">${e(n)}</span><span class="cr2-r">${e(r)}</span></li>`).join('')}</ul>`) +
-        grp(4, 'We make', `<ol class="cr2-make">${WE_MAKE.map((w, i) => `<li><span class="cr2-no">${String(i + 1).padStart(2, '0')}</span>${e(w)}</li>`).join('')}</ol>`) +
-        grp(5, 'Made for', `<ul class="cr2-cols c3 cr2-cl">${clients.map(c => `<li>${cl(c)}</li>`).join('')}</ul>`) +
-        grp(6, 'Contact', `<p class="x2-ln cr2-cmd"><span class="k">$</span> <span class="v">panorama --contact</span><span class="x2-cur" aria-hidden="true"></span></p>
-          <p class="cr2-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr2-links">${LINKS}</p>`, ' data-x2sec="contact"');
-    } else {
-      /* B2: the studio as a session in the site's code voice: commands in grey, answers in white, a red cursor at the end */
-      const cmd = c => `<p class="x2-ln x2-cmdl"><span class="k">$</span> <span class="v">${c}</span></p>`;
-      const dot = (r, n, id) => `<li${id ? ` data-pp="${id}"` : ''}><span class="cr2-r">${e(r)}</span><span class="cr2-lead" aria-hidden="true"></span><span class="cr2-n">${e(n)}</span></li>`;
-      const grp = (body, extra = '') => `<div class="cr2-g" data-x2b${extra}>${body}</div>`;
-      sec.innerHTML =
-        grp(`<div class="cr2-top"><span class="x2-code">PF-ST/001 STUDIO</span>${rec}</div>${cmd('panorama --about')}<p class="cr2-say">${e(STATEMENT)}</p>${ln('location =', `[<span lang="sr-Cyrl">Београд</span>, <bdi lang="ar">دبي</bdi>, worldwide]`)}`) +
-        grp(`${cmd('panorama --show crew')}<ul class="cr2-dots">${CORE.map(([id, n, r]) => dot(r, n, id)).join('')}</ul>`) +
-        grp(`${cmd('panorama --show collective')}<ul class="cr2-dots">${COLLECTIVE.map(([id, n, r]) => dot(r, n, id)).join('')}</ul>`) +
-        grp(`${ln('output =', `[${WE_MAKE.map(w => e(w.toLowerCase())).join(', ')}]`)}<ol class="cr2-make">${WE_MAKE.map((w, i) => `<li><span class="cr2-no">${String(i + 1).padStart(2, '0')}</span>${e(w)}</li>`).join('')}</ol>`) +
-        grp(`${cmd(`panorama --clients | head ${clients.length}`)}<ul class="cr2-cols c3 cr2-cl">${clients.map(c => `<li>${cl(c)}</li>`).join('')}</ul>`) +
-        grp(`${cmd('panorama --contact')}<p class="cr2-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a><span class="x2-cur" aria-hidden="true"></span></p><p class="cr2-links">${LINKS}</p>`, ' data-x2sec="contact"');
-    }
+    const grp = (n, w, body, extra = '') => `<div class="cr2-g" data-x2b${extra}><div class="cr2-l">${code(n, w)}</div><div class="cr2-b">${body}</div></div>`;
+    sec.innerHTML =
+      grp(1, 'Studio', `<p class="cr2-say">${e(STATEMENT)}</p><p class="cr2-meta">${rec}<span class="cr2-pl">${PLACES}</span></p>`) +
+      grp(2, 'Core', `<ul class="cr2-cols c3">${CORE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-r">${e(r)}</span><span class="cr2-n">${e(n)}</span></li>`).join('')}</ul>`) +
+      /* the Collective: the site's own List / Graph (moved here from the hidden About section); the plain columns stay if it is missing */
+      grp(3, 'Collective', `<div class="cr2-peers"></div><ul class="cr2-cols c3 cr2-coll">${COLLECTIVE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-n">${e(n)}</span><span class="cr2-r">${e(r)}</span></li>`).join('')}</ul>`) +
+      grp(4, 'We make', `<ol class="cr2-make">${WE_MAKE.map((w, i) => `<li><span class="cr2-no">${String(i + 1).padStart(2, '0')}</span>${e(w)}</li>`).join('')}</ol>`) +
+      grp(5, 'Made for', `<div class="x2-logos">${LOGO_CLIENTS.map(logoTag).join('')}</div>`) +
+      grp(6, 'Contact', `<p class="x2-ln cr2-cmd"><span class="k">$</span> <span class="v">panorama --contact</span><span class="x2-cur" aria-hidden="true"></span></p>
+        <p class="cr2-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr2-links">${LINKS}</p>`, ' data-x2sec="contact"');
     field.appendChild(sec);
+    const peers = document.getElementById('peers'), slot = $('.cr2-peers', sec);
+    if (peers && slot) { slot.appendChild(peers); sec.classList.add('has-peers'); }
     return sec;
   }
 
@@ -121,29 +113,6 @@
     <span class="fx-m${streams(k) ? ' media cover' : ''}"${streams(k) ? ` data-c="${k}"${F[k].hover ? ` data-hv="${F[k].hover}"` : ''}` : ''}><img src="${still(k)}" alt="" loading="lazy" decoding="async" draggable="false"></span>
     <p class="fx-lab" aria-hidden="true"><span class="fx-c">${e(clientOf(k))}</span><span class="fx-ti">${e(titleOf(k))}</span></p></a></div>`;
   wrap.innerHTML = keys.map(filmTile).join('');
-
-  /* c: the field goes on into the studio */
-  let btsPhotos = [];
-  if (REST === 'c') {
-    const person = ([id, n, r, src], core) => `<div class="fx-i x2-pt${core ? ' core' : ''}" data-g="studio" data-shape="portrait"><div class="fx-t x2-st" tabindex="0" aria-label="${e(n)}, ${e(r)}">
-      <span class="fx-m"><img src="${src}" alt="${e(n)}" loading="lazy" decoding="async" draggable="false"></span>
-      <p class="fx-lab"><span class="fx-c">${e(r)}</span><span class="fx-ti">${e(n)}</span></p></div></div>`;
-    const text = (cls, html, shape) => `<div class="fx-i x2-tx ${cls}" data-g="studio" data-shape="${shape}"><div class="fx-t x2-st">${html}</div></div>`;
-    wrap.insertAdjacentHTML('beforeend',
-      text('x2-chap', '<h2 class="x2-chap-t">Studio</h2>', 'chapter') +
-      text('x2-say', `<p>${e(STATEMENT)}</p>`, 'say') +
-      CORE.map(p => person(p, true)).join('') + COLLECTIVE.map(p => person(p, false)).join('') +
-      text('x2-make', `<p class="x2-k">We make</p><p>${WE_MAKE.map(e).join('<br>')}</p>`, 'make') +
-      text('x2-for', `<p class="x2-k">Made for</p><p>${CLIENTS.slice(0, 16).map(c => filmOfClient(c) ? `<a href="${hrefOf(filmOfClient(c))}" data-x2film="${filmOfClient(c)}">${e(c)}</a>` : e(c)).join(', ')}</p>`, 'for') +
-      text('x2-ask', `<p class="x2-ask-t">Let’s make a film together.</p><p class="x2-links">${LINKS}</p><p class="x2-pl">${PLACES}</p>`, 'ask'));
-    fetch('media/bts/photos.json').then(r => r.json()).then(d => {
-      btsPhotos = (d.photos || []).filter(p => !p.hidden);
-      const R = rng(seed ^ 0x2545f491), pickN = (a, n) => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a.slice(0, n); };
-      const html = pickN(btsPhotos, 14).map(p => `<div class="fx-i x2-bts" data-g="studio" data-shape="photo" data-ar="${(p.w / p.h).toFixed(3)}"><div class="fx-t x2-st" aria-hidden="true"><span class="fx-m"><img src="media/bts/${p.f}" alt="" loading="lazy" decoding="async" draggable="false"></span></div></div>`).join('');
-      const ask = $('.x2-ask', wrap); if (ask) ask.insertAdjacentHTML('beforebegin', html); else wrap.insertAdjacentHTML('beforeend', html);
-      collect(); shuffle(); layout(); measure(); items.forEach(it => io.observe(it.t));
-    }).catch(() => {});
-  }
 
   let items = [];
   const collect = () => { items = $$('.fx-i', wrap).map(el => { const old = items.find(x => x.el === el); return old || ({ el, t: $('.fx-t', el), k: el.dataset.k || null, g: el.dataset.g, shape: el.dataset.shape || 'film', d: 1, x: 0, y: 0, w: 0, h: 0, seen: false, cur: 0, kk: 5 }); }); };
@@ -157,10 +126,7 @@
     const mix = a => { for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(R() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
     /* the films keep the website's order (showreel first, then as on the site); only where each one lands is random (Andrija, 2026-10-30) */
     const films = keys.map(k => items.find(it => it.k === k)).filter(Boolean);
-    /* the studio: the chapter word and the statement open it, the ask closes it, everything else shuffled between */
-    const st = items.filter(it => it.g === 'studio'), first = st.filter(it => /chapter|say/.test(it.shape)), last = st.filter(it => it.shape === 'ask');
-    const mid = mix(st.filter(it => !first.includes(it) && !last.includes(it)));
-    items = [...films, ...first, ...mid, ...last];
+    items = films;
     items.forEach(it => wrap.appendChild(it.el));
   }
   function layout() {
@@ -172,21 +138,14 @@
       group = it.g;
       /* wide and scope crops, as on wanda.net (Andrija, 2026-10-30) */
       let ar = pick([16 / 9, 16 / 9, 16 / 9, 2.39, 2.39, 2.39, 2, 1.85, 3 / 2, 4 / 3]), colsR = [8, 16];
-      if (it.shape === 'portrait') { ar = 4 / 5; colsR = it.el.classList.contains('core') ? [5, 7] : [3, 5]; }
-      else if (it.shape === 'photo') { ar = Math.max(1, Math.min(2.4, parseFloat(it.el.dataset.ar) || 1.5)); colsR = [6, 11]; }
-      else if (it.shape === 'chapter') { ar = 4; colsR = [10, 14]; }
-      else if (it.shape === 'say') { ar = 2.39; colsR = [14, 18]; }
-      else if (it.shape === 'make' || it.shape === 'for') { ar = it.shape === 'for' ? 1.6 : 1.4; colsR = [7, 9]; }
-      else if (it.shape === 'ask') { ar = 2.2; colsR = [16, 20]; }
       let w, x;
       if (phone) {
-        const big = /say|ask|chapter|for|make/.test(it.shape);
-        w = W * (big ? 0.94 : it.shape === 'portrait' ? r(0.42, 0.62) : r(0.62, 0.96));
-        x = big ? W * 0.03 : r(-0.04 * W, W - w + 0.04 * W);
+        w = W * r(0.62, 0.96);
+        x = r(-0.04 * W, W - w + 0.04 * W);
       } else {
         const cols = Math.round(r(colsR[0], colsR[1]));
         w = cols * u;
-        let c = /chapter/.test(it.shape) ? 1 : Math.round(r(-1, 24 - cols + 1));
+        let c = Math.round(r(-1, 24 - cols + 1));
         if (lastX !== null && Math.abs(c - lastX) < 3) c = c + (c < 12 - cols / 2 ? 6 : -6);
         c = Math.min(24 - cols + 1, Math.max(-1, c)); lastX = c;
         x = c * u;
@@ -203,7 +162,7 @@
 
   /* ---------- b: the end credits after the last film ---------- */
   let rest = null;
-  if (REST === 'b1' || REST === 'b2') rest = buildCredits(REST);
+  if (REST === 'b1') rest = buildCredits();
   if (REST === 'b') {
     const row = (role, name, attrs = '') => `<div class="cr-r" data-x2b${attrs}><span class="cr-role">${e(role)}</span><span class="cr-n">${e(name)}</span></div>`;
     const head = t => `<h2 class="cr-h" data-x2b>${e(t)}</h2>`;
@@ -218,10 +177,22 @@
       ${head('We make')}
       ${WE_MAKE.map(w => `<p class="cr-c" data-x2b>${e(w)}</p>`).join('')}
       ${head('Made for')}
-      ${pairs(CLIENTS.slice(0, 18)).map(p => `<div class="cr-r cr-two" data-x2b>${p.map(c => filmOfClient(c) ? `<a class="cr-n" href="${hrefOf(filmOfClient(c))}" data-x2film="${filmOfClient(c)}">${e(c)}</a>` : `<span class="cr-n">${e(c)}</span>`).join('')}</div>`).join('')}
+      <div class="x2-logos cr-logos" data-x2b>${LOGO_CLIENTS.map(logoTag).join('')}</div>
       <p class="cr-pl" data-x2b>${PLACES}</p>
       <div class="cr-end" data-x2b data-x2sec="contact"><p class="cr-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr-links">${LINKS}</p></div>`;
     field.appendChild(rest);
+  }
+
+  /* a thin red bar along the top shows how far down the page you are (b, b1; Andrija, 2026-10-30) */
+  const bar2 = CREDITS ? document.body.appendChild(Object.assign(document.createElement('div'), { className: 'x2-prog' })) : null;
+  if (bar2) bar2.setAttribute('aria-hidden', 'true');
+  function progTick() {
+    if (!bar2) return;
+    let p;
+    if (VIRTUAL) { const m = maxY(), c = items.length ? items[0].cur : target; p = m ? Math.min(1, Math.max(0, (lines.length ? lines[lines.length - 1].cur : c) / m)) : 0; }
+    else { const m = document.documentElement.scrollHeight - innerHeight; p = m > 0 ? scrollY / m : 0; }
+    bar2.style.transform = `scaleX(${p.toFixed(4)})`;
+    bar2.style.opacity = overlayOpen() ? '0' : '';
   }
 
   /* the visit's own Rec timecode (hh:mm:ss:ff at 25 fps), as in the old header */
@@ -258,7 +229,6 @@
   function measure() {
     const wh = wrap.offsetHeight;
     if (CREDITS && rest) { const c = $('[data-x2sec="contact"]', rest); SEC.studio = wh - 80; SEC.contact = c ? wh + c.offsetTop - innerHeight * 0.3 : null; }
-    if (REST === 'c') { const ch = items.find(x => x.shape === 'chapter'), ask = items.find(x => x.shape === 'ask'); SEC.studio = ch ? ch.y - 100 : null; SEC.contact = ask ? ask.y - 100 : null; }
     if (!rest) return;
     lines = $$('[data-x2b]', rest).map((el, i) => { const o = lines.find(l => l.el === el); return { el, y: wrap.offsetHeight + el.offsetTop, h: el.offsetHeight, cur: o ? o.cur : target, kk: T.springText[0] + ((i * 0.37) % 1) * (T.springText[1] - T.springText[0]) }; });
   }
@@ -335,12 +305,13 @@
         it.t.style.transform = `translate3d(${(-cx * ax * it.d).toFixed(1)}px,${(-cy * ay * it.d + par).toFixed(1)}px,0)`;
       }
     }
-    breadcrumb(); recTick();
+    breadcrumb(); recTick(); progTick();
   }
 
   addEventListener('pageshow', ev => { if (ev.persisted && !qs.get('seed')) { seed = Math.floor(Math.random() * 1e9); shuffle(); layout(); measure(); tick(true); } });
   let rw = 0; addEventListener('resize', () => { clearTimeout(rw); rw = setTimeout(() => { layout(); measure(); target = clampY(target); tick(true); }, 120); });
   if (document.fonts) document.fonts.ready.then(() => { measure(); tick(true); });
+  if (rest && window.ResizeObserver) { let mq = 0; new ResizeObserver(() => { cancelAnimationFrame(mq); mq = requestAnimationFrame(() => { measure(); target = clampY(target); }); }).observe(rest); }
 
   /* phones: the tile crossing the middle of the window comes up to full brightness */
   if (!FINE) {
@@ -400,7 +371,7 @@
       b.classList.toggle('on', ixOn ? id === 'index' : panel ? panel.dataset.p === id : id === (inStudio ? 'studio' : 'work'));
     });
     /* bare over the films (as on wanda.net); over the credits the header keeps its shade so text never runs under it */
-    hdr.classList.toggle('x2-over', !(CREDITS && inStudio) && (VIRTUAL || REST === 'c' || wrap.getBoundingClientRect().bottom > 90));
+    hdr.classList.toggle('x2-over', !(CREDITS && inStudio) && (VIRTUAL || wrap.getBoundingClientRect().bottom > 90));
   }
 
   /* ---------- the floating picture: a clip by a film's name, a portrait by a person's name ---------- */
@@ -472,7 +443,7 @@
       <div class="pn-cols">
         <div><p class="pn-k">The Collective</p><ul class="pn-l">${COLLECTIVE.map(([id, n, r]) => `<li data-pp="${id}"><span>${e(n)}</span> <span class="pn-r">${e(r)}</span></li>`).join('')}</ul></div>
         <div><p class="pn-k">We make</p><ul class="pn-l">${WE_MAKE.map(w => `<li>${e(w)}</li>`).join('')}</ul></div>
-        <div><p class="pn-k">Made for</p><ul class="pn-l">${CLIENTS.map(c => `<li>${filmOfClient(c) ? `<a href="${hrefOf(filmOfClient(c))}" data-x2film="${filmOfClient(c)}">${e(c)}</a>` : e(c)}</li>`).join('')}</ul></div>
+        <div><p class="pn-k">Made for</p><div class="x2-logos pn-logos">${LOGO_CLIENTS.map(logoTag).join('')}</div></div>
       </div>`);
     mk('contact', 'Contact', `<p class="pn-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="pn-links">${LINKS}</p><p class="pn-pl">${PLACES}</p>`);
   }
@@ -497,7 +468,7 @@
   /* ---------- the switch between the three approaches (for trying them; bottom left) ---------- */
   const sw = document.createElement('div');
   sw.className = 'x2-sw'; sw.setAttribute('role', 'group'); sw.setAttribute('aria-label', 'Try another approach for the rest of the site');
-  sw.innerHTML = '<span>Rest of site</span>' + [['a', 'A Panels'], ['b', 'B Credits'], ['b1', 'B1 Columns'], ['b2', 'B2 Code'], ['c', 'C One field']].map(([v, t]) => `<a href="?rest=${v}"${v === REST ? ' aria-current="true"' : ''}>${t}</a>`).join('');
+  sw.innerHTML = '<span>Rest of site</span>' + [['a', 'A Panels'], ['b', 'B Credits'], ['b1', 'B1 Columns']].map(([v, t]) => `<a href="?rest=${v}"${v === REST ? ' aria-current="true"' : ''}>${t}</a>`).join('');
   document.body.appendChild(sw);
   window.PF_X2 = { get target() { return target; }, scrollToY, items: () => items, REST, VIRTUAL };
   /* start moving only now that everything above exists */

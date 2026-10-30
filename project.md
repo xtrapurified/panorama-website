@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-30 (experimental2: B1 columns and B2 code credits; films in the site's order). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-30 (experimental2: B2 and C removed; progress bar, logo wall, B1 List/Graph Collective, globe in the header, clip edges fixed). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -79,6 +79,13 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
   - **B2, Code:** the studio as a session in the old site's code voice (grey command, white answer, as in Human in the loop): a top rule with PF-ST/001 STUDIO and Rec timecode; `$ panorama --about` and the statement; `location = [Београд, دبي, worldwide]`; `$ panorama --show crew` and `--show collective` as role ······ name lines with dotted leaders; `output = [documentaries, …]` over the numbered We make list; `$ panorama --clients | head 18` in three columns; `$ panorama --contact` and the ask with the red cursor.
   - **No overlapping text:** each block of text still rides its own spring, but it can never lag into the block above it; measured while flicking the wheel hard up and down, overlap on screen stays at 0.
   - Over the credits the header keeps its usual shade (bare only over the films), so text never runs under it. A person's portrait and a client's film now appear by the pointer at once, not in the corner first.
+- **Later the same evening (Andrija):** B2 and C removed (the switch now reads A Panels · B Credits · B1 Columns; B1 is the default).
+  - **A thin red bar along the top** (B and B1) shows how far down the page you are; hidden while a project is open.
+  - **Client logos:** "Made for" is now a wall of the clients' own logos (the site's files in `media/logos`, drawn as masks with the site's equal-visual-weight sizing and corrections), the selected clients first, 24 in all: grey, white under the pointer, red when the client has a film, which then floats by the pointer and opens on click. B1: six to a row; B: centred rows; A: three to a row in the Studio panel. Clients without a logo file are set in capitals.
+  - **B1's Collective is the site's own List / Graph** (the switch, the names list, the network graph with its timeline and profile drawer), moved in from the hidden About section; the plain three-column list stays only as a fallback.
+  - **Edge lines:** nine clips (docu, imagine, metaplasm, miracles, orchard, pula, sport (Dubai, the City of Sport), valamar, wewalk) had a light line in their last pixel column (an encoding artefact of the 854-px width); re-encoded at their own bitrates without that column (852×480), sizes about the same. This fixes them on every version and on dev once merged.
+  - **The Panorama globe is back in the header**, small (46 px element, 38 on phones), before the Panorama Films wordmark, which loses its red bullet; it still turns its meridian toward the pointer.
+
 - Not taken over from wanda.net: Likes (a shortlist with a counter), the language switch, the cookie bar.
 - Reduced motion: no drift, no fades, stills instead of clips.
 
