@@ -16,12 +16,15 @@ body{background:var(--fxbg)}
 .fx-m{position:absolute;inset:0;overflow:hidden;background:#000;opacity:.75;transition:opacity .4s ease-out}
 .fx-m img,.fx-m video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .fx-m video{opacity:0;transition:opacity .5s}
+/* streamed tiles use the page's thumbnail player: in colour like the rest of the field, and over the still once playing */
+.fx-m.media > img,.fx-m.media > video,.fx-m.media > .stream{filter:none!important}
+.fx-m.media{position:absolute;inset:0}
 .fx-m video.on{opacity:1}
 .fx-t:hover .fx-m,.fx-t:focus-visible .fx-m,.fx-t.near .fx-m{opacity:1}
 .fx-t:focus-visible{outline:1px solid #fff;outline-offset:4px}
 /* the label: the client in monospace, the title in the display face, centred on the tile */
 .fx-lab{position:absolute;left:50%;top:50%;z-index:3;margin:0;transform:translate3d(-50%,-50%,0);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .2s ease-out,visibility 0s linear .2s;
-  background:#000;padding:.32em .5em .36em;line-height:1}   /* a black strip under the words, like a highlighter, so they read over any picture (Andrija, 2026-10-30) */
+  background:#000;padding:0 .3em;line-height:1.02}   /* a black strip under the words, like a highlighter, so they read over any picture (Andrija, 2026-10-30) */
 .fx-t:hover .fx-lab,.fx-t:focus-visible .fx-lab,.fx-t.near .fx-lab{opacity:1;visibility:visible;transition:opacity .2s ease-out,visibility 0s}
 .fx-c{font-family:var(--fxmono);font-weight:300;font-size:clamp(15px,1.55vw,26px);letter-spacing:-.02em;color:rgba(255,255,255,.62);margin-right:.4em}
 .fx-ti{font-weight:500;font-size:clamp(15px,1.55vw,26px);letter-spacing:-.03em}

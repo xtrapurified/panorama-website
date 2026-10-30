@@ -26,14 +26,21 @@
   /* ---------- what goes in: every project on the site and the showreel ---------- */
   const visible = k => F[k] && !(typeof HIDDEN !== 'undefined' && HIDDEN.includes(k));
   const keys = ['reel', ...ORDER].filter((k, i, a) => visible(k) && a.indexOf(k) === i);
-  const clipOf = k => { const f = F[k]; return f.clip ? `${M}clips/${f.clip}.${VEXT}` : f.hover ? `${M}hover/${f.hover}.${VEXT}` : null; };
+  /* moving pictures for every tile (Andrija, 2026-10-30): several hover loops were a still photo slowly zooming or a title card.
+     OWN: short montages cut for the field from the films themselves (media/field/clips, ~1 s shots across the film).
+     STREAMED: films that could not be fetched to cut from; they play silently from Vimeo / YouTube in the tile, through the
+     page's own player for thumbnails (released a few seconds after leaving the screen); phones keep the loop. */
+  const OWN = new Set(['hotf', 'p28', 'p37']);
+  const STREAMED = new Set(['p16', 'p21', 'p24', 'p26', 'p29', 'p30', 'p32', 'p35', 'p36', 'p38']);
+  const streams = k => STREAMED.has(k) && typeof mio !== 'undefined' && (F[k].v || F[k].yt);
+  const clipOf = k => { const f = F[k]; return OWN.has(k) ? `${M}field/clips/${k}.mp4` : f.clip ? `${M}clips/${f.clip}.${VEXT}` : f.hover ? `${M}hover/${f.hover}.${VEXT}` : null; };
   const clientOf = k => { const f = F[k]; return k === 'reel' ? 'Panorama Films' : f.client || ''; };
   const titleOf = k => { const f = F[k]; return k === 'reel' ? `Showreel${f.dur ? ' ' + f.dur : ''}` : f.title; };
   const hrefOf = k => (k !== 'reel' && typeof workUrl === 'function' && workUrl(k)) || (typeof ext === 'function' ? ext(F[k]) : '#');
   const e = s => (typeof esc === 'function' ? esc(s) : String(s));
 
   wrap.innerHTML = keys.map(k => `<div class="fx-i" data-k="${k}"><a class="fx-t" href="${hrefOf(k)}" data-fx="${k}" draggable="false" aria-label="${e(titleOf(k))}, ${e(clientOf(k))}">
-    <span class="fx-m"><img src="${still(k)}" alt="" loading="lazy" decoding="async" draggable="false"></span>
+    <span class="fx-m${streams(k) ? ' media cover' : ''}"${streams(k) ? ` data-c="${k}"${F[k].hover ? ` data-hv="${F[k].hover}"` : ''}` : ''}><img src="${still(k)}" alt="" loading="lazy" decoding="async" draggable="false"></span>
     <p class="fx-lab" aria-hidden="true"><span class="fx-c">${e(clientOf(k))}</span><span class="fx-ti">${e(titleOf(k))}</span></p></a></div>`).join('');
   const items = $$('.fx-i', wrap).map(el => ({ el, t: $('.fx-t', el), k: el.dataset.k, d: 1, x: 0, y: 0, w: 0, h: 0, seen: false }));
 
@@ -87,7 +94,8 @@
     const it = items.find(x => x.el === en.target); if (!it) return;
     it.vis = en.isIntersecting;
     if (en.isIntersecting && !it.seen) { it.seen = true; it.el.classList.add('in'); }
-    const src = clipOf(it.k), m = $('.fx-m', it.el);
+    const m = $('.fx-m', it.el); if (m.dataset.c) return;   /* streamed: the page's own player handles it */
+    const src = clipOf(it.k);
     let v = $('video', m);
     if (en.isIntersecting && src && !RM) {
       if (!v) { v = document.createElement('video'); Object.assign(v, { muted: true, loop: true, playsInline: true, preload: 'auto' }); v.setAttribute('muted', ''); v.setAttribute('playsinline', ''); v.addEventListener('playing', () => v.classList.add('on'), { once: true }); v.src = src; m.appendChild(v); }
@@ -95,6 +103,7 @@
     } else if (v) v.pause();
   }), { rootMargin: '10% 0px' });
   items.forEach(it => io.observe(it.el));
+  $$('.fx-m[data-c]', wrap).forEach(m => mio.observe(m));
   if (RM) items.forEach(it => it.el.classList.add('in'));
 
   /* ---------- the drift: against the mouse, each tile by its own depth; and a little depth on scroll ---------- */
