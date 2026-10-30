@@ -1827,7 +1827,13 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   #chapters,#chapters .works,section.sec#films{margin-bottom:0!important;padding-bottom:0!important}
   #cards{margin-top:0}
 }
-/* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in, ?hov=a|b|c, remembered per browser.
+/* Featured titles on computers: pointing at a film draws a thin red underline under its title from the left, the menu's red line (Andrija, 2026-10-30) */
+@media (min-width:761px){
+  .ov-u{background:linear-gradient(var(--red),var(--red)) left calc(100% - .02em) / 0 max(1px,.035em) no-repeat;-webkit-box-decoration-break:clone;box-decoration-break:clone;padding-bottom:.06em;transition:background-size .55s var(--ease)}
+  .works .frame:hover .ov-u,.works .frame:focus-visible .ov-u{background-size:100% max(1px,.035em)}
+}
+@media (prefers-reduced-motion:reduce){.ov-u{transition:none}}
+/* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in were tried, C (Rise) chosen; ?hov=a|b still shows the others.
    A Focus: the words come into focus from a soft blur. B Wipe: they are uncovered left to right. C Rise: each line rises from behind its own edge.
    Touch screens: the card crossing the middle of the window; the keyboard: the focused card. */
 @media (min-width:761px){
@@ -2109,7 +2115,7 @@ const F = {
   p08:{n:"08", title:"Miracles Don’t Happen", client:"Dubai Future Forum", year:"2024", roles:"Creative direction, cinematography, editing", img:"thumbs/p08", page:"Miracles-Don-t-Happen", hover:"p08", v:"1103734783"},
   p09:{n:"09", title:"Slavko Štimac", sub:"71st Pula Film Festival Award Film", line:"71st Pula Film Festival Award Film", client:"71st Pula Film Festival", year:"2024", roles:"Cinematography", img:"thumbs/p09", page:"Pula-Film-Festival", hover:"p09", s:0, loop:8, v:"988793491"},   /* moving cover: the film's first 8 seconds, 0:00–0:08 (Andrija, 2026-10-22) */
   p10:{n:"10", title:"Valamar Loves Bike", mainT:"Happiness is a bike ride away", client:"Valamar Hotels", year:"2018–2025", roles:"Creative direction, direction, cinematography, editing", img:"thumbs/p10", page:"Valamar-Biking", hover:"p10", s:50, loop:17, v:"1103738334"},   /* moving cover: the film 0:50–1:07 (Andrija, 2026-10-28) */
-  p12:{n:"12", title:"Air to the People: Serbia", client:"Air to the People 2.0", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p12", page:"Air-to-the-People-Serbia", hover:"p12", s:77, loop:13, yt:"LdLfDc-AlAc", card:{zoom:[1.3,"50% 100%"]}},   /* card zoomed from the bottom so YouTube's information panel (top left, can't be switched off) falls outside the frame (2026-10-30) */   /* moving cover: the film 1:17–1:30 (Andrija, 2026-10-23) */
+  p12:{n:"12", title:"Air to the People: Serbia", client:"Air to the People 2.0", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p12", page:"Air-to-the-People-Serbia", hover:"p12", s:77, loop:13, yt:"LdLfDc-AlAc", card:{yt:null}},   /* the card plays our own cut of 1:17–1:30 (media/hover/p12, from Andrija's file, 2026-10-30) instead of the YouTube stream, which showed YouTube's information panel */   /* moving cover: the film 1:17–1:30 (Andrija, 2026-10-23) */
   p13:{n:"13", title:"Dubai Future Forum", mainT:"Dubai Future Forum 2025 Highlights", line:"The World’s Largest Gathering of Futurists", s:45, loop:40, client:"Dubai Future Foundation", year:"2022–2025", roles:"Script, creative direction, production, cinematography, editing", img:"stills/dff", page:"Dubai-Future-Forum-Chronicles-1", hover:"p13", card:{yt:null}, yt:"PkLvj-vQygs"},   /* moving cover: hosted loop media/hover/p13, film 1:39–1:43.75, ending before Maggie Jackson's name caption; still: the woman at 1:12 (Andrija, 2026-10-22) */
   p14:{n:"14", title:"We Will Walk", client:"Civil Rights Defenders", year:"2022", roles:"Creative direction, cinematography, editing", img:"thumbs/p14", page:"We-Will-Walk", hover:"p14", s:85, loop:20, v:"886851613", h:"25a02b2640"},   /* moving cover: the film 1:25–1:45 (Andrija, 2026-10-23) */
   p15:{n:"15", title:"Imagine Our Future", client:"Dubai Future Forum", year:"2023", roles:"Creative direction, cinematography, editing", img:"thumbs/p15", page:"Imagine-Our-Future", hover:"p15", yt:"tkh-cNGWigw"},
@@ -2206,7 +2212,7 @@ function frame(k, small){
     ${f.v||f.yt||f.file ? '<span class="play" aria-hidden="true"><span class="play-t">Play</span></span>' : ''}
     ${small ? `<span class="hud"><span class="top"><span></span>${more}</span></span>`
       : `<span class="hud"></span>
-      <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-tl"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span>${f.client ? `<span class="ov-c">${esc(f.client)}</span>` : ''}</span></span>`}</a>`;
+      <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-tl"><span class="ov-t"><span class="ov-u">${esc(f.title)}</span></span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span>${f.client ? `<span class="ov-c">${esc(f.client)}</span>` : ''}</span></span>`}</a>`;
 }
 function work(k){
   const f = F[k];
@@ -2333,10 +2339,10 @@ function fitStream(m, box, f){
 /* phones play the hosted loops (one light video each) instead of a Vimeo or YouTube player per film, which made scrolling lag
    (Andrija, 2026-10-29); films with no hosted loop still stream */
 const PHONE_LOOPS = () => matchMedia('(max-width:760px)').matches;
-/* catalogue hover text studies, ?hov=a|b|c (2026-10-30), remembered per browser */
-(()=>{ let v = (new URLSearchParams(location.search).get('hov') || '').toLowerCase();
-  try { if (/^[abc]$/.test(v)) localStorage.setItem('pf-hov', v); else v = localStorage.getItem('pf-hov') || 'a'; } catch(_) { if (!/^[abc]$/.test(v)) v = 'a'; }
-  document.documentElement.dataset.hov = v; })();
+/* catalogue hover text: C chosen (2026-10-30) */
+(()=>{ const v = (new URLSearchParams(location.search).get('hov') || '').toLowerCase();   /* C, Rise, chosen (Andrija, 2026-10-30); ?hov=a|b still shows the others, nothing remembered */
+  try { localStorage.removeItem('pf-hov'); } catch(_) {}
+  document.documentElement.dataset.hov = /^[abc]$/.test(v) ? v : 'c'; })();
 /* header reel: the 2019 reel on 30% of visits, V4 on the other 70% (Andrija, 2026-10-30); ?reel=2019 or ?reel=v4 forces one, to check */
 (()=>{ const q = new URLSearchParams(location.search).get('reel'), hm = document.getElementById('heroMedia');
   if (hm) hm.dataset.k = q === '2019' ? 'reel19' : q === 'v4' ? 'reel' : Math.random() < .3 ? 'reel19' : 'reel'; })();
