@@ -2837,8 +2837,8 @@ function playVimeo(k, fm){
   box.insertAdjacentHTML('beforeend', `<iframe src="${src}" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen tabindex="-1" title="${esc(f.title)}"></iframe><button class="lb-hit" type="button" tabindex="-1" aria-hidden="true"></button>`);
   const lp = new Vimeo.Player(box.querySelector('iframe')), off = () => lp.disableTextTrack().catch(()=>{});
   const st = { sound:true, nativeFs:true, paused:true, muted:false, time:0, dur:0,
-    play(){ lp.play().catch(()=>{ st.paused = true; paint(); }); }, pause(){ lp.pause().catch(()=>{}); },
-    seek(t){ lp.setCurrentTime(t).catch(()=>{}); }, mute(m){ lp.setMuted(m).then(()=>{ st.muted = m; if (!m && st.level === 0) st.vol(VOL || 1); paint(); }).catch(()=>{}); },
+    play(){ const go = () => lp.play().catch(()=>{ st.paused = true; paint(); }); if (st.atEnd){ st.atEnd = false; lp.setCurrentTime(0).then(go, go); } else go(); }, pause(){ lp.pause().catch(()=>{}); },
+    seek(t){ st.atEnd = t >= (st.dur || Infinity) - .3; lp.setCurrentTime(t).catch(()=>{}); }, mute(m){ lp.setMuted(m).then(()=>{ st.muted = m; if (!m && st.level === 0) st.vol(VOL || 1); paint(); }).catch(()=>{}); },
     level:VOL, vol(x){ st.level = x; lp.setVolume(x).catch(()=>{}); lp.setMuted(x === 0).then(()=>{ st.muted = x === 0; paint(); }).catch(()=>{}); },
     fs(){ lp.requestFullscreen().catch(()=>{}); }, destroy(){ lp.destroy().catch(()=>{}); } };
   P = st;
@@ -2857,7 +2857,9 @@ function playVimeo(k, fm){
   lp.on('loaded', off);
   lp.on('play', ()=>{ off(); if (!picked) best(); st.paused = false; ready(); lp.getMuted().then(m=>{ st.muted = m; paint(); }); paint(); });
   lp.on('pause', ()=>{ st.paused = true; paint(); });
-  lp.on('timeupdate', d=>{ st.time = d.seconds; st.dur = d.duration; paint(); });
+  /* stop on the last frame a moment before the end, so Vimeo's "More from Panorama Films" end screen never shows (Andrija, 2026-10-30); Play then starts over */
+  lp.on('timeupdate', d=>{ st.time = d.seconds; st.dur = d.duration; if (d.duration && d.seconds >= d.duration - .3 && !st.atEnd){ st.atEnd = true; lp.pause().catch(()=>{}); } paint(); });
+  lp.on('ended', ()=>{ st.atEnd = true; lp.setCurrentTime(Math.max(0, (st.dur || 0) - .35)).catch(()=>{}); st.paused = true; paint(); });
   lp.on('volumechange', d=>{ if (d && typeof d.volume === 'number') st.level = d.volume; lp.getMuted().then(m=>{ st.muted = m; paint(); }); });
   lp.on('error', ()=>{ if (!box.classList.contains('ready')) playLocal(k, true); });
   /* autoplay with sound can be refused: once loaded but not playing, show the still with a Play control instead of a black box */
