@@ -9,7 +9,7 @@
  * (or client) in four columns over the dimmed field, the clip floating by the name under the pointer.
  *
  * Uses the page's own data and openFilm, so /work/ addresses, history and the project pages are untouched.
- * Reduced motion: no drift, no smooth scrolling, no fades.  ?seed=123 repeats a layout.
+ * Reduced motion: no drift, no fades.  ?seed=123 repeats a layout.
  */
 (() => {
   if (typeof F === 'undefined' || typeof openFilm !== 'function') return;
@@ -21,7 +21,7 @@
   if (!field || !wrap) return;
 
   const T = (window.PF_FIELD = { pan: 0.165, depth: [0.82, 1.16], ease: 0.055, scrollDepth: 0.6, fadeOut: 0.45, fadeIn: 0.7,
-    step: [0.58, 0.86], stepPhone: [0.86, 1], drag: 1, throw: 0.32 });   /* step: how far down the next tile starts, as a share of the tile's height (less overlap = higher) */
+    step: [0.74, 0.98], stepPhone: [0.95, 1.04] });   /* less overlap again (Andrija, 2026-10-30) */   /* step: how far down the next tile starts, as a share of the tile's height (less overlap = higher) */
 
   /* ---------- what goes in: the showreel, the featured films, then everything else, as on the site ---------- */
   const visible = k => F[k] && !(typeof HIDDEN !== 'undefined' && HIDDEN.includes(k));
@@ -111,66 +111,17 @@
     items.forEach(it => nio.observe(it.t));
   }
 
-  /* ---------- smooth scrolling ---------- */
-  let lenis = null;
-  if (!RM && window.Lenis && G) {
-    ['#lb', '#sx', '.net-dr', '.x2-ix', '#navov'].forEach(s => $$(s).forEach(el => el.setAttribute('data-lenis-prevent', '')));
-    lenis = new Lenis({ lerp: 0.085, smoothWheel: true });
-    G.ticker.add(t => lenis.raf(t * 1000)); G.ticker.lagSmoothing(0);
-    /* any other box that scrolls on its own keeps its wheel (the Human in the loop index, the search list…) */
-    const mark = () => $$('body *').forEach(el => { if (el.hasAttribute('data-lenis-prevent')) return; const cs = getComputedStyle(el); if (/(auto|scroll)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 4 && el !== document.body) el.setAttribute('data-lenis-prevent', ''); });
-    setTimeout(mark, 1500); addEventListener('load', () => setTimeout(mark, 500));
-    window.PF_LENIS = lenis;
-    /* links within the page (Work, About, Contact…) glide there through the scroller, since the browser's own smoothing is off */
-    document.addEventListener('click', ev => {
-      if (ev.defaultPrevented || ev.metaKey || ev.ctrlKey || ev.button) return;
-      const a = ev.target.closest('a[href^="#"]'); if (!a || a.closest('#lb, .x2-ix')) return;
-      const id = decodeURIComponent(a.getAttribute('href').slice(1)), el = id && document.getElementById(id);
-      if (!el) return;
-      ev.preventDefault(); lenis.scrollTo(el, { offset: -90 }); history.replaceState(history.state, '', '#' + id);
-    });
-  }
-
   /* ---------- opening a project: the field fades out, the project fades in; closing brings the field back ---------- */
   function go(k) {
     if (RM || !G) { openFilm(k); return; }
     G.to(wrap, { autoAlpha: 0, duration: T.fadeOut, ease: 'power1.out', onComplete: () => openFilm(k) });
   }
-  /* grab and drag: the mouse can pull the field up and down as well as the wheel; let go and it glides on.
-     A press that turns into a drag never opens a film. (Andrija, 2026-10-30: "I keep trying to scroll with the mouse") */
-  let drag = null, dragged = false;
-  if (FINE) {
-    field.addEventListener('dragstart', ev => ev.preventDefault());
-    field.addEventListener('pointerdown', ev => {
-      if (ev.pointerType !== 'mouse' || ev.button !== 0) return;
-      drag = { y: ev.clientY, s: scrollY, last: ev.clientY, t: performance.now(), v: 0, on: false }; dragged = false;
-    });
-    addEventListener('pointermove', ev => {
-      if (!drag) return;
-      const dy = ev.clientY - drag.y;
-      if (!drag.on && Math.abs(dy) > 6) { drag.on = true; dragged = true; field.classList.add('drag'); lenis && lenis.stop(); }
-      if (!drag.on) return;
-      const now = performance.now(), dt = Math.max(1, now - drag.t);
-      drag.v = drag.v * 0.6 + ((ev.clientY - drag.last) / dt) * 0.4; drag.last = ev.clientY; drag.t = now;
-      scrollTo(0, drag.s - dy * T.drag);
-    });
-    const end = () => {
-      if (!drag) return;
-      const d = drag; drag = null; field.classList.remove('drag');
-      setTimeout(() => { dragged = false; }, 0);   /* the click that ends a drag comes before this; any later click is a real one */
-      if (!d.on) return;
-      if (lenis) { lenis.start(); lenis.scrollTo(scrollY - d.v * 1000 * T.throw, { lerp: 0.06 }); }   /* the throw: px/ms → a glide */
-    };
-    addEventListener('pointerup', end); addEventListener('pointercancel', end); addEventListener('blur', end);
-  }
   field.addEventListener('click', ev => {
-    if (dragged) { dragged = false; ev.preventDefault(); ev.stopPropagation(); return; }
     const a = ev.target.closest('.fx-t'); if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button) return;
     ev.preventDefault(); ev.stopPropagation(); go(a.dataset.fx);
   }, true);
   if (lb) new MutationObserver(() => {
-    if (lb.hidden) { lenis && lenis.start(); if (G) G.to(wrap, { autoAlpha: 1, duration: RM ? 0 : T.fadeIn, ease: 'power1.out' }); else wrap.style.opacity = ''; }
-    else lenis && lenis.stop();
+    if (lb.hidden) { if (G) G.to(wrap, { autoAlpha: 1, duration: RM ? 0 : T.fadeIn, ease: 'power1.out' }); else wrap.style.opacity = ''; }
   }).observe(lb, { attributes: true, attributeFilter: ['hidden'] });
 
   /* ---------- the header: wordmark, breadcrumb (Work · Index), and ⊕ ---------- */
@@ -181,7 +132,7 @@
   plus && plus.addEventListener('click', () => { const o = hdr.classList.toggle('x2-open'); plus.setAttribute('aria-expanded', String(o)); });
   document.addEventListener('click', ev => {
     const b = ev.target.closest('.x2-bc button'); if (!b) return;
-    if (b.dataset.bc === 'work') { lenis ? lenis.scrollTo(0) : scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' }); }
+    if (b.dataset.bc === 'work') scrollTo({ top: 0, behavior: RM ? 'auto' : 'smooth' });
     else openIndex(b);
   });
   /* the breadcrumb says where you are: Work over the field, nothing further down */
@@ -193,7 +144,7 @@
   /* ---------- Index: every project, or every client, in columns over the dimmed field ---------- */
   const clients = [...new Map(keys.filter(k => k !== 'reel').map(k => [clientOf(k), k])).entries()].filter(([c]) => c && c !== 'Panorama Films').sort((a, b) => a[0].localeCompare(b[0]));
   const ix = document.createElement('div');
-  ix.className = 'x2-ix'; ix.setAttribute('role', 'dialog'); ix.setAttribute('aria-modal', 'true'); ix.setAttribute('aria-label', 'Index'); ix.setAttribute('data-lenis-prevent', '');
+  ix.className = 'x2-ix'; ix.setAttribute('role', 'dialog'); ix.setAttribute('aria-modal', 'true'); ix.setAttribute('aria-label', 'Index');
   ix.innerHTML = `<button type="button" class="x2-ix-x">(×) Close</button>
     <div class="x2-ix-in"><div class="x2-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="p">Projects</button><button type="button" role="tab" aria-selected="false" data-tab="c">Clients</button></div>
     <ul class="x2-g" data-g="p">${keys.map(k => `<li><a href="${hrefOf(k)}" data-ix="${k}">${e(titleOf(k))}</a></li>`).join('')}</ul>
@@ -204,13 +155,13 @@
   let back = null, pvK = null;
   const pxTo = G && G.quickTo(pv, 'x', { duration: 0.6, ease: 'power3.out' }), pyTo = G && G.quickTo(pv, 'y', { duration: 0.6, ease: 'power3.out' });
   function openIndex(from) {
-    back = from || document.activeElement; ix.classList.add('on'); lenis && lenis.stop(); document.body.style.overflow = 'hidden';
+    back = from || document.activeElement; ix.classList.add('on'); document.body.style.overflow = 'hidden';
     const b = $('.x2-bc [data-bc="index"]'); b && b.classList.add('on');
     setTimeout(() => { const a = $('.x2-g:not([hidden]) a', ix); a && a.focus({ preventScroll: true }); }, 50);
   }
   function closeIndex() {
     if (!ix.classList.contains('on')) return;
-    ix.classList.remove('on'); pv.classList.remove('on'); document.body.style.overflow = ''; lenis && lenis.start();
+    ix.classList.remove('on'); pv.classList.remove('on'); document.body.style.overflow = '';
     const b = $('.x2-bc [data-bc="index"]'); b && b.classList.remove('on');
     back && back.focus && back.focus({ preventScroll: true });
   }
