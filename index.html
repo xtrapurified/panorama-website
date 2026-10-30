@@ -1830,10 +1830,11 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   #chapters,#chapters .works,section.sec#films{margin-bottom:0!important;padding-bottom:0!important}
   #cards{margin-top:0}
 }
-/* Featured titles on computers: pointing at a film brightens its logline and client a little (Andrija, 2026-10-30; the red underline was tried and dropped) */
+/* Featured titles on computers: pointing at the title, logline or client brightens the logline and client a little (Andrija, 2026-10-30; the red underline was tried and dropped) */
 @media (min-width:761px){
   .works .ov-l,.works .ov-c{transition:opacity .35s var(--ease)}
-  .works .frame:hover :is(.ov-l,.ov-c),.works .frame:focus-visible :is(.ov-l,.ov-c){opacity:.95}
+  .works .ov-tl,.works .ov-c{pointer-events:auto}   /* only the words react, not the whole film (Andrija, 2026-10-30); a click still opens the film */
+  .works .ov-in:has(.ov-tl:hover,.ov-c:hover) :is(.ov-l,.ov-c),.works .frame:focus-visible :is(.ov-l,.ov-c){opacity:.95}
 }
 /* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in were tried, C (Rise) chosen; ?hov=a|b still shows the others.
    A Focus: the words come into focus from a soft blur. B Wipe: they are uncovered left to right. C Rise: each line rises from behind its own edge.
