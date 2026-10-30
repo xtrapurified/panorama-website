@@ -188,10 +188,42 @@ svg.ar{display:inline-block;width:.62em;height:.62em;vertical-align:.02em;fill:n
   #hitl .hl-b .hl-t{margin:0 0 .15em;font-size:15px}
   #hitl .hl-b .hl-code{font-size:11px}
 }
-.hl-term{width:min(440px,calc(100vw - 2 * var(--m)));background:rgba(5,5,5,.78);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);border:1px solid rgba(237,237,235,.18);padding:0 clamp(14px,1.3vw,20px) clamp(14px,1.3vw,20px);color:#ededeb;--fg:#ededeb;--mid:#8d8d8a}
-.hl-bar{display:flex;align-items:center;gap:6px;margin:0 calc(clamp(14px,1.3vw,20px) * -1) clamp(12px,1.1vw,16px);padding:8px clamp(14px,1.3vw,20px);border-bottom:1px solid rgba(237,237,235,.14);font-size:var(--ui);color:var(--mid)}
-.hl-bar i{width:7px;height:7px;border-radius:50%;background:rgba(237,237,235,.28)}.hl-bar i:first-child{background:var(--red)}
+/* the two windows follow the site's look (Andrija, 2026-10-29): dark on the dark look, as before; light on the light look */
+.hl-term,.hl-ix{--w-bg:rgba(5,5,5,.78);--w-blur:blur(10px);--w-bd:rgba(237,237,235,.18);--w-sh:none;--w-rule:rgba(237,237,235,.14);--w-dot:rgba(237,237,235,.28);--w-dim:#3b3b39;--w-bd2:rgba(237,237,235,.16);--w-bd3:rgba(237,237,235,.4);--fg:#ededeb;--mid:#8d8d8a}
+:root[data-pf="light"] .hl-term,:root[data-pf="light"] .hl-ix{--w-bg:rgba(243,243,240,.86);--w-blur:blur(14px) saturate(1.2);--w-bd:rgba(255,255,255,.55);--w-sh:0 1px 0 rgba(255,255,255,.6) inset,0 18px 50px rgba(0,0,0,.32);--w-rule:rgba(0,0,0,.09);--w-dot:rgba(0,0,0,.16);--w-dim:#b4b4b0;--w-bd2:rgba(0,0,0,.14);--w-bd3:rgba(0,0,0,.35);--fg:#111;--mid:#6c6c68}
+.hl-term{width:min(440px,calc(100vw - 2 * var(--m)));background:var(--w-bg);-webkit-backdrop-filter:var(--w-blur);backdrop-filter:var(--w-blur);border:1px solid var(--w-bd);box-shadow:var(--w-sh);padding:0 clamp(14px,1.3vw,20px) clamp(14px,1.3vw,20px);color:var(--fg)}
+.hl-bar{display:flex;align-items:center;gap:6px;margin:0 calc(clamp(14px,1.3vw,20px) * -1) clamp(12px,1.1vw,16px);padding:8px clamp(14px,1.3vw,20px);border-bottom:1px solid var(--w-rule);font-size:var(--ui);color:var(--mid)}
+.hl-bar i{width:7px;height:7px;border-radius:50%;background:var(--w-dot)}.hl-bar i:first-child{background:var(--red)}
 .hl-bar span{margin-left:8px;letter-spacing:.02em}
+/* the index window (2026-10-29, from /hitl-studies/): a second light window docked on the right over the photos, listing every photo in the loop.
+   It glides with the slideshow, holds still under the pointer (the line pointed at is the photo shown), scrolls by wheel, rail, buttons, arrow keys or dragging,
+   and drags around the photos by its title bar. Computers only; phones keep the terminal alone. */
+.hl-ix{display:none}
+@media (min-width:761px){:root[data-hl="b"] .hl-ix{display:flex}}
+.hl-ix{position:absolute;right:var(--m);top:50%;transform:translate(var(--dx,0px),calc(-50% + var(--dy,0px)));z-index:4;flex-direction:column;width:clamp(330px,27vw,410px);height:min(66%,460px);background:var(--w-bg);-webkit-backdrop-filter:var(--w-blur);backdrop-filter:var(--w-blur);border:1px solid var(--w-bd);box-shadow:var(--w-sh);color:var(--fg);user-select:none;-webkit-user-select:none}
+.hl-ix .hl-bar{margin:0;padding:8px 14px;flex:none}.hl-ix .hl-bar em{margin-left:auto;font-style:normal;font-family:var(--mono);font-size:10px;letter-spacing:.06em}
+@media (hover:hover) and (pointer:fine){.hl-ix .hl-bar{cursor:grab;touch-action:none}.hl-ix.drag .hl-bar{cursor:grabbing}}
+.ix-v{position:relative;flex:1;min-height:0;overflow:hidden;-webkit-mask:linear-gradient(transparent,#000 16%,#000 84%,transparent);mask:linear-gradient(transparent,#000 16%,#000 84%,transparent)}
+.ix-s{position:absolute;inset:0;overflow-y:scroll;scrollbar-width:none;overscroll-behavior:contain;padding:0 22px 0 14px}
+.ix-s::-webkit-scrollbar{display:none}
+.ix-s.grab,.ix-s.grab li{cursor:grabbing}
+.hl-ix ol{list-style:none;margin:0;padding:0}
+.hl-ix li{display:grid;grid-template-columns:4ch 1fr auto;gap:12px;align-items:center;height:21px;font-family:var(--mono);font-size:11px;font-variant-numeric:tabular-nums;white-space:nowrap;cursor:pointer;color:var(--w-dim);transition:color .12s}
+.hl-ix li > *{overflow:hidden;text-overflow:ellipsis}
+.hl-ix li.seen{color:var(--mid)}
+.hl-ix li.on{color:var(--red)}
+.hl-ix li.on .n::before{content:"> "}.hl-ix li.on .n{margin-left:-2ch}
+.hl-ix li u{text-decoration:none;opacity:.55}.hl-ix li.on u{opacity:.8}
+@media (hover:hover){.hl-ix li:hover{color:var(--fg)}}
+.hl-ix.hold li.on{color:var(--fg)}.hl-ix.hold li.on .n::before{color:var(--red)}
+.ix-r{position:absolute;right:5px;top:10px;bottom:10px;width:11px;z-index:2;cursor:ns-resize;touch-action:none}
+.ix-r::before{content:"";position:absolute;left:5px;top:0;bottom:0;width:1px;background:var(--w-rule)}
+.ix-r i{position:absolute;left:4px;width:3px;background:var(--mid);transition:background .15s}
+.ix-r:hover i,.ix-r.on i{background:var(--fg)}
+.ix-c{display:flex;align-items:center;gap:6px;flex:none;padding:7px 10px 7px 14px;border-top:1px solid var(--w-rule);color:var(--mid);font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+.ix-c span{margin-right:auto}.ix-c span b{font-weight:400;color:var(--fg)}
+.ix-c button{font:inherit;font-size:9px;color:var(--mid);background:none;border:1px solid var(--w-bd2);width:24px;height:20px;padding:0;cursor:pointer;line-height:1;touch-action:none}
+.ix-c button:hover,.ix-c button.on{color:var(--fg);border-color:var(--w-bd3)}.ix-c button.on{color:var(--red)}
 .hl-b .hl-t{margin:.25em 0 .35em;font-size:var(--t1);font-weight:400;letter-spacing:-.03em;line-height:1.1}
 .hl-cur{display:inline-block;width:.55em;height:1.05em;margin-left:.3em;vertical-align:-.15em;background:var(--red);animation:hlBlink 1.1s steps(1) infinite}
 @keyframes hlBlink{50%{opacity:0}}
@@ -1258,6 +1290,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 :root[data-pf="light"] .seek::-moz-range-thumb{background:var(--fg)}
 :root[data-pf="light"] .net-hint{color:#d0291f}
 :root[data-pf="light"] .hitl h2{color:#fff}
+:root[data-pf="light"] .hitl .hl-term .hl-t{color:var(--fg)}   /* the terminal's title takes the window's own colour */
 /* Human in the loop slideshow, rebuilt 2026-10-14 to match the About page gallery on panoramafilms.tv:
    a fixed frame (column width × the tallest photo's shape, capped to the window), each photo shown whole inside it */
 .hitl{min-height:0;container-type:inline-size}
@@ -1478,7 +1511,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 @media (min-width:761px){
   /* the red underline is drawn as a background line, so the text's colour fringes never reach it */
   .menu a,.menu a.go,.menu a.on,.menu a:hover,.menu a.go:hover,.menu a:focus-visible{text-decoration:none}
-  .menu a{background:linear-gradient(var(--red),var(--red)) left 100% / 100% 0 no-repeat;padding-bottom:.12em}
+  .menu a{background:linear-gradient(var(--red),var(--red)) left calc(100% - .22em) / 100% 0 no-repeat;padding-bottom:.12em}   /* the line sits .22em higher, closer to the words (Andrija, 2026-10-30) */
   .menu a:hover,.menu a:focus-visible{background-size:100% max(1px,.035em)}   /* no colour fringe since 2026-10-20 (Andrija): only the red underline */
 }
 @media (prefers-reduced-motion:reduce){.menu a:hover,.menu a:focus-visible{animation:none}}
@@ -1595,9 +1628,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .ov-in{gap:0}
 .ov-t,.ov-l{font-size:var(--d1);font-weight:400;line-height:1.06;letter-spacing:-.05em;max-width:24ch}
 .ov-l{opacity:.5}
-/* trying plain white instead of inverted (Andrija, 2026-10-14): white type with a soft shadow so it holds on bright frames; the logline at 70% */
-.ov{mix-blend-mode:normal;color:#fff;text-shadow:0 1px 24px rgba(0,0,0,.28),0 0 2px rgba(0,0,0,.18)}
-.ov-l{opacity:.7}
+/* inverted type again (Andrija, 2026-10-30; plain white with a shadow was tried from 2026-10-14): the words invert what is under them; logline and client at 50% */
 .works .cap .cl{grid-column:1/-1}
 .works .cap .yr{grid-column:10/span 3;text-align:right}
 @media (max-width:760px){.works .ov{display:none}.works .cap h3.sr-only{position:static;width:auto;height:auto;overflow:visible;clip:auto;white-space:normal;grid-column:1/-1;font-size:var(--small);font-weight:400;letter-spacing:-.01em;line-height:1.35;margin:0}.works .cap{row-gap:0}}
@@ -1794,6 +1825,62 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .tag .arr,.more .mt .arr{order:-1;margin:0 .18em 0 0}
 .tag,.more .mt{display:inline-flex;align-items:baseline}
 #chapters .lede .tag.sub,.lede.cat .tag{display:flex!important;width:max-content}   /* Featured and Catalogue sit on their own line: flex keeps the arrow first there too */
+/* no red arrows on the labels any more (Andrija, 2026-10-30) */
+.tag .arr,.more .mt .arr,summary .arr,.peekbar .arr{display:none!important}
+/* the red arrow as a superscript before the word: smaller, its top level with the capitals (Andrija, 2026-10-30) */
+.tag .arr,.more .mt .arr,#studio > details.more > summary .arr,#approach > details.more > summary .arr{align-self:flex-start;line-height:1;margin:.13em .1em 0 0}
+.tag .arr .dn,.more .mt .arr .dn{display:block;width:.34em;height:.42em;stroke-width:2.3}
+/* computers too (Andrija, 2026-10-30): one label only, "↓ Films" under the reel. No Featured / Catalogue labels and no big
+   "Campaigns & Commissioned Films" / "Archive" headings: Featured runs straight into the catalogue thumbnails, as on phones */
+@media (min-width:761px){
+  #chapters > .lede,#chapters .lede,.lede.cat{display:none}
+  #films.sec,section.sec:has(#cards){padding-top:0}
+  #chapters,#chapters .works,section.sec#films{margin-bottom:0!important;padding-bottom:0!important}
+  #cards{margin-top:0}
+}
+/* Featured titles on computers: pointing at the title, logline or client brightens the logline and client a little (Andrija, 2026-10-30; the red underline was tried and dropped) */
+@media (min-width:761px){
+  .works .ov-l,.works .ov-c{transition:opacity .35s var(--ease)}
+  .works .ov-tl,.works .ov-c{pointer-events:auto}   /* only the words react, not the whole film (Andrija, 2026-10-30); a click still opens the film */
+  .works .frame:has(.ov-tl:hover,.ov-c:hover) .ov-l,.works .frame:focus-visible .ov-l{opacity:.8}
+}
+/* featured client: plain white in its own layer (.ov-w), the inverted layer keeps title and logline */
+.ov:not(.ov-w) .ov-c{visibility:hidden}
+.ov-w{mix-blend-mode:normal}
+.ov-w .ov-tl{visibility:hidden}
+.ov-w .ov-c{opacity:1;color:#fff;text-shadow:0 1px 18px rgba(0,0,0,.3),0 0 2px rgba(0,0,0,.2)}
+/* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in were tried, C (Rise) chosen; ?hov=a|b still shows the others.
+   A Focus: the words come into focus from a soft blur. B Wipe: they are uncovered left to right. C Rise: each line rises from behind its own edge.
+   Touch screens: the card crossing the middle of the window; the keyboard: the focused card. */
+@media (min-width:761px){
+  #cards .card .meta > *{opacity:0;transition:opacity .45s var(--ease),filter .6s var(--ease),transform .6s var(--ease),clip-path .6s var(--ease)}
+  #cards .card .meta .cl{transition-delay:0s}
+  :root[data-hov="a"] #cards .card .meta > *{filter:blur(8px);transform:scale(1.02);transform-origin:0 50%}
+  :root[data-hov="b"] #cards .card .meta > *{opacity:1;clip-path:inset(0 100% 0 0);transition-duration:.2s,.6s,.6s,.7s}
+  :root[data-hov="c"] #cards .card .meta > *{transform:translateY(.25em);transition:opacity .8s var(--ease),transform .9s var(--ease)}   /* subtler still (2026-10-30): a quarter-line lift with the fade, no mask */
+  #cards .card .meta{row-gap:0}
+  #cards .card .meta h3,#cards .card .meta .cl{line-height:.98}   /* subtler (Andrija, 2026-10-30): a short rise with a fade */
+  /* revealed (after the three starting states, so it wins over them) */
+  :is(#cards .card:hover,#cards .card:focus-within,#cards .card:has(.media.lit)) .meta > *{opacity:1;filter:none;transform:none;clip-path:inset(0 0 0 0)}
+  :is(#cards .card:hover,#cards .card:focus-within,#cards .card:has(.media.lit)) .meta .cl{transition-delay:.09s}
+}
+@media (min-width:761px) and (prefers-reduced-motion:reduce){#cards .card .meta > *{transition:opacity .2s!important;filter:none!important;transform:none!important;clip-path:none!important}}
+/* the outline globe as a pictogram inside the About us statement, after Panorama Films; the bottom of its circle sits on the baseline (Andrija, 2026-10-29: the solid, negative globe, 15% bigger) */
+/* computers (Andrija, 2026-10-30): Featured films follow one another with no space between; the client sits over the film at the far right,
+   on the title's line, and travels with the title. The line under each film stays in the page for search only. */
+.ov-in{display:flex;justify-content:space-between;align-items:first baseline;gap:var(--g)}
+.ov-tl{display:grid;min-width:0}
+.ov-c{flex:none;font-size:var(--t1);letter-spacing:-.02em;line-height:1.1;text-align:right;opacity:.5}
+@media (min-width:761px){
+  .works{gap:0}
+  .works .work .cap{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  /* catalogue, a trial "to see": thumbnails edge to edge with no gaps, title and client over the picture, left, in the middle of its height */
+  .cards{gap:0;margin-inline:calc(var(--m) * -1)}
+  .cards .card{position:relative}
+  #cards .card .meta{position:absolute;inset:0;z-index:3;margin:0;padding:0 clamp(12px,1.6vw,20px) 0 var(--m);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;row-gap:2px;pointer-events:none;color:#fff;text-shadow:0 0 14px rgba(0,0,0,.45)}
+  #cards .card .meta .cl{color:rgba(255,255,255,.62)}
+}
+.pf-globe{display:inline-block;width:.85em;height:.85em;vertical-align:calc(-.022em - 5px);fill:currentColor;overflow:visible}   /* an inline vector (media/globe-flat.svg, one flat path), not a CSS mask: masks are drawn as a bitmap and went soft (Andrija, 2026-10-30) */
 </style>
 <!-- SEO:LD --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://panoramafilms.tv/#site","url":"https://panoramafilms.tv/","name":"Panorama Films","inLanguage":"en","publisher":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Organization","@id":"https://panoramafilms.tv/#org","name":"Panorama Films","alternateName":["Panorama Films Collective","Панорама Филмс"],"url":"https://panoramafilms.tv/","logo":"https://panoramafilms.tv/media/icons/icon-512.png","image":"https://panoramafilms.tv/media/og/home.jpg","description":"Independent creative storytelling studio from Belgrade, Serbia, making documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.","slogan":"Seeing the bigger picture.","address":{"@type":"PostalAddress","addressLocality":"Belgrade","addressCountry":"RS"},"areaServed":[{"@type":"Country","name":"United Arab Emirates"},{"@type":"Country","name":"Serbia"},{"@type":"Place","name":"Worldwide"}],"knowsAbout":["Documentary film production","Docuseries","Brand films","Campaign films","Event films","Cinematography","Aerial cinematography","Film editing","Sound design","Script writing","Creative direction"],"sameAs":["https://www.instagram.com/panoramafilms.tv/","https://vimeo.com/panoramafilmstv","https://www.youtube.com/@panoramafilmstv"],"founder":[{"@id":"https://panoramafilms.tv/#andrija-kovac"}],"employee":[{"@id":"https://panoramafilms.tv/#andrija-kovac"},{"@id":"https://panoramafilms.tv/#mina-strugar"},{"@id":"https://panoramafilms.tv/#marija-kovacina"}]},{"@type":"Person","@id":"https://panoramafilms.tv/#andrija-kovac","name":"Andrija Kovač","jobTitle":"Creative Director","description":"Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.","image":"https://panoramafilms.tv/media/team/andrija-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#mina-strugar","name":"Mina Strugar","jobTitle":"Producer","description":"Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.","image":"https://panoramafilms.tv/media/team/mina-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#marija-kovacina","name":"Marija Kovačina","jobTitle":"Editorial Director","description":"Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.","image":"https://panoramafilms.tv/media/team/marija-2.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}}]}</script><!-- /SEO:LD --></head>
 <body>
@@ -1834,7 +1921,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
         <div class="media cover" id="heroMedia" data-k="reel" data-loop="full"></div><!-- black until the reel loads; the reel starts at a random point -->
         <span class="lab x-now" id="heroNow"></span>
       </div>
-      <div class="x-cap"><a class="play-reel" data-play="reel" href="media/reel.mp4" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:29</span></a></div>
+      <div class="x-cap"><a class="play-reel" data-play="reel" href="https://vimeo.com/1241383768/79fb0efac2" target="_blank" rel="noopener"><span class="tri"></span>Play showreel with sound <span class="mid">1:32</span></a></div>
     </div>
   </section>
   <section class="x-stage page" aria-label="Studio">
@@ -1859,7 +1946,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   </section>
 
   <section class="sec" id="studio" data-sec="studio">
-    <div class="lede"><span class="tag">About us<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Panorama Films is an open circle of creatives telling stories that matter in ways that make you care.</h2></div>
+    <div class="lede"><span class="tag">About us<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><h2>Panorama Films <svg class="pf-globe" viewBox="7.5 -1.5 690 690" aria-hidden="true" focusable="false"><use href="media/globe-flat.svg#g"/></svg> is an open circle of creatives telling stories that matter in ways that make you care.</h2></div>
     <details class="more" open id="toolkit">
       <summary><span class="mt">We make<span class="arr" aria-hidden="true"><svg class="dn" viewBox="0 0 12 14" aria-hidden="true"><path d="M6 0v12.6M1.4 8 6 12.6 10.6 8"/></svg></span></span><span class="pm" aria-hidden="true"></span></summary>
       <div class="kit-wrap">
@@ -1925,6 +2012,9 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
       <div class="hl hl-b"><div class="hl-term"><div class="hl-bar"><i></i><i></i><i></i><span>field-notes</span></div>
         <p class="hl-code"><span class="k">$</span> panorama --show crew</p><h2 class="hl-t">Human in the loop</h2>
         <p class="hl-code"><span class="k">frame</span> <span class="v hl-n">01 / 89</span> <span class="k">· loop =</span> <span class="v">true</span><span class="hl-cur" aria-hidden="true"></span></p></div></div>
+      <div class="hl-ix" id="hlIx" aria-label="Index of the photos"><div class="hl-bar"><i></i><i></i><i></i><span>index</span><em id="ixN"></em></div>
+        <div class="ix-v"><div class="ix-s" id="ixS"><ol id="ixL"></ol></div><div class="ix-r" id="ixR"><i id="ixT"></i></div></div>
+        <div class="ix-c"><span id="ixC"></span><button type="button" id="ixUp" aria-label="Scroll up">▲</button><button type="button" id="ixDn" aria-label="Scroll down">▼</button></div></div>
       <div class="hitl-stage" id="hitlStage" role="img" aria-label="Behind the scenes on Panorama Films shoots"><img class="on" src="media/bts/00.webp" alt="" decoding="async"></div>
       <div class="over">
         <div class="top"><span class="lab rec live">Field notes</span><span class="lab tc" id="flickNo">01 / 89</span></div>
@@ -2037,7 +2127,10 @@ const SVC_ITEMS = (()=>{ const s = new Set(), add = v => String(v || '').split(/
   add('Script writing, video production, edit, sound design, service production, aerial cinematography'); return s; })();   /* old spellings still found in copied text */   /* per-project films, text and photos from panoramafilms.tv */
 /* s = second where the 20-second background loop starts */
 const F = {
-  reel:{title:"Showreel", client:"Panorama Films", file:"reel", still:"reel", clip:"home", own:true, cr:true, dur:"1:29"},   /* header loop starts at a random point on every visit, then loops from 0:00 (Andrija, 2026-10-20) */   /* V4 (2026-10-20), hosted until the final cut goes to Vimeo; old Vimeo 1232743611/7e23d97b0f */
+  /* 2019 reel (Andrija, 2026-10-30): the header shows it on 30% of visits, the V4 reel on the other 70%, both from a random point.
+     It streams from Vimeo at the best quality on offer; the hosted cut (media/clips/reel19, from Andrija's small file) shows first while Vimeo loads, and is all phones play */
+  reel19:{title:"Showreel 2019", client:"Panorama Films", v:"1241275029", h:"05d3038bce", clip:"reel19", cr:true, pre:true},
+  reel:{title:"Showreel", client:"Panorama Films", v:"1241383768", h:"79fb0efac2", still:"reel", clip:"home", cr:true, pre:true, dur:"1:32"},   /* new reel, sharper master (Andrija, 2026-10-30, "PANORAMA SHOWREEL V3"): streams from Vimeo at the best quality on offer, the hosted cut (media/clips/home, 1280×720 from his file) plays first and on phones; replaces V4 (1:29) that was hosted with the site */   /* header loop starts at a random point on every visit, then loops from 0:00 (Andrija, 2026-10-20) */   /* V4 (2026-10-20), hosted until the final cut goes to Vimeo; old Vimeo 1232743611/7e23d97b0f */
   hotf:{n:"01", client:"Dubai Future Week", year:"2026", title:"For the Human of the Future", line:"The world we’re shaping, told by those who’ll inherit it.", roles:"Concept, script, creative direction, direction, production, editing, sound production", v:"1237606218", h:"939f33d13e", dur:"1:30", s:15},
   wss26:{n:"02", client:"Dubai Sports Council", year:"2026", title:"This is What Moves Us", mainT:"What Moves Us", line:"World Sports Summit", roles:"Concept, script, creative direction, direction, production, editing, sound production"},
   ask:{n:"01", client:"Dubai Future Forum", year:"2025", title:"Ask More", line:"A visual anthem to the questions that shape our future.", roles:"Concept, creative direction", yt:"QWbPqxAycbI", dur:"1:10", clip:"ask", s:0},
@@ -2049,8 +2142,8 @@ const F = {
   p07:{n:"07", title:"ImagineBoka.ai", client:"Photo exhibition, curated by Andrija Kovač", nocl:true, roles:"", img:"thumbs/p07", page:"ImagineBoka-ai", hover:"p07", year:"2023"},
   p08:{n:"08", title:"Miracles Don’t Happen", client:"Dubai Future Forum", year:"2024", roles:"Creative direction, cinematography, editing", img:"thumbs/p08", page:"Miracles-Don-t-Happen", hover:"p08", v:"1103734783"},
   p09:{n:"09", title:"Slavko Štimac", sub:"71st Pula Film Festival Award Film", line:"71st Pula Film Festival Award Film", client:"71st Pula Film Festival", year:"2024", roles:"Cinematography", img:"thumbs/p09", page:"Pula-Film-Festival", hover:"p09", s:0, loop:8, v:"988793491"},   /* moving cover: the film's first 8 seconds, 0:00–0:08 (Andrija, 2026-10-22) */
-  p10:{n:"10", title:"A Perfect Day on the Bike", mainT:"Happiness is a bike ride away", client:"Valamar", year:"2018–2025", roles:"Creative direction, direction, cinematography, editing", img:"thumbs/p10", page:"Valamar-Biking", hover:"p10", s:50, loop:17, v:"1103738334"},   /* moving cover: the film 0:50–1:07 (Andrija, 2026-10-28) */
-  p12:{n:"12", title:"Air to the People: Serbia", client:"Air to the People 2.0", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p12", page:"Air-to-the-People-Serbia", hover:"p12", s:77, loop:13, yt:"LdLfDc-AlAc"},   /* moving cover: the film 1:17–1:30 (Andrija, 2026-10-23) */
+  p10:{n:"10", title:"Valamar Loves Bike", mainT:"Happiness is a bike ride away", client:"Valamar Hotels", year:"2018–2025", roles:"Creative direction, direction, cinematography, editing", img:"thumbs/p10", page:"Valamar-Biking", hover:"p10", s:50, loop:17, v:"1103738334"},   /* moving cover: the film 0:50–1:07 (Andrija, 2026-10-28) */
+  p12:{n:"12", title:"Air to the People: Serbia", client:"Air to the People 2.0", year:"2020", roles:"Direction, cinematography, editing", img:"thumbs/p12", page:"Air-to-the-People-Serbia", hover:"p12", s:77, loop:13, yt:"LdLfDc-AlAc", card:{yt:null}},   /* the card plays our own cut of 1:17–1:30 (media/hover/p12, from Andrija's file, 2026-10-30) instead of the YouTube stream, which showed YouTube's information panel */   /* moving cover: the film 1:17–1:30 (Andrija, 2026-10-23) */
   p13:{n:"13", title:"Dubai Future Forum", mainT:"Dubai Future Forum 2025 Highlights", line:"The World’s Largest Gathering of Futurists", s:45, loop:40, client:"Dubai Future Foundation", year:"2022–2025", roles:"Script, creative direction, production, cinematography, editing", img:"stills/dff", page:"Dubai-Future-Forum-Chronicles-1", hover:"p13", card:{yt:null}, yt:"PkLvj-vQygs"},   /* moving cover: hosted loop media/hover/p13, film 1:39–1:43.75, ending before Maggie Jackson's name caption; still: the woman at 1:12 (Andrija, 2026-10-22) */
   p14:{n:"14", title:"We Will Walk", client:"Civil Rights Defenders", year:"2022", roles:"Creative direction, cinematography, editing", img:"thumbs/p14", page:"We-Will-Walk", hover:"p14", s:85, loop:20, v:"886851613", h:"25a02b2640"},   /* moving cover: the film 1:25–1:45 (Andrija, 2026-10-23) */
   p15:{n:"15", title:"Imagine Our Future", client:"Dubai Future Forum", year:"2023", roles:"Creative direction, cinematography, editing", img:"thumbs/p15", page:"Imagine-Our-Future", hover:"p15", yt:"tkh-cNGWigw"},
@@ -2069,7 +2162,7 @@ const F = {
   p26:{n:"26", title:"Tajkun", client:"Firefly Productions", year:"2019", roles:"Aerial cinematography", img:"thumbs/p26", page:"Tajkun-TV-Series", hover:"p26", s:55, v:"502243916"},
   p27:{n:"27", title:"Education For All", client:"Goethe-Institut", year:"2020", roles:"Direction, production, editing", img:"thumbs/p27", page:"Goethe-Institut", hover:"p27", v:"486368338", h:"2e7c1ab6bf"},
   p28:{n:"28", title:"Long Way To Europe", client:"European Western Balkans", year:"2021", roles:"Direction, cinematography, editing", img:"thumbs/p28", page:"European-Western-Balkans", hover:"p28", s:1, loop:7, v:"687108342", h:"96054f31ac"},
-  p29:{n:"29", title:"Under Surveillance", mainT:"Hiljade.Kamera", client:"Share Foundation", year:"", roles:"Creative direction, production", img:"thumbs/p29", page:"SHARE-Foundation", hover:"p29", card:{v:"437807739", yt:null, s:1}, yt:"XlMldmOhYG8"},
+  p29:{n:"29", title:"Under Surveillance", mainT:"Hiljade.Kamera", client:"SHARE Foundation", year:"2018–2022", roles:"Creative direction, production", img:"thumbs/p29", page:"SHARE-Foundation", hover:"p29", card:{v:"437807739", yt:null, s:1}, yt:"XlMldmOhYG8"},
   p30:{n:"30", title:"World Drone Prix", client:"World Drone Prix", year:"2016", roles:"Production, cinematography, editing", img:"thumbs/p30", page:"World-Drone-Prix", hover:"p30", s:89, loop:18, v:"158810492"},
   p31:{n:"31", title:"Belgrade Furniture Fair", client:"Belgrade Fair", year:"2017–2019", roles:"Production, cinematography, editing", img:"thumbs/p31", page:"Belgrade-Furniture-Fair", hover:"p31", card:{v:"400261995", s:23, loop:14}, v:"397015324"},
   p32:{n:"32", title:"Shinobi", client:"Shinobi", year:"2020", roles:"Creative direction, production, cinematography", img:"thumbs/p32", page:"Shinobi", hover:"p32", v:"314829689"},
@@ -2128,7 +2221,7 @@ const VEXT = 'mp4';
 const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 /* every project's address is /work/<slug>/, the slug made from its title (functions/work and lib/site.js use the same rule) */
 const slugify = t => [...String(t)].map(c => /[đĐ]/.test(c) ? 'd' : c.normalize('NFD')[0]).join('').toLowerCase().replace(/[’'`]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-const WORK = {}; Object.keys(F).forEach(k=>{ if (k !== 'reel') WORK[k] = slugify(F[k].title); });
+const WORK = {}; Object.keys(F).forEach(k=>{ if (k !== 'reel' && k !== 'reel19') WORK[k] = slugify(F[k].title); });
 const BY_WORK = Object.fromEntries(Object.entries(WORK).map(([k, v])=>[v, k]));
 const workUrl = k => WORK[k] ? `/work/${WORK[k]}/` : null;
 const HOME_TITLE = document.title;
@@ -2147,7 +2240,9 @@ function frame(k, small){
     ${f.v||f.yt||f.file ? '<span class="play" aria-hidden="true"><span class="play-t">Play</span></span>' : ''}
     ${small ? `<span class="hud"><span class="top"><span></span>${more}</span></span>`
       : `<span class="hud"></span>
-      <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span></span>`}</a>`;
+      ${(()=>{ const inner = `<span class="ov-in"><span class="ov-tl"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span>${f.client ? `<span class="ov-c">${esc(f.client)}</span>` : ''}</span>`;
+        /* two layers with the same layout, so both move together: the title and logline invert what is under them, the client is plain white (Andrija, 2026-10-30) */
+        return `<span class="ov" aria-hidden="true">${inner}</span><span class="ov ov-w" aria-hidden="true">${inner}</span>`; })()}`}</a>`;
 }
 function work(k){
   const f = F[k];
@@ -2285,6 +2380,13 @@ function fitStream(m, box, f){
 /* phones play the hosted loops (one light video each) instead of a Vimeo or YouTube player per film, which made scrolling lag
    (Andrija, 2026-10-29); films with no hosted loop still stream */
 const PHONE_LOOPS = () => matchMedia('(max-width:760px)').matches;
+/* catalogue hover text: C chosen (2026-10-30) */
+(()=>{ const v = (new URLSearchParams(location.search).get('hov') || '').toLowerCase();   /* C, Rise, chosen (Andrija, 2026-10-30); ?hov=a|b still shows the others, nothing remembered */
+  try { localStorage.removeItem('pf-hov'); } catch(_) {}
+  document.documentElement.dataset.hov = /^[abc]$/.test(v) ? v : 'c'; })();
+/* header reel: the 2019 reel on 30% of visits, V4 on the other 70% (Andrija, 2026-10-30); ?reel=2019 or ?reel=v4 forces one, to check */
+(()=>{ const q = new URLSearchParams(location.search).get('reel'), hm = document.getElementById('heroMedia');
+  if (hm) hm.dataset.k = q === '2019' ? 'reel19' : q === 'v4' ? 'reel' : Math.random() < .3 ? 'reel19' : 'reel'; })();
 function start(m){
   clearTimeout(m._kill);
   if (live.has(m)) return live.get(m).play();
@@ -2294,6 +2396,7 @@ function start(m){
     return (STREAM && !PHONE_LOOPS() && (f.v || f.yt)) ? streamIn(m, f, false, {auto:f.s === undefined, hover:m.dataset.hv}) : hoverIn(m);
   }
   const k = m.dataset.k, f = F[k], full = m.dataset.loop === 'full';
+  if (f.pre && !PHONE_LOOPS() && STREAM && f.v) return preStream(m, f);
   if ((f.own || PHONE_LOOPS()) && f.clip) clipIn(m, f);   /* own: the loop is a cut of our own (a trailer segment), not a stretch of the streamed film */
   else if (STREAM && (f.v || f.yt)) streamIn(m, f, full);
   else if (f.clip) clipIn(m, f);
@@ -2325,6 +2428,41 @@ function clipIn(m, f){
   const ctl = {play:()=>v.play().then(()=>m.classList.add('on')).catch(()=>{}), pause:()=>v.pause(), time:()=>v.currentTime, clip:true,
     seek:fr=>{ if (v.duration){ v.pause(); v.currentTime = fr * v.duration; } }, sound:()=>{}};
   live.set(m, ctl); ctl.play();
+}
+/* pre: the hosted cut plays at once (from a random point), while the Vimeo stream loads underneath at the best quality on offer;
+   once the stream is moving at the same moment it fades in over the cut, which then stops (the 2019 header reel, 2026-10-30) */
+function preStream(m, f){
+  clipIn(m, f); const v = m.querySelector('video'), clipCtl = live.get(m);
+  const box = document.createElement('div'); box.className = 'stream'; box.style.opacity = 0;
+  fitStream(m, box, f); new ResizeObserver(()=>fitStream(m, box, f)).observe(m);
+  box.innerHTML = `<iframe src="https://player.vimeo.com/video/${f.v}?${f.h?`h=${f.h}&`:''}background=1&autoplay=0&muted=1&loop=1&autopause=0&controls=0&dnt=1" allow="autoplay; fullscreen" title="" tabindex="-1" aria-hidden="true"></iframe>`;
+  m.appendChild(box);
+  const p = new Vimeo.Player(box.firstChild), VQ = ['2160p','4k','1440p','2k','1080p','720p','540p'];   /* Vimeo names 4K and 2K 2160p and 1440p */
+  let t = 0, shown = false;
+  const ctl = {...clipCtl, destroy:()=>{ p.destroy().catch(()=>{}); box.remove(); }};
+  live.set(m, ctl);
+  const fail = () => { if (!shown){ box.remove(); live.set(m, clipCtl); } };
+  p.on('error', fail);
+  let target = -1, tries = 0, lead = 3, go = false;
+  const park = () => { target = (v.currentTime || 0) + lead; tries++; go = false; p.pause().catch(()=>{}); p.setCurrentTime(target).catch(()=>{}); };   /* park the stream a few seconds ahead of the cut */
+  const best = () => p.getQualities().catch(()=>[]).then(qs=>{ const ids = qs.map(x=>x.id), want = VQ.find(q=>ids.includes(q)); return want ? p.setQuality(want).catch(()=>{}) : null; });
+  /* when the cut reaches the parked moment the stream starts; if the cut has already passed it (or looped), park again */
+  const wait = () => { if (shown || !box.isConnected) return;
+    const c = v.currentTime;
+    if (!go && !v.paused && c >= target - .06){ if (c > target + .5 && tries < 6) park(); else { go = true; p.play().catch(fail); } }
+    else if (c < target - lead - 1) park();
+    requestAnimationFrame(wait); };
+  p.ready().then(()=>{ best(); park(); wait(); }).catch(fail);
+  p.on('loaded', best);
+  p.on('timeupdate', d=>{ t = d.seconds; if (shown || !go || d.seconds < target + .05) return;
+    /* the stream is moving: fade it in only if it runs with the cut; if it started late (buffering), park again further ahead */
+    /* if the stream started late (buffering), the hosted cut jumps to the stream's moment under it instead of waiting for another try, so the switch never stalls (2026-10-30) */
+    if (Math.abs(v.currentTime - d.seconds) > .3){ try { v.currentTime = d.seconds + .15; } catch(_) {} }
+    shown = true; box.style.transition = 'opacity .8s'; box.style.opacity = 1;
+    setTimeout(()=>{ v.pause(); v.style.visibility = 'hidden'; }, 900);
+    live.set(m, {destroy:ctl.destroy, play:()=>p.play().catch(()=>{}), pause:()=>p.pause().catch(()=>{}), time:()=>t, clip:false,
+      seek:fr=>{ p.pause().catch(()=>{}); p.getDuration().then(d=>p.setCurrentTime(fr * d)).catch(()=>{}); }, sound:on=>{ p.setMuted(!on).catch(()=>{}); p.setVolume(on?1:0).catch(()=>{}); }});
+  });
 }
 function streamIn(m, f, full, o = {}){
   const box = document.createElement('div'); box.className = 'stream' + (f.yt ? ' yt' : '');
@@ -2475,7 +2613,7 @@ function hSet(list){
   hPics = hList.map(p=>`${M}bts/${p.f}?v=${p.v || 1}`); hImgs = []; hOk = new Array(hList.length).fill(false);
   hs.style.setProperty('--hr', Math.max(...hList.map(p=>p.h / p.w)).toFixed(4));   /* tallest shown photo: height ÷ width */
   const first = hs.querySelector('img'); first.src = hPics[0]; hImgs[0] = first; hOk[0] = true; hPos = 0;
-  fn.textContent = `01 / ${hList.length}`; hlN(fn.textContent);
+  fn.textContent = `01 / ${hList.length}`; hlN(fn.textContent); ixBuild();
 }
 fetch(`${M}bts/photos.json`, {cache:'no-cache'}).then(r=>r.ok ? r.json() : null).catch(()=>null).then(j=>{
   hSet(j && Array.isArray(j.photos) && j.photos.length ? j.photos : hList);
@@ -2495,11 +2633,85 @@ function preloadAll(){
   });
 }
 function flick(){
+  if (ixScrub) return;
   const p = (hPos + 1) % hList.length;
   if (p === hPos || !hOk[p]) return;   /* hold the current photo until the next one is decoded */
   hImgs[p].classList.add('on'); hImgs[hPos].classList.remove('on'); hPos = p;
-  fn.textContent = `${String(hPos+1).padStart(2,'0')} / ${hList.length}`; hlN(fn.textContent);
+  fn.textContent = `${String(hPos+1).padStart(2,'0')} / ${hList.length}`; hlN(fn.textContent); ixAt(hPos, true);
 }
+/* show photo k at once (the index window), or as soon as it has loaded */
+let ixWant = -1;
+function hJump(k){
+  if (!hImgs[k]) preloadAll(); ixWant = k;
+  if (!hOk[k]){ const im = hImgs[k]; if (im) (im.decode ? im.decode() : Promise.resolve()).then(()=>{ hOk[k] = true; if (ixWant === k) hJump(k); }).catch(()=>{}); return; }
+  ixWant = -1; if (k === hPos) return;
+  hImgs[k].classList.add('on'); hImgs[hPos].classList.remove('on'); hPos = k;
+  fn.textContent = `${String(hPos+1).padStart(2,'0')} / ${hList.length}`; hlN(fn.textContent); ixAt(hPos, false);
+}
+/* the index window: the list three times over, so it can glide past the end and back to the start without a jump.
+   Each photo is listed under a fuller name: PF-<the file's own number>_<a word from a fixed set>_<a checksum of the file name>.webp,
+   display labels only, the same for a photo on every visit; the size is the file's own. */
+const ixEl = document.getElementById('hlIx'), ixS = document.getElementById('ixS'), ixL = document.getElementById('ixL'), ixR = document.getElementById('ixR'), ixT = document.getElementById('ixT');
+const IX_W = ['panorama', 'fieldnotes', 'bts', 'crew', 'onset', 'loop'], IX_ROW = 21;
+const ixH = s => { let h = 2166136261; for (const c of s) h = Math.imul(h ^ c.charCodeAt(0), 16777619) >>> 0; return h; };
+const ixName = p => { const n = p.f.replace(/\.\w+$/, ''), h = ixH(p.f); return `<u>PF-</u>${n.padStart(4, '0')}<u>_</u>${IX_W[h % IX_W.length]}<u>_</u>${(h >>> 8).toString(16).toUpperCase().padStart(4, '0').slice(-4)}<u>.webp</u>`; };
+let ixRows = [], ixN = 0, ixVi = 0, ixHold = false, ixScrub = false, ixLast = -1, ixPush = 0, ixPt = null, ixLive = false;
+function ixBuild(){ ixN = hList.length; if (!ixN) return;
+  ixL.innerHTML = [0, 1, 2].map(()=>hList.map((p, k)=>`<li data-k="${k}"><span class="n">${String(k + 1).padStart(3, '0')}</span><span>${ixName(p)}</span><span>${p.w}×${p.h}</span></li>`).join('')).join('');
+  ixRows = [...ixL.children]; ixLast = -1; ixVi = ixN + hPos; document.getElementById('ixN').textContent = `${ixN} files`; ixPaint(); ixS.scrollTop = ixTarget(); }
+const ixTarget = () => ixVi * IX_ROW + IX_ROW / 2 - ixS.clientHeight / 2;
+function ixPaint(){ if (!ixRows.length) return;
+  if (ixLast >= 0) for (let c = 0; c < 3; c++) ixRows[ixLast + c * ixN].classList.remove('on');
+  for (let c = 0; c < 3; c++) ixRows[hPos + c * ixN].classList.add('on', 'seen'); ixLast = hPos; }
+function ixAt(k, step){ if (!ixRows.length) return; if (step && !ixHold) ixVi++; else if (!ixHold) ixVi = ixN + k; ixPaint(); }
+const ixCtl = document.getElementById('ixC');
+(function ixGlide(){ if (ixLive && ixRows.length){
+    if (!ixHold && !REDUCED){ if (ixVi >= 2 * ixN){ ixVi -= ixN; ixS.scrollTop -= ixN * IX_ROW; } const d = ixTarget() - ixS.scrollTop; ixS.scrollTop += Math.abs(d) < .5 ? d : d * .12; }
+    if (ixPush){ ixS.scrollTop += ixPush; ixPush = Math.max(-26, Math.min(26, ixPush * 1.035)); ixMid(); }
+    const c = ixN * IX_ROW, H = ixR.clientHeight, th = Math.max(18, H * ixS.clientHeight / c), mid = ixS.scrollTop + ixS.clientHeight / 2 - IX_ROW / 2;
+    ixT.style.height = th + 'px'; ixT.style.top = ((mid % c) + c) % c / c * (H - th) + 'px';
+    const line = ((Math.round(mid / IX_ROW) % ixN) + ixN) % ixN;
+    ixCtl.innerHTML = ixHold ? `line <b>${String(line + 1).padStart(3, '0')}</b> / ${ixN}` : `scroll · ${ixN} files`; }
+  requestAnimationFrame(ixGlide); })();
+new IntersectionObserver(([e])=>{ ixLive = e.isIntersecting; }).observe(document.getElementById('hitl'));
+/* scrolling by hand stays inside the middle copy, so it never runs out */
+ixS.addEventListener('scroll', ()=>{ if (!ixHold) return; const c = ixN * IX_ROW; if (ixS.scrollTop < c * .5) ixS.scrollTop += c; else if (ixS.scrollTop > c * 1.5) ixS.scrollTop -= c; if (ixPt) ixPick(ixPt); });
+const ixUnder = e => { const t = document.elementFromPoint(e.clientX, e.clientY)?.closest('li[data-k]'); return t && ixEl.contains(t) ? t : null; };
+const ixPick = e => { const t = ixUnder(e); if (!t) return; ixScrub = true; hJump(+t.dataset.k); };
+const ixMid = () => { const r = ixS.getBoundingClientRect(); ixPick({clientX: r.left + 40, clientY: r.top + r.height / 2}); };
+const ixGrab = () => { ixHold = true; ixEl.classList.add('hold'); clearTimeout(ixEl.t); };
+const ixResume = () => { ixScrub = false; ixHold = false; ixEl.classList.remove('hold'); ixWant = -1;
+  const c = Math.round((ixS.scrollTop + ixS.clientHeight / 2 - IX_ROW / 2) / IX_ROW), d = ((c - hPos) % ixN + ixN) % ixN; ixVi = c - d + (d > ixN / 2 ? ixN : 0); };
+ixEl.addEventListener('pointerenter', e=>{ if (e.pointerType === 'mouse') ixGrab(); });
+ixEl.addEventListener('pointermove', e=>{ if (e.pointerType !== 'mouse') return; ixPt = {clientX: e.clientX, clientY: e.clientY}; ixPick(ixPt); });
+ixEl.addEventListener('pointerleave', e=>{ ixPt = null; if (e.pointerType === 'mouse') ixResume(); });
+ixEl.addEventListener('touchstart', ixGrab, {passive: true});
+ixEl.addEventListener('touchend', ()=>{ clearTimeout(ixEl.t); ixEl.t = setTimeout(ixResume, 1600); }, {passive: true});
+ixEl.addEventListener('click', e=>{ const t = ixUnder(e); if (t){ ixScrub = true; hJump(+t.dataset.k); } });
+/* the rail: press anywhere on it or drag the thumb */
+let ixRail = false;
+const ixRailTo = e => { const b = ixR.getBoundingClientRect(), f = Math.max(0, Math.min(.9999, (e.clientY - b.top) / b.height)), c = ixN * IX_ROW; ixS.scrollTop = c + f * c - ixS.clientHeight / 2 + IX_ROW / 2; ixMid(); };
+ixR.addEventListener('pointerdown', e=>{ e.preventDefault(); e.stopPropagation(); ixRail = true; ixR.classList.add('on'); ixR.setPointerCapture(e.pointerId); ixGrab(); ixRailTo(e); });
+ixR.addEventListener('pointermove', e=>{ if (ixRail) ixRailTo(e); });
+['pointerup', 'pointercancel'].forEach(ev=>ixR.addEventListener(ev, ()=>{ ixRail = false; ixR.classList.remove('on'); }));
+/* the buttons: a press moves three lines, holding keeps it running and speeding up */
+[['ixUp', -1], ['ixDn', 1]].forEach(([id, d])=>{ const b = document.getElementById(id);
+  b.addEventListener('pointerdown', e=>{ e.preventDefault(); b.setPointerCapture(e.pointerId); b.classList.add('on'); ixGrab(); ixS.scrollTop += d * IX_ROW * 3; ixMid(); b.t = setTimeout(()=>{ ixPush = d * 4; }, 260); });
+  ['pointerup', 'pointercancel'].forEach(ev=>b.addEventListener(ev, ()=>{ clearTimeout(b.t); ixPush = 0; b.classList.remove('on'); })); });
+/* press and drag the list with a mouse to scroll it; the photo follows the line under the pointer */
+let ixDY = null, ixDS = 0;
+ixS.addEventListener('pointerdown', e=>{ if (e.pointerType !== 'mouse' || e.button) return; ixDY = e.clientY; ixDS = ixS.scrollTop; ixS.setPointerCapture(e.pointerId); });
+ixS.addEventListener('pointermove', e=>{ if (ixDY === null) return; if (Math.abs(e.clientY - ixDY) > 3) ixS.classList.add('grab'); ixS.scrollTop = ixDS - (e.clientY - ixDY); });
+['pointerup', 'pointercancel'].forEach(ev=>ixS.addEventListener(ev, ()=>{ ixDY = null; ixS.classList.remove('grab'); }));
+/* the arrow keys while the pointer is on the window */
+addEventListener('keydown', e=>{ if (!ixHold || !/^Arrow(Up|Down)$/.test(e.key)) return; e.preventDefault(); ixS.scrollTop += (e.key === 'ArrowUp' ? -1 : 1) * IX_ROW; ixMid(); });
+/* the window drags around the photos by its title bar, like the terminal */
+(()=>{ if (!matchMedia('(hover:hover) and (pointer:fine)').matches) return; const h = ixEl.querySelector('.hl-bar'), box = document.getElementById('hitl'); let sx, sy, dx = 0, dy = 0, bx, by, lim, on = false;
+  h.addEventListener('pointerdown', e=>{ if (e.button) return; on = true; h.setPointerCapture(e.pointerId); ixEl.classList.add('drag'); sx = e.clientX; sy = e.clientY; bx = dx; by = dy;
+    const r = ixEl.getBoundingClientRect(), R = box.getBoundingClientRect(); lim = {l: R.left - r.left + dx + 8, r: R.right - r.right + dx - 8, t: R.top - r.top + dy + 8, b: R.bottom - r.bottom + dy - 8}; e.preventDefault(); });
+  h.addEventListener('pointermove', e=>{ if (!on) return; dx = Math.min(lim.r, Math.max(lim.l, bx + e.clientX - sx)); dy = Math.min(lim.b, Math.max(lim.t, by + e.clientY - sy));
+    ixEl.style.setProperty('--dx', dx + 'px'); ixEl.style.setProperty('--dy', dy + 'px'); });
+  ['pointerup', 'pointercancel'].forEach(ev=>h.addEventListener(ev, ()=>{ on = false; ixEl.classList.remove('drag'); })); })();
 /* start downloading well before the section arrives; run only while it is on screen */
 new IntersectionObserver(([e])=>{ if (e.isIntersecting) preloadAll(); }, {rootMargin:'1500px 0px'}).observe(document.getElementById('hitl'));
 new IntersectionObserver(([e])=>{ clearInterval(fiT); if (e.isIntersecting && !REDUCED) fiT = setInterval(flick, 300); }).observe(document.getElementById('hitl'));
@@ -2641,7 +2853,7 @@ function playVimeo(k, fm){
   /* sharpest version the screen can show: the player's width in device pixels (the whole screen in full screen), never below 1080p;
      asked again once playback starts and on entering full screen, because Vimeo's automatic quality starts low and climbs.
      Vimeo only honours this when the account allows choosing quality; otherwise it stays on automatic (2026-10-22) */
-  const VQ = [['4k',3840],['2k',2560],['1080p',1920],['720p',1280],['540p',960],['360p',640],['240p',426]];
+  const VQ = [['2160p',3840],['4k',3840],['1440p',2560],['2k',2560],['1080p',1920],['720p',1280],['540p',960],['360p',640],['240p',426]];
   let picked = '';
   function best(){ lp.getQualities().then(qs=>{ const ids = qs.map(x=>x.id), fs = document.fullscreenElement || document.webkitFullscreenElement;
     const need = Math.max(1920, (fs ? screen.width : lbp.clientWidth) * Math.min(devicePixelRatio || 1, 3));
@@ -3203,7 +3415,7 @@ document.addEventListener('keydown', e=>{
     b.setAttribute('aria-expanded', String(step === last));
     /* the line says how many films are still waiting (Andrija, 2026-10-29): '19 more films', then '6 from the archive', then 'Show fewer' */
     const left = PH.matches ? c.querySelectorAll('.card.m-tail').length : step === 0 ? extra : arch, pl = n => n === 1 ? 'film' : 'films';
-    t.textContent = step === last ? 'Show fewer' : (!PH.matches && step === 1) ? `${left} more from the archive` : `${left} more ${pl(left)}`; };
+    t.textContent = step === last ? 'Show fewer' : (!PH.matches && step === 1) ? 'More from the archive' : 'More films'; };   /* no counts (Andrija, 2026-10-30) */
   PH.addEventListener('change', ()=>set(0));
   set(0);
   b.addEventListener('click', e=>{
@@ -3227,7 +3439,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
 (()=>{
   const cv = document.getElementById('net'); if (!cv) return;
   /* a canvas never downloads a font by itself: load the weights the names use, or they draw in the fallback */
-  if (document.fonts) ['400','500'].forEach(w=>document.fonts.load(`${w} 16px "Untitled Sans"`));
+  if (document.fonts){ ['400','500'].forEach(w=>document.fonts.load(`${w} 16px "Untitled Sans"`)); document.fonts.load('16px "Data Error Horiz"'); }
   const LIGHT = () => document.documentElement.dataset.pf === 'light';
   const ctx = cv.getContext('2d');
   const PEOPLE = [
@@ -3312,7 +3524,7 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
     nodes.forEach((n,i)=>{ const a = seed + i * 2.39996 + (Math.random() - .5) * .6, r = (n.person ? .36 : .18) * Math.min(W, FH) * (.85 + Math.random() * .3); n.x = W/2 + Math.cos(a) * r; n.y = H/2 + Math.sin(a) * r; n.vx = n.vy = 0; });
     if (typeof settle === 'function') settle(); return true; }
   const GS = .8;   /* portraits, dots and names at 80% of their earlier size; the lines keep their thickness */
-  const R_ = n => (n.person ? (n.core ? 32 : Math.min(24, 14 + n.deg * .7)) : 1.8 + n.deg * .5) * (W < 600 ? .62 : S) * GS;
+  const R_ = n => (n.person ? (n.core ? 26 : Math.min(24, 14 + n.deg * .7)) : 1.8 + n.deg * .5)   /* the three of us a little smaller, close to everyone else (Andrija, 2026-10-29; was 32) */ * (W < 600 ? .62 : S) * GS;
   /* fixed points: Andrija on top, Marija bottom right, Mina bottom left; everyone else turns inside */
   const CORE = ['andrija','marija','mina'].map(id=>pn.find(n=>n.id === id)); let ANG = -Math.PI / 2 + Math.random() * Math.PI * 2;
   /* the first time the web comes into view it opens gently from the centre */
@@ -3386,10 +3598,20 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
       ctx.beginPath(); ctx.arc(n.x, n.y, r, 0, 7); ctx.lineWidth = (n.core ? 2.5 : 1.3) * (small ? 1 : S); ctx.strokeStyle = n.core || n === act ? '#e2231a' : (LIGHT() ? '#8f8f8a' : '#5d5d5a'); ctx.stroke();
       if (!n.img){ ctx.font = `500 ${Math.round(r * .78)}px "Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif`; ctx.fillStyle = LIGHT() ? '#3a3a37' : '#bdbdba'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle'; ctx.fillText(ini(n), n.x, n.y + .5); }
       /* the three of us in red; everyone else sized by how many projects we made together */
-      const others = pn.filter(p=>!p.core), lo = Math.min(...others.map(p=>p.deg)), hi2 = Math.max(...others.map(p=>p.deg)), f = hi2 > lo ? (n.deg - lo) / (hi2 - lo) : 1;
-      const fs = Math.round((n.core ? (small ? 15 : 22 * S) : (small ? 10 + f * 4 : (13 + f * 7) * S)) * GS);
+      const others = pn.filter(p=>!p.core), lo = Math.min(...others.map(p=>p.deg)), hi2 = Math.max(...others.map(p=>p.deg)), f = Math.min(1, hi2 > lo ? (n.deg - lo) / (hi2 - lo) : 1);
+      const fs = Math.round((n.core ? (small ? 13 : 19 * S) : (small ? 10 + f * 4 : (13 + f * 7) * S)) * GS);   /* the three of us smaller than before (19, was 22), close to the largest collaborators (Andrija, 2026-10-29) */
       label(n, r, fs, 500, n.core ? (LIGHT() ? '#d0291f' : '#f0463d') : (LIGHT() ? '#2b2b28' : '#cfcfcc'));
+      /* a data tag over each name in the t-shirt's dot-matrix face: crew code and how many projects (Andrija, 2026-10-29) */
+      if (!small && n._lb){ const left = n._lb[0] > n.x; ctx.font = `${Math.round(Math.max(10, 11.5 * S * GS))}px "Data Error Horiz",ui-monospace,monospace`; ctx.textAlign = left ? 'left' : 'right'; ctx.textBaseline = 'alphabetic';
+        ctx.fillStyle = n === act ? '#e2231a' : (LIGHT() ? '#9a9994' : '#646461'); ctx.fillText(`${CREW(n.id)} · ${String(n.projects.length).padStart(2,'0')} PROJ`.replace(/ /g, '\u2009'), left ? n._lb[0] + 4 : n._lb[2] - 4, n.y - fs * .78); }
       ctx.globalAlpha = 1; });
+    /* the log (person and every project with them) is off: it ran under the open profile's bio (Andrija, 2026-10-30) */
+    if (false && !small && act && act.person){ const ls = act.projects.map(id=>[year(id) || '', F[id].title]).sort((a,b)=>(b[0]||0)-(a[0]||0)), fz = Math.round(Math.max(12, 14 * S * GS)), lh = Math.round(fz * 1.6);
+      ctx.font = `${fz}px "Data Error Horiz",ui-monospace,monospace`; ctx.textAlign = 'left'; ctx.textBaseline = 'top';
+      const x0 = Math.max(14, (cv.getBoundingClientRect().left < 8 ? parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--m')) || 48 : 14)), tot = lh * (ls.length + 2.6); let y = Math.max(14, H / 2 - tot / 2);   /* in the free left column, centred on the graph */
+      ctx.fillStyle = '#e2231a'; ctx.fillText(`> ${CREW(act.id)} ${act.name.toUpperCase()}`, x0, y); y += lh * 1.3;
+      ls.forEach(([yr, t])=>{ ctx.fillStyle = LIGHT() ? '#8f8f8a' : '#6a6a67'; ctx.fillText(String(yr), x0, y); ctx.fillStyle = LIGHT() ? '#3a3a37' : '#bdbdba'; ctx.fillText(t.toUpperCase(), x0 + fz * 4.2, y); y += lh; });
+      ctx.fillStyle = LIGHT() ? '#a3a29d' : '#4f4f4c'; ctx.fillText(`${String(ls.length).padStart(2,'0')} PROJECTS`, x0, y + lh * .3); }
   }
   function loop(){ step(); draw(); raf = running ? requestAnimationFrame(loop) : 0; }
   const start = () => { if (running) return; running = true; raf = requestAnimationFrame(loop); };

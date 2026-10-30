@@ -13,3 +13,6 @@ https://panorama-website.pages.dev/*
 
 https://:version.panorama-website.pages.dev/*
   X-Robots-Tag: noindex
+
+/hitl-studies/*
+  X-Robots-Tag: noindex, nofollow
