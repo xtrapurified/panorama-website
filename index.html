@@ -1827,10 +1827,10 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   #chapters,#chapters .works,section.sec#films{margin-bottom:0!important;padding-bottom:0!important}
   #cards{margin-top:0}
 }
-/* Featured titles on computers: pointing at a film shows a thin red underline close under its title at once, the menu's red line (Andrija, 2026-10-30) */
+/* Featured titles on computers: pointing at a film brightens its logline and client a little (Andrija, 2026-10-30; the red underline was tried and dropped) */
 @media (min-width:761px){
-  .ov-u{text-decoration:underline transparent;text-decoration-thickness:max(1px,.035em);text-underline-offset:.09em;text-decoration-skip-ink:none}
-  .works .frame:hover .ov-u,.works .frame:focus-visible .ov-u{text-decoration-color:var(--red)}
+  .works .ov-l,.works .ov-c{transition:opacity .35s var(--ease)}
+  .works .frame:hover :is(.ov-l,.ov-c),.works .frame:focus-visible :is(.ov-l,.ov-c){opacity:.95}
 }
 /* catalogue on computers: no text on the thumbnails until the pointer is on one (Andrija, 2026-10-30); three ways in were tried, C (Rise) chosen; ?hov=a|b still shows the others.
    A Focus: the words come into focus from a soft blur. B Wipe: they are uncovered left to right. C Rise: each line rises from behind its own edge.
@@ -2211,7 +2211,7 @@ function frame(k, small){
     ${f.v||f.yt||f.file ? '<span class="play" aria-hidden="true"><span class="play-t">Play</span></span>' : ''}
     ${small ? `<span class="hud"><span class="top"><span></span>${more}</span></span>`
       : `<span class="hud"></span>
-      <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-tl"><span class="ov-t"><span class="ov-u">${esc(f.title)}</span></span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span>${f.client ? `<span class="ov-c">${esc(f.client)}</span>` : ''}</span></span>`}</a>`;
+      <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-tl"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span>${f.client ? `<span class="ov-c">${esc(f.client)}</span>` : ''}</span></span>`}</a>`;
 }
 function work(k){
   const f = F[k];

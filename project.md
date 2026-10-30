@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-30 (2019 reel in the header on 30% of visits; Featured without gaps, client over the film; catalogue edge to edge with titles over the thumbnails). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-30, pushed live (2019 reel in the header on 30% of visits; Featured without gaps, client over the film; catalogue edge to edge with titles over the thumbnails). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -173,7 +173,7 @@ Approved versions to go back to before trying new things. Each one is a git bran
 - **Catalogue text on hover only (later the same day):** no text on the thumbnails at rest; title and client appear under the pointer (touch screens: the card crossing the middle of the window; keyboard: the focused card). Three ways in were tried, `?hov=a|b|c`; Andrija chose C, Rise (the default, nothing remembered any more; `?hov=a|b` still shows the others): A Focus (the words come into focus from a soft blur), B Wipe (uncovered left to right), C Rise (each line rises from behind its own edge); the client follows the title by 0.09 s. Reduced motion: a plain fade.
 - **One label (later the same day):** on computers too, only "↓ Films" under the reel: the Featured and Catalogue labels and the big "Campaigns & Commissioned Films" and "Archive" headings are hidden, so Featured runs straight into the thumbnails, as on phones. Load more still adds the archive at the end.
 - **Air to the People: Serbia card:** YouTube showed its information panel (top left, about climate change) over this film's stream, and it can't be switched off in an embed. The card now plays our own cut of the film, 1:17–1:30 (13 s, 640×360, `media/hover/p12`, from Andrija's file "Air to the people - Klimerko FINAL - preview"; same timing as the YouTube film), instead of the stream (`card:{yt:null}`). The project page still plays the film from YouTube.
-- **Featured titles on hover (computers):** pointing at a featured film shows a thin red underline close under its title, at once, no drawing (`.ov-u`, text underline .09em below the text). The main menu's red hover line now sits closer to the words too (.22em higher than before).
+- **Featured titles on hover (computers):** pointing at a featured film brightens its logline and client a little (70% → 95% white, 0.35 s); the title is already white. A red underline under the title was tried the same day and dropped. The main menu's red hover line sits closer to the words (.22em higher than before).
 - **Catalogue hover text, refined:** the Rise is subtler (a short rise with a fade, 0.8 s), and the text sits at the page margin (`--m`), so the left column's titles line up with the featured titles above.
 
 ## Changes of 2026-10-21 (Andrija)
