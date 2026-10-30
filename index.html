@@ -1820,6 +1820,20 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
 .tag,.more .mt{display:inline-flex;align-items:baseline}
 #chapters .lede .tag.sub,.lede.cat .tag{display:flex!important;width:max-content}   /* Featured and Catalogue sit on their own line: flex keeps the arrow first there too */
 /* the outline globe as a pictogram inside the About us statement, after Panorama Films; the bottom of its circle sits on the baseline (Andrija, 2026-10-29: the solid, negative globe, 15% bigger) */
+/* computers (Andrija, 2026-10-30): Featured films follow one another with no space between; the client sits over the film at the far right,
+   on the title's line, and travels with the title. The line under each film stays in the page for search only. */
+.ov-in{display:flex;justify-content:space-between;align-items:first baseline;gap:var(--g)}
+.ov-tl{display:grid;min-width:0}
+.ov-c{flex:none;font-size:var(--t1);letter-spacing:-.02em;line-height:1.1;text-align:right;opacity:.7}
+@media (min-width:761px){
+  .works{gap:0}
+  .works .work .cap{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+  /* catalogue, a trial "to see": thumbnails edge to edge with no gaps, title and client over the picture, left, in the middle of its height */
+  .cards{gap:0;margin-inline:calc(var(--m) * -1)}
+  .cards .card{position:relative}
+  #cards .card .meta{position:absolute;inset:0;z-index:3;margin:0;padding:0 clamp(12px,1.6vw,20px);display:flex;flex-direction:column;justify-content:center;align-items:flex-start;row-gap:2px;pointer-events:none;color:#fff;text-shadow:0 0 14px rgba(0,0,0,.45)}
+  #cards .card .meta .cl{color:rgba(255,255,255,.62)}
+}
 .pf-globe{display:inline-block;width:.85em;height:.85em;vertical-align:calc(-.022em - 5px);fill:currentColor;overflow:visible}   /* an inline vector (media/globe-flat.svg, one flat path), not a CSS mask: masks are drawn as a bitmap and went soft (Andrija, 2026-10-30) */
 </style>
 <!-- SEO:LD --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://panoramafilms.tv/#site","url":"https://panoramafilms.tv/","name":"Panorama Films","inLanguage":"en","publisher":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Organization","@id":"https://panoramafilms.tv/#org","name":"Panorama Films","alternateName":["Panorama Films Collective","Панорама Филмс"],"url":"https://panoramafilms.tv/","logo":"https://panoramafilms.tv/media/icons/icon-512.png","image":"https://panoramafilms.tv/media/og/home.jpg","description":"Independent creative storytelling studio from Belgrade, Serbia, making documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.","slogan":"Seeing the bigger picture.","address":{"@type":"PostalAddress","addressLocality":"Belgrade","addressCountry":"RS"},"areaServed":[{"@type":"Country","name":"United Arab Emirates"},{"@type":"Country","name":"Serbia"},{"@type":"Place","name":"Worldwide"}],"knowsAbout":["Documentary film production","Docuseries","Brand films","Campaign films","Event films","Cinematography","Aerial cinematography","Film editing","Sound design","Script writing","Creative direction"],"sameAs":["https://www.instagram.com/panoramafilms.tv/","https://vimeo.com/panoramafilmstv","https://www.youtube.com/@panoramafilmstv"],"founder":[{"@id":"https://panoramafilms.tv/#andrija-kovac"}],"employee":[{"@id":"https://panoramafilms.tv/#andrija-kovac"},{"@id":"https://panoramafilms.tv/#mina-strugar"},{"@id":"https://panoramafilms.tv/#marija-kovacina"}]},{"@type":"Person","@id":"https://panoramafilms.tv/#andrija-kovac","name":"Andrija Kovač","jobTitle":"Creative Director","description":"Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.","image":"https://panoramafilms.tv/media/team/andrija-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#mina-strugar","name":"Mina Strugar","jobTitle":"Producer","description":"Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.","image":"https://panoramafilms.tv/media/team/mina-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#marija-kovacina","name":"Marija Kovačina","jobTitle":"Editorial Director","description":"Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.","image":"https://panoramafilms.tv/media/team/marija-2.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}}]}</script><!-- /SEO:LD --></head>
@@ -2057,6 +2071,9 @@ const SVC_ITEMS = (()=>{ const s = new Set(), add = v => String(v || '').split(/
   add('Script writing, video production, edit, sound design, service production, aerial cinematography'); return s; })();   /* old spellings still found in copied text */   /* per-project films, text and photos from panoramafilms.tv */
 /* s = second where the 20-second background loop starts */
 const F = {
+  /* 2019 reel (Andrija, 2026-10-30): the header shows it on 30% of visits, the V4 reel on the other 70%, both from a random point.
+     It streams from Vimeo at the best quality on offer; the hosted cut (media/clips/reel19, from Andrija's small file) shows first while Vimeo loads, and is all phones play */
+  reel19:{title:"Showreel 2019", client:"Panorama Films", v:"1241275029", h:"05d3038bce", clip:"reel19", cr:true, pre:true},
   reel:{title:"Showreel", client:"Panorama Films", file:"reel", still:"reel", clip:"home", own:true, cr:true, dur:"1:29"},   /* header loop starts at a random point on every visit, then loops from 0:00 (Andrija, 2026-10-20) */   /* V4 (2026-10-20), hosted until the final cut goes to Vimeo; old Vimeo 1232743611/7e23d97b0f */
   hotf:{n:"01", client:"Dubai Future Week", year:"2026", title:"For the Human of the Future", line:"The world we’re shaping, told by those who’ll inherit it.", roles:"Concept, script, creative direction, direction, production, editing, sound production", v:"1237606218", h:"939f33d13e", dur:"1:30", s:15},
   wss26:{n:"02", client:"Dubai Sports Council", year:"2026", title:"This is What Moves Us", mainT:"What Moves Us", line:"World Sports Summit", roles:"Concept, script, creative direction, direction, production, editing, sound production"},
@@ -2148,7 +2165,7 @@ const VEXT = 'mp4';
 const esc = s => String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 /* every project's address is /work/<slug>/, the slug made from its title (functions/work and lib/site.js use the same rule) */
 const slugify = t => [...String(t)].map(c => /[đĐ]/.test(c) ? 'd' : c.normalize('NFD')[0]).join('').toLowerCase().replace(/[’'`]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
-const WORK = {}; Object.keys(F).forEach(k=>{ if (k !== 'reel') WORK[k] = slugify(F[k].title); });
+const WORK = {}; Object.keys(F).forEach(k=>{ if (k !== 'reel' && k !== 'reel19') WORK[k] = slugify(F[k].title); });
 const BY_WORK = Object.fromEntries(Object.entries(WORK).map(([k, v])=>[v, k]));
 const workUrl = k => WORK[k] ? `/work/${WORK[k]}/` : null;
 const HOME_TITLE = document.title;
@@ -2167,7 +2184,7 @@ function frame(k, small){
     ${f.v||f.yt||f.file ? '<span class="play" aria-hidden="true"><span class="play-t">Play</span></span>' : ''}
     ${small ? `<span class="hud"><span class="top"><span></span>${more}</span></span>`
       : `<span class="hud"></span>
-      <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span></span>`}</a>`;
+      <span class="ov" aria-hidden="true"><span class="ov-in"><span class="ov-tl"><span class="ov-t">${esc(f.title)}</span>${f.line ? `<span class="ov-l">${esc(f.line)}</span>` : ''}</span>${f.client ? `<span class="ov-c">${esc(f.client)}</span>` : ''}</span></span>`}</a>`;
 }
 function work(k){
   const f = F[k];
@@ -2294,6 +2311,9 @@ function fitStream(m, box, f){
 /* phones play the hosted loops (one light video each) instead of a Vimeo or YouTube player per film, which made scrolling lag
    (Andrija, 2026-10-29); films with no hosted loop still stream */
 const PHONE_LOOPS = () => matchMedia('(max-width:760px)').matches;
+/* header reel: the 2019 reel on 30% of visits, V4 on the other 70% (Andrija, 2026-10-30); ?reel=2019 or ?reel=v4 forces one, to check */
+(()=>{ const q = new URLSearchParams(location.search).get('reel'), hm = document.getElementById('heroMedia');
+  if (hm) hm.dataset.k = q === '2019' ? 'reel19' : q === 'v4' ? 'reel' : Math.random() < .3 ? 'reel19' : 'reel'; })();
 function start(m){
   clearTimeout(m._kill);
   if (live.has(m)) return live.get(m).play();
@@ -2303,6 +2323,7 @@ function start(m){
     return (STREAM && !PHONE_LOOPS() && (f.v || f.yt)) ? streamIn(m, f, false, {auto:f.s === undefined, hover:m.dataset.hv}) : hoverIn(m);
   }
   const k = m.dataset.k, f = F[k], full = m.dataset.loop === 'full';
+  if (f.pre && !PHONE_LOOPS() && STREAM && f.v) return preStream(m, f);
   if ((f.own || PHONE_LOOPS()) && f.clip) clipIn(m, f);   /* own: the loop is a cut of our own (a trailer segment), not a stretch of the streamed film */
   else if (STREAM && (f.v || f.yt)) streamIn(m, f, full);
   else if (f.clip) clipIn(m, f);
@@ -2334,6 +2355,41 @@ function clipIn(m, f){
   const ctl = {play:()=>v.play().then(()=>m.classList.add('on')).catch(()=>{}), pause:()=>v.pause(), time:()=>v.currentTime, clip:true,
     seek:fr=>{ if (v.duration){ v.pause(); v.currentTime = fr * v.duration; } }, sound:()=>{}};
   live.set(m, ctl); ctl.play();
+}
+/* pre: the hosted cut plays at once (from a random point), while the Vimeo stream loads underneath at the best quality on offer;
+   once the stream is moving at the same moment it fades in over the cut, which then stops (the 2019 header reel, 2026-10-30) */
+function preStream(m, f){
+  clipIn(m, f); const v = m.querySelector('video'), clipCtl = live.get(m);
+  const box = document.createElement('div'); box.className = 'stream'; box.style.opacity = 0;
+  fitStream(m, box, f); new ResizeObserver(()=>fitStream(m, box, f)).observe(m);
+  box.innerHTML = `<iframe src="https://player.vimeo.com/video/${f.v}?${f.h?`h=${f.h}&`:''}background=1&autoplay=0&muted=1&loop=1&autopause=0&controls=0&dnt=1" allow="autoplay; fullscreen" title="" tabindex="-1" aria-hidden="true"></iframe>`;
+  m.appendChild(box);
+  const p = new Vimeo.Player(box.firstChild), VQ = ['2160p','4k','1440p','2k','1080p','720p','540p'];   /* Vimeo names 4K and 2K 2160p and 1440p */
+  let t = 0, shown = false;
+  const ctl = {...clipCtl, destroy:()=>{ p.destroy().catch(()=>{}); box.remove(); }};
+  live.set(m, ctl);
+  const fail = () => { if (!shown){ box.remove(); live.set(m, clipCtl); } };
+  p.on('error', fail);
+  let target = -1, tries = 0, lead = 3, go = false;
+  const park = () => { target = (v.currentTime || 0) + lead; tries++; go = false; p.pause().catch(()=>{}); p.setCurrentTime(target).catch(()=>{}); };   /* park the stream a few seconds ahead of the cut */
+  const best = () => p.getQualities().catch(()=>[]).then(qs=>{ const ids = qs.map(x=>x.id), want = VQ.find(q=>ids.includes(q)); return want ? p.setQuality(want).catch(()=>{}) : null; });
+  /* when the cut reaches the parked moment the stream starts; if the cut has already passed it (or looped), park again */
+  const wait = () => { if (shown || !box.isConnected) return;
+    const c = v.currentTime;
+    if (!go && !v.paused && c >= target - .06){ if (c > target + .5 && tries < 6) park(); else { go = true; p.play().catch(fail); } }
+    else if (c < target - lead - 1) park();
+    requestAnimationFrame(wait); };
+  p.ready().then(()=>{ best(); park(); wait(); }).catch(fail);
+  p.on('loaded', best);
+  p.on('timeupdate', d=>{ t = d.seconds; if (shown || !go || d.seconds < target + .05) return;
+    /* the stream is moving: fade it in only if it runs with the cut; if it started late (buffering), park again further ahead */
+    const off = v.currentTime - d.seconds;
+    if (Math.abs(off) > .3 && tries < 6){ lead = Math.min(8, lead + Math.max(0, off) + .5); return park(); }
+    shown = true; box.style.transition = 'opacity .8s'; box.style.opacity = 1;
+    setTimeout(()=>{ v.pause(); v.style.visibility = 'hidden'; }, 900);
+    live.set(m, {destroy:ctl.destroy, play:()=>p.play().catch(()=>{}), pause:()=>p.pause().catch(()=>{}), time:()=>t, clip:false,
+      seek:fr=>{ p.pause().catch(()=>{}); p.getDuration().then(d=>p.setCurrentTime(fr * d)).catch(()=>{}); }, sound:on=>{ p.setMuted(!on).catch(()=>{}); p.setVolume(on?1:0).catch(()=>{}); }});
+  });
 }
 function streamIn(m, f, full, o = {}){
   const box = document.createElement('div'); box.className = 'stream' + (f.yt ? ' yt' : '');
@@ -2724,7 +2780,7 @@ function playVimeo(k, fm){
   /* sharpest version the screen can show: the player's width in device pixels (the whole screen in full screen), never below 1080p;
      asked again once playback starts and on entering full screen, because Vimeo's automatic quality starts low and climbs.
      Vimeo only honours this when the account allows choosing quality; otherwise it stays on automatic (2026-10-22) */
-  const VQ = [['4k',3840],['2k',2560],['1080p',1920],['720p',1280],['540p',960],['360p',640],['240p',426]];
+  const VQ = [['2160p',3840],['4k',3840],['1440p',2560],['2k',2560],['1080p',1920],['720p',1280],['540p',960],['360p',640],['240p',426]];
   let picked = '';
   function best(){ lp.getQualities().then(qs=>{ const ids = qs.map(x=>x.id), fs = document.fullscreenElement || document.webkitFullscreenElement;
     const need = Math.max(1920, (fs ? screen.width : lbp.clientWidth) * Math.min(devicePixelRatio || 1, 3));
