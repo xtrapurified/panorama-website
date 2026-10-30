@@ -121,6 +121,14 @@
     const mark = () => $$('body *').forEach(el => { if (el.hasAttribute('data-lenis-prevent')) return; const cs = getComputedStyle(el); if (/(auto|scroll)/.test(cs.overflowY) && el.scrollHeight > el.clientHeight + 4 && el !== document.body) el.setAttribute('data-lenis-prevent', ''); });
     setTimeout(mark, 1500); addEventListener('load', () => setTimeout(mark, 500));
     window.PF_LENIS = lenis;
+    /* links within the page (Work, About, Contact…) glide there through the scroller, since the browser's own smoothing is off */
+    document.addEventListener('click', ev => {
+      if (ev.defaultPrevented || ev.metaKey || ev.ctrlKey || ev.button) return;
+      const a = ev.target.closest('a[href^="#"]'); if (!a || a.closest('#lb, .x2-ix')) return;
+      const id = decodeURIComponent(a.getAttribute('href').slice(1)), el = id && document.getElementById(id);
+      if (!el) return;
+      ev.preventDefault(); lenis.scrollTo(el, { offset: -90 }); history.replaceState(history.state, '', '#' + id);
+    });
   }
 
   /* ---------- opening a project: the field fades out, the project fades in; closing brings the field back ---------- */

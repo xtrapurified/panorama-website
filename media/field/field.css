@@ -78,3 +78,10 @@ body{background:var(--fxbg)}
 /* ---------- the project page in the same voice: monospace controls, a fade in after the field fades out ---------- */
 .lb{background:var(--fxbg)}
 .lb-bar .lab,.lb-ctl,.lb-ctl .lab,#c-tc,.lb-side-t{font-family:var(--fxmono)!important;letter-spacing:-.01em!important;text-transform:none!important}
+
+/* the smooth scroller does the smoothing; the browser's own smooth scrolling (html{scroll-behavior:smooth} in the page)
+   animated every step it took again, so the wheel answered seconds late (Andrija, 2026-10-30). Rules the library asks for: */
+html.lenis,html.lenis body{height:auto}
+html.lenis,html.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
