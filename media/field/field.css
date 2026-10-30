@@ -2,7 +2,11 @@
    The hero and the two film sections stay in the page (their code and search text keep working) but are not shown;
    the field takes their place at the top. Everything for this lives in media/field/. */
 
-:root{--fxbg:#080808;--fxmono:"Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif}   /* the monospace tried first was not liked: Untitled Sans Light instead (Andrija, 2026-10-30) */
+:root{--x-bg:#000;--x-bgrgb:0 0 0;--x-rgb:255 255 255;--fxbg:var(--x-bg);--fxmono:"Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif}
+/* one background everywhere (Andrija, 2026-10-31): pitch black; the light look is the site's paper. Every colour below follows the Dark / Light switch */
+:root:not([data-pf="light"]){--bg:#000;--field:#000}
+:root[data-pf="light"]{--x-bg:#f1f0ec;--x-bgrgb:241 240 236;--x-rgb:18 18 17}
+html,body{background:var(--x-bg)}   /* the monospace tried first was not liked: Untitled Sans Light instead (Andrija, 2026-10-30) */
 #hero,.peekbar,main > .page > section.sec[data-sec="films"]{display:none!important}
 body{background:var(--fxbg)}
 
@@ -11,7 +15,7 @@ body{background:var(--fxbg)}
 .fx-tiles{position:relative;width:100%;overflow:hidden}
 .fx-i{position:absolute;display:block;opacity:0;transition:opacity 1.1s cubic-bezier(.16,1,.3,1)}
 .fx-i.in{opacity:1}
-.fx-t{position:absolute;inset:0;display:block;color:#fff;text-decoration:none;will-change:transform;-webkit-tap-highlight-color:transparent;cursor:pointer}
+.fx-t{position:absolute;inset:0;display:block;color:rgb(var(--x-rgb));text-decoration:none;will-change:transform;-webkit-tap-highlight-color:transparent;cursor:pointer}
 /* the cursor over a tile (Andrija, 2026-10-30: no circle around it): a small red dot by default; ?cursor=play for the white play triangle alone */
 html:not([data-cur="play"]) .fx-t{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16'%3E%3Ccircle cx='8' cy='8' r='6' fill='%23e2231a'/%3E%3C/svg%3E") 8 8,pointer}
 html[data-cur="play"] .fx-t{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M9 6.5v15l12-7.5z' fill='%23fff' stroke='rgba(0,0,0,.35)' stroke-width='1'/%3E%3C/svg%3E") 12 14,pointer}
@@ -23,12 +27,12 @@ html[data-cur="play"] .fx-t{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://
 .fx-m.media{position:absolute;inset:0}
 .fx-m video.on{opacity:1}
 .fx-t:hover .fx-m,.fx-t:focus-visible .fx-m,.fx-t.near .fx-m{opacity:1}
-.fx-t:focus-visible{outline:1px solid #fff;outline-offset:4px}
+.fx-t:focus-visible{outline:1px solid rgb(var(--x-rgb));outline-offset:4px}
 /* the label: the client in monospace, the title in the display face, centred on the tile */
 .fx-lab{position:absolute;left:50%;top:50%;z-index:3;margin:0;transform:translate3d(-50%,-50%,0);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .2s ease-out,visibility 0s linear .2s;
-  background:#000;padding:0 .3em;line-height:1.02}   /* a black strip under the words, like a highlighter, so they read over any picture (Andrija, 2026-10-30) */
+  background:var(--x-bg);padding:0 .3em;line-height:1.02}   /* a black strip under the words, like a highlighter, so they read over any picture (Andrija, 2026-10-30) */
 .fx-t:hover .fx-lab,.fx-t:focus-visible .fx-lab,.fx-t.near .fx-lab{opacity:1;visibility:visible;transition:opacity .2s ease-out,visibility 0s}
-.fx-c{font-family:var(--fxmono);font-weight:300;font-size:clamp(15px,1.55vw,26px);letter-spacing:-.02em;color:rgba(255,255,255,.62);margin-right:.4em}
+.fx-c{font-family:var(--fxmono);font-weight:300;font-size:clamp(15px,1.55vw,26px);letter-spacing:-.02em;color:rgb(var(--x-rgb) / .62);margin-right:.4em}
 .fx-ti{font-weight:500;font-size:clamp(15px,1.55vw,26px);letter-spacing:-.03em}
 @media (max-width:760px){.fx-lab{display:none}}
 @media (prefers-reduced-motion:reduce){.fx-i{transition:none;opacity:1}}
@@ -39,16 +43,16 @@ html[data-cur="play"] .fx-t{cursor:url("data:image/svg+xml,%3Csvg xmlns='http://
    site: Work · Index · About · Contact. The Rec counter is left out. */
 .hdr .hdr-rec{display:none!important}
 .hdr.x2-over::before{display:none!important}                    /* over the field the header is bare, as on wanda.net; further down it keeps its shade */
-.hdr.x2-over .wm{color:#fff}
+.hdr.x2-over .wm{color:rgb(var(--x-rgb))}
 
 /* ---------- the index, after wanda.net's Directors: every project in four columns over the dimmed field ---------- */
-.x2-ix{position:fixed;inset:0;z-index:58;background:rgba(8,8,8,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:#fff;overflow-y:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .45s ease-out,visibility 0s linear .45s}
+.x2-ix{position:fixed;inset:0;z-index:58;background:rgb(var(--x-bgrgb) / .76);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:rgb(var(--x-rgb));overflow-y:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .45s ease-out,visibility 0s linear .45s}
 .x2-ix.on{opacity:1;visibility:visible;transition:opacity .45s ease-out,visibility 0s}
-.x2-ix-x{position:fixed;top:clamp(18px,2vw,30px);right:var(--m);z-index:3;font-family:var(--fxmono);font-weight:300;font-size:clamp(14px,1.1vw,17px);color:#fff;background:none;border:0;cursor:pointer;opacity:.8}
+.x2-ix-x{position:fixed;top:clamp(18px,2vw,30px);right:var(--m);z-index:3;font-family:var(--fxmono);font-weight:300;font-size:clamp(14px,1.1vw,17px);color:rgb(var(--x-rgb));background:none;border:0;cursor:pointer;opacity:.8}
 .x2-ix-x:hover{opacity:1}
 .x2-ix-in{position:relative;z-index:2;padding:clamp(110px,15vh,170px) clamp(24px,8vw,125px) 80px clamp(24px,10.5vw,160px)}
 .x2-tabs{display:flex;gap:40px}
-.x2-tabs button,.x2-g a{font-family:var(--fxmono);font-weight:300;font-size:clamp(15px,1.2vw,18px);line-height:1.17;letter-spacing:-.01em;color:#fff;background:none;border:0;padding:0;opacity:.6;transition:opacity .2s linear;text-decoration:none;cursor:pointer}
+.x2-tabs button,.x2-g a{font-family:var(--fxmono);font-weight:300;font-size:clamp(15px,1.2vw,18px);line-height:1.17;letter-spacing:-.01em;color:rgb(var(--x-rgb));background:none;border:0;padding:0;opacity:.6;transition:opacity .2s linear;text-decoration:none;cursor:pointer}
 .x2-tabs button[aria-selected="true"],.x2-tabs button:hover{opacity:1}
 .x2-g{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:clamp(24px,4vw,80px);margin:30px 0 0;padding:0;list-style:none}
 .x2-g li{margin-bottom:10px;min-width:0}
@@ -84,17 +88,17 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 .x2-pt .fx-m img{filter:grayscale(1) contrast(1.05)}
 .x2-pt:hover .fx-m img{filter:grayscale(1) contrast(1.05) brightness(1.08)}
 .x2-tx .fx-m{display:none}
-.x2-tx .fx-t{color:#fff;font-family:var(--fxmono);font-weight:300}
+.x2-tx .fx-t{color:rgb(var(--x-rgb));font-family:var(--fxmono);font-weight:300}
 .x2-chap-t{margin:0;font-size:clamp(64px,9.5vw,170px);font-weight:300;letter-spacing:-.055em;line-height:.9}
 .x2-say p{margin:0;font-size:clamp(22px,2.5vw,46px);line-height:1.08;letter-spacing:-.035em;text-wrap:balance}
 .x2-make p,.x2-for p{margin:0;font-size:clamp(16px,1.3vw,22px);line-height:1.3;letter-spacing:-.015em}
-.x2-for p:not(.x2-k){font-size:clamp(14px,1.05vw,18px);color:rgba(255,255,255,.75)}
+.x2-for p:not(.x2-k){font-size:clamp(14px,1.05vw,18px);color:rgb(var(--x-rgb) / .75)}
 .x2-for a,.cr-two a,.pn-l a{color:inherit;text-decoration:none}
-.x2-for a:hover,.cr-two a:hover,.pn-l a:hover{color:#fff;text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
-.x2-k,.pn-k{margin:0 0 .8em!important;font-size:clamp(11px,.8vw,13px)!important;letter-spacing:.14em!important;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.x2-for a:hover,.cr-two a:hover,.pn-l a:hover{color:rgb(var(--x-rgb));text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
+.x2-k,.pn-k{margin:0 0 .8em!important;font-size:clamp(11px,.8vw,13px)!important;letter-spacing:.14em!important;text-transform:uppercase;color:rgb(var(--x-rgb) / .5)}
 .x2-ask-t{margin:0;font-size:clamp(34px,5vw,92px);letter-spacing:-.045em;line-height:1}
 .x2-links,.cr-links,.pn-links{display:flex;gap:1.4em;flex-wrap:wrap;margin:1.1em 0 0;font-size:clamp(16px,1.3vw,22px)}
-.x2-links a,.cr-links a,.pn-links a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35);text-underline-offset:.22em;text-decoration-thickness:1px}
+.x2-links a,.cr-links a,.pn-links a{color:rgb(var(--x-rgb));text-decoration:underline;text-decoration-color:rgb(var(--x-rgb) / .35);text-underline-offset:.22em;text-decoration-thickness:1px}
 .x2-links a:hover,.cr-links a:hover,.pn-links a:hover{color:var(--red,#e2231a);text-decoration-color:currentColor}
 .x2-pl,.cr-pl,.pn-pl{margin:1.2em 0 0;color:var(--red,#e2231a);font-size:clamp(15px,1.1vw,19px)}
 .x2-tx.x2-ask .fx-t{display:flex;flex-direction:column;justify-content:center}
@@ -105,25 +109,25 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 }
 
 /* ---------- b: end credits ---------- */
-.x2-cr{position:relative;padding:30vh var(--m) 34vh;color:#fff;text-align:center;font-family:var(--fxmono);font-weight:300}
+.x2-cr{position:relative;padding:30vh var(--m) 34vh;color:rgb(var(--x-rgb));text-align:center;font-family:var(--fxmono);font-weight:300}
 .x2-cr [data-x2b]{position:relative}
 .cr-mark{margin:0 0 5vh;font-family:"Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:500;font-size:clamp(28px,3vw,52px);letter-spacing:-.04em}
 .cr-mark sup{font-size:.4em;font-weight:400;vertical-align:1.3em;margin-left:.08em}
 .cr-dot{display:inline-block;width:.28em;height:.28em;border-radius:50%;background:var(--red,#e2231a);margin-right:.25em;vertical-align:.14em;animation:blink 1s steps(1,end) infinite}
 .cr-say{max-width:30ch;margin:0 auto 16vh;font-size:clamp(20px,1.9vw,32px);line-height:1.15;letter-spacing:-.025em;text-wrap:balance}
-.cr-h{margin:14vh 0 3.5vh;font-size:clamp(11px,.8vw,13px);font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.5)}
+.cr-h{margin:14vh 0 3.5vh;font-size:clamp(11px,.8vw,13px);font-weight:400;letter-spacing:.16em;text-transform:uppercase;color:rgb(var(--x-rgb) / .5)}
 .cr-r{display:grid;grid-template-columns:1fr 1fr;column-gap:clamp(16px,1.6vw,28px);align-items:baseline;max-width:980px;margin:0 auto;padding:.3em 0;font-size:clamp(16px,1.25vw,21px);letter-spacing:-.01em}
-.cr-role{text-align:right;color:rgba(255,255,255,.5)}
-.cr-n{text-align:left;color:#fff;font-weight:400}
-.cr-two .cr-n:first-child{text-align:right;color:rgba(255,255,255,.85)}
-.cr-two .cr-n:last-child{color:rgba(255,255,255,.85)}
+.cr-role{text-align:right;color:rgb(var(--x-rgb) / .5)}
+.cr-n{text-align:left;color:rgb(var(--x-rgb));font-weight:400}
+.cr-two .cr-n:first-child{text-align:right;color:rgb(var(--x-rgb) / .85)}
+.cr-two .cr-n:last-child{color:rgb(var(--x-rgb) / .85)}
 .cr-c{margin:0;padding:.3em 0;font-size:clamp(16px,1.25vw,21px)}
 [data-pp]{cursor:default}
 [data-pp]:hover .cr-n,[data-pp]:hover > span:first-child{color:var(--red,#e2231a)}
 .cr-pl{margin-top:16vh}
 .cr-end{margin-top:26vh}
 .cr-ask{margin:0;font-size:clamp(40px,6vw,112px);letter-spacing:-.05em;line-height:1}
-.cr-ask a{color:#fff;text-decoration:none}
+.cr-ask a{color:rgb(var(--x-rgb));text-decoration:none}
 .cr-ask a:hover{color:var(--red,#e2231a)}
 .cr-links{justify-content:center}
 @media (max-width:760px){.cr-r{font-size:15px;column-gap:12px}.cr-say{margin-bottom:10vh}.cr-h{margin-top:10vh}}
@@ -133,14 +137,14 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 .pn-core{display:grid;grid-template-columns:repeat(3,minmax(0,230px));gap:clamp(10px,1.2vw,20px)}
 .pn-pt{position:relative;margin:0;aspect-ratio:4/5;overflow:hidden;background:#000}
 .pn-pt img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:grayscale(1) contrast(1.05)}
-.pn-pt figcaption{position:absolute;left:8px;bottom:8px;background:#000;padding:0 .3em;line-height:1.05;white-space:nowrap;max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis}
+.pn-pt figcaption{position:absolute;left:8px;bottom:8px;background:var(--x-bg);padding:0 .3em;line-height:1.05;white-space:nowrap;max-width:calc(100% - 16px);overflow:hidden;text-overflow:ellipsis}
 .pn-pt .fx-c,.pn-pt .fx-ti{font-size:clamp(12px,.95vw,15px)}
 .pn-cols{display:grid;grid-template-columns:1.4fr 1fr 1.4fr;gap:clamp(24px,4vw,72px);margin-top:9vh;align-items:start}
-.pn-l{list-style:none;margin:0;padding:0;font-family:var(--fxmono);font-weight:300;font-size:clamp(14px,1.1vw,18px);line-height:1.55;color:rgba(255,255,255,.75)}
-.pn-l li:hover{color:#fff}
-.pn-r{color:rgba(255,255,255,.4)}
+.pn-l{list-style:none;margin:0;padding:0;font-family:var(--fxmono);font-weight:300;font-size:clamp(14px,1.1vw,18px);line-height:1.55;color:rgb(var(--x-rgb) / .75)}
+.pn-l li:hover{color:rgb(var(--x-rgb))}
+.pn-r{color:rgb(var(--x-rgb) / .4)}
 .pn-ask{margin:0;font-family:var(--fxmono);font-weight:300;font-size:clamp(40px,6.4vw,120px);letter-spacing:-.05em;line-height:1}
-.pn-ask a{color:#fff;text-decoration:none}
+.pn-ask a{color:rgb(var(--x-rgb));text-decoration:none}
 .pn-ask a:hover{color:var(--red,#e2231a)}
 @media (max-width:900px){.pn-cols{grid-template-columns:1fr}.pn-core{grid-template-columns:repeat(3,minmax(0,1fr))}}
 
@@ -151,48 +155,48 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 .x2-pv.x2-pv-p img{filter:grayscale(1) contrast(1.05)}
 
 /* the switch between the three approaches (an experiment control) */
-.x2-sw{position:fixed;left:var(--m);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:57;display:flex;gap:.9em;align-items:baseline;padding:.35em .6em;background:#000;font-family:var(--fxmono);font-weight:300;font-size:12px;color:rgba(255,255,255,.45)}
-.x2-sw a{color:rgba(255,255,255,.6);text-decoration:none}
-.x2-sw a:hover{color:#fff}
-.x2-sw a[aria-current]{color:#fff}
+.x2-sw{position:fixed;left:var(--m);bottom:calc(14px + env(safe-area-inset-bottom,0px));z-index:57;display:flex;gap:.9em;align-items:baseline;padding:.35em .6em;background:var(--x-bg);font-family:var(--fxmono);font-weight:300;font-size:12px;color:rgb(var(--x-rgb) / .45)}
+.x2-sw a{color:rgb(var(--x-rgb) / .6);text-decoration:none}
+.x2-sw a:hover{color:rgb(var(--x-rgb))}
+.x2-sw a[aria-current]{color:rgb(var(--x-rgb))}
 .x2-sw a[aria-current]::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--red,#e2231a);margin-right:.4em;vertical-align:.1em}
 @media (max-width:760px){.x2-sw span{display:none}.x2-sw{font-size:11px}}
 
 /* ======================= B1 / B2: the credits in columns, in the old site's type (2026-10-30) ======================= */
-.x2-cr2{--cw:min(1240px,calc(100vw - 2 * var(--m)));position:relative;padding:26vh 0 32vh;color:#fff;font-family:"Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:300}
+.x2-cr2{--cw:min(1240px,calc(100vw - 2 * var(--m)));position:relative;padding:26vh 0 32vh;color:rgb(var(--x-rgb));font-family:"Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:300}
 .x2-cr2 .cr2-g{position:relative;width:var(--cw);margin:0 auto 20vh}
 .x2-cr2 .cr2-g:last-child{margin-bottom:0}
 /* the old site's details: Data Error codes, grey/white code lines, the red block cursor, Rec with the visit's timecode */
-.x2-code{font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(11px,.85vw,14px);letter-spacing:.2em;color:rgba(255,255,255,.58);white-space:nowrap}
+.x2-code{font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(11px,.85vw,14px);letter-spacing:.2em;color:rgb(var(--x-rgb) / .58);white-space:nowrap}
 .x2-ln{margin:0;font-size:clamp(14px,1.05vw,17px);line-height:1.4;font-variant-numeric:tabular-nums}
-.x2-ln .k{color:rgba(255,255,255,.45)}
-.x2-ln .v{color:#fff}
+.x2-ln .k{color:rgb(var(--x-rgb) / .45)}
+.x2-ln .v{color:rgb(var(--x-rgb))}
 .x2-cur{display:inline-block;width:.55em;height:1.05em;margin-left:.3em;vertical-align:-.15em;background:var(--red,#e2231a);animation:hlBlink 1.1s steps(1) infinite}
 @keyframes hlBlink{50%{opacity:0}}
-.x2-rec{display:inline-flex;align-items:center;gap:.5em;font-size:clamp(11px,.8vw,13px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:#fff}
+.x2-rec{display:inline-flex;align-items:center;gap:.5em;font-size:clamp(11px,.8vw,13px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgb(var(--x-rgb))}
 .x2-rd{width:8px;height:8px;border-radius:50%;background:var(--red,#e2231a);animation:blink 1s steps(1,end) infinite}
-.x2-tc{font-family:var(--mono,ui-monospace,monospace);font-weight:400;letter-spacing:.04em;color:rgba(255,255,255,.4);font-variant-numeric:tabular-nums}
+.x2-tc{font-family:var(--mono,ui-monospace,monospace);font-weight:400;letter-spacing:.04em;color:rgb(var(--x-rgb) / .4);font-variant-numeric:tabular-nums}
 .cr2-say{margin:0;max-width:22ch;font-size:clamp(30px,3.4vw,62px);letter-spacing:-.045em;line-height:1.04;text-wrap:balance}
 .cr2-cols{list-style:none;margin:0;padding:0;display:grid;column-gap:clamp(20px,2.4vw,44px);row-gap:clamp(14px,1.4vw,22px)}
 .cr2-cols.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
 .cr2-cols li{display:flex;flex-direction:column;gap:.15em;min-width:0}
-.cr2-n{font-size:clamp(17px,1.4vw,24px);font-weight:400;letter-spacing:-.02em;color:#fff}
-.cr2-r{font-size:clamp(11px,.8vw,13px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,255,255,.45)}
+.cr2-n{font-size:clamp(17px,1.4vw,24px);font-weight:400;letter-spacing:-.02em;color:rgb(var(--x-rgb))}
+.cr2-r{font-size:clamp(11px,.8vw,13px);font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:rgb(var(--x-rgb) / .45)}
 [data-pp]:hover .cr2-n{color:var(--red,#e2231a)}
 .cr2-make{list-style:none;margin:0;padding:0}
-.cr2-make li{display:flex;align-items:baseline;gap:clamp(14px,1.6vw,28px);padding:.18em 0;border-top:1px solid rgba(255,255,255,.12);font-size:clamp(26px,2.8vw,50px);letter-spacing:-.04em;line-height:1.1}
-.cr2-make li:last-child{border-bottom:1px solid rgba(255,255,255,.12)}
-.cr2-no{flex:none;width:2.2em;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(11px,.85vw,14px);letter-spacing:.2em;color:rgba(255,255,255,.42)}
+.cr2-make li{display:flex;align-items:baseline;gap:clamp(14px,1.6vw,28px);padding:.18em 0;border-top:1px solid rgb(var(--x-rgb) / .12);font-size:clamp(26px,2.8vw,50px);letter-spacing:-.04em;line-height:1.1}
+.cr2-make li:last-child{border-bottom:1px solid rgb(var(--x-rgb) / .12)}
+.cr2-no{flex:none;width:2.2em;font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(11px,.85vw,14px);letter-spacing:.2em;color:rgb(var(--x-rgb) / .42)}
 .cr2-make li:hover .cr2-no{color:var(--red,#e2231a)}
-.cr2-cl li{font-size:clamp(15px,1.15vw,19px);color:rgba(255,255,255,.75)}
+.cr2-cl li{font-size:clamp(15px,1.15vw,19px);color:rgb(var(--x-rgb) / .75)}
 .cr2-cl a,.cr2-cl span{color:inherit;text-decoration:none}
-.cr2-cl a:hover{color:#fff;text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
+.cr2-cl a:hover{color:rgb(var(--x-rgb));text-decoration:underline;text-underline-offset:.2em;text-decoration-thickness:1px}
 .cr2-ask{margin:.25em 0 0;font-size:clamp(44px,6.4vw,124px);letter-spacing:-.055em;line-height:.98}
-.cr2-ask a{color:#fff;text-decoration:none}
+.cr2-ask a{color:rgb(var(--x-rgb));text-decoration:none}
 .cr2-ask a:hover{color:var(--red,#e2231a)}
 .cr2-ask .x2-cur{height:.8em;width:.35em;vertical-align:-.05em}
 .cr2-links{display:flex;gap:1.6em;flex-wrap:wrap;margin:1.2em 0 0;font-size:clamp(16px,1.25vw,21px)}
-.cr2-links a{color:#fff;text-decoration:underline;text-decoration-color:rgba(255,255,255,.35);text-underline-offset:.22em;text-decoration-thickness:1px}
+.cr2-links a{color:rgb(var(--x-rgb));text-decoration:underline;text-decoration-color:rgb(var(--x-rgb) / .35);text-underline-offset:.22em;text-decoration-thickness:1px}
 .cr2-links a:hover{color:var(--red,#e2231a);text-decoration-color:currentColor}
 
 /* B1: a label column (codes) and the content beside it, on the 12-column grid */
@@ -223,11 +227,11 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 
 /* client logos, as in the site's strip: the authentic files as masks, grey, white under the pointer, red when they open a film */
 .x2-logos{--u:clamp(54px,4.4vw,84px);display:grid;grid-template-columns:repeat(6,minmax(0,1fr));align-items:center;justify-items:start;gap:clamp(30px,3.2vw,56px) clamp(18px,2vw,36px)}
-.x2-lg{display:block;width:calc(var(--w) * var(--u));height:calc(var(--h) * var(--u));max-width:100%;background:rgba(255,255,255,.55);-webkit-mask:var(--src) left center/contain no-repeat;mask:var(--src) left center/contain no-repeat;transition:background-color .25s}
-.x2-lg:hover,.x2-lg:focus-visible{background:#fff}
+.x2-lg{display:block;width:calc(var(--w) * var(--u));height:calc(var(--h) * var(--u));max-width:100%;background:rgb(var(--x-rgb) / .55);-webkit-mask:var(--src) left center/contain no-repeat;mask:var(--src) left center/contain no-repeat;transition:background-color .25s}
+.x2-lg:hover,.x2-lg:focus-visible{background:rgb(var(--x-rgb))}
 .x2-lg.ln:hover,.x2-lg.ln:focus-visible{background:var(--red,#e2231a)}
-.x2-lg.lt{width:auto;height:auto;background:none;-webkit-mask:none;mask:none;color:rgba(255,255,255,.55);font-size:clamp(13px,1vw,16px);font-weight:500;letter-spacing:-.01em;text-transform:uppercase;text-decoration:none}
-.x2-lg.lt:hover{color:#fff}
+.x2-lg.lt{width:auto;height:auto;background:none;-webkit-mask:none;mask:none;color:rgb(var(--x-rgb) / .55);font-size:clamp(13px,1vw,16px);font-weight:500;letter-spacing:-.01em;text-transform:uppercase;text-decoration:none}
+.x2-lg.lt:hover{color:rgb(var(--x-rgb))}
 .x2-lg.lt.ln:hover{color:var(--red,#e2231a)}
 .cr-logos{display:flex;flex-wrap:wrap;justify-content:center;max-width:1100px;margin:0 auto}
 .cr-logos .x2-lg{-webkit-mask-position:center;mask-position:center}
@@ -255,8 +259,8 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 
 /* Human in the loop, discreet: a strip of thin ticks, one per photo; a photo only while pointing at it */
 .x2-strip{display:flex;align-items:stretch;gap:2px;height:36px;margin:1.1em 0 .7em;cursor:crosshair;touch-action:none;outline-offset:6px}
-.x2-strip i{flex:1 1 0;min-width:1px;max-width:6px;background:rgba(255,255,255,.22);transition:background-color .15s,transform .15s;transform-origin:50% 100%}
-.x2-strip:hover i{background:rgba(255,255,255,.3)}
+.x2-strip i{flex:1 1 0;min-width:1px;max-width:6px;background:rgb(var(--x-rgb) / .22);transition:background-color .15s,transform .15s;transform-origin:50% 100%}
+.x2-strip:hover i{background:rgb(var(--x-rgb) / .3)}
 .x2-strip i.on{background:var(--red,#e2231a);transform:scaleY(1.35)}
 .x2-hlc{position:relative}
 .x2-hn{font-variant-numeric:tabular-nums}
@@ -278,3 +282,46 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 .x2-egg .ft-gh{font-size:clamp(10px,.72vw,12px)}
 .x2-egg .ft-gh-t{display:inline!important}
 .x2-egg #golden{margin-top:clamp(14px,1.4vw,22px)}
+
+/* ======================= 2026-10-31 ======================= */
+/* B1: the three roles in the label column's Data Error type; the cities at the statement's size */
+.cr2-core .cr2-r.x2-code{font-size:clamp(11px,.85vw,14px);font-weight:400;letter-spacing:.2em}
+.x2-b1 .cr2-say.cr2-pl{margin-top:.12em;color:var(--red,#e2231a);font-size:clamp(30px,3.4vw,62px);letter-spacing:-.045em;line-height:1.04}
+.x2-b1 .cr2-say{max-width:24ch}
+.cr2-say .pf-globe,.cr-say .pf-globe,.pn-say .pf-globe{vertical-align:-.08em}
+/* Human in the loop: Field notes as on the site */
+.x2-fn{margin:0 0 .4em}
+.x2-fn-t{margin:0 0 .5em;font-size:clamp(28px,3vw,54px);font-weight:300;letter-spacing:-.045em;line-height:1}
+.cr-hitl .x2-fn-t{font-size:clamp(24px,2.4vw,40px)}
+.x2-pv.x2-pv-b{background:transparent}
+.x2-pv.x2-pv-b img{object-fit:contain}
+.x2-hframe img{object-fit:contain}
+@media (hover:none),(pointer:coarse){.x2-hframe{background:transparent}}
+/* the footer at the bottom: ©, Dark / Light, Index, Back to top */
+.x2-foot{width:min(1240px,calc(100vw - 2 * var(--m)));margin:16vh auto 0;color:rgb(var(--x-rgb) / .55)}
+.x2-foot footer{margin:0;padding:clamp(18px,2vw,28px) 0 0;border-top:1px solid rgb(var(--x-rgb) / .12)}
+.x2-foot footer a,.x2-foot footer button{color:inherit}
+.x2-foot footer a:hover,.x2-foot footer button:hover{color:rgb(var(--x-rgb))}
+.x2-ix .x2-foot{width:auto;margin-top:8vh}
+
+/* the light look: header and nav in dark type on paper, the globe drawn dark */
+:root[data-pf="light"] .hdr .menu a{color:rgba(18,18,17,.62)}
+:root[data-pf="light"] .hdr .menu a:hover,:root[data-pf="light"] .hdr .menu a.on{color:#121211}
+:root[data-pf="light"] .hdr .logo panorama-globe-follow{filter:invert(1)}
+:root[data-pf="light"] .hdr .burger i,:root[data-pf="light"] .hdr .burger i::before,:root[data-pf="light"] .hdr .burger i::after{background:#121211}
+:root[data-pf="light"] .lb{background:var(--x-bg)}
+/* the header's nav keeps one place, where it sits beside the wordmark: the large globe hangs from the bar instead of making it taller */
+.hdr .logo-slot{aspect-ratio:auto!important;height:44px!important}
+.hdr:not(.compact) .logo-slot .logo{position:absolute;left:0;top:0}
+@media (max-width:760px){.hdr .logo-slot{height:44px!important}}
+/* client logos: the site's own horizontal strip (Andrija, 2026-10-31); the grid only if the strip is missing */
+.has-strip .x2-logos-fb{display:none}
+.x2-collab .collab{margin:0}
+.x2-collab .collab > .tag,.x2-collab .featured{display:none}
+.x2-b1 .cr2-wide{row-gap:clamp(18px,2vw,30px)}
+.x2-b1 .cr2-wide .cr2-b{grid-column:1/-1}
+.x2-collab .clients.logos{margin-inline:calc((100vw - min(1240px,calc(100vw - 2 * var(--m)))) / -2)}
+.cr-strip .x2-collab .clients.logos{margin-inline:calc(var(--m) * -1)}
+.pn-strip{margin-top:6vh}
+.pn-strip .clients.logos{margin-inline:calc(var(--m) * -1)}
+.hdr .logo-slot .logo{position:absolute!important;left:0;top:0}

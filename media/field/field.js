@@ -60,6 +60,8 @@
 
   /* ---------- the studio, in few words (everything here is already on the site or confirmed by Andrija) ---------- */
   const STATEMENT = 'Panorama Films is an open circle of creatives telling stories that matter in ways that make you care.';
+  /* the statement as the site sets it: the flat Panorama globe inline after the name (media/globe-flat.svg) */
+  const SAY = STATEMENT.replace('Panorama Films', 'Panorama Films <svg class="pf-globe" viewBox="7.5 -1.5 690 690" aria-hidden="true" focusable="false"><use href="media/globe-flat.svg#g"/></svg>');
   const CORE = [['andrija', 'Andrija Kovač', 'Creative Director', 'media/team/andrija-4.webp'],
     ['mina', 'Mina Strugar', 'Producer', 'media/team/mina-4.webp'],
     ['marija', 'Marija Kovačina', 'Editorial Director', 'media/team/marija-2.webp']];
@@ -89,9 +91,10 @@
   /* ---------- Human in the loop, discreet (Andrija, 2026-10-30): no photos by default. One code line and a strip of thin ticks,
      one per behind-the-scenes photo; pointing along the strip (or dragging on a phone, or the arrow keys) shows that frame
      beside the pointer and counts it, frame 23 / 106. Photos load only when asked for. ---------- */
-  const hitlHTML = () => `<p class="x2-ln"><span class="k">(filming in progress) {</span> <span class="v">human</span><span class="k">.in(</span><span class="v">loop</span><span class="k">) }</span></p>
+  const hitlHTML = () => `<p class="x2-fn"><span class="x2-rec"><span class="x2-rd" aria-hidden="true"></span>Field notes</span></p><p class="x2-fn-t">Human in the loop</p>
+    <p class="x2-ln"><span class="k">(filming in progress) {</span> <span class="v">human</span><span class="k">.in(</span><span class="v">loop</span><span class="k">) }</span></p>
     <div class="x2-strip" tabindex="0" role="slider" aria-label="Behind the scenes photos: point along the strip to see them" aria-valuemin="1" aria-valuemax="1" aria-valuenow="1"></div>
-    <p class="x2-ln x2-hlc"><span class="k">frame</span> <span class="v x2-hn">00 / 00</span><span class="x2-hframe" aria-hidden="true"></span></p>`;
+    <p class="x2-ln x2-hlc"><span class="k">frame</span> <span class="v x2-hn">00 / 00</span> <span class="k">· loop =</span> <span class="v">true</span><span class="x2-hframe" aria-hidden="true"></span></p>`;
   let bts = [];
   function initHitl(root) {
     const strip = $('.x2-strip', root); if (!strip) return;
@@ -110,9 +113,11 @@
       $$('i', strip).forEach((t, j) => t.classList.toggle('on', j === i));
       num.textContent = `${String(i + 1).padStart(2, '0')} / ${String(bts.length).padStart(2, '0')}`;
       strip.setAttribute('aria-valuenow', i + 1);
-      const src = `media/bts/${bts[i].f}`;
-      if (FINE) { pvK = 'bts' + i; pv.className = 'x2-pv on x2-pv-b'; pv.innerHTML = `<img src="${src}" alt="">`; if (near) { const r = strip.getBoundingClientRect(); px = r.left + r.width * (i + 0.5) / bts.length; py = r.top - 120; } placePv(true); }
-      else { inl.innerHTML = `<img src="${src}" alt="">`; inl.classList.add('on'); }
+      const src = `media/bts/${bts[i].f}`, ar = (bts[i].w / bts[i].h) || 1.5;
+      /* the whole photo, never cropped: its own shape, about a third of the window wide, never taller than 70 % of it */
+      const w = Math.min(innerWidth * (FINE ? 0.32 : 0.86), innerHeight * (FINE ? 0.7 : 0.5) * ar, FINE ? 560 : 440);
+      if (FINE) { pvK = 'bts' + i; pv.className = 'x2-pv on x2-pv-b'; pv.style.width = w + 'px'; pv.style.aspectRatio = String(ar); pv.innerHTML = `<img src="${src}" alt="">`; if (near) { const r = strip.getBoundingClientRect(); px = r.left + r.width * (i + 0.5) / bts.length; py = r.top - 120; } placePv(true); }
+      else { inl.style.width = w + 'px'; inl.style.aspectRatio = String(ar); inl.innerHTML = `<img src="${src}" alt="">`; inl.classList.add('on'); }
     };
     const at = x => { const r = strip.getBoundingClientRect(); return Math.floor((x - r.left) / r.width * bts.length); };
     strip.addEventListener('pointermove', ev => { if (ev.pointerType === 'mouse' || ev.buttons) show(at(ev.clientX)); });
@@ -124,6 +129,13 @@
     strip.addEventListener('blur', off);
   }
 
+  /* ---------- the client logos as the site's own horizontal strip (with its throw physics), moved in from the hidden About section ---------- */
+  function moveStrip(slot, scope) {
+    const c = document.querySelector('.collab'); if (!c || !slot) return;
+    slot.appendChild(c); scope.classList.add('has-strip');
+    dispatchEvent(new Event('resize'));   /* the strip measures itself again in its new place */
+  }
+
   /* ---------- the easter egg at the bottom: the old site's Golden hour fold (a live map of where the golden hour is now) ---------- */
   function addEgg(root, wrapTag) {
     const g = document.getElementById('golden'); if (!g || !root) return;
@@ -131,6 +143,8 @@
     /* its way in is the footer's small red ping with the live line "golden hour now…" (the footer itself is hidden here) */
     const btn = document.getElementById('ftGh'); if (btn) box.appendChild(btn);
     box.appendChild(g); root.appendChild(box);
+    /* and under it the site's footer: ©, Dark / Light, Index, Back to top (Andrija, 2026-10-31) */
+    const ft = document.querySelector('main footer'); if (ft) { const fb = document.createElement('div'); fb.className = 'x2-foot'; fb.setAttribute('data-x2b', ''); fb.appendChild(ft); root.appendChild(fb); }
     const fold = document.getElementById('ghFold');
     if (fold && VIRTUAL) fold.addEventListener('toggle', () => { if (!fold.open) return; setTimeout(() => { measure(); const l = lines.find(x => x.el === box); if (l) scrollToY(l.y - 90); }, 80); });
   }
@@ -141,20 +155,21 @@
     sec.className = 'x2-rest x2-cr2 x2-b1'; sec.setAttribute('aria-label', 'Studio');
     const code = (n, w) => `<span class="x2-code">PF-${w.slice(0, 2).toUpperCase()}/${String(n).padStart(3, '0')} ${e(w.toUpperCase())}</span>`;
     const rec = '<span class="x2-rec"><span class="x2-rd" aria-hidden="true"></span>Rec <span class="x2-tc">00:00:00:00</span></span>';
-    const grp = (n, w, body, extra = '') => `<div class="cr2-g" data-x2b${extra}><div class="cr2-l">${code(n, w)}</div><div class="cr2-b">${body}</div></div>`;
+    const grp = (n, w, body, extra = '') => `<div class="cr2-g${/data-wide/.test(extra) ? ' cr2-wide' : ''}" data-x2b${extra.replace(' data-wide', '')}><div class="cr2-l">${code(n, w)}</div><div class="cr2-b">${body}</div></div>`;
     sec.innerHTML =
-      grp(1, 'Studio', `<p class="cr2-say">${e(STATEMENT)}</p><p class="cr2-meta">${rec}<span class="cr2-pl">${PLACES}</span></p>`) +
-      grp(2, 'Core', `<ul class="cr2-cols c3">${CORE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-r">${e(r)}</span><span class="cr2-n">${e(n)}</span></li>`).join('')}</ul>`) +
+      grp(1, 'Studio', `<p class="cr2-say">${SAY}</p><p class="cr2-say cr2-pl">${PLACES}</p><p class="cr2-meta">${rec}</p>`) +
+      grp(2, 'Core', `<ul class="cr2-cols c3 cr2-core">${CORE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-r x2-code">${e(r.toUpperCase())}</span><span class="cr2-n">${e(n)}</span></li>`).join('')}</ul>`) +
       /* the Collective: the site's own List / Graph (moved here from the hidden About section); the plain columns stay if it is missing */
       grp(3, 'Collective', `<div class="cr2-peers"></div><ul class="cr2-cols c3 cr2-coll">${COLLECTIVE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-n">${e(n)}</span><span class="cr2-r">${e(r)}</span></li>`).join('')}</ul>`) +
       grp(4, 'We make', `<ol class="cr2-make">${WE_MAKE.map((w, i) => `<li><span class="cr2-no">${String(i + 1).padStart(2, '0')}</span>${e(w)}</li>`).join('')}</ol>`) +
       grp(5, 'Human in the loop', hitlHTML()) +
-      grp(6, 'Made for', `<div class="x2-logos">${LOGO_CLIENTS.map(logoTag).join('')}</div>`) +
+      grp(6, 'Made for', `<div class="x2-collab"></div><div class="x2-logos x2-logos-fb">${LOGO_CLIENTS.map(logoTag).join('')}</div>`, ' data-wide') +
       grp(7, 'Contact', `<p class="x2-ln cr2-cmd"><span class="k">$</span> <span class="v">panorama --contact</span><span class="x2-cur" aria-hidden="true"></span></p>
         <p class="cr2-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr2-links">${LINKS}</p>`, ' data-x2sec="contact"');
     field.appendChild(sec);
     const peers = document.getElementById('peers'), slot = $('.cr2-peers', sec);
     if (peers && slot) { slot.appendChild(peers); sec.classList.add('has-peers'); }
+    moveStrip($('.x2-collab', sec), sec);
     addEgg(sec);
     return sec;
   }
@@ -221,7 +236,7 @@
     rest = document.createElement('section');
     rest.className = 'x2-rest x2-cr'; rest.setAttribute('aria-label', 'Studio'); rest.dataset.x2sec = 'studio';
     rest.innerHTML = `<p class="cr-mark" data-x2b><span class="cr-dot" aria-hidden="true"></span>Panorama Films<sup>®</sup></p>
-      <p class="cr-say" data-x2b>${e(STATEMENT)}</p>
+      <p class="cr-say" data-x2b>${SAY}</p>
       ${CORE.map(([id, n, r]) => row(r, n, ` data-pp="${id}"`)).join('')}
       ${head('The Collective')}
       ${COLLECTIVE.map(([id, n, r]) => row(r, n, ` data-pp="${id}"`)).join('')}
@@ -230,10 +245,11 @@
       ${head('Human in the loop')}
       <div class="cr-hitl" data-x2b>${hitlHTML()}</div>
       ${head('Made for')}
-      <div class="x2-logos cr-logos" data-x2b>${LOGO_CLIENTS.map(logoTag).join('')}</div>
+      <div class="cr-strip" data-x2b><div class="x2-collab"></div><div class="x2-logos cr-logos x2-logos-fb">${LOGO_CLIENTS.map(logoTag).join('')}</div></div>
       <p class="cr-pl" data-x2b>${PLACES}</p>
       <div class="cr-end" data-x2b data-x2sec="contact"><p class="cr-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr-links">${LINKS}</p></div>`;
     field.appendChild(rest);
+    moveStrip($('.x2-collab', rest), rest);
     addEgg(rest);
   }
 
@@ -309,16 +325,20 @@
     }, { passive: false });
     addEventListener('keydown', ev => {
       if (overlayOpen() || ev.defaultPrevented || /input|textarea|select/i.test((ev.target.tagName || '')) || ev.metaKey || ev.ctrlKey || ev.altKey) return;
+      if (ev.key === ' ' && ev.target.closest && ev.target.closest('button, a, [role="slider"], summary')) return;   /* Space presses a focused button */
       const H = innerHeight, map = { ArrowDown: 100, ArrowUp: -100, PageDown: H * 0.85, PageUp: -H * 0.85, ' ': ev.shiftKey ? -H * 0.85 : H * 0.85 };
       if (ev.key in map) { ev.preventDefault(); target = clampY(target + map[ev.key]); }
       else if (ev.key === 'Home') { ev.preventDefault(); target = 0; }
       else if (ev.key === 'End') { ev.preventDefault(); target = maxY(); }
     });
     /* tabbing to something below the window brings it into view */
+    /* only for keyboard focus, and only by as much as the focused thing is out of view: a click in the Collective (which moves
+       focus into the profile) used to throw the page to the top of the block (Andrija, 2026-10-31: graph glitches) */
     field.addEventListener('focusin', ev => {
-      const it = items.find(x => x.el.contains(ev.target)), l = lines.find(x => x.el.contains(ev.target));
-      const y = it ? it.y : l ? l.y : null; if (y == null) return;
-      if (y - target < 80 || y - target > innerHeight - 160) target = clampY(y - innerHeight * 0.35);
+      const el = ev.target; if (!el.matches || !el.matches(':focus-visible')) return;
+      const r = el.getBoundingClientRect();
+      if (r.top < 90) target = clampY(target + r.top - 120);
+      else if (r.bottom > innerHeight - 60) target = clampY(target + r.bottom - innerHeight + 120);
     });
   }
 
@@ -406,17 +426,17 @@
   }
   document.addEventListener('click', ev => {
     /* the menu's links (and the phone menu) lead to the new places */
-    const a = ev.target.closest('a[href="#field"], a.x2-ixl, a[href="#studio"], a[href="#contact"]:not([data-mail]), a[href="#top"], a[href="#hero"]');
+    const a = ev.target.closest('a[href="#field"], a.x2-ixl, a[data-index], a[href="#studio"], a[href="#contact"]:not([data-mail]), a[href="#top"], a[href="#hero"]');
     if (!a || a.closest('#lb')) return;
     ev.preventDefault(); ev.stopPropagation();
-    const h = a.getAttribute('href').slice(1), id = h === 'index' ? 'index' : h === 'studio' ? 'studio' : h === 'contact' ? 'contact' : 'work';
+    const h = a.hasAttribute('data-index') ? 'index' : a.getAttribute('href').slice(1), id = h === 'index' ? 'index' : h === 'studio' ? 'studio' : h === 'contact' ? 'contact' : 'work';
     if (hdr.classList.contains('navopen')) { const bu = $('#burger'); bu && bu.click(); }
     goSection(id, a);
   }, true);
   let bcN = 0;
   function breadcrumb() {
     /* the globe at the top, the wordmark once the field has moved (as on the site, where it happens when the reel's heading reaches the globe) */
-    const c = (VIRTUAL ? target : scrollY) > 40;
+    const c = (VIRTUAL ? target : scrollY) > innerHeight * 0.32;   /* a little later than at first (Andrija, 2026-10-31) */
     if (hdr.classList.contains('compact') !== c) hdr.classList.toggle('compact', c);   /* the page's own scroll handler would set it from the hidden hero */
     if (++bcN % 6) return;
     const y = scrollY2() + innerHeight * 0.4;
@@ -442,7 +462,7 @@
     else { const p = person(id); if (!p) return; pv.className = 'x2-pv on x2-pv-p'; pv.innerHTML = `<img src="${p[3]}" alt="">`; }
     placePv(true);   /* appear by the pointer, not in the corner */
   }
-  const hidePv = () => { pv.classList.remove('on'); pvK = null; };
+  const hidePv = () => { pv.classList.remove('on'); pvK = null; pv.style.width = pv.style.aspectRatio = ''; };
   let px = 0, py = 0;
   const placePv = instant => {
     const w = pv.offsetWidth, h = pv.offsetHeight;
@@ -495,13 +515,14 @@
     const mk = (id, label, html) => { const p = document.createElement('div'); p.className = 'x2-pnl x2-ix'; p.dataset.p = id; p.setAttribute('role', 'dialog'); p.setAttribute('aria-modal', 'true'); p.setAttribute('aria-label', label);
       p.innerHTML = `<button type="button" class="x2-ix-x">(×) Close</button><div class="x2-ix-in">${html}</div>`; document.body.appendChild(p); panels[id] = p;
       $('.x2-ix-x', p).addEventListener('click', () => closePanels(true)); };
-    mk('studio', 'Studio', `<p class="pn-say">${e(STATEMENT)}</p>
+    mk('studio', 'Studio', `<p class="pn-say">${SAY}</p>
       <div class="pn-core">${CORE.map(([id, n, r, src]) => `<figure class="pn-pt"><img src="${src}" alt="${e(n)}" loading="lazy"><figcaption><span class="fx-c">${e(r)}</span><span class="fx-ti">${e(n)}</span></figcaption></figure>`).join('')}</div>
       <div class="pn-cols">
         <div><p class="pn-k">The Collective</p><ul class="pn-l">${COLLECTIVE.map(([id, n, r]) => `<li data-pp="${id}"><span>${e(n)}</span> <span class="pn-r">${e(r)}</span></li>`).join('')}</ul></div>
         <div><p class="pn-k">We make</p><ul class="pn-l">${WE_MAKE.map(w => `<li>${e(w)}</li>`).join('')}</ul></div>
-        <div><p class="pn-k">Made for</p><div class="x2-logos pn-logos">${LOGO_CLIENTS.map(logoTag).join('')}</div></div>
-      </div>`);
+        <div></div>
+      </div><div class="pn-strip"><p class="pn-k">Made for</p><div class="x2-collab"></div><div class="x2-logos pn-logos x2-logos-fb">${LOGO_CLIENTS.map(logoTag).join('')}</div></div>`);
+    moveStrip($('.x2-collab', panels.studio), panels.studio);
     mk('contact', 'Contact', `<p class="pn-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="pn-links">${LINKS}</p><p class="pn-pl">${PLACES}</p>`);
   }
   let pBack = null;
