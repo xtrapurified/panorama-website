@@ -20,7 +20,8 @@
   const field = $('#field'), wrap = $('#fxTiles'), lb = $('#lb'), hdr = $('#hdr');
   if (!field || !wrap) return;
 
-  const T = (window.PF_FIELD = { pan: 0.165, depth: [0.82, 1.16], ease: 0.055, scrollDepth: 0.6, fadeOut: 0.45, fadeIn: 0.7 });
+  const T = (window.PF_FIELD = { pan: 0.165, depth: [0.82, 1.16], ease: 0.055, scrollDepth: 0.6, fadeOut: 0.45, fadeIn: 0.7,
+    step: [0.58, 0.86], stepPhone: [0.86, 1], drag: 1, throw: 0.32 });   /* step: how far down the next tile starts, as a share of the tile's height (less overlap = higher) */
 
   /* ---------- what goes in: the showreel, the featured films, then everything else, as on the site ---------- */
   const visible = k => F[k] && !(typeof HIDDEN !== 'undefined' && HIDDEN.includes(k));
@@ -32,7 +33,7 @@
   const hrefOf = k => (k !== 'reel' && typeof workUrl === 'function' && workUrl(k)) || (typeof ext === 'function' ? ext(F[k]) : '#');
   const e = s => (typeof esc === 'function' ? esc(s) : String(s));
 
-  wrap.innerHTML = keys.map(k => `<div class="fx-i" data-k="${k}"><a class="fx-t" href="${hrefOf(k)}" data-fx="${k}" aria-label="${e(titleOf(k))}, ${e(clientOf(k))}">
+  wrap.innerHTML = keys.map(k => `<div class="fx-i" data-k="${k}"><a class="fx-t" href="${hrefOf(k)}" data-fx="${k}" draggable="false" aria-label="${e(titleOf(k))}, ${e(clientOf(k))}">
     <span class="fx-m"><img src="${still(k)}" alt="" loading="lazy" decoding="async" draggable="false"></span>
     <p class="fx-lab" aria-hidden="true"><span class="fx-c">${e(clientOf(k))}</span><span class="fx-ti">${e(titleOf(k))}</span></p></a></div>`).join('');
   const items = $$('.fx-i', wrap).map(el => ({ el, t: $('.fx-t', el), k: el.dataset.k, d: 1, x: 0, y: 0, w: 0, h: 0, seen: false }));
@@ -63,7 +64,7 @@
       Object.assign(it, { x, y, w, h, d: r(T.depth[0], T.depth[1]) });
       Object.assign(it.el.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
       bottom = Math.max(bottom, y + h);
-      y += h * (phone ? r(0.62, 0.82) : r(0.36, 0.7));
+      y += h * (phone ? r(...T.stepPhone) : r(...T.step));   /* less overlap than at first (Andrija, 2026-10-30) */
     });
     wrap.style.height = Math.ceil(bottom + (phone ? 80 : 160)) + 'px';
   }
@@ -127,7 +128,35 @@
     if (RM || !G) { openFilm(k); return; }
     G.to(wrap, { autoAlpha: 0, duration: T.fadeOut, ease: 'power1.out', onComplete: () => openFilm(k) });
   }
+  /* grab and drag: the mouse can pull the field up and down as well as the wheel; let go and it glides on.
+     A press that turns into a drag never opens a film. (Andrija, 2026-10-30: "I keep trying to scroll with the mouse") */
+  let drag = null, dragged = false;
+  if (FINE) {
+    field.addEventListener('dragstart', ev => ev.preventDefault());
+    field.addEventListener('pointerdown', ev => {
+      if (ev.pointerType !== 'mouse' || ev.button !== 0) return;
+      drag = { y: ev.clientY, s: scrollY, last: ev.clientY, t: performance.now(), v: 0, on: false }; dragged = false;
+    });
+    addEventListener('pointermove', ev => {
+      if (!drag) return;
+      const dy = ev.clientY - drag.y;
+      if (!drag.on && Math.abs(dy) > 6) { drag.on = true; dragged = true; field.classList.add('drag'); lenis && lenis.stop(); }
+      if (!drag.on) return;
+      const now = performance.now(), dt = Math.max(1, now - drag.t);
+      drag.v = drag.v * 0.6 + ((ev.clientY - drag.last) / dt) * 0.4; drag.last = ev.clientY; drag.t = now;
+      scrollTo(0, drag.s - dy * T.drag);
+    });
+    const end = () => {
+      if (!drag) return;
+      const d = drag; drag = null; field.classList.remove('drag');
+      setTimeout(() => { dragged = false; }, 0);   /* the click that ends a drag comes before this; any later click is a real one */
+      if (!d.on) return;
+      if (lenis) { lenis.start(); lenis.scrollTo(scrollY - d.v * 1000 * T.throw, { lerp: 0.06 }); }   /* the throw: px/ms → a glide */
+    };
+    addEventListener('pointerup', end); addEventListener('pointercancel', end); addEventListener('blur', end);
+  }
   field.addEventListener('click', ev => {
+    if (dragged) { dragged = false; ev.preventDefault(); ev.stopPropagation(); return; }
     const a = ev.target.closest('.fx-t'); if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button) return;
     ev.preventDefault(); ev.stopPropagation(); go(a.dataset.fx);
   }, true);

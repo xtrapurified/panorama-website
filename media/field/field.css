@@ -7,8 +7,10 @@
 body{background:var(--fxbg)}
 
 /* ---------- the field ---------- */
-.fx{position:relative;background:var(--fxbg)}
-.fx-tiles{position:relative;width:100%;overflow:hidden}
+.fx{position:relative;background:var(--fxbg);cursor:grab}   /* the space between tiles can be grabbed */
+.fx-tiles{position:relative;width:100%;overflow:hidden;user-select:none;-webkit-user-select:none}
+.fx.drag,.fx.drag .fx-t{cursor:grabbing!important}
+.fx.drag .fx-lab{opacity:0!important}
 .fx-i{position:absolute;display:block;opacity:0;transition:opacity 1.1s cubic-bezier(.16,1,.3,1)}
 .fx-i.in{opacity:1}
 .fx-t{position:absolute;inset:0;display:block;color:#fff;text-decoration:none;will-change:transform;-webkit-tap-highlight-color:transparent;
