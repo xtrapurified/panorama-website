@@ -2,7 +2,7 @@
    The hero and the two film sections stay in the page (their code and search text keep working) but are not shown;
    the field takes their place at the top. Everything for this lives in media/field/. */
 
-:root{--fxbg:#080808;--fxmono:var(--mono,ui-monospace,"SF Mono",Menlo,Consolas,monospace)}
+:root{--fxbg:#080808;--fxmono:"Untitled Sans","Helvetica Neue",Helvetica,Arial,sans-serif}   /* the monospace tried first was not liked: Untitled Sans Light instead (Andrija, 2026-10-30) */
 #hero,.peekbar,main > .page > section.sec[data-sec="films"]{display:none!important}
 body{background:var(--fxbg)}
 
@@ -20,10 +20,11 @@ body{background:var(--fxbg)}
 .fx-t:hover .fx-m,.fx-t:focus-visible .fx-m,.fx-t.near .fx-m{opacity:1}
 .fx-t:focus-visible{outline:1px solid #fff;outline-offset:4px}
 /* the label: the client in monospace, the title in the display face, centred on the tile */
-.fx-lab{position:absolute;left:50%;top:50%;z-index:3;margin:0;transform:translate3d(-50%,-50%,0);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .2s ease-out,visibility 0s linear .2s;text-shadow:0 0 18px rgba(0,0,0,.35)}
+.fx-lab{position:absolute;left:50%;top:50%;z-index:3;margin:0;transform:translate3d(-50%,-50%,0);white-space:nowrap;pointer-events:none;opacity:0;visibility:hidden;transition:opacity .2s ease-out,visibility 0s linear .2s;
+  background:#000;padding:.32em .5em .36em;line-height:1}   /* a black strip under the words, like a highlighter, so they read over any picture (Andrija, 2026-10-30) */
 .fx-t:hover .fx-lab,.fx-t:focus-visible .fx-lab,.fx-t.near .fx-lab{opacity:1;visibility:visible;transition:opacity .2s ease-out,visibility 0s}
-.fx-c{font-family:var(--fxmono);font-weight:300;font-size:clamp(15px,1.55vw,26px);letter-spacing:-.02em;color:rgba(255,255,255,.72);margin-right:.45em}
-.fx-ti{font-weight:500;font-size:clamp(17px,1.8vw,28px);letter-spacing:-.03em;line-height:.9}
+.fx-c{font-family:var(--fxmono);font-weight:300;font-size:clamp(15px,1.55vw,26px);letter-spacing:-.02em;color:rgba(255,255,255,.62);margin-right:.4em}
+.fx-ti{font-weight:500;font-size:clamp(15px,1.55vw,26px);letter-spacing:-.03em}
 @media (max-width:760px){.fx-lab{display:none}}
 @media (prefers-reduced-motion:reduce){.fx-i{transition:none;opacity:1}}
 
@@ -51,7 +52,7 @@ body{background:var(--fxbg)}
 /* ---------- the index, after wanda.net's Directors: every project in four columns over the dimmed field ---------- */
 .x2-ix{position:fixed;inset:0;z-index:58;background:rgba(8,8,8,.72);-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:#fff;overflow-y:auto;overscroll-behavior:contain;opacity:0;visibility:hidden;transition:opacity .45s ease-out,visibility 0s linear .45s}
 .x2-ix.on{opacity:1;visibility:visible;transition:opacity .45s ease-out,visibility 0s}
-.x2-ix-x{position:fixed;top:clamp(18px,2vw,30px);right:var(--m);z-index:3;font-family:var(--fxmono);font-size:clamp(14px,1.1vw,17px);color:#fff;background:none;border:0;cursor:pointer;opacity:.8}
+.x2-ix-x{position:fixed;top:clamp(18px,2vw,30px);right:var(--m);z-index:3;font-family:var(--fxmono);font-weight:300;font-size:clamp(14px,1.1vw,17px);color:#fff;background:none;border:0;cursor:pointer;opacity:.8}
 .x2-ix-x:hover{opacity:1}
 .x2-ix-in{position:relative;z-index:2;padding:clamp(110px,15vh,170px) clamp(24px,8vw,125px) 80px clamp(24px,10.5vw,160px)}
 .x2-tabs{display:flex;gap:40px}
@@ -75,4 +76,4 @@ body{background:var(--fxbg)}
 
 /* ---------- the project page in the same voice: monospace controls, a fade in after the field fades out ---------- */
 .lb{background:var(--fxbg)}
-.lb-bar .lab,.lb-ctl,.lb-ctl .lab,#c-tc,.lb-side-t{font-family:var(--fxmono)!important;letter-spacing:-.01em!important;text-transform:none!important}
+.lb-bar .lab,.lb-ctl,.lb-ctl .lab,#c-tc,.lb-side-t{font-family:var(--fxmono)!important;font-weight:300!important;letter-spacing:-.01em!important;text-transform:none!important}
