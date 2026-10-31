@@ -128,7 +128,7 @@
         if (on >= 0) { imgs[on].classList.remove('on'); ticks[on].classList.remove('on'); }
         /* each photo at its own size and place in the frame (Andrija, 2026-10-31, 15:43: vary their height / width) */
         const k = 0.5 + Math.random() * 0.5, st = imgs[i].style;
-        st.width = st.height = (k * 100).toFixed(1) + '%'; st.left = (Math.random() * (1 - k) * 100).toFixed(1) + '%'; st.top = (Math.random() * (1 - k) * 100).toFixed(1) + '%';
+        st.width = st.height = (k * 100).toFixed(1) + '%'; st.left = st.top = ((1 - k) * 50).toFixed(1) + '%';   /* centred both ways (16:14) */
         on = i; imgs[i].classList.add('on'); ticks[i].classList.add('on');
         num.textContent = `${String(i + 1).padStart(2, '0')} / ${String(bts.length).padStart(2, '0')}`; };
       go(0);
