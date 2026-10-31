@@ -144,7 +144,7 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
       - Share and its arrow swap every 4 s with a slide, and the arrow nudges.
       - At the end, Vimeo and YouTube films stop on their last frame, so no end menu ("More from Panorama Films") appears.
     - Merged main: Andrija's new clips and stills for Thousands of Cameras, Share Labs, World Drone Prix, Belgrade Furniture Fair, Shinobi and Fruškać, with Share Labs as its own project, plus the volume slider. The field plays those clips instead of streaming the films from Vimeo. Tajkun got no new clip.
-    - Golden hour: 11 px, in Data Error; left-aligned on phones.
+    - Golden hour: in the site's own type, a size smaller (12–13 px); its keys, formula lines and hint in Data Error (12:00; all Data Error was too much); left-aligned on phones.
     - Phones: the header wordmark is 17 px, the size of the one on a project page.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.

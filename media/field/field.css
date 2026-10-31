@@ -466,10 +466,11 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 .lb #pj{transition:filter .6s ease}   /* a filter, not opacity: the page's fade-in animation holds opacity */
 .lb.is-playing #pj{filter:brightness(.42)}
 .lb.is-playing #pj:hover,.lb.is-playing #pj:focus-within{filter:none}
-/* Golden hour: smaller, in the Data Error type of the codes (Andrija, 2026-10-31) */
-.x2-egg .ft-gh,.x2-egg .ft-gh *,#golden .gh-tease,#golden .gh-tease *,#golden .gh-code,#golden .gh-hint{font-family:"Data Error Horiz",ui-monospace,monospace!important;letter-spacing:.06em!important}
-.x2-egg .ft-gh,#golden .gh-tease{font-size:11px!important}
-#golden .gh-code{font-size:11px!important;line-height:1.55!important;gap:1.1em!important}
+/* Golden hour: the site's own type back, a size smaller; the code around it (keys, the formula, the hint) in Data Error
+   (Andrija, 2026-10-31: all Data Error was too much) */
+.x2-egg .ft-gh,#golden .gh-tease{font-size:12px!important}
+#golden .gh-code{font-size:13px!important;line-height:1.45!important;gap:1.1em!important}
+#golden .gh-code .k,#golden .gh-code pre,#golden .gh-hint{font-family:"Data Error Horiz",ui-monospace,monospace!important;letter-spacing:.08em!important;font-size:11px!important}
 #golden .gh-hint{font-size:10px!important}
 @media (max-width:760px){
   .x2-egg,.x2-egg #golden{text-align:left}
