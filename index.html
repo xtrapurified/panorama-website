@@ -1881,6 +1881,32 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   #cards .card .meta .cl{color:rgba(255,255,255,.62)}
 }
 .pf-globe{display:inline-block;width:.85em;height:.85em;vertical-align:calc(-.022em - 5px);fill:currentColor;overflow:visible}   /* an inline vector (media/globe-flat.svg, one flat path), not a CSS mask: masks are drawn as a bitmap and went soft (Andrija, 2026-10-30) */
+
+/* ---------- project page, 2026-10-31 (Andrija; first tried on the experimental branch) ---------- */
+/* phones: the project's title is not repeated in the top bar (computers keep it) */
+@media (max-width:760px){.lb .lab.ttl{display:none!important}}
+/* the player's controls, quieter: dimmed until touched, 18 px icons, a hairline track and a small knob */
+.lb-ctl{opacity:.62;transition:opacity .25s}
+.lb-ctl:hover,.lb-ctl:focus-within{opacity:1}
+.lb-ctl button svg{width:18px!important;height:18px!important;stroke-width:1.4!important}
+.lb-ctl #c-play svg{width:20px!important;height:20px!important}
+.lb-ctl #c-tc{font-size:12px;color:var(--mid)}
+.lb .seek::-webkit-slider-runnable-track{height:1px}
+.lb .seek::-moz-range-track{height:1px}
+.lb .seek::-webkit-slider-thumb{width:8px;height:8px;margin-top:-3.5px}
+.lb .seek::-moz-range-thumb{width:8px;height:8px}
+/* a project's text dims while its film plays (a filter: the page's fade-in animation holds opacity) */
+.lb #pj{transition:filter .6s ease}
+.lb.is-playing #pj{filter:brightness(.42)}
+.lb.is-playing #pj:hover,.lb.is-playing #pj:focus-within{filter:none}
+/* Share: a plain arrow and the word swap places every 4 s, one sliding out up and right as the other comes in from below; the arrow nudges */
+.lb-bar #lb-share{display:inline-grid!important;align-items:center;justify-items:end;overflow:visible}
+.lb-bar #lb-share > .sh-t,.lb-bar #lb-share > .ic{grid-area:1/1;display:inline-block!important}
+.lb-bar #lb-share > .sh-t{font-size:.66em;letter-spacing:.02em;animation:shT 8s cubic-bezier(.65,0,.35,1) infinite}
+.lb-bar #lb-share > .ic{animation:shA 8s cubic-bezier(.65,0,.35,1) infinite}
+@keyframes shA{0%{opacity:0;transform:translate(-5px,5px)}5%{opacity:1;transform:none}22%{transform:none}25%{transform:translate(2px,-2px)}28%{transform:none}45%{opacity:1;transform:none}50%,100%{opacity:0;transform:translate(5px,-5px)}}
+@keyframes shT{0%,45%{opacity:0;transform:translateY(7px)}50%{opacity:1;transform:none}95%{opacity:1;transform:none}100%{opacity:0;transform:translateY(-7px)}}
+@media (prefers-reduced-motion:reduce){.lb-bar #lb-share > .sh-t{animation:none;opacity:0}.lb-bar #lb-share > .ic{animation:none}}
 </style>
 <!-- SEO:LD --><script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://panoramafilms.tv/#site","url":"https://panoramafilms.tv/","name":"Panorama Films","inLanguage":"en","publisher":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Organization","@id":"https://panoramafilms.tv/#org","name":"Panorama Films","alternateName":["Panorama Films Collective","Панорама Филмс"],"url":"https://panoramafilms.tv/","logo":"https://panoramafilms.tv/media/icons/icon-512.png","image":"https://panoramafilms.tv/media/og/home.jpg","description":"Independent creative storytelling studio from Belgrade, Serbia, making documentaries, series, campaigns and brand films for institutions, foundations, NGOs and brands in the UAE, Europe and Serbia.","slogan":"Seeing the bigger picture.","address":{"@type":"PostalAddress","addressLocality":"Belgrade","addressCountry":"RS"},"areaServed":[{"@type":"Country","name":"United Arab Emirates"},{"@type":"Country","name":"Serbia"},{"@type":"Place","name":"Worldwide"}],"knowsAbout":["Documentary film production","Docuseries","Brand films","Campaign films","Event films","Cinematography","Aerial cinematography","Film editing","Sound design","Script writing","Creative direction"],"sameAs":["https://www.instagram.com/panoramafilms.tv/","https://vimeo.com/panoramafilmstv","https://www.youtube.com/@panoramafilmstv"],"founder":[{"@id":"https://panoramafilms.tv/#andrija-kovac"}],"employee":[{"@id":"https://panoramafilms.tv/#andrija-kovac"},{"@id":"https://panoramafilms.tv/#mina-strugar"},{"@id":"https://panoramafilms.tv/#marija-kovacina"}]},{"@type":"Person","@id":"https://panoramafilms.tv/#andrija-kovac","name":"Andrija Kovač","jobTitle":"Creative Director","description":"Co-founder of Panorama Films Collective and director of photography, exploring the space between film, photography and design. He has directed and shot short films, video essays and branded films for companies, NGOs, startups, artists and activist groups.","image":"https://panoramafilms.tv/media/team/andrija-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#mina-strugar","name":"Mina Strugar","jobTitle":"Producer","description":"Creative producer and audio engineer, leading projects and creative development. She has created museum experiences and worked on theatre productions. Her research focuses on spatial sound and sound design.","image":"https://panoramafilms.tv/media/team/mina-4.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}},{"@type":"Person","@id":"https://panoramafilms.tv/#marija-kovacina","name":"Marija Kovačina","jobTitle":"Editorial Director","description":"Film editor, multimedia artist and musician. She has edited and directed documentaries, art films and short experimental works, screened and awarded at international festivals.","image":"https://panoramafilms.tv/media/team/marija-2.webp","worksFor":{"@id":"https://panoramafilms.tv/#org"}}]}</script><!-- /SEO:LD --></head>
 <body>
@@ -1892,7 +1918,7 @@ footer .ft-ix:hover,footer .ft-ix:focus-visible{opacity:1;color:var(--red)}
   <symbol id="i-l" viewBox="0 0 12 12"><path d="M10.5 6h-9M5 2.5 1.5 6 5 9.5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
   <symbol id="i-d" viewBox="0 0 12 12"><path d="M6 1.5v9M2.5 7 6 10.5 9.5 7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
   <symbol id="i-u" viewBox="0 0 12 12"><path d="M6 10.5v-9M2.5 5 6 1.5 9.5 5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
-  <symbol id="i-sh" viewBox="0 0 12 12"><path d="M6 7.5V1.2M3.6 3.4 6 1 8.4 3.4M4 5.2H2.2v5.6h7.6V5.2H8" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
+  <symbol id="i-sh" viewBox="0 0 12 12"><path d="M2.5 9.5l7-7M4.5 2.5h5v5" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
   <symbol id="i-x" viewBox="0 0 12 12"><path d="M2.5 2.5l7 7M9.5 2.5l-7 7" fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="square"/></symbol>
   <filter id="heat" color-interpolation-filters="sRGB"><feColorMatrix type="matrix" values=".33 .5 .17 0 0 .33 .5 .17 0 0 .33 .5 .17 0 0 0 0 0 1 0"/><feComponentTransfer><feFuncR type="table" tableValues="0 .32 .89 1 1"/><feFuncG type="table" tableValues="0 .02 .14 .62 1"/><feFuncB type="table" tableValues="0 .03 .1 .55 1"/></feComponentTransfer></filter>
 </svg>
@@ -2780,6 +2806,7 @@ function paint(){
   if (!cVol.hidden && document.activeElement !== cVol){ const lv = P.muted ? 0 : Math.round((P.level ?? VOL) * 100); cVol.value = lv; cVol.style.setProperty('--p', lv + '%'); cVol.setAttribute('aria-valuetext', lv + '%'); }
   cFs.hidden = !(FS_OK || P.nativeFs); { const on = document.fullscreenElement || document.webkitFullscreenElement; setIco(cFs, on ? 'fsx' : 'fs', on ? 'Exit full screen' : 'Full screen'); }
   cTc.textContent = `${mmss(P.time)} / ${mmss(P.dur)}`;
+  lb.classList.toggle('is-playing', !P.paused);   /* the project's text dims while a film plays */
   if (!scrubbing){ const r = P.dur ? P.time / P.dur : 0; cSeek.value = Math.round(r*1000); cSeek.style.setProperty('--p', (r*100).toFixed(2)+'%'); }
   cSeek.setAttribute('aria-valuetext', `${mmss(P.time)} of ${mmss(P.dur)}`);
 }
@@ -2876,7 +2903,7 @@ function playYouTube(k, fm){
   lif.classList.add('yt');   /* taller than the window: YouTube's title bar and logo fall outside the crop */
   const c = (fn,args=[]) => lif.contentWindow && lif.contentWindow.postMessage(JSON.stringify({event:'command',func:fn,args}), '*');
   const st = { sound:true, nativeFs:false, paused:true, muted:false, time:0, dur:0,
-    play(){ c('playVideo'); }, pause(){ c('pauseVideo'); }, seek(t){ c('seekTo',[t,true]); st.time = t; ytNoCC(c); paint(); },
+    play(){ if (st.atEnd){ st.atEnd = false; c('seekTo',[0,true]); } c('playVideo'); }, pause(){ c('pauseVideo'); }, seek(t){ st.atEnd = false; c('seekTo',[t,true]); st.time = t; ytNoCC(c); paint(); },
     mute(m){ c(m?'mute':'unMute'); st.muted = m; paint(); },
     level:VOL, vol(x){ st.level = x; c('setVolume',[Math.round(x * 100)]); c(x === 0 ? 'mute' : 'unMute'); st.muted = x === 0; paint(); },
     destroy(){ removeEventListener('message', onMsg); } };
@@ -2894,10 +2921,11 @@ function playYouTube(k, fm){
       if (info.playerState !== st.ps){ st.ps = info.playerState; if (st.ps === 1){ ready(); ytNoCC(c); c('setPlaybackQuality',['hd1080']); if (VOL_OK && !st.volSet){ st.volSet = true; c('setVolume',[Math.round((st.level ?? VOL) * 100)]); } } }
       st.paused = info.playerState !== 1 && info.playerState !== 3;
       if ((info.playerState === -1 || info.playerState === 5) && st.dur) unload();   /* loaded, autoplay refused: Play is waiting */
-      if (info.playerState === 0){ c('seekTo',[0,true]); c('playVideo'); }
+      if (info.playerState === 0){ st.atEnd = true; c('seekTo',[Math.max(0, st.dur - 1),true]); c('pauseVideo'); }
     }
-    /* loop just before the end so YouTube's suggestions never appear */
-    if (st.dur && st.time >= st.dur - .8 && !st.paused){ c('seekTo',[0,true]); ytNoCC(c); }
+    /* stop on the last frame a moment before the end, as Vimeo films do, so YouTube's suggestions never appear (Andrija, 2026-10-31:
+       no end menus for any film); Play then starts over */
+    if (st.dur && st.time >= st.dur - .8 && !st.paused && !st.atEnd){ st.atEnd = true; c('pauseVideo'); }
     paint();
   }
   addEventListener('message', onMsg);

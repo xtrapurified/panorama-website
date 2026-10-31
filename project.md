@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-31 (dev: scraped leftovers removed from the project data: Dubai TGR's intro was the old site's footer, now empty; a stray "Year / 2023" at the end of the Astronauts intro). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (dev: the project page from the experimental branch: no title in the top bar on phones, a plain Share arrow that swaps with the word, quieter player controls, the text dimmed while the film plays, YouTube films stopping on their last frame like Vimeo's; scraped leftovers removed from Dubai TGR and Astronauts). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
