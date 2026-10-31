@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-30, pushed live (2019 reel in the header on 30% of visits; Featured without gaps, client over the film; catalogue edge to edge with titles over the thumbnails). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (dev: scraped leftovers removed from the project data: Dubai TGR's intro was the old site's footer, now empty; a stray "Year / 2023" at the end of the Astronauts intro). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
