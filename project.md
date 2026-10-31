@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-31 (experimental: pitch black and the Dark / Light switch everywhere, footer at the bottom, the site's client strip, Field notes, header and Collective fixes). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (experimental: the phone version: bigger tiles, aligned header, titles on the middle tile, centred studio; Field notes in the code line; collaborators without bios). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -94,6 +94,19 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
   - **Header:** the globe gives way to the wordmark later (after about a third of a screen); the nav keeps one place, where it sits beside the wordmark (the large globe hangs from the bar instead of making it taller).
   - **Client logos: the site's own horizontal strip** (logos with its throw physics), moved in from the hidden About section, full width, in B1, B and A; the logo grid stays only as a fallback.
   - **Fixes (00:12):** the Collective's profile sits on solid black (the graph used to show through it) and further right, into the page margin, with the names a size smaller so each stays on one line; in windows narrower than 1200 px it opens below the names or the graph instead. The client strip drifts and can be dragged and thrown again (it had measured itself while hidden and stopped); a sideways trackpad swipe over it scrolls it.
+  - **Phone version (10:40):**
+    - Bigger tiles (84–116 % of the screen width, a little taller crops) that may run past the left or right edge.
+    - The header's globe (56 px), the wordmark and the menu sit on one line, on the page margins.
+    - The tile nearest the middle of the screen shows its client and title on black strips, centred on the part that is on screen.
+    - The studio is centred like end credits.
+    - "We make" is shown without its numbers.
+    - Email and Instagram are set in the big type of "Let's make a film together."
+    - The client strip is 20 % lower and drifts faster (36 px/s instead of 22).
+    - The footer has no Roman-numeral year; Back to top stays.
+    - Everywhere on the branch:
+      - Field notes now opens the code line in place of "(filming in progress)", and the section's label reads Filming in progress; the big "Human in the loop" title is gone.
+      - Vimeo is left out of the contact links.
+      - A collaborator's profile shows only the photo, the name and their Instagram; the three at the core keep their bios.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.
   - **Collective, B1:** the List / Graph switch without its pictograms; the profile opens on the right beside the names (36 % of the column, at most 360 px) instead of over them.

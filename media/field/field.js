@@ -86,13 +86,13 @@
   const filmOfClient = c => (typeof CLIENT_FILM !== 'undefined' && CLIENT_FILM[c] && visible(CLIENT_FILM[c])) ? CLIENT_FILM[c] : null;
   const PLACES = '<span lang="sr-Cyrl">Београд</span> <bdi lang="ar">دبي</bdi> Worldwide';
   const MAIL = 'Film enquiry';
-  const LINKS = `<a href="#contact" data-mail="${MAIL}">Email</a><a href="https://www.instagram.com/panoramafilms.tv/" target="_blank" rel="noopener">Instagram</a><a href="https://vimeo.com/panoramafilmstv" target="_blank" rel="noopener">Vimeo</a>`;
+  const LINKS = `<a href="#contact" data-mail="${MAIL}">Email</a><a href="https://www.instagram.com/panoramafilms.tv/" target="_blank" rel="noopener">Instagram</a>`;   /* Vimeo left out (Andrija, 2026-10-31) */
 
   /* ---------- Human in the loop, discreet (Andrija, 2026-10-30): no photos by default. One code line and a strip of thin ticks,
      one per behind-the-scenes photo; pointing along the strip (or dragging on a phone, or the arrow keys) shows that frame
      beside the pointer and counts it, frame 23 / 106. Photos load only when asked for. ---------- */
-  const hitlHTML = () => `<p class="x2-fn"><span class="x2-rec"><span class="x2-rd" aria-hidden="true"></span>Field notes</span></p><p class="x2-fn-t">Human in the loop</p>
-    <p class="x2-ln"><span class="k">(filming in progress) {</span> <span class="v">human</span><span class="k">.in(</span><span class="v">loop</span><span class="k">) }</span></p>
+  /* Field notes takes the place of "(filming in progress)" in the code line; the label above says Filming in progress (Andrija, 2026-10-31) */
+  const hitlHTML = () => `<p class="x2-ln x2-fnl"><span class="x2-fnw"><span class="x2-rd" aria-hidden="true"></span>Field notes</span> <span class="k">{</span> <span class="v">human</span><span class="k">.in(</span><span class="v">loop</span><span class="k">) }</span></p>
     <div class="x2-strip" tabindex="0" role="slider" aria-label="Behind the scenes photos: point along the strip to see them" aria-valuemin="1" aria-valuemax="1" aria-valuenow="1"></div>
     <p class="x2-ln x2-hlc"><span class="k">frame</span> <span class="v x2-hn">00 / 00</span> <span class="k">· loop =</span> <span class="v">true</span><span class="x2-hframe" aria-hidden="true"></span></p>`;
   let bts = [];
@@ -165,13 +165,16 @@
       /* the Collective: the site's own List / Graph (moved here from the hidden About section); the plain columns stay if it is missing */
       grp(3, 'Collective', `<div class="cr2-peers"></div><ul class="cr2-cols c3 cr2-coll">${COLLECTIVE.map(([id, n, r]) => `<li data-pp="${id}"><span class="cr2-n">${e(n)}</span><span class="cr2-r">${e(r)}</span></li>`).join('')}</ul>`) +
       grp(4, 'We make', `<ol class="cr2-make">${WE_MAKE.map((w, i) => `<li><span class="cr2-no">${String(i + 1).padStart(2, '0')}</span>${e(w)}</li>`).join('')}</ol>`) +
-      grp(5, 'Human in the loop', hitlHTML()) +
+      grp(5, 'Filming in progress', hitlHTML()) +
       grp(6, 'Made for', `<div class="x2-collab"></div><div class="x2-logos x2-logos-fb">${LOGO_CLIENTS.map(logoTag).join('')}</div>`, ' data-wide') +
       grp(7, 'Contact', `<p class="x2-ln cr2-cmd"><span class="k">$</span> <span class="v">panorama --contact</span><span class="x2-cur" aria-hidden="true"></span></p>
         <p class="cr2-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr2-links">${LINKS}</p>`, ' data-x2sec="contact"');
     field.appendChild(sec);
     const peers = document.getElementById('peers'), slot = $('.cr2-peers', sec);
     if (peers && slot) { slot.appendChild(peers); sec.classList.add('has-peers'); }
+    /* a collaborator's profile is only the photo, the name and their Instagram; the three at the core keep theirs (Andrija, 2026-10-31) */
+    const dr = document.getElementById('netDr');
+    if (dr) new MutationObserver(() => { const b = $('#netNames [data-p].on'), li = b && b.closest('li'); dr.classList.toggle('x2-crew', !(li && li.classList.contains('core'))); }).observe(dr, { childList: true });
     moveStrip($('.x2-collab', sec), sec);
     addEgg(sec);
     return sec;
@@ -206,11 +209,12 @@
       if (group && it.g !== group) y = bottom + (phone ? 120 : innerHeight * 0.32);   /* a breath between Work and Studio */
       group = it.g;
       /* wide and scope crops, as on wanda.net (Andrija, 2026-10-30) */
-      let ar = pick([16 / 9, 16 / 9, 16 / 9, 2.39, 2.39, 2.39, 2, 1.85, 3 / 2, 4 / 3]), colsR = [8, 16];
+      let ar = pick(phone ? [16 / 9, 16 / 9, 16 / 9, 3 / 2, 4 / 3, 2, 1.85, 2.39] : [16 / 9, 16 / 9, 16 / 9, 2.39, 2.39, 2.39, 2, 1.85, 3 / 2, 4 / 3]), colsR = [8, 16];
       let w, x;
       if (phone) {
-        w = W * r(0.62, 0.96);
-        x = r(-0.04 * W, W - w + 0.04 * W);
+        /* phones (Andrija, 2026-10-31): bigger, taller tiles that fill more of the screen, some running past the left or right edge */
+        w = W * r(0.84, 1.16);
+        x = w > W ? r(W - w - 0.06 * W, 0.06 * W) : r(-0.12 * W, W - w + 0.12 * W);
       } else {
         const cols = Math.round(r(colsR[0], colsR[1]));
         w = cols * u;
@@ -222,6 +226,9 @@
       const h = w / ar;
       Object.assign(it, { x, y, w, h, d: r(T.depth[0], T.depth[1]), kk: r(T.spring[0], T.spring[1]) });
       Object.assign(it.el.style, { left: x + 'px', top: y + 'px', width: w + 'px', height: h + 'px' });
+      /* the title sits in the middle of the part of the tile that is on screen (phones: tiles run past the edges) */
+      const vl = Math.max(x, 0), vr = Math.min(x + w, W);
+      it.el.style.setProperty('--lx', ((vl + vr) / 2 - x).toFixed(1) + 'px'); it.el.style.setProperty('--lw', Math.max(120, vr - vl - 24).toFixed(0) + 'px');
       bottom = Math.max(bottom, y + h);
       y += h * (phone ? r(...T.stepPhone) : r(...T.step));
     });
@@ -245,7 +252,7 @@
       ${COLLECTIVE.map(([id, n, r]) => row(r, n, ` data-pp="${id}"`)).join('')}
       ${head('We make')}
       ${WE_MAKE.map(w => `<p class="cr-c" data-x2b>${e(w)}</p>`).join('')}
-      ${head('Human in the loop')}
+      ${head('Filming in progress')}
       <div class="cr-hitl" data-x2b>${hitlHTML()}</div>
       ${head('Made for')}
       <div class="cr-strip" data-x2b><div class="x2-collab"></div><div class="x2-logos cr-logos x2-logos-fb">${LOGO_CLIENTS.map(logoTag).join('')}</div></div>
@@ -395,9 +402,18 @@
   if (rest && window.ResizeObserver) { let mq = 0; new ResizeObserver(() => { cancelAnimationFrame(mq); mq = requestAnimationFrame(() => { measure(); target = clampY(target); }); }).observe(rest); }
 
   /* phones: the tile crossing the middle of the window comes up to full brightness */
+  /* and shows its client and title: one tile at a time, the one nearest the middle (Andrija, 2026-10-31) */
   if (!FINE) {
-    const nio = new IntersectionObserver(es => es.forEach(en => en.target.classList.toggle('near', en.isIntersecting)), { rootMargin: '-42% 0px -42% 0px' });
-    items.forEach(it => nio.observe(it.t));
+    let nearIt = null, nq = 0;
+    const pickNear = () => { nq = 0;
+      const mid = innerHeight * 0.5; let best = null, bd = Infinity;
+      for (const it of items) { const r = it.t.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) continue;
+        const d = r.top <= mid && r.bottom >= mid ? 0 : Math.min(Math.abs(r.top - mid), Math.abs(r.bottom - mid)); if (d < bd) { bd = d; best = it; } }
+      if (bd > innerHeight * 0.22) best = null;
+      if (best !== nearIt) { if (nearIt) nearIt.t.classList.remove('near'); nearIt = best; if (best) best.t.classList.add('near'); } };
+    addEventListener('scroll', () => { if (!nq) nq = requestAnimationFrame(pickNear); }, { passive: true });
+    addEventListener('resize', () => setTimeout(pickNear, 200));
+    setTimeout(pickNear, 300);
   }
 
   /* ---------- opening a project: the field fades out, the project fades in; closing brings the field back ---------- */

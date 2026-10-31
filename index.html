@@ -3320,7 +3320,7 @@ document.addEventListener('keydown', e=>{
    Any manual scroll pauses the drift for a few seconds; the doubled set lets it loop without a seam. */
 (()=>{
   const mq = document.querySelector('#clients .marq'); if (!mq) return;
-  const SPEED = 22;   /* pixels per second */
+  const SPEED = document.getElementById('field') && innerWidth <= 760 ? 36 : 22;   /* pixels per second (experimental, phones: faster, Andrija 2026-10-31) */
   let hold = 0, hover = false, last = performance.now(), pos = 0, auto = false, vel = SPEED, samples = [], touching = false;
   const mod = v => { const h = half(); return ((v % h) + h) % h; };
   const half = () => mq.scrollWidth / 2;

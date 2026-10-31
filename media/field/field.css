@@ -338,3 +338,66 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
   .cr2-peers .net-dr{position:relative!important;right:auto!important;left:auto!important;top:auto!important;width:auto!important;max-width:520px;margin-top:28px;padding:0!important;box-shadow:none!important}
   .cr2-peers .net-names{padding-right:0}
 }
+
+/* ======================= 2026-10-31, the phone version (Andrija) ======================= */
+/* Field notes in the code line, where "(filming in progress)" was; the big title is gone */
+.x2-fnw{display:inline-flex;align-items:center;gap:.45em;color:rgb(var(--x-rgb))}
+.x2-fnw .x2-rd{width:.5em;height:.5em}
+.x2-fn,.x2-fn-t{display:none}
+/* a collaborator's profile: photo, name and Instagram, nothing else */
+.net-dr.x2-crew .dr-bio,.net-dr.x2-crew .dr-code,.net-dr.x2-crew .dr-role,.net-dr.x2-crew [data-all]{display:none!important}
+.net-dr.x2-crew .dr-ln{padding-top:16px;margin-top:0}
+
+@media (max-width:760px){
+  /* header: globe, wordmark and menu on one line, on the page's margins */
+  .hdr .bar{padding-block:12px!important;align-items:center!important;padding-inline:var(--m)}
+  .hdr .logo-slot{display:flex!important;align-items:center;height:56px!important;width:auto!important;min-width:56px}
+  .hdr .logo-slot .logo{width:56px!important;height:56px!important;top:0!important;left:0!important}
+  .hdr .logo-slot .logo panorama-globe-follow{width:100%!important;height:100%!important}
+  .hdr .wm{position:relative;top:0;font-size:20px}
+  .hdr .burger{align-self:center;margin-right:-11px}
+
+  /* titles: the tile crossing the middle of the screen shows its client and title, centred on the part that is on screen */
+  .fx-lab{display:flex;flex-direction:column;align-items:center;gap:0;left:var(--lx,50%);width:var(--lw,80vw);white-space:normal;text-align:center;line-height:1.1;padding:0;background:none}
+  .fx-lab span{display:inline;background:var(--x-bg);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:.02em .3em}
+  .fx-c,.fx-ti{font-size:16px}
+  .fx-c{margin-right:0}
+
+  /* the studio, centred like end credits */
+  .x2-b1 .cr2-g{text-align:center}
+  .x2-b1 .cr2-l{display:flex;justify-content:center}
+  .cr2-say,.x2-b1 .cr2-say{margin-inline:auto;font-size:32px}
+  .x2-b1 .cr2-say.cr2-pl{font-size:32px}
+  .x2-b1 .cr2-meta{justify-content:center}
+  .cr2-cols.c3.cr2-core{grid-template-columns:1fr;row-gap:22px}
+  .cr2-cols li{align-items:center}
+  .cr2-peers .net-view,.cr2-peers .net-hint{justify-content:center;text-align:center}
+  .cr2-peers .net-names{text-align:center;padding-inline:0}
+  .cr2-peers .net-names li{display:flex;flex-direction:column;align-items:center}
+  .cr2-peers .net-dr.inl{display:flex;flex-direction:column;align-items:center;text-align:center}
+  .cr2-peers .net-dr.inl .x{right:0}
+  .cr2-peers .net-dr.inl .dr-ln{justify-items:center}
+  .cr2-make li{justify-content:center;font-size:32px}
+  .cr2-no{display:none}
+  .x2-fnl{display:flex;justify-content:center;flex-wrap:wrap;gap:0 .35em}
+  .x2-hlc{text-align:center}
+  .x2-hframe{left:50%;transform:translateX(-50%)}
+  /* clients: a fifth smaller, and faster (index.html) */
+  .x2-collab .clients.logos{--u:48px;--gap:60px}
+  .x2-collab .marq{padding-block:8px}
+  /* contact: Email and Instagram in the big type of the ask */
+  .x2-b1 .cr2-cmd{justify-content:center}
+  .cr2-ask{font-size:46px}
+  .x2-b1 .cr2-links{flex-direction:column;align-items:center;gap:.08em;margin-top:.5em;font-size:46px;letter-spacing:-.055em;line-height:1.05}
+  .x2-b1 .cr2-links a{text-decoration:none;color:rgb(var(--x-rgb) / .55)}
+  .x2-b1 .cr2-links a:active,.x2-b1 .cr2-links a:hover{color:var(--red,#e2231a)}
+  /* the bottom: centred; Back to top stays, the year in Roman numerals goes */
+  .x2-egg{text-align:center}
+  .x2-foot footer{justify-content:center}
+  .x2-foot .ft-y{display:none!important}
+}
+/* touch screens: a tap leaves :hover stuck on a tile, so only the tile in the middle shows its title */
+@media (hover:none){
+  .fx-t:not(.near) .fx-lab{opacity:0!important;visibility:hidden!important}
+  .fx-t:not(.near):hover .fx-m{opacity:.75}
+}
