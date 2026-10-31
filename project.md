@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-31 (experimental: the phone version, round 2: wordmark only, bigger square / 4:5 clips, four title options, a Field notes filmstrip). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (experimental: the phone version, round 3: one column of 4:5 clips, titles on the middle clip, one Collective list, the Field notes filmstrip loops, no more jumping). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -119,7 +119,13 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
     - Field notes is a filmstrip to swipe, with photos whole and loaded as they come near; the ticks below follow it and a tap jumps (the scrubbing flickered).
     - The contact block is left-aligned.
     - The statement and the cities are 46 px, the size of "Let's make a film together."
-    - Everywhere on the branch: no blinking block cursor, and the three at the core are listed once, in Core (no longer again in the Collective list).
+    - Everywhere on the branch: no blinking block cursor.
+  - **Phone version, round 3 (10:59):**
+    - Titles: option A, Middle, was chosen; the other three and the Titles switch are gone.
+    - The films are one column of 4:5 clips, centred, the width of the screen less the margins, cropped from the middle. Andrija will flag clips whose text gets cut.
+    - One list for everyone: the separate Core block is gone, and Andrija, Mina and Marija are back at the top of the Collective list. The sections are renumbered 1–6. On phones the list is left-aligned.
+    - The Field notes filmstrip drifts on its own and loops without end, like the client strip; a finger takes it over, and the drift resumes 2.5 s later.
+    - The page no longer jumps: phones lay the field out again only when the width changes. The address bar showing and hiding used to change the height and trigger a new layout.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.
   - **Collective, B1:** the List / Graph switch without its pictograms; the profile opens on the right beside the names (36 % of the column, at most 360 px) instead of over them.
