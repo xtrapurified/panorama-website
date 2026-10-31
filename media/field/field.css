@@ -418,11 +418,10 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
   .x2-b1 .cr2-links{align-items:flex-start}
   .x2-fnl{justify-content:flex-start}
   .x2-hlc{text-align:left}
-  /* Field notes: a filmstrip to swipe, the ticks below follow it */
-  .x2-film{overflow-x:auto;overscroll-behavior-x:contain;margin:1.1em calc(var(--m) * -1) 0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .x2-film-t{display:flex;gap:6px;width:max-content}
-  .x2-film::-webkit-scrollbar{display:none}
-  .x2-film img{flex:none;height:min(58vw,260px);width:auto;background:rgb(var(--x-rgb) / .06);display:block}
+  /* Field notes: a slideshow in one fixed frame (every photo whole, a new one every 0.3 s), the ticks below follow it */
+  .x2-slide{position:relative;margin:1.1em 0 0;width:100%;height:min(calc((100vw - 2 * var(--m)) * var(--hr,1.25)),70svh);-webkit-touch-callout:none;user-select:none}
+  .x2-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:0 50%;opacity:0;transition:opacity .1s linear}
+  .x2-slide img.on{opacity:1}
   .x2-strip{height:18px;margin:.8em 0 .5em;cursor:pointer;touch-action:manipulation}
   .x2-hframe{display:none!important}
 
@@ -476,3 +475,7 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
   .x2-egg,.x2-egg #golden{text-align:left}
   .x2-egg .ft-gh{justify-content:flex-start}
 }
+
+/* Field notes counter in Data Error: frame 08 / 102 · loop = true (Andrija, 2026-10-31, 15:34) */
+.x2-hlc,.x2-hlc .k,.x2-hlc .v{font-family:"Data Error Horiz",ui-monospace,monospace!important;letter-spacing:.2em;font-size:clamp(11px,.85vw,14px)}
+@media (prefers-reduced-motion:reduce){.x2-slide img{transition:none}}

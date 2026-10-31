@@ -111,32 +111,32 @@
       measure();
     }).catch(() => {});
     let cur = -1;
-    /* phones (Andrija, 2026-10-31): the photos as a filmstrip that drifts on its own and loops without end, like the client strip;
-       a finger takes it over (and it drifts on a few seconds after). Photos are whole and load as they come near; the ticks follow */
+    /* phones (Andrija, 2026-10-31, 15:34): no drifting filmstrip; a slideshow in one fixed frame, as on the main site's
+       Human in the loop: every photo whole inside the frame, a 0.1 s fade, a new photo every 0.3 s while the frame is on screen.
+       A finger on the frame holds the photo; a tap on the ticks jumps there. Only the next few photos are loaded ahead */
     function phoneStrip() {
-      const fs = document.createElement('div'); fs.className = 'x2-film'; fs.setAttribute('aria-label', 'Behind the scenes photos');
-      const set = (hide) => bts.map((p, i) => `<img src="media/bts/${p.f}" alt="" loading="lazy" decoding="async" style="aspect-ratio:${p.w}/${p.h}" data-i="${i}"${hide ? ' aria-hidden="true"' : ''}>`).join('');
-      fs.innerHTML = `<div class="x2-film-t">${set()}${set(true)}</div>`;   /* drawn twice so the loop has no seam */
+      const fs = document.createElement('div'); fs.className = 'x2-slide'; fs.setAttribute('role', 'img'); fs.setAttribute('aria-label', 'Behind the scenes photos');
+      const tall = Math.max(...bts.map(p => p.h / p.w)) || 1.5;
+      fs.style.setProperty('--hr', Math.min(tall, 1.5).toFixed(4));
       strip.before(fs); strip.removeAttribute('tabindex'); strip.setAttribute('aria-hidden', 'true');
-      const ticks = $$('i', strip), half = () => fs.scrollWidth / 2;
-      let on = -1, pos = 0, hold = 0, touching = false, last = performance.now(), auto = false;
-      const SPEED = 34;   /* pixels per second */
-      const wrapX = () => { const h = half(); if (h <= 0) return; if (fs.scrollLeft >= h) fs.scrollLeft -= h; else if (fs.scrollLeft <= 0) fs.scrollLeft += h; };
-      const mark = () => { const x0 = fs.getBoundingClientRect().left + 16; let best = 0, bd = Infinity;
-        for (const im of fs.firstChild.children) { const r = im.getBoundingClientRect(); if (r.right < x0 - 400 || r.left > x0 + 400) continue; const d = Math.abs(r.left - x0); if (d < bd) { bd = d; best = +im.dataset.i; } }
-        if (best === on) return; if (on >= 0) ticks[on].classList.remove('on'); on = best; ticks[on].classList.add('on');
-        num.textContent = `${String(on + 1).padStart(2, '0')} / ${String(bts.length).padStart(2, '0')}`; };
-      let vis = false; new IntersectionObserver(es => { vis = es[0].isIntersecting; }).observe(fs);
-      const step = t => { const dt = Math.min(0.1, (t - last) / 1000); last = t;
-        if (vis && !RM && !touching && t > hold && half() > 0) { pos += SPEED * dt; if (pos >= half()) pos -= half(); auto = true; fs.scrollLeft = pos; mark(); }
+      const ticks = $$('i', strip), imgs = [], ok = [];
+      const load = i => { if (imgs[i]) return; const im = new Image(); im.alt = ''; im.decoding = 'async'; im.src = `media/bts/${bts[i].f}`; fs.appendChild(im); imgs[i] = im;
+        (im.decode ? im.decode() : new Promise(r => { im.onload = r; })).then(() => { ok[i] = true; }).catch(() => {}); };
+      let on = -1, vis = false, hold = false, t0 = 0;
+      const go = i => { i = (i + bts.length) % bts.length; load(i); for (let k = 1; k <= 4; k++) load((i + k) % bts.length);
+        if (on >= 0) { imgs[on].classList.remove('on'); ticks[on].classList.remove('on'); }
+        on = i; imgs[i].classList.add('on'); ticks[i].classList.add('on');
+        num.textContent = `${String(i + 1).padStart(2, '0')} / ${String(bts.length).padStart(2, '0')}`; };
+      go(0);
+      new IntersectionObserver(es => { vis = es[0].isIntersecting; }).observe(fs);
+      const step = t => { if (vis && !RM && !hold && t - t0 >= 300) { const n = (on + 1) % bts.length; if (ok[n]) { go(n); t0 = t; } else load(n); }
         requestAnimationFrame(step); };
       requestAnimationFrame(step);
-      fs.addEventListener('touchstart', () => { touching = true; }, { passive: true });
-      const up = () => { touching = false; hold = performance.now() + 2500; };
+      fs.addEventListener('touchstart', () => { hold = true; }, { passive: true });
+      const up = () => { hold = false; t0 = performance.now() + 400; };
       fs.addEventListener('touchend', up, { passive: true }); fs.addEventListener('touchcancel', up, { passive: true });
-      fs.addEventListener('scroll', () => { if (auto) { auto = false; return; } wrapX(); pos = fs.scrollLeft; hold = Math.max(hold, performance.now() + 2500); mark(); }, { passive: true });
-      strip.addEventListener('click', ev => { const i = Math.max(0, Math.min(bts.length - 1, at(ev.clientX))); const im = fs.firstChild.children[i]; pos = im.offsetLeft - 16; fs.scrollLeft = pos; hold = performance.now() + 2500; mark(); });
-      mark();
+      fs.addEventListener('contextmenu', ev => ev.preventDefault());
+      strip.addEventListener('click', ev => { go(Math.max(0, Math.min(bts.length - 1, at(ev.clientX)))); t0 = performance.now() + 1200; });
     }
     const show = (i, near) => {
       if (!bts.length) return;
