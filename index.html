@@ -2769,6 +2769,7 @@ function paint(){
   cSnd.hidden = !P.sound; setIco(cSnd, P.muted ? 'mute' : 'snd', P.muted ? 'Unmute' : 'Mute');
   cFs.hidden = !(FS_OK || P.nativeFs); { const on = document.fullscreenElement || document.webkitFullscreenElement; setIco(cFs, on ? 'fsx' : 'fs', on ? 'Exit full screen' : 'Full screen'); }
   cTc.textContent = `${mmss(P.time)} / ${mmss(P.dur)}`;
+  lb.classList.toggle('is-playing', !P.paused);   /* experimental: the project's text dims while a film plays */
   if (!scrubbing){ const r = P.dur ? P.time / P.dur : 0; cSeek.value = Math.round(r*1000); cSeek.style.setProperty('--p', (r*100).toFixed(2)+'%'); }
   cSeek.setAttribute('aria-valuetext', `${mmss(P.time)} of ${mmss(P.dur)}`);
 }
@@ -2844,7 +2845,10 @@ function playVimeo(k, fm){
   lp.on('loaded', off);
   lp.on('play', ()=>{ off(); if (!picked) best(); st.paused = false; ready(); lp.getMuted().then(m=>{ st.muted = m; paint(); }); paint(); });
   lp.on('pause', ()=>{ st.paused = true; paint(); });
-  lp.on('timeupdate', d=>{ st.time = d.seconds; st.dur = d.duration; paint(); });
+  lp.on('timeupdate', d=>{ st.time = d.seconds; st.dur = d.duration; paint();
+    /* never let Vimeo reach its end screen ("More from Panorama Films"): just before the end, back to the start, paused (Andrija, 2026-10-31) */
+    if (d.duration && d.seconds >= d.duration - .4 && !st.ending){ st.ending = true; lp.pause().catch(()=>{}).then(()=>lp.setCurrentTime(0)).catch(()=>{}).then(()=>{ st.ending = false; st.time = 0; st.paused = true; paint(); }); } });
+  lp.on('ended', ()=>{ lp.setCurrentTime(0).catch(()=>{}); st.time = 0; st.paused = true; paint(); });
   lp.on('volumechange', ()=>lp.getMuted().then(m=>{ st.muted = m; paint(); }));
   lp.on('error', ()=>{ if (!box.classList.contains('ready')) playLocal(k, true); });
   /* autoplay with sound can be refused: once loaded but not playing, show the still with a Play control instead of a black box */
@@ -2876,10 +2880,10 @@ function playYouTube(k, fm){
       if (info.playerState !== st.ps){ st.ps = info.playerState; if (st.ps === 1){ ready(); ytNoCC(c); c('setPlaybackQuality',['hd1080']); } }
       st.paused = info.playerState !== 1 && info.playerState !== 3;
       if ((info.playerState === -1 || info.playerState === 5) && st.dur) unload();   /* loaded, autoplay refused: Play is waiting */
-      if (info.playerState === 0){ c('seekTo',[0,true]); c('playVideo'); }
+      if (info.playerState === 0){ c('seekTo',[0,true]); c('pauseVideo'); }
     }
-    /* loop just before the end so YouTube's suggestions never appear */
-    if (st.dur && st.time >= st.dur - .8 && !st.paused){ c('seekTo',[0,true]); ytNoCC(c); }
+    /* just before the end, back to the start, paused, so YouTube's suggestions never appear (Andrija, 2026-10-31: no end menus) */
+    if (st.dur && st.time >= st.dur - .8 && !st.paused){ c('pauseVideo'); c('seekTo',[0,true]); st.time = 0; ytNoCC(c); }
     paint();
   }
   addEventListener('message', onMsg);
