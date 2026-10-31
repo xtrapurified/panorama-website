@@ -453,3 +453,11 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 .lb .seek::-moz-range-track{height:1px}
 .lb .seek::-webkit-slider-thumb{width:8px;height:8px;margin-top:-3.5px}
 .lb .seek::-moz-range-thumb{width:8px;height:8px}
+/* Share: the arrow and the word take turns every 2 s, crossfading in one spot (Andrija, 2026-10-31) */
+.lb-bar #lb-share{display:inline-grid!important;align-items:center;justify-items:end}
+.lb-bar #lb-share > .sh-t,.lb-bar #lb-share > .ic{grid-area:1/1;display:inline-block!important}
+.lb-bar #lb-share > .sh-t{font-size:.82em;animation:x2shT 4s ease-in-out infinite}
+.lb-bar #lb-share > .ic{animation:x2shA 4s ease-in-out infinite}
+@keyframes x2shA{0%,42%{opacity:1}50%,92%{opacity:0}100%{opacity:1}}
+@keyframes x2shT{0%,42%{opacity:0}50%,92%{opacity:1}100%{opacity:0}}
+@media (prefers-reduced-motion:reduce){.lb-bar #lb-share > .sh-t{animation:none;opacity:0}.lb-bar #lb-share > .ic{animation:none}}
