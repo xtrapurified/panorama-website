@@ -39,8 +39,8 @@
   const CREDITS = REST[0] === 'b';   /* b, b1: the studio after the last film */
   const VIRTUAL = FINE && !RM && !!G;
   const PHONE = () => innerWidth <= 760;
-  /* phones: the clip in the middle of the screen shows its title (option A of four tried, Andrija 2026-10-31) */
-  root.dataset.ttl = 'mid';   /* the wanda.net scrolling, on computers */
+  /* phones: a caption under every clip (option B of four tried, Andrija 2026-10-31) */
+  root.dataset.ttl = 'under';   /* the wanda.net scrolling, on computers */
   root.classList.toggle('x2-vs', VIRTUAL);
 
   const T = (window.PF_FIELD = { pan: 0.165, depth: [0.82, 1.16], ease: 0.055, scrollDepth: 0.6, fadeOut: 0.45, fadeIn: 0.7,
@@ -244,8 +244,9 @@
       let ar = pick(phone ? [16 / 9, 16 / 9, 16 / 9, 3 / 2, 4 / 3, 2, 1.85, 2.39] : [16 / 9, 16 / 9, 16 / 9, 2.39, 2.39, 2.39, 2, 1.85, 3 / 2, 4 / 3]), colsR = [8, 16];
       let w, x;
       if (phone) {
-        /* phones (Andrija, 2026-10-31): one column of 4:5 clips, centred, cropped from the middle */
-        ar = 4 / 5; w = Math.min(W - 32, 520); x = (W - w) / 2;
+        /* phones (Andrija, 2026-10-31): one column of 4:5 clips, centred, cropped from the middle, 10–20 % wider than the screen
+           so they run past both edges */
+        ar = 4 / 5; w = W * r(1.1, 1.2); x = (W - w) / 2;
       } else {
         const cols = Math.round(r(colsR[0], colsR[1]));
         w = cols * u;
@@ -262,7 +263,7 @@
       it.el.style.setProperty('--lx', ((vl + vr) / 2 - x).toFixed(1) + 'px'); it.el.style.setProperty('--lw', Math.max(120, vr - vl - 24).toFixed(0) + 'px');
       it.el.style.setProperty('--cl', Math.max(0, 16 - x).toFixed(1) + 'px');   /* a caption under the tile starts at the page margin */
       bottom = Math.max(bottom, y + h);
-      y += phone ? h + 16 : h * r(...T.step);
+      y += phone ? h + 44 : h * r(...T.step);   /* phones: room for the caption */
     });
     wrap.style.height = Math.ceil(bottom + (phone ? 80 : 160)) + 'px';
   }
@@ -437,7 +438,7 @@
 
   /* phones: the tile crossing the middle of the window comes up to full brightness */
   /* and shows its client and title: one tile at a time, the one nearest the middle (Andrija, 2026-10-31) */
-  if (!FINE) {
+  if (!FINE && root.dataset.ttl === 'mid') {
     let nearIt = null, nq = 0;
     const pickNear = () => { nq = 0;
       const mid = innerHeight * 0.5; let best = null, bd = Infinity;

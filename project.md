@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-31 (experimental: the phone version, round 3: one column of 4:5 clips, titles on the middle clip, one Collective list, the Field notes filmstrip loops, no more jumping). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (experimental: the phone version, round 4: captions under the clips, clips past the edges, no title in a project page's top bar). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -126,6 +126,10 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
     - One list for everyone: the separate Core block is gone, and Andrija, Mina and Marija are back at the top of the Collective list. The sections are renumbered 1–6. On phones the list is left-aligned.
     - The Field notes filmstrip drifts on its own and loops without end, like the client strip; a finger takes it over, and the drift resumes 2.5 s later.
     - The page no longer jumps: phones lay the field out again only when the width changes. The address bar showing and hiding used to change the height and trigger a new layout.
+  - **Phone version, round 4 (11:25):**
+    - Titles switched to option B, Caption: a caption under every clip, from the page margin, at 12.5 px, with 44 px between clips.
+    - The clips are 10–20 % wider than the screen, still 4:5, centred and cropped from the middle, so they run past both edges.
+    - Everywhere on the branch: a project page no longer repeats the project's title in the bar at the top.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.
   - **Collective, B1:** the List / Graph switch without its pictograms; the profile opens on the right beside the names (36 % of the column, at most 360 px) instead of over them.
