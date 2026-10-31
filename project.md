@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-31 (experimental, round 6: merged main's new clips, quieter project page, no end menus, Golden hour in Data Error, smaller phone wordmark, Field notes slideshow on phones, touching clips, Collective with photos and handles, no Index). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (experimental, round 6: merged main's new clips, quieter project page, no end menus, Golden hour in Data Error, smaller phone wordmark, Field notes slideshow on phones, touching clips, Collective with photos and handles, no Index, B1 only). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -153,6 +153,7 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
       - Phones: client logos 40 % smaller and twice as fast (72 px/s).
       - Golden hour line shortened by about a fifth before it is opened (no "output =", "+3" instead of "+3 more").
       - No Index: gone from the menu and footer, and the I key does nothing.
+    - B1 Columns only (15:49): the A Panels / B Credits / B1 Columns switch at the bottom left is gone, and ?rest= no longer changes anything.
     - Phones: the header wordmark is 17 px, the size of the one on a project page.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.

@@ -35,7 +35,8 @@
 
   /* the cursor over film tiles: a small red dot (default) or the white play triangle alone (Andrija, 2026-10-30: no circle) */
   root.dataset.cur = pref('cursor', 'pf-cur', /^(dot|play)$/, 'dot');
-  const REST = (root.dataset.rest = pref('rest', 'pf-rest', /^(a|b|b1)$/, 'b1'));   /* B2 and C were tried and dropped (Andrija, 2026-10-30) */
+  const REST = (root.dataset.rest = 'b1');   /* B1 only (Andrija, 2026-10-31, 15:49): A Panels and B Credits dropped with their switch; B2 and C earlier */
+  try { localStorage.removeItem('pf-rest'); } catch (_) {}
   const CREDITS = REST[0] === 'b';   /* b, b1: the studio after the last film */
   const VIRTUAL = FINE && !RM && !!G;
   const PHONE = () => innerWidth <= 760;
@@ -604,11 +605,6 @@
     if ($('.x2-pnl.on')) { ev.stopPropagation(); closePanels(true); }
   }, true);
 
-  /* ---------- the switch between the three approaches (for trying them; bottom left) ---------- */
-  const sw = document.createElement('div');
-  sw.className = 'x2-sw'; sw.setAttribute('role', 'group'); sw.setAttribute('aria-label', 'Try another approach for the rest of the site');
-  sw.innerHTML = '<span>Rest of site</span>' + [['a', 'A Panels'], ['b', 'B Credits'], ['b1', 'B1 Columns']].map(([v, t]) => `<a href="?rest=${v}"${v === REST ? ' aria-current="true"' : ''}>${t}</a>`).join('');
-  document.body.appendChild(sw);
   window.PF_X2 = { get target() { return target; }, scrollToY, items: () => items, REST, VIRTUAL };
   if (rest) initHitl(rest);
   /* A: the easter egg sits at the foot of the Contact panel */
