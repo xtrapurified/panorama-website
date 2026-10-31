@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-31 (experimental: the phone version: bigger tiles, aligned header, titles on the middle tile, centred studio; Field notes in the code line; collaborators without bios). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (experimental: the phone version, round 2: wordmark only, bigger square / 4:5 clips, four title options, a Field notes filmstrip). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -107,6 +107,19 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
       - Field notes now opens the code line in place of "(filming in progress)", and the section's label reads Filming in progress; the big "Human in the loop" title is gone.
       - Vimeo is left out of the contact links.
       - A collaborator's profile shows only the photo, the name and their Instagram; the three at the core keep their bios.
+  - **Phone version, round 2 (10:47):**
+    - The header is the wordmark only, with no globe.
+    - Clips are sized by the screen's height (40–58 %), leaning square and 4:5, and cropped by the left and right edges.
+    - The showreel fills 62–70 % of the screen height, square or 4:5, and is never wider than 16:9.
+    - Four title options to compare, ?titles=mid|under|bar|tap, with a "Titles" switch above the other one; the default is D:
+      - A Middle: the clip in the middle of the screen shows its title.
+      - B Caption: a caption under every clip.
+      - C Bar: a line pinned at the bottom with the middle clip's title; a tap opens the film.
+      - D Tap: the first tap shows the title and "Tap again to watch", the second opens the film.
+    - Field notes is a filmstrip to swipe, with photos whole and loaded as they come near; the ticks below follow it and a tap jumps (the scrubbing flickered).
+    - The contact block is left-aligned.
+    - The statement and the cities are 46 px, the size of "Let's make a film together."
+    - Everywhere on the branch: no blinking block cursor, and the three at the core are listed once, in Core (no longer again in the Collective list).
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.
   - **Collective, B1:** the List / Graph switch without its pictograms; the profile opens on the right beside the names (36 % of the column, at most 360 px) instead of over them.

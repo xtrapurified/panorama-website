@@ -398,6 +398,60 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 }
 /* touch screens: a tap leaves :hover stuck on a tile, so only the tile in the middle shows its title */
 @media (hover:none){
-  .fx-t:not(.near) .fx-lab{opacity:0!important;visibility:hidden!important}
+  html:not([data-ttl="under"]):not([data-ttl="tap"]) .fx-t:not(.near) .fx-lab{opacity:0!important;visibility:hidden!important}
   .fx-t:not(.near):hover .fx-m{opacity:.75}
+}
+
+/* ======================= 2026-10-31, the phone version, round 2 (Andrija) ======================= */
+.x2-cur{display:none!important}   /* no blinking block cursor */
+html:not([data-ttl="tap"]) .fx-go{display:none!important}
+/* the three at the core are listed once, in Core; the Collective list is the collaborators */
+.x2-b1 .cr2-peers .net-names li.core{display:none}
+.x2-np,.x2-sw2{display:none}
+@media (max-width:760px){
+  /* the wordmark only, no globe */
+  .hdr .logo-slot{min-width:0}
+  .hdr .logo-slot .logo{display:none!important}
+  /* the studio's statement and the cities at the size of "Let's make a film together." */
+  .cr2-say,.x2-b1 .cr2-say,.x2-b1 .cr2-say.cr2-pl{font-size:46px;letter-spacing:-.055em;line-height:1}
+  .x2-b1 .cr2-say{max-width:none}
+  /* contact and Field notes on the left */
+  .x2-b1 [data-x2sec="contact"],.x2-b1 .cr2-g:has(.x2-fnl){text-align:left}
+  .x2-b1 [data-x2sec="contact"] .cr2-l,.x2-b1 .cr2-g:has(.x2-fnl) .cr2-l{justify-content:flex-start}
+  .x2-b1 .cr2-links{align-items:flex-start}
+  .x2-fnl{justify-content:flex-start}
+  .x2-hlc{text-align:left}
+  /* Field notes: a filmstrip to swipe, the ticks below follow it */
+  .x2-film{display:flex;gap:6px;overflow-x:auto;overscroll-behavior-x:contain;scroll-snap-type:x mandatory;scroll-padding-inline:16px;padding:0 16px;margin:1.1em calc(var(--m) * -1) 0;scrollbar-width:none;-webkit-overflow-scrolling:touch}
+  .x2-film::-webkit-scrollbar{display:none}
+  .x2-film img{flex:none;height:min(58vw,260px);width:auto;scroll-snap-align:start;background:rgb(var(--x-rgb) / .06);display:block}
+  .x2-strip{height:18px;margin:.8em 0 .5em;cursor:pointer;touch-action:manipulation}
+  .x2-hframe{display:none!important}
+
+  /* titles, B Caption: under every tile, from the page margin */
+  html[data-ttl="under"] .fx-lab{opacity:1!important;visibility:visible!important;display:block;top:calc(100% + 8px);left:var(--cl,0);transform:none;width:auto;max-width:calc(100vw - 32px);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  html[data-ttl="under"] .fx-lab span{background:none;padding:0}
+  html[data-ttl="under"] .fx-lab .fx-c{margin-right:.45em}
+  html[data-ttl="under"] .fx-c,html[data-ttl="under"] .fx-ti{font-size:14px}
+  html[data-ttl="under"] .fx-tiles{overflow:visible}
+  html[data-ttl="under"] .fx{overflow-x:clip}
+  /* C Bar: a line pinned at the bottom with the title of the clip in the middle of the screen; a tap on it opens the film */
+  html[data-ttl="bar"] .fx-lab{display:none}
+  .x2-np{position:fixed;left:16px;right:16px;bottom:calc(64px + env(safe-area-inset-bottom,0px));z-index:56;display:flex;flex-direction:column;align-items:flex-start;gap:2px;color:rgb(var(--x-rgb));text-decoration:none;opacity:0;transform:translateY(8px);transition:opacity .25s,transform .25s;pointer-events:none}
+  .x2-np.on{opacity:1;transform:none;pointer-events:auto}
+  .x2-np span{background:var(--x-bg);padding:.05em .3em}
+  .x2-np .fx-c{font-size:14px}
+  .x2-np .fx-ti{font-size:20px;letter-spacing:-.03em}
+  .x2-np .fx-ti::after{content:"  \2192";color:var(--red,#e2231a)}
+  /* D Tap: the first tap shows the title over the clip, the second opens it */
+  html[data-ttl="tap"] .fx-t.armed .fx-lab{opacity:1!important;visibility:visible!important}
+  html[data-ttl="tap"] .fx-t.armed .fx-m{opacity:1}
+  html[data-ttl="tap"] .fx-t.armed .fx-m::after{content:"";position:absolute;inset:0;background:rgb(0 0 0 / .35)}
+  html[data-ttl="tap"] .fx-lab{z-index:4}
+  html[data-ttl="tap"] .fx-ti{font-size:22px;letter-spacing:-.03em}
+  html[data-ttl="tap"] .fx-go{display:inline;margin-top:.5em;font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--red,#e2231a)}
+  html[data-ttl="tap"] .fx-t:not(.armed) .fx-lab{opacity:0!important;visibility:hidden!important}
+  /* the switch for the titles, above the other one */
+  .x2-sw2{display:flex;bottom:calc(40px + env(safe-area-inset-bottom,0px))}
+  .x2-sw2 span{display:inline!important;color:rgb(var(--x-rgb) / .45)}
 }

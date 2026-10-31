@@ -37,7 +37,10 @@
   root.dataset.cur = pref('cursor', 'pf-cur', /^(dot|play)$/, 'dot');
   const REST = (root.dataset.rest = pref('rest', 'pf-rest', /^(a|b|b1)$/, 'b1'));   /* B2 and C were tried and dropped (Andrija, 2026-10-30) */
   const CREDITS = REST[0] === 'b';   /* b, b1: the studio after the last film */
-  const VIRTUAL = FINE && !RM && !!G;   /* the wanda.net scrolling, on computers */
+  const VIRTUAL = FINE && !RM && !!G;
+  const PHONE = () => innerWidth <= 760;
+  /* phones: four ways to show a film's title, to choose from (?titles=mid|under|bar|tap; a switch at the bottom, Andrija 2026-10-31) */
+  const TTL = (root.dataset.ttl = pref('titles', 'pf-ttl', /^(mid|under|bar|tap)$/, 'tap'));   /* the wanda.net scrolling, on computers */
   root.classList.toggle('x2-vs', VIRTUAL);
 
   const T = (window.PF_FIELD = { pan: 0.165, depth: [0.82, 1.16], ease: 0.055, scrollDepth: 0.6, fadeOut: 0.45, fadeIn: 0.7,
@@ -104,9 +107,26 @@
       strip.innerHTML = bts.map(() => '<i></i>').join('');
       strip.setAttribute('aria-valuemax', bts.length);
       num.textContent = `01 / ${String(bts.length).padStart(2, '0')}`;
+      if (!FINE) phoneStrip();
       measure();
     }).catch(() => {});
     let cur = -1;
+    /* phones (Andrija, 2026-10-31: the scrubbing flickered): the photos as a filmstrip to swipe, whole and uncropped, loaded as they come
+       near; the ticks follow along and a tap on them jumps */
+    function phoneStrip() {
+      const fs = document.createElement('div'); fs.className = 'x2-film'; fs.setAttribute('aria-label', 'Behind the scenes photos');
+      fs.innerHTML = bts.map((p, i) => `<img src="media/bts/${p.f}" alt="" loading="lazy" decoding="async" style="aspect-ratio:${p.w}/${p.h}" data-i="${i}">`).join('');
+      strip.before(fs); strip.removeAttribute('tabindex'); strip.setAttribute('aria-hidden', 'true');
+      const ticks = $$('i', strip); let on = -1, q = 0;
+      const mark = () => { q = 0; const x0 = fs.getBoundingClientRect().left + 16; let best = 0, bd = Infinity;
+        for (const im of fs.children) { const d = Math.abs(im.getBoundingClientRect().left - x0); if (d < bd) { bd = d; best = +im.dataset.i; } }
+        if (fs.scrollLeft + fs.clientWidth >= fs.scrollWidth - 4) best = bts.length - 1;
+        if (best === on) return; if (on >= 0) ticks[on].classList.remove('on'); on = best; ticks[on].classList.add('on');
+        num.textContent = `${String(on + 1).padStart(2, '0')} / ${String(bts.length).padStart(2, '0')}`; };
+      fs.addEventListener('scroll', () => { if (!q) q = requestAnimationFrame(mark); }, { passive: true });
+      strip.addEventListener('click', ev => { const i = Math.max(0, Math.min(bts.length - 1, at(ev.clientX))); const im = fs.children[i]; fs.scrollTo({ left: im.offsetLeft - 16, behavior: RM ? 'auto' : 'smooth' }); });
+      mark();
+    }
     const show = (i, near) => {
       if (!bts.length) return;
       i = Math.max(0, Math.min(bts.length - 1, i)); if (i === cur && pv.classList.contains('on')) return; cur = i;
@@ -120,6 +140,7 @@
       else { inl.style.width = w + 'px'; inl.style.aspectRatio = String(ar); inl.innerHTML = `<img src="${src}" alt="">`; inl.classList.add('on'); }
     };
     const at = x => { const r = strip.getBoundingClientRect(); return Math.floor((x - r.left) / r.width * bts.length); };
+    if (!FINE) return;   /* phones: the filmstrip above, nothing to scrub */
     strip.addEventListener('pointermove', ev => { if (ev.pointerType === 'mouse' || ev.buttons) show(at(ev.clientX)); });
     strip.addEventListener('pointerdown', ev => { if (ev.pointerType !== 'mouse') { strip.setPointerCapture(ev.pointerId); show(at(ev.clientX)); } });
     const off = () => { hidePv(); inl.classList.remove('on'); $$('i.on', strip).forEach(t => t.classList.remove('on')); cur = -1; };
@@ -167,7 +188,7 @@
       grp(4, 'We make', `<ol class="cr2-make">${WE_MAKE.map((w, i) => `<li><span class="cr2-no">${String(i + 1).padStart(2, '0')}</span>${e(w)}</li>`).join('')}</ol>`) +
       grp(5, 'Filming in progress', hitlHTML()) +
       grp(6, 'Made for', `<div class="x2-collab"></div><div class="x2-logos x2-logos-fb">${LOGO_CLIENTS.map(logoTag).join('')}</div>`, ' data-wide') +
-      grp(7, 'Contact', `<p class="x2-ln cr2-cmd"><span class="k">$</span> <span class="v">panorama --contact</span><span class="x2-cur" aria-hidden="true"></span></p>
+      grp(7, 'Contact', `<p class="x2-ln cr2-cmd"><span class="k">$</span> <span class="v">panorama --contact</span></p>
         <p class="cr2-ask"><a href="#contact" data-mail="${MAIL}">Let’s make a film together.</a></p><p class="cr2-links">${LINKS}</p>`, ' data-x2sec="contact"');
     field.appendChild(sec);
     const peers = document.getElementById('peers'), slot = $('.cr2-peers', sec);
@@ -183,7 +204,7 @@
   /* ---------- tiles ---------- */
   const filmTile = k => `<div class="fx-i" data-k="${k}" data-g="work"><a class="fx-t" href="${hrefOf(k)}" data-fx="${k}" draggable="false" aria-label="${e(titleOf(k))}, ${e(clientOf(k))}">
     <span class="fx-m${streams(k) ? ' media cover' : ''}"${streams(k) ? ` data-c="${k}"${F[k].hover ? ` data-hv="${F[k].hover}"` : ''}` : ''}><img src="${still(k)}" alt="" loading="lazy" decoding="async" draggable="false"></span>
-    <p class="fx-lab" aria-hidden="true"><span class="fx-c">${e(clientOf(k))}</span><span class="fx-ti">${e(titleOf(k))}</span></p></a></div>`;
+    <p class="fx-lab" aria-hidden="true"><span class="fx-c">${e(clientOf(k))}</span><span class="fx-ti">${e(titleOf(k))}</span><span class="fx-go">Tap again to watch</span></p></a></div>`;
   wrap.innerHTML = keys.map(filmTile).join('');
 
   let items = [];
@@ -204,7 +225,7 @@
   function layout() {
     const R = rng(seed), r = (a, b) => a + (b - a) * R(), pick = a => a[Math.floor(R() * a.length)];
     const W = wrap.clientWidth, phone = W <= 760, u = W / 24;
-    let y = phone ? 150 : Math.max(230, innerHeight * 0.27), bottom = 0, lastX = null, group = null;   /* the first films start below the large globe */
+    let y = phone ? 96 : Math.max(230, innerHeight * 0.27), bottom = 0, lastX = null, group = null;   /* the first films start below the large globe */
     items.forEach(it => {
       if (group && it.g !== group) y = bottom + (phone ? 120 : innerHeight * 0.32);   /* a breath between Work and Studio */
       group = it.g;
@@ -212,9 +233,12 @@
       let ar = pick(phone ? [16 / 9, 16 / 9, 16 / 9, 3 / 2, 4 / 3, 2, 1.85, 2.39] : [16 / 9, 16 / 9, 16 / 9, 2.39, 2.39, 2.39, 2, 1.85, 3 / 2, 4 / 3]), colsR = [8, 16];
       let w, x;
       if (phone) {
-        /* phones (Andrija, 2026-10-31): bigger, taller tiles that fill more of the screen, some running past the left or right edge */
-        w = W * r(0.84, 1.16);
-        x = w > W ? r(W - w - 0.06 * W, 0.06 * W) : r(-0.12 * W, W - w + 0.12 * W);
+        /* phones (Andrija, 2026-10-31): big tiles, sized by height, leaning square and 4:5, cropped by the screen's left and right edges;
+           the showreel fills most of the screen, never wider than 16:9 */
+        const H = innerHeight;
+        if (it.k === 'reel') { ar = pick([1, 4 / 5, 4 / 5]); w = H * r(0.62, 0.7) * ar; }
+        else { ar = pick([16 / 9, 3 / 2, 4 / 3, 4 / 3, 1, 1, 4 / 5, 4 / 5]); w = Math.min(W * 1.5, Math.max(W * 0.9, H * r(0.4, 0.58) * ar)); }
+        x = it.k === 'reel' ? (W - w) / 2 + r(-0.04, 0.04) * W : w > W ? r(W - w - 0.05 * W, 0.05 * W) : r(-0.1 * W, W - w + 0.1 * W);
       } else {
         const cols = Math.round(r(colsR[0], colsR[1]));
         w = cols * u;
@@ -229,8 +253,9 @@
       /* the title sits in the middle of the part of the tile that is on screen (phones: tiles run past the edges) */
       const vl = Math.max(x, 0), vr = Math.min(x + w, W);
       it.el.style.setProperty('--lx', ((vl + vr) / 2 - x).toFixed(1) + 'px'); it.el.style.setProperty('--lw', Math.max(120, vr - vl - 24).toFixed(0) + 'px');
+      it.el.style.setProperty('--cl', Math.max(0, 16 - x).toFixed(1) + 'px');   /* a caption under the tile starts at the page margin */
       bottom = Math.max(bottom, y + h);
-      y += h * (phone ? r(...T.stepPhone) : r(...T.step));
+      y += h * (phone ? r(...T.stepPhone) : r(...T.step)) + (phone && TTL === 'under' ? 52 : 0);
     });
     wrap.style.height = Math.ceil(bottom + (phone ? 80 : 160)) + 'px';
   }
@@ -403,6 +428,8 @@
 
   /* phones: the tile crossing the middle of the window comes up to full brightness */
   /* and shows its client and title: one tile at a time, the one nearest the middle (Andrija, 2026-10-31) */
+  const np = document.createElement('a'); np.className = 'x2-np'; np.href = '#'; np.innerHTML = '<span class="fx-c"></span><span class="fx-ti"></span>';
+  if (!FINE && TTL === 'bar') { document.body.appendChild(np); np.addEventListener('click', ev => { ev.preventDefault(); if (np.dataset.k) go(np.dataset.k); }); }
   if (!FINE) {
     let nearIt = null, nq = 0;
     const pickNear = () => { nq = 0;
@@ -410,7 +437,10 @@
       for (const it of items) { const r = it.t.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) continue;
         const d = r.top <= mid && r.bottom >= mid ? 0 : Math.min(Math.abs(r.top - mid), Math.abs(r.bottom - mid)); if (d < bd) { bd = d; best = it; } }
       if (bd > innerHeight * 0.22) best = null;
-      if (best !== nearIt) { if (nearIt) nearIt.t.classList.remove('near'); nearIt = best; if (best) best.t.classList.add('near'); } };
+      const armed = $('.fx-t.armed'); if (armed) { const r = armed.getBoundingClientRect(); if (r.bottom < 60 || r.top > innerHeight - 60) armed.classList.remove('armed'); }
+      if (TTL !== 'mid' && TTL !== 'bar') best = null;
+      if (best !== nearIt) { if (nearIt) nearIt.t.classList.remove('near'); nearIt = best; if (best) best.t.classList.add('near');
+        if (TTL === 'bar') { np.classList.toggle('on', !!best); if (best) { np.dataset.k = best.k; $('.fx-c', np).textContent = clientOf(best.k); $('.fx-ti', np).textContent = titleOf(best.k); } } } };
     addEventListener('scroll', () => { if (!nq) nq = requestAnimationFrame(pickNear); }, { passive: true });
     addEventListener('resize', () => setTimeout(pickNear, 200));
     setTimeout(pickNear, 300);
@@ -425,7 +455,10 @@
   }
   document.addEventListener('click', ev => {
     const a = ev.target.closest('.fx-t[data-fx], [data-x2film]'); if (!a || ev.metaKey || ev.ctrlKey || ev.shiftKey || ev.button) return;
-    ev.preventDefault(); ev.stopPropagation(); go(a.dataset.fx || a.dataset.x2film);
+    ev.preventDefault(); ev.stopPropagation();
+    /* tap mode: the first tap shows the title over the clip, the second opens the film */
+    if (!FINE && TTL === 'tap' && a.classList.contains('fx-t') && !a.classList.contains('armed')) { $$('.fx-t.armed').forEach(x => x.classList.remove('armed')); a.classList.add('armed'); return; }
+    go(a.dataset.fx || a.dataset.x2film);
   }, true);
   if (lb) new MutationObserver(() => {
     if (lb.hidden) { if (G) G.to(fadeEls(), { autoAlpha: 1, duration: RM ? 0 : T.fadeIn, ease: 'power1.out' }); else fadeEls().forEach(x => { x.style.opacity = ''; }); }
@@ -456,7 +489,7 @@
   let bcN = 0;
   function breadcrumb() {
     /* the globe at the top, the wordmark once the field has moved (as on the site, where it happens when the reel's heading reaches the globe) */
-    const c = (VIRTUAL ? target : scrollY) > innerHeight * 0.32;   /* a little later than at first (Andrija, 2026-10-31) */
+    const c = PHONE() || (VIRTUAL ? target : scrollY) > innerHeight * 0.32;   /* phones: the wordmark only, no globe (Andrija, 2026-10-31) */   /* a little later than at first (Andrija, 2026-10-31) */
     if (hdr.classList.contains('compact') !== c) hdr.classList.toggle('compact', c);   /* the page's own scroll handler would set it from the hidden hero */
     if (++bcN % 6) return;
     const y = scrollY2() + innerHeight * 0.4;
@@ -568,6 +601,9 @@
   sw.className = 'x2-sw'; sw.setAttribute('role', 'group'); sw.setAttribute('aria-label', 'Try another approach for the rest of the site');
   sw.innerHTML = '<span>Rest of site</span>' + [['a', 'A Panels'], ['b', 'B Credits'], ['b1', 'B1 Columns']].map(([v, t]) => `<a href="?rest=${v}"${v === REST ? ' aria-current="true"' : ''}>${t}</a>`).join('');
   document.body.appendChild(sw);
+  if (!FINE) { const s2 = document.createElement('div'); s2.className = 'x2-sw x2-sw2'; s2.setAttribute('role', 'group'); s2.setAttribute('aria-label', 'Try another way of showing titles');
+    s2.innerHTML = '<span>Titles</span>' + [['mid', 'A Middle'], ['under', 'B Caption'], ['bar', 'C Bar'], ['tap', 'D Tap']].map(([v, t]) => `<a href="?titles=${v}"${v === TTL ? ' aria-current="true"' : ''}>${t}</a>`).join('');
+    document.body.appendChild(s2); }
   window.PF_X2 = { get target() { return target; }, scrollToY, items: () => items, REST, VIRTUAL };
   if (rest) initHitl(rest);
   /* A: the easter egg sits at the foot of the Contact panel */
