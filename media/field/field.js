@@ -236,7 +236,7 @@
   function layout() {
     const R = rng(seed), r = (a, b) => a + (b - a) * R(), pick = a => a[Math.floor(R() * a.length)];
     const W = wrap.clientWidth, phone = W <= 760, u = W / 24;
-    let y = phone ? 88 : Math.max(230, innerHeight * 0.27), bottom = 0, lastX = null, group = null;   /* the first films start below the large globe */
+    let y = phone ? 0 : Math.max(230, innerHeight * 0.27), bottom = 0, lastX = null, group = null;   /* the first films start below the large globe */
     items.forEach(it => {
       if (group && it.g !== group) y = bottom + (phone ? 120 : innerHeight * 0.32);   /* a breath between Work and Studio */
       group = it.g;
@@ -246,7 +246,7 @@
       if (phone) {
         /* phones (Andrija, 2026-10-31): one column of 4:5 clips, centred, cropped from the middle, 10–20 % wider than the screen
            so they run past both edges */
-        ar = 4 / 5; w = W * r(1.1, 1.2); x = (W - w) / 2;
+        ar = 4 / 5; w = W * r(1.1, 1.2); x = (W - w) / 2;   /* the first, the showreel, starts at the very top, under the header */
       } else {
         const cols = Math.round(r(colsR[0], colsR[1]));
         w = cols * u;
@@ -263,7 +263,7 @@
       it.el.style.setProperty('--lx', ((vl + vr) / 2 - x).toFixed(1) + 'px'); it.el.style.setProperty('--lw', Math.max(120, vr - vl - 24).toFixed(0) + 'px');
       it.el.style.setProperty('--cl', Math.max(0, 16 - x).toFixed(1) + 'px');   /* a caption under the tile starts at the page margin */
       bottom = Math.max(bottom, y + h);
-      y += phone ? h + 44 : h * r(...T.step);   /* phones: room for the caption */
+      y += phone ? h + 16 : h * r(...T.step);
     });
     wrap.style.height = Math.ceil(bottom + (phone ? 80 : 160)) + 'px';
   }

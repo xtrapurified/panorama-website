@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-31 (experimental: the phone version, round 4: captions under the clips, clips past the edges, no title in a project page's top bar). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (experimental, round 5: captions over the clips, the reel under the header, quieter player controls, a plain Share arrow; scraped footer text removed from Dubai TGR and Astronauts). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -129,7 +129,15 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
   - **Phone version, round 4 (11:25):**
     - Titles switched to option B, Caption: a caption under every clip, from the page margin, at 12.5 px, with 44 px between clips.
     - The clips are 10–20 % wider than the screen, still 4:5, centred and cropped from the middle, so they run past both edges.
-    - Everywhere on the branch: a project page no longer repeats the project's title in the bar at the top.
+    - Phones only: a project page no longer repeats the project's title in the bar at the top (computers keep it, Andrija at 11:30).
+  - **Round 5 (11:30):**
+    - Phones: the caption sits over the clip, about 10 % up from its bottom, on black strips; clips are 16 px apart again.
+    - Phones: the showreel starts at the very top, under the header.
+    - The project player's controls are quieter: 62 % opacity until touched, 18 px icons, a hairline track and an 8 px knob.
+    - The Share icon is a plain diagonal arrow.
+    - Scraped leftovers removed from the project data, on dev as well, for the live site:
+      - Dubai TGR's intro was the old site's footer ("Home Work About / Get in touch / Hilandarska 13 / Last Update"); it is now empty.
+      - The Astronauts intro ended with a stray "Year / 2023"; that is removed too.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.
   - **Collective, B1:** the List / Graph switch without its pictograms; the profile opens on the right beside the names (36 % of the column, at most 360 px) instead of over them.

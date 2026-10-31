@@ -429,13 +429,27 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 }
 
 /* ======================= 2026-10-31, phone round 4 (Andrija) ======================= */
-/* the project's title is not repeated in the bar at the top of a project page */
-.lb .lab.ttl{display:none!important}
 @media (max-width:760px){
   /* B Caption: under every clip, from the page margin, a little smaller */
-  html[data-ttl="under"] .fx-lab{opacity:1!important;visibility:visible!important;display:block;top:calc(100% + 8px);left:var(--cl,0);transform:none;width:auto;max-width:calc(100vw - 32px);text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.25}
-  html[data-ttl="under"] .fx-lab span{background:none;padding:0}
-  html[data-ttl="under"] .fx-lab .fx-c{margin-right:.45em}
+  /* over the clip, about a tenth of its height up from the bottom, on black strips (Andrija, 2026-10-31) */
+  html[data-ttl="under"] .fx-lab{opacity:1!important;visibility:visible!important;display:block;top:auto;bottom:10%;left:var(--cl,0);transform:none;width:auto;max-width:calc(100vw - 32px);text-align:left;white-space:normal;line-height:1.5}
+  html[data-ttl="under"] .fx-lab span{background:var(--x-bg);padding:.12em .35em;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+  html[data-ttl="under"] .fx-lab .fx-c{margin-right:0}
+  html[data-ttl="under"] .fx-lab .fx-c::after{content:"";margin-right:.25em}
   html[data-ttl="under"] .fx-c,html[data-ttl="under"] .fx-ti{font-size:12.5px}
   html[data-ttl="under"] .fx-m{opacity:1}
 }
+
+/* ======================= 2026-10-31, round 5 (Andrija) ======================= */
+/* phones: a project page does not repeat the project's title in its top bar (computers keep it) */
+@media (max-width:760px){.lb .lab.ttl{display:none!important}}
+/* the project's player: quieter controls, smaller and dimmer, a hairline track and a small knob */
+.lb-ctl{opacity:.62;transition:opacity .25s}
+.lb-ctl:hover,.lb-ctl:focus-within{opacity:1}
+.lb-ctl button svg{width:18px!important;height:18px!important;stroke-width:1.4!important}
+.lb-ctl #c-play svg{width:20px!important;height:20px!important}
+.lb-ctl #c-tc{font-size:12px;color:rgb(var(--x-rgb) / .6)}
+.lb .seek::-webkit-slider-runnable-track{height:1px}
+.lb .seek::-moz-range-track{height:1px}
+.lb .seek::-webkit-slider-thumb{width:8px;height:8px;margin-top:-3.5px}
+.lb .seek::-moz-range-thumb{width:8px;height:8px}
