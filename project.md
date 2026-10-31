@@ -154,6 +154,7 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
       - Golden hour line shortened by about a fifth before it is opened (no "output =", "+3" instead of "+3 more").
       - No Index: gone from the menu and footer, and the I key does nothing.
     - B1 Columns only (15:49): the A Panels / B Credits / B1 Columns switch at the bottom left is gone, and ?rest= no longer changes anything.
+    - Round 8 (15:53): phone clips square (1:1) so less burned-in text is cut, the showreel stays 4:5; the Collective has no photos before the names; the Instagram handle follows each name in the names' own type, smaller, in red. New handles (also on dev): Andrija @xtrapurified, Nevena @nevepega, Nemanja Babić @ncmanja.
     - Phones: the header wordmark is 17 px, the size of the one on a project page.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.

@@ -226,7 +226,6 @@
     $$('li > button[data-p]', names).forEach(b => {
       const id = b.dataset.p, p = P[id] || {}, li = b.parentElement;
       li.classList.add('x2-pp');
-      if (p.photo && !/placeholder/.test(p.photo)) b.insertAdjacentHTML('afterbegin', `<img class="x2-ppi" src="${p.photo}" alt="" loading="lazy" decoding="async">`);
       const h = handle(p.link || '');
       if (h) b.insertAdjacentHTML('afterend', `<a class="x2-ig" href="${e(p.link)}" target="_blank" rel="noopener">${e(h)}</a>`);
       if (!p.core) { b.classList.add('x2-nodr'); b.tabIndex = -1; }
@@ -272,7 +271,8 @@
       if (phone) {
         /* phones (Andrija, 2026-10-31): one column of 4:5 clips, centred, cropped from the middle, 10–20 % wider than the screen
            so they run past both edges */
-        ar = 4 / 5; w = W * r(1.1, 1.2); x = (W - w) / 2;   /* the first, the showreel, starts at the very top, under the header */
+        ar = it.k === 'reel' ? 4 / 5 : 1; w = W * r(1.1, 1.2);   /* square, so less burned-in text is cut; the showreel stays 4:5 (Andrija, 2026-10-31, 15:53) */
+        x = (W - w) / 2;   /* the first, the showreel, starts at the very top, under the header */
       } else {
         const cols = Math.round(r(colsR[0], colsR[1]));
         w = cols * u;
