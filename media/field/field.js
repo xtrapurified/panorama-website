@@ -53,7 +53,7 @@
   /* moving pictures for every tile: OWN montages cut for the field (media/field/clips); STREAMED films that could not be
      fetched play silently from Vimeo / YouTube through the page's own thumbnail player (phones keep the loop) */
   const OWN = new Set(['hotf', 'p28', 'p37']);
-  const STREAMED = new Set(['p16', 'p21', 'p24', 'p26', 'p29', 'p30', 'p32', 'p35', 'p36', 'p38']);
+  const STREAMED = new Set(['p16', 'p21', 'p24', 'p26', 'p36', 'p38']);   /* Thousands of Cameras, World Drone Prix, Shinobi and Fruškać play Andrija's own new clips (main, 2026-10-31) */
   const streams = k => STREAMED.has(k) && typeof mio !== 'undefined' && (F[k].v || F[k].yt);
   const clipOf = k => { const f = F[k]; return OWN.has(k) ? `${M}field/clips/${k}.mp4` : f.clip ? `${M}clips/${f.clip}.${VEXT}` : f.hover ? `${M}hover/${f.hover}.${VEXT}` : null; };
   const clientOf = k => (k === 'reel' ? 'Panorama Films' : F[k].client || '');
