@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-31 (experimental, round 5: captions over the clips, the reel under the header, quieter player controls, a plain Share arrow; scraped footer text removed from Dubai TGR and Astronauts; Share alternates arrow and word). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (experimental, round 6: merged main's new clips, quieter project page, no end menus, Golden hour in Data Error, smaller phone wordmark). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -138,6 +138,14 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
     - Scraped leftovers removed from the project data, on dev as well, for the live site:
       - Dubai TGR's intro was the old site's footer ("Home Work About / Get in touch / Hilandarska 13 / Last Update"); it is now empty.
       - The Astronauts intro ended with a stray "Year / 2023"; that is removed too.
+  - **Round 6 (11:37–11:40):**
+    - Project page:
+      - Its text dims (brightness 42 %) while the film plays and comes back on touch or pause.
+      - Share and its arrow swap every 4 s with a slide, and the arrow nudges.
+      - At the end, Vimeo and YouTube films stop on their last frame, so no end menu ("More from Panorama Films") appears.
+    - Merged main: Andrija's new clips and stills for Thousands of Cameras, Share Labs, World Drone Prix, Belgrade Furniture Fair, Shinobi and Fruškać, with Share Labs as its own project, plus the volume slider. The field plays those clips instead of streaming the films from Vimeo. Tajkun got no new clip.
+    - Golden hour: 11 px, in Data Error; left-aligned on phones.
+    - Phones: the header wordmark is 17 px, the size of the one on a project page.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.
   - **Collective, B1:** the List / Graph switch without its pictograms; the profile opens on the right beside the names (36 % of the column, at most 360 px) instead of over them.
