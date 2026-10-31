@@ -3351,7 +3351,7 @@ document.addEventListener('keydown', e=>{
    Any manual scroll pauses the drift for a few seconds; the doubled set lets it loop without a seam. */
 (()=>{
   const mq = document.querySelector('#clients .marq'); if (!mq) return;
-  const SPEED = document.getElementById('field') && innerWidth <= 760 ? 36 : 22;   /* pixels per second (experimental, phones: faster, Andrija 2026-10-31) */
+  const SPEED = document.getElementById('field') && innerWidth <= 760 ? 72 : 22;   /* pixels per second (experimental, phones: twice as fast again, Andrija 2026-10-31 15:43) */
   let hold = 0, hover = false, last = performance.now(), pos = 0, auto = false, vel = SPEED, samples = [], touching = false;
   const mod = v => { const h = half(); return ((v % h) + h) % h; };
   const half = () => mq.scrollWidth / 2;
@@ -3507,6 +3507,8 @@ document.querySelectorAll('.team .face img[data-alt]').forEach(img=>{
   const PHOTOS = {piki:'media/team/piki.webp', babic:'media/team/babic.webp', danilo:'media/team/danilo.webp', stojanovic:'media/team/stojanovic.webp', bojan:'media/team/bojan.webp',
     zoran:'media/team/zoran.webp', milovan:'media/team/milovan.webp', nevena:'media/team/nevena.webp', ana:'media/team/ana.webp', neda:'media/team/neda.webp', matija:'media/team/matija.webp', cile:'media/team/cile.webp'};
   Object.entries(PHOTOS).forEach(([id, src])=>{ INFO[id] = Object.assign({photo: src}, INFO[id] || {}); });
+  /* experimental: each person's photo and link for the Collective list (field.js puts them beside the names) */
+  window.PF_PEOPLE = Object.fromEntries(pn.map(n=>[n.id, {core: n.core, photo: (INFO[n.id] || {}).photo || '', link: LINKS[n.id] || ''}]));
   /* a black-and-white copy of a portrait, drawn by hand: Safari on iPhone ignores the canvas grayscale filter (2026-10-20) */
   const grey = img => { try { const c = document.createElement('canvas'), w = c.width = img.naturalWidth, h = c.height = img.naturalHeight, x = c.getContext('2d');
     x.drawImage(img, 0, 0); const d = x.getImageData(0, 0, w, h), a = d.data; for (let k = 0; k < a.length; k += 4){ const y = a[k]*.2126 + a[k+1]*.7152 + a[k+2]*.0722; a[k] = a[k+1] = a[k+2] = y; } x.putImageData(d, 0, 0); return c; } catch(_) { return null; } };
@@ -3926,8 +3928,8 @@ document.querySelectorAll('#studio > details.more, #approach > details.more').fo
     o.textContent = (off >= 0 ? '+' : '−') + oh + 'h' + (om ? String(om).padStart(2, '0') : ''); o.setAttribute('aria-valuenow', off.toFixed(2));
     const home = hits.find(h => h.name === 'Belgrade');
     document.getElementById('ghTease').innerHTML = hits.length
-      ? `output = <span class="gh-gold">[golden,hour]</span>, <b>${(home || hits[0]).name}</b> ${(home || hits[0]).up ? '<svg class="ar" viewBox="0 0 10 10" aria-label="rising"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg>' : '<svg class="ar" viewBox="0 0 10 10" aria-label="setting"><path d="M2 2 8 8M8 3.5V8H3.5"/></svg>'} golden hour now${hits.length > 1 ? `, +${hits.length - 1} more` : ''}`
-      : `output = <span class="gh-gold">[golden,hour]</span>, ${pinNext ? (pin.name === 'Panorama Films' ? 'Belgrade' : pin.name || 'pin') + ' golden hour in ' + pinNext : 'golden hour'}`;
+      ? `<span class="gh-gold">[golden,hour]</span>, <b>${(home || hits[0]).name}</b> ${(home || hits[0]).up ? '<svg class="ar" viewBox="0 0 10 10" aria-label="rising"><path d="M2 8 8 2M3.5 2H8v4.5"/></svg>' : '<svg class="ar" viewBox="0 0 10 10" aria-label="setting"><path d="M2 2 8 8M8 3.5V8H3.5"/></svg>'} golden hour now${hits.length > 1 ? `, +${hits.length - 1}` : ''}`
+      : `<span class="gh-gold">[golden,hour]</span>, ${pinNext ? (pin.name === 'Panorama Films' ? 'Belgrade' : pin.name || 'pin') + ' golden hour in ' + pinNext : 'golden hour'}`;
   }
 
   const base = document.createElement('canvas'), bctx = base.getContext('2d'), bpath = d3.geoPath(proj, bctx);

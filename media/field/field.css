@@ -384,7 +384,7 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
   .x2-hlc{text-align:center}
   .x2-hframe{left:50%;transform:translateX(-50%)}
   /* clients: a fifth smaller, and faster (index.html) */
-  .x2-collab .clients.logos{--u:48px;--gap:60px}
+  .x2-collab .clients.logos{--u:29px;--gap:36px}   /* 40 % smaller again (15:43) */
   .x2-collab .marq{padding-block:8px}
   /* contact: Email and Instagram in the big type of the ask */
   .x2-b1 .cr2-cmd{justify-content:center}
@@ -479,3 +479,22 @@ html.x2-vs .fx-t,html.x2-vs .x2-rest [data-x2b]{will-change:transform}
 /* Field notes counter in Data Error: frame 08 / 102 · loop = true (Andrija, 2026-10-31, 15:34) */
 .x2-hlc,.x2-hlc .k,.x2-hlc .v{font-family:"Data Error Horiz",ui-monospace,monospace!important;letter-spacing:.2em;font-size:clamp(11px,.85vw,14px)}
 @media (prefers-reduced-motion:reduce){.x2-slide img{transition:none}}
+
+/* 2026-10-31, 15:43 (Andrija) */
+/* no Index */
+.x2-ixl,.nav-ix,.ft-ix,[data-index]{display:none!important}
+/* Field notes slideshow: each photo at its own size and place in the frame */
+.x2-slide img{inset:auto;object-position:50% 50%}
+/* the Collective list: a small photo before each name, the Instagram handle after it; collaborators' names open nothing */
+.cr2-peers .net-names > li.x2-pp{display:block}
+.cr2-peers .net-names .x2-ppi{display:inline-block;width:.62em;height:.78em;object-fit:cover;margin:.12em .22em 0 0;vertical-align:top;filter:grayscale(1);opacity:.85}
+.cr2-peers .net-names > li > button.x2-nodr{cursor:default}
+.cr2-peers .net-names .x2-ig{font-family:"Data Error Horiz",ui-monospace,monospace;font-size:clamp(10px,.8vw,13px);letter-spacing:.14em;color:rgb(var(--x-rgb) / .5);display:inline-block;vertical-align:top;margin:.55em 0 0 .7em;text-decoration:none;line-height:1.2;white-space:nowrap}
+.cr2-peers .net-names .x2-ig:hover{color:var(--red,#e2231a)}
+@media (max-width:760px){
+  /* phones: the list only, no graph */
+  .cr2-peers .net-view,.cr2-peers .net-wrap,.cr2-peers #netHint{display:none!important}
+  /* the clips touch; the picture moves inside its frame */
+  .fx-tiles .fx-m{opacity:1}
+  .fx-tiles .fx-m > img,.fx-tiles .fx-m > video,.fx-tiles .fx-m > .stream{top:-12%!important;height:124%!important;bottom:auto!important;transform:translate3d(0,var(--py,0px),0)}
+}

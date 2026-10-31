@@ -2,7 +2,7 @@
 
 <!-- impeccable:product-schema 1 -->
 
-Last updated: 2026-10-31 (experimental, round 6: merged main's new clips, quieter project page, no end menus, Golden hour in Data Error, smaller phone wordmark, Field notes slideshow on phones). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
+Last updated: 2026-10-31 (experimental, round 6: merged main's new clips, quieter project page, no end menus, Golden hour in Data Error, smaller phone wordmark, Field notes slideshow on phones, touching clips, Collective with photos and handles, no Index). Keep this file current: update it whenever the site structure, a rule, the workflow or a milestone changes. Copies live in the repo root and in the claude.ai Project ("PANORAMA Website") as `claude/project.md`; the repo copy is the one to trust if they differ.
 
 ## Platform
 
@@ -146,6 +146,13 @@ First pass on `dev` (2026-10-22, from the doc): the Studio label reads "About Us
     - Merged main: Andrija's new clips and stills for Thousands of Cameras, Share Labs, World Drone Prix, Belgrade Furniture Fair, Shinobi and Fruškać, with Share Labs as its own project, plus the volume slider. The field plays those clips instead of streaming the films from Vimeo. Tajkun got no new clip.
     - Golden hour: in the site's own type, a size smaller (12–13 px); its keys, formula lines and hint in Data Error (12:00; all Data Error was too much); left-aligned on phones.
     - Field notes (15:34): on phones, no drifting filmstrip; a slideshow in one fixed frame, every photo whole, at the main site's pace (0.1 s fade, a new photo every 0.3 s) while on screen; a finger on it holds the photo, a tap on the ticks jumps. The counter line "frame 08 / 102 · loop = true" is in Data Error everywhere.
+    - Round 7 (15:43):
+      - Field notes slideshow: each photo at its own size (50–100 % of the frame) and place.
+      - Phones: the clips touch, with no black between them; the frames stay put and the picture moves inside each one at its own depth (parallax inside the frame).
+      - Collective: a small photo before every name and the Instagram handle after it (only where we have one); collaborators' names open nothing, the three at the core still open their profile. Phones show the list only, no graph.
+      - Phones: client logos 40 % smaller and twice as fast (72 px/s).
+      - Golden hour line shortened by about a fifth before it is opened (no "output =", "+3" instead of "+3 more").
+      - No Index: gone from the menu and footer, and the I key does nothing.
     - Phones: the header wordmark is 17 px, the size of the one on a project page.
 - **Late evening, 2026-10-30 (Andrija):**
   - **Less overlap:** each film starts 92–112 % of the previous one's height further down (100–108 % on phones), so tiles mostly stand apart.

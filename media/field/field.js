@@ -117,7 +117,7 @@
     function phoneStrip() {
       const fs = document.createElement('div'); fs.className = 'x2-slide'; fs.setAttribute('role', 'img'); fs.setAttribute('aria-label', 'Behind the scenes photos');
       const tall = Math.max(...bts.map(p => p.h / p.w)) || 1.5;
-      fs.style.setProperty('--hr', Math.min(tall, 1.5).toFixed(4));
+      fs.style.setProperty('--hr', Math.min(tall, 1.25).toFixed(4));
       strip.before(fs); strip.removeAttribute('tabindex'); strip.setAttribute('aria-hidden', 'true');
       const ticks = $$('i', strip), imgs = [], ok = [];
       const load = i => { if (imgs[i]) return; const im = new Image(); im.alt = ''; im.decoding = 'async'; im.src = `media/bts/${bts[i].f}`; fs.appendChild(im); imgs[i] = im;
@@ -125,6 +125,9 @@
       let on = -1, vis = false, hold = false, t0 = 0;
       const go = i => { i = (i + bts.length) % bts.length; load(i); for (let k = 1; k <= 4; k++) load((i + k) % bts.length);
         if (on >= 0) { imgs[on].classList.remove('on'); ticks[on].classList.remove('on'); }
+        /* each photo at its own size and place in the frame (Andrija, 2026-10-31, 15:43: vary their height / width) */
+        const k = 0.5 + Math.random() * 0.5, st = imgs[i].style;
+        st.width = st.height = (k * 100).toFixed(1) + '%'; st.left = (Math.random() * (1 - k) * 100).toFixed(1) + '%'; st.top = (Math.random() * (1 - k) * 100).toFixed(1) + '%';
         on = i; imgs[i].classList.add('on'); ticks[i].classList.add('on');
         num.textContent = `${String(i + 1).padStart(2, '0')} / ${String(bts.length).padStart(2, '0')}`; };
       go(0);
@@ -206,10 +209,32 @@
     if (peers && slot) { slot.appendChild(peers); sec.classList.add('has-peers'); }
     /* a collaborator's profile is only the photo, the name and their Instagram; the three at the core keep theirs (Andrija, 2026-10-31) */
     const dr = document.getElementById('netDr');
+    listPeople(sec, dr);
     if (dr) new MutationObserver(() => { const b = $('#netNames [data-p].on'), li = b && b.closest('li'); dr.classList.toggle('x2-crew', !(li && li.classList.contains('core'))); }).observe(dr, { childList: true });
     moveStrip($('.x2-collab', sec), sec);
     addEgg(sec);
     return sec;
+  }
+
+  /* ---------- the Collective as a list with each person's photo and Instagram beside the name (Andrija, 2026-10-31, 15:43):
+     a collaborator's profile held nothing more, so their names no longer open one; the three at the core keep theirs (with
+     the bio). Phones show the list only, without the graph ---------- */
+  function listPeople(sec, dr) {
+    const names = document.getElementById('netNames'), P = window.PF_PEOPLE || {}; if (!names) return;
+    const handle = u => /instagram\.com\//.test(u) ? '@' + u.replace(/^.*instagram\.com\//, '').replace(/\/.*$/, '') : '';
+    $$('li > button[data-p]', names).forEach(b => {
+      const id = b.dataset.p, p = P[id] || {}, li = b.parentElement;
+      li.classList.add('x2-pp');
+      if (p.photo && !/placeholder/.test(p.photo)) b.insertAdjacentHTML('afterbegin', `<img class="x2-ppi" src="${p.photo}" alt="" loading="lazy" decoding="async">`);
+      const h = handle(p.link || '');
+      if (h) b.insertAdjacentHTML('afterend', `<a class="x2-ig" href="${e(p.link)}" target="_blank" rel="noopener">${e(h)}</a>`);
+      if (!p.core) { b.classList.add('x2-nodr'); b.tabIndex = -1; }
+    });
+    /* collaborators' names open nothing (clicks, and the mouse running over the list, stop here before the site's own handlers) */
+    const crew = ev => { const b = ev.target.closest && ev.target.closest('.x2-nodr'); if (b) { ev.stopPropagation(); if (ev.type === 'click') ev.preventDefault(); } };
+    ['click', 'mousemove'].forEach(t => names.addEventListener(t, crew, true));
+    names.addEventListener('mousemove', ev => { if (ev.target.closest && ev.target.closest('.x2-nodr') && dr && !dr.hidden && dr.classList.contains('dr-peek')) { const x = $('[data-x]', dr); x && x.click(); } }, true);
+    if (PHONE()) { const lb = $('.net-view [data-view="list"]', sec); if (lb && lb.getAttribute('aria-pressed') !== 'true') lb.click(); }
   }
 
   /* ---------- tiles ---------- */
@@ -238,7 +263,7 @@
     const W = wrap.clientWidth, phone = W <= 760, u = W / 24;
     let y = phone ? 0 : Math.max(230, innerHeight * 0.27), bottom = 0, lastX = null, group = null;   /* the first films start below the large globe */
     items.forEach(it => {
-      if (group && it.g !== group) y = bottom + (phone ? 120 : innerHeight * 0.32);   /* a breath between Work and Studio */
+      if (group && it.g !== group) y = bottom + (phone ? 0 : innerHeight * 0.32);   /* a breath between Work and Studio */
       group = it.g;
       /* wide and scope crops, as on wanda.net (Andrija, 2026-10-30) */
       let ar = pick(phone ? [16 / 9, 16 / 9, 16 / 9, 3 / 2, 4 / 3, 2, 1.85, 2.39] : [16 / 9, 16 / 9, 16 / 9, 2.39, 2.39, 2.39, 2, 1.85, 3 / 2, 4 / 3]), colsR = [8, 16];
@@ -263,7 +288,7 @@
       it.el.style.setProperty('--lx', ((vl + vr) / 2 - x).toFixed(1) + 'px'); it.el.style.setProperty('--lw', Math.max(120, vr - vl - 24).toFixed(0) + 'px');
       it.el.style.setProperty('--cl', Math.max(0, 16 - x).toFixed(1) + 'px');   /* a caption under the tile starts at the page margin */
       bottom = Math.max(bottom, y + h);
-      y += phone ? h + 16 : h * r(...T.step);
+      y += phone ? h : h * r(...T.step);   /* phones: the clips touch, no black between them (Andrija, 2026-10-31, 15:43) */
     });
     wrap.style.height = Math.ceil(bottom + (phone ? 80 : 160)) + 'px';
   }
@@ -419,9 +444,19 @@
       }
     } else {
       const sy = scrollY, top0 = wrap.getBoundingClientRect().top + sy;
+      const ph = PHONE();
       for (const it of items) {
         const docY = top0 + it.y;
         if (!force && (docY + it.h < sy - 400 || docY > sy + H + 400)) continue;
+        if (ph) {
+          /* phones: the frames stay put and touch; the picture moves inside its frame, each at its own depth, so the column
+             scrolls in layers without any black between the clips (Andrija, 2026-10-31, 15:43) */
+          if (it.t.style.transform) it.t.style.transform = '';
+          const m = it.m || (it.m = $('.fx-m', it.el)), lim = it.h * 0.11;
+          const off = RM ? 0 : Math.max(-lim, Math.min(lim, -(docY + it.h / 2 - (sy + H / 2)) * (0.05 + (it.d - 0.82) * 0.12)));
+          m.style.setProperty('--py', off.toFixed(1) + 'px');
+          continue;
+        }
         const par = RM ? 0 : (docY + it.h / 2 - (sy + H / 2)) * (it.d - 1) * T.scrollDepth;
         it.t.style.transform = `translate3d(${(-cx * ax * it.d).toFixed(1)}px,${(-cy * ay * it.d + par).toFixed(1)}px,0)`;
       }
@@ -469,21 +504,22 @@
   const slot = $('#slot'), bar = $('.hdr .bar');
   /* the site's own nav on the right (Work · About · Contact), with Index added after Work */
   const menu = $('#menu'), workA = menu && $('a[href="#field"]', menu);
-  if (workA) workA.insertAdjacentHTML('afterend', '<a href="#index" data-nav="index" class="x2-ixl">Index</a>');
+  /* no Index any more (Andrija, 2026-10-31, 15:43): its links are hidden and the I key does nothing */
+  document.addEventListener('click', ev => { const a = ev.target.closest && ev.target.closest('[data-index], a[href="#index"]'); if (a) { ev.preventDefault(); ev.stopPropagation(); } }, true);
+  addEventListener('keydown', ev => { if (ev.key && ev.key.toLowerCase() === 'i' && !ev.metaKey && !ev.ctrlKey && !ev.altKey) ev.stopImmediatePropagation(); }, true);
   /* where a section starts, in the field's own coordinates */
   const secY = id => (id === 'work' ? 0 : SEC[id] == null ? null : SEC[id]);
   function goSection(id, from) {
-    if (id === 'index') return openIndex(from);
     if (REST === 'a' && (id === 'studio' || id === 'contact')) return openPanel(id, from);
     closePanels(); closeIndex(true);
     const y = secY(id); if (y != null) scrollToY(y);
   }
   document.addEventListener('click', ev => {
     /* the menu's links (and the phone menu) lead to the new places */
-    const a = ev.target.closest('a[href="#field"], a.x2-ixl, a[data-index], a[href="#studio"], a[href="#contact"]:not([data-mail]), a[href="#top"], a[href="#hero"]');
+    const a = ev.target.closest('a[href="#field"], a[href="#studio"], a[href="#contact"]:not([data-mail]), a[href="#top"], a[href="#hero"]');
     if (!a || a.closest('#lb')) return;
     ev.preventDefault(); ev.stopPropagation();
-    const h = a.hasAttribute('data-index') ? 'index' : a.getAttribute('href').slice(1), id = h === 'index' ? 'index' : h === 'studio' ? 'studio' : h === 'contact' ? 'contact' : 'work';
+    const h = a.getAttribute('href').slice(1), id = h === 'studio' ? 'studio' : h === 'contact' ? 'contact' : 'work';
     if (hdr.classList.contains('navopen')) { const bu = $('#burger'); bu && bu.click(); }
     goSection(id, a);
   }, true);
@@ -495,10 +531,10 @@
     if (++bcN % 6) return;
     const y = scrollY2() + innerHeight * 0.4;
     const sY = secY('studio'), inStudio = REST !== 'a' && sY != null && sY > 0 && y >= sY + 80;
-    const panel = $('.x2-pnl.on'), ixOn = $('.x2-ix.on');
+    const panel = $('.x2-pnl.on');
     const cY = secY('contact'), inContact = REST !== 'a' && cY != null && y >= cY + innerHeight * 0.2;
-    const here = ixOn ? 'index' : panel ? panel.dataset.p : inContact ? 'contact' : inStudio ? 'studio' : 'work';
-    const ids = { field: 'work', index: 'index', studio: 'studio', contact: 'contact' };
+    const here = panel ? panel.dataset.p : inContact ? 'contact' : inStudio ? 'studio' : 'work';
+    const ids = { field: 'work', studio: 'studio', contact: 'contact' };
     if (menu) $$('a', menu).forEach(a => { const id = ids[(a.getAttribute('href') || '').slice(1)]; if (id) a.classList.toggle('on', id === here); });
     /* bare over the films (as on wanda.net); over the credits the header keeps its shade so text never runs under it */
     hdr.classList.toggle('x2-over', !(CREDITS && inStudio) && (VIRTUAL || wrap.getBoundingClientRect().bottom > 90));
@@ -533,35 +569,7 @@
   });
   document.addEventListener('pointerout', ev => { const to = ev.relatedTarget; if (!to || !to.closest || !to.closest('[data-ix], [data-x2film], [data-pp]')) hidePv(); });
 
-  /* ---------- Index: every project, or every client, in columns over the dimmed field ---------- */
-  const clientsIx = [...new Map(keys.filter(k => k !== 'reel').map(k => [clientOf(k), k])).entries()].filter(([c]) => c && c !== 'Panorama Films').sort((a, b) => a[0].localeCompare(b[0]));
-  const ix = document.createElement('div');
-  ix.className = 'x2-ix'; ix.setAttribute('role', 'dialog'); ix.setAttribute('aria-modal', 'true'); ix.setAttribute('aria-label', 'Index');
-  ix.innerHTML = `<button type="button" class="x2-ix-x">(×) Close</button>
-    <div class="x2-ix-in"><div class="x2-tabs" role="tablist"><button type="button" role="tab" aria-selected="true" data-tab="p">Projects</button><button type="button" role="tab" aria-selected="false" data-tab="c">Clients</button></div>
-    <ul class="x2-g" data-g="p">${keys.map(k => `<li><a href="${hrefOf(k)}" data-ix="${k}">${e(titleOf(k))}</a></li>`).join('')}</ul>
-    <ul class="x2-g" data-g="c" hidden>${clientsIx.map(([c, k]) => `<li><a href="${hrefOf(k)}" data-ix="${k}">${e(c)}</a></li>`).join('')}</ul></div>`;
-  document.body.appendChild(ix);
-  let back = null;
-  function openIndex(from) {
-    closePanels();
-    back = from || document.activeElement; ix.classList.add('on'); document.body.style.overflow = 'hidden';
-    setTimeout(() => { const a = $('.x2-g:not([hidden]) a', ix); a && a.focus({ preventScroll: true }); }, 50);
-  }
-  function closeIndex(quiet) {
-    if (!ix.classList.contains('on')) return;
-    ix.classList.remove('on'); hidePv(); document.body.style.overflow = '';
-    if (!quiet && back && back.focus) back.focus({ preventScroll: true });
-  }
-  $('.x2-ix-x', ix).addEventListener('click', () => closeIndex());
-  $$('.x2-tabs button', ix).forEach(b => b.addEventListener('click', () => {
-    $$('.x2-tabs button', ix).forEach(x => x.setAttribute('aria-selected', String(x === b)));
-    $$('.x2-g', ix).forEach(g => { g.hidden = g.dataset.g !== b.dataset.tab; });
-  }));
-  ix.addEventListener('click', ev => {
-    const a = ev.target.closest('[data-ix]'); if (!a || ev.metaKey || ev.ctrlKey) return;
-    ev.preventDefault(); ev.stopPropagation(); go(a.dataset.ix);
-  });
+  const closeIndex = () => {};
 
   /* ---------- a: Studio and Contact as panels over the dimmed field ---------- */
   const panels = {};
@@ -593,8 +601,7 @@
   }
   addEventListener('keydown', ev => {
     if (ev.key !== 'Escape') return;
-    if (ix.classList.contains('on')) { ev.stopPropagation(); closeIndex(); }
-    else if ($('.x2-pnl.on')) { ev.stopPropagation(); closePanels(true); }
+    if ($('.x2-pnl.on')) { ev.stopPropagation(); closePanels(true); }
   }, true);
 
   /* ---------- the switch between the three approaches (for trying them; bottom left) ---------- */
